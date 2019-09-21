@@ -13,6 +13,8 @@ SOEN 6441 - RISK GAME GROUP PROJECT
         - [3.2.3. Fortification Phase](#323-fortification-phase)
     - [3.3. Cards](#33-cards)
 - [4. Implementations](#4-implementations)
+    - [4.1. Design Pattern](#41-design-pattern)
+    - [4.2. JDK version and tools](#42-jdk-version-and-tools)
 
 <!-- /TOC -->
 
@@ -102,3 +104,17 @@ If a player holds five cards during his reinforcement phase, he must exchange th
 
 # 4. Implementations
 <a id="markdown-implementations" name="implementations"></a>
+
+This part of the document briefly introduce the implementations of the project. For more detailed implementation, check out `wiki` section.
+
+## 4.1. Design Pattern
+<a id="markdown-design-pattern" name="design-pattern"></a>
+
+The project using MVC Pattern, which is stand for Model-View-Controller
+
+More about applying MVC in Java applications can be found here: [MVC article on Codeproject](https://www.codeproject.com/Articles/879896/Programming-in-Java-using-the-MVC-architecture)
+
+## 4.2. JDK version and tools
+<a id="markdown-jdk-version-and-tools" name="jdk-version-and-tools"></a>
+
+The project use features of Java 8, as well as a mix of Eclipse IDE and Visual Studio Code with Java extension by RedHat.
