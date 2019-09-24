@@ -23,6 +23,7 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 - 40124288 - Van Tuan Tran
 - 40080998 - Benjamin Osei Asante
 - 40114377 - Tejinder Singh
+- 40089008 - Bharti Saini
 
 # 2. General description
 <a id="markdown-general-description" name="general-description"></a>
