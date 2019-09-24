@@ -22,7 +22,7 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 <a id="markdown-members" name="members"></a>
 - 40124288 - Van Tuan Tran
 - 40080998 - Benjamin Osei Asante
-- Please enter your student id and name
+- 40114377 - Tejinder Singh
 
 # 2. General description
 <a id="markdown-general-description" name="general-description"></a>
