@@ -1,6 +1,6 @@
-package com.project.soen6441riskgame;
+package com.project.soen6441riskgame.tests;
 
-public class RiskGameContestsTest {
+public class ContestsTest {
 	
 	/**
 	 * for setting up contests  mode for testing

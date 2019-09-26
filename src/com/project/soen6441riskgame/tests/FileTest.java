@@ -1,5 +1,5 @@
-package com.project.soen6441riskgame;
+package com.project.soen6441riskgame.tests;
 
-public class RiskGameFileTest {
+public class FileTest {
 
 }
