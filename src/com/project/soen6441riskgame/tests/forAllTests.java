@@ -1,4 +1,4 @@
-package com.project.soen6441.tests;
+package com.project.soen6441riskgame.tests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

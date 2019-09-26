@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 
 public class Aggressiveness implements Strategy, Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -7335837812727083738L;
 	
 	
 	/**

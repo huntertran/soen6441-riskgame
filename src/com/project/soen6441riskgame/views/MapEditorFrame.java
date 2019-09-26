@@ -1,4 +1,4 @@
-package com.project.soen6441riskgame;
+package com.project.soen6441riskgame.views;
 
 public class MapEditorFrame {
 	

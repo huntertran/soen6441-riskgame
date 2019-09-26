@@ -1,8 +1,13 @@
-package com.project.soen6441riskgame;
+package com.project.soen6441riskgame.views;
 
 import javax.swing.JFrame;
 
 public class ContestsResultsFrame extends JFrame {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	
 	/**

@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 
 public class Benevolence implements Strategy, Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1062276947580741326L;
 	
 	
 	/**

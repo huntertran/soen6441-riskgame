@@ -5,6 +5,11 @@ import javax.swing.JPanel;
 import java.io.Serializable;
 
 public class Frame extends JFrame implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 4616349459699764299L;
 	
 	/**
 	 * this should be Class that creates a frame with three panels: 
