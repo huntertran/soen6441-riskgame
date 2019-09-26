@@ -1,9 +1,8 @@
-package com.project.soen6441riskgame.tests;
+package com.project.soen6441.tests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
 
 /**
  * This class is for running all the test files at ones.
@@ -12,9 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
  * 
  */
 
-
 @RunWith(Suite.class)
-@SuiteClasses({ RiskGameFileTest.class, RiskGameTesting.class, RiskGamePlayerTest.class, RiskGameGraphTest.class, RiskGameContestsTest.class})
+@SuiteClasses({ FileTest.class, Testing.class, PlayerTest.class, GraphTest.class, ContestsTest.class })
 public class forAllTests {
 
 }
