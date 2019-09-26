@@ -1,11 +1,6 @@
 package main.java.soen6441riskgame;
 
-
-
-import java.util.Collections;
-import java.util.List; 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 
 public class Benevolence implements Strategy, Serializable {

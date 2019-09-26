@@ -1,7 +1,6 @@
 package main.java.soen6441riskgame;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.io.Serializable;
 
 public class Frame extends JFrame implements Serializable {
