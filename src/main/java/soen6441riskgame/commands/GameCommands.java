@@ -1,5 +1,6 @@
 package main.java.soen6441riskgame.commands;
 
-public enum GameCommands {
-    mapeditor, playgame
+public final class GameCommands {
+    public static final String MAPEDITOR = "mapeditor";
+    public static final String PLAYGAME = "playgame";
 }
