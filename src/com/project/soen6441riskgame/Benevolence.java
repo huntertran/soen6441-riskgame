@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class RiskGameBenevolence implements RiskGameStrategy, Serializable {
+public class Benevolence implements Strategy, Serializable {
 	
 	
 	/**

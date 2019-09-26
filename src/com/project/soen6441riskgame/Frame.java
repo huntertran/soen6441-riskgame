@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.io.Serializable;
 
-public class RiskGameFrame  extends JFrame implements Serializable {
+public class Frame extends JFrame implements Serializable {
 	
 	/**
 	 * this should be Class that creates a frame with three panels: 

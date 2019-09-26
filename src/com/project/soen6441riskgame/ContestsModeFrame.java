@@ -2,7 +2,7 @@ package com.project.soen6441riskgame;
 
 import javax.swing.JFrame;
 
-public class RiskGameContestsModeFrame extends JFrame {
+public class ContestsModeFrame extends JFrame {
 	
 	
 	/**

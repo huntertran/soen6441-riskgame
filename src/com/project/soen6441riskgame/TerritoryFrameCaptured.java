@@ -1,5 +1,5 @@
 package com.project.soen6441riskgame;
 
-public class Testing {
+public class TerritoryFrameCaptured {
 
 }

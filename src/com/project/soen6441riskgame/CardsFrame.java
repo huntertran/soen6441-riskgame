@@ -3,7 +3,7 @@ package com.project.soen6441riskgame;
 
 import javax.swing.JFrame;
 
-public class RiskGameCardsFrame extends JFrame {
+public class CardsFrame extends JFrame {
 	
 	
 	/**

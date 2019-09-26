@@ -1,5 +1,5 @@
 package com.project.soen6441riskgame;
 
-public class RiskGameStrategyforPlayer {
+public class FrameforPlayers {
 
 }

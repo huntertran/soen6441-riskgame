@@ -3,7 +3,7 @@ package com.project.soen6441riskgame;
 import java.util.Observer;
 import javax.swing.JPanel;
 
-public class RiskGameDominationView extends JPanel implements Observer {
+public class DominationView extends JPanel implements Observer {
 	
 	
 	/**

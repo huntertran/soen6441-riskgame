@@ -1,6 +1,6 @@
 package com.project.soen6441riskgame;
 
-public class RiskGameMapEditorFrame {
+public class MapEditorFrame {
 	
 	/**
 	 * this should be Class that creates the starting frame of the application. This frame should contain a menu bar with 2 options: 

@@ -1,6 +1,6 @@
 package com.project.soen6441riskgame;
 
-public class RiskGameContestsManager {
+public class ContestsManager {
 	
 	
 	/**
