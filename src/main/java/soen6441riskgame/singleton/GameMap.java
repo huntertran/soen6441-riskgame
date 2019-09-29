@@ -1,7 +1,8 @@
 package main.java.soen6441riskgame.singleton;
 
 import main.java.soen6441riskgame.models.Continent;
-import java.util.List;
+
+import java.util.ArrayList;
 
 public class GameMap {
     private static final GameMap instance = new GameMap();
@@ -13,7 +14,7 @@ public class GameMap {
         return instance;
     }
 
-    public List<Continent> Continents;
+    public ArrayList<Continent> Continents;
 
     public int[][] Graph;
 }

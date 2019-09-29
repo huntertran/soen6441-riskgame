@@ -6,12 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch) - Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
             "name": "Debug (Launch)-Main<soen6441riskgame>",
             "request": "launch",
             "mainClass": "main.java.soen6441riskgame.App",
