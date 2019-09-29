@@ -12,29 +12,18 @@ import main.java.soen6441riskgame.singleton.GameMap;
 public class MapControllerTest {
 
 	@Test
-	/*public void editContinentTest() {
-		// Setup
-		GameMap.getInstance().Continents = new ArrayList<Continent>();
+    public void loadMapTest(){
+        // Setup
+        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        MapController mapController = new MapController();
 
-		// Action
-		GameMap.getInstance().Continents.add(new Continent("Asia"));
+        // Action
+        mapController.loadMap(filePath);
 
-		// Assert
-		Assert.assertTrue(GameMap.getInstance().Continents.get(0).name == "Asia");
+        // Assert
+        Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName() == "North_Africa");
 	}
-	*/
-	
-	/*public boolean continentExists(String continentName) {
-    	
-    	for(Continent continent : Continents) {
-    		if(continent.name == continentName)
-    			return true;
-    	}
-    	return false;
-    }
-    */
-	
-	
+
 	public void editContinentTest() {
 		//Setup
 		MapController map = new MapController();
