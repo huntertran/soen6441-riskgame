@@ -17,4 +17,14 @@ public class GameMap {
     public ArrayList<Continent> Continents;
 
     public int[][] Graph;
+    
+    public boolean continentExists(String continentName) {
+    	
+    	for(Continent continent : Continents) {
+    		if(continent.name == continentName)
+    			return true;
+    	}
+    	return false;
+    }
+    
 }
