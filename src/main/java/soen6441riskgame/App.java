@@ -39,7 +39,35 @@ public final class App {
 
         switch (command) {
         case MapEditorCommands.EDITCONTINENT: {
-            mapController.editContinents(remainingArgs);
+            mapController.editContinent(remainingArgs);
+            break;
+        }
+        case MapEditorCommands.EDITCOUNTRY: {
+            mapController.editCountry(remainingArgs);
+            break;
+        }
+        case MapEditorCommands.EDITNEIGHBOR: {
+            mapController.editNeighbor(remainingArgs);
+            break;
+        }
+        case MapEditorCommands.SHOWMAP: {
+            mapController.showMap();
+            break;
+        }
+        case MapEditorCommands.SAVEMAP: {
+            mapController.saveMap(remainingArgs[0]);
+            break;
+        }
+        case MapEditorCommands.EDITMAP: {
+            mapController.editMap(remainingArgs[0]);
+            break;
+        }
+        case MapEditorCommands.VALIDATEMAP: {
+            mapController.validateMap();
+            break;
+        }
+        case MapEditorCommands.LOADMAP: {
+            mapController.loadMap(remainingArgs[0]);
             break;
         }
         }
