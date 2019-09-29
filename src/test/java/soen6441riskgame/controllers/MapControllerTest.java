@@ -23,7 +23,7 @@ public class MapControllerTest {
         // Assert
         Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName() == "North_Africa");
 	}
-
+	
 	public void editContinentTest() {
 		//Setup
 		MapController map = new MapController();
@@ -33,12 +33,7 @@ public class MapControllerTest {
 		map.editContinent(arguments);
 		
 		//Assert
-		//ArrayList<Continent> continents = GameMap.getInstance().continentExists("Asia");
-		
-		//Assert.assertTrue(GameMap.continentExists("Asia") == true);
-		
-		
-		
+		Assert.assertTrue(GameMap.getInstance().continentExists("Asia") == true);
 	}
 	
 	
