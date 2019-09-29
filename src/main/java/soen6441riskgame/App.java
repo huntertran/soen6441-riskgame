@@ -14,11 +14,14 @@ public final class App {
     public static void main(String[] args) {
         System.out.println("SOEN 6441 - Risk Domination game");
 
-        if (args.length == 0) {
-            runFromBegining();
-        } else {
-            jumpToCommand(args);
-        }
+        MapController mapController = new MapController();
+        mapController.loadMap("test");
+
+        // if (args.length == 0) {
+        //     runFromBegining();
+        // } else {
+        //     jumpToCommand(args);
+        // }
     }
 
     public static void jumpToCommand(String[] args) {

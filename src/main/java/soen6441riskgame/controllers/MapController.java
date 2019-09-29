@@ -1,6 +1,12 @@
 package main.java.soen6441riskgame.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import main.java.soen6441riskgame.singleton.GameMap;
 
@@ -77,11 +83,66 @@ public final class MapController {
     }
 
     public void loadMap(String fileName) {
-        GameMap.getInstance().Continents.size();
+        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        Path path = Paths.get(filePath);
+
+        List<String> lines;
+
+        try {
+            lines = Files.lines(path).collect(Collectors.toList());
+            for (int index = 0; index < lines.size(); index++) {
+                String currentLine = lines.get(index);
+                if (currentLine.startsWith(";")) {
+                    continue;
+                }
+
+                String firstWord = currentLine.split(" ")[0];
+
+                switch (firstWord) {
+                case "name": {
+                    GameMap.getInstance().setMapName(currentLine.split("name")[1].trim());
+                    break;
+                }
+                case "[files]": {
+                    break;
+                }
+                case "[continents]": {
+                    loadContinentFromFile(index, lines);
+                    break;
+                }
+                case "[countries]": {
+                    break;
+                }
+                case "[borders]": {
+                    break;
+                }
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int loadContinentFromFile(int currentLineIndex, List<String> lines) {
+        for (int index = currentLineIndex + 1; index < lines.size(); index++) {
+            String currentLine = lines.get(index);
+            String[] fragments = currentLine.split(" ");
+            String continentName = fragments[0];
+            int continentArmy = Integer.parseInt(fragments[1]);
+
+            // String continentColor = fragments[2];
+
+            addContinent(continentName, Integer.toString(continentArmy));
+
+            currentLineIndex = index;
+        }
+
+        return currentLineIndex + 1;
     }
 
     public void addContinent(String continentName, String continentValue) {
-
+        // GameMap.getInstance()
     }
 
     public void removeContinent(String continentName) {
