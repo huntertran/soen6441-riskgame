@@ -17,7 +17,7 @@ public class MapControllerTest {
         GameMap.getInstance().setContinents(new ArrayList<Continent>());
 
         // Action
-        GameMap.getInstance().getContinents().add(new Continent("Asia"));
+        GameMap.getInstance().getContinents().add(new Continent("Asia", 1));
 
         // Assert
         Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName() == "Asia");
