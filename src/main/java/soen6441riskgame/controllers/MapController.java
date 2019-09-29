@@ -2,6 +2,8 @@ package main.java.soen6441riskgame.controllers;
 
 import java.util.Scanner;
 
+import main.java.soen6441riskgame.singleton.GameMap;
+
 public final class MapController {
     public void start(String[]... args) {
         Scanner scanner = new Scanner(System.in);
@@ -75,7 +77,7 @@ public final class MapController {
     }
 
     public void loadMap(String fileName) {
-
+        GameMap.getInstance().Continents.size();
     }
 
     public void addContinent(String continentName, String continentValue) {
