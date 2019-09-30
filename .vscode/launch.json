@@ -6,10 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch)-Main<soen6441riskgame>",
+            "name": "Debug (Launch)-App<Soen6441RiskGame>",
             "request": "launch",
             "mainClass": "main.java.soen6441riskgame.App",
-            "projectName": "soen6441riskgame"
+            "projectName": "Soen6441RiskGame"
         }
     ]
 }

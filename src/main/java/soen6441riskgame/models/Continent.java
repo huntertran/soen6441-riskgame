@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Continent {
     private String name;
     private int army;
-    private ArrayList<Country> Countries;
+    private ArrayList<Country> Countries = new ArrayList<Country>();
     private int order;
 
     public Continent(String name, int army, int... order) {

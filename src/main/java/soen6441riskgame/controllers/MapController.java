@@ -124,14 +124,26 @@ public final class MapController {
                 }
 
             }
+
+            System.out.println("Map loaded");
+            showMap();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private boolean isStillInCurrentDataBlock(int index, List<String> lines) {
+        if (index < lines.size()) {
+            String currentLine = lines.get(index);
+            return currentLine != "" && currentLine.contains(" ");
+        }
+
+        return false;
+    }
+
     private int loadContinentsFromFile(int currentLineIndex, List<String> lines) {
         int continentOrder = 1;
-        for (int index = currentLineIndex + 1; index < lines.size(); index++) {
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
             String currentLine = lines.get(index);
             String[] fragments = currentLine.split(" ");
             String continentName = fragments[0];
@@ -149,7 +161,7 @@ public final class MapController {
     }
 
     private int loadCountriesFromFile(int currentLineIndex, List<String> lines) {
-        for (int index = currentLineIndex + 1; index < lines.size(); index++) {
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
             String currentLine = lines.get(index);
 
             String[] fragments = currentLine.split(" ");
@@ -194,7 +206,10 @@ public final class MapController {
     }
 
     private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
-        for (int index = currentLineIndex + 1; index < lines.size(); index++) {
+        int numberOfCountry = GameMap.getInstance().getCountries().size();
+        GameMap.getInstance().setGraph(new int[numberOfCountry][numberOfCountry]);
+
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
             String currentLine = lines.get(index);
 
             String[] fragments = currentLine.split(" ");
@@ -202,7 +217,7 @@ public final class MapController {
             int countryOrder = Integer.parseInt(fragments[0]);
 
             int[] borderWithCountries = new int[fragments.length - 1];
-            for (int borderIndex = 0; index < borderWithCountries.length; borderIndex++) {
+            for (int borderIndex = 0; borderIndex < borderWithCountries.length; borderIndex++) {
                 borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);
             }
 
@@ -217,8 +232,8 @@ public final class MapController {
     private void addBorders(int countryOrder, int... borderWithCountries) {
         int[][] graph = GameMap.getInstance().getGraph();
         for (int index = 0; index < borderWithCountries.length; index++) {
-            graph[countryOrder][borderWithCountries[index]] = 1;
-            graph[borderWithCountries[index]][countryOrder] = 1;
+            graph[countryOrder - 1][borderWithCountries[index] - 1] = 1;
+            graph[borderWithCountries[index] - 1][countryOrder - 1] = 1;
         }
     }
 
