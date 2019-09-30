@@ -68,7 +68,8 @@ public final class MapController {
     }
 
     public void showMap() {
-
+        GameMap.getInstance().showContinents();
+        // GameMap.getInstance().showCountries();
     }
 
     public void saveMap(String fileName) {

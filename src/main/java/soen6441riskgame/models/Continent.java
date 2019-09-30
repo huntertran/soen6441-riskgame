@@ -2,7 +2,7 @@ package main.java.soen6441riskgame.models;
 
 import java.util.ArrayList;
 
-public class Continent {
+public class Continent implements Viewable {
     private String name;
     private int army;
     private ArrayList<Country> countries = new ArrayList<Country>();
@@ -47,5 +47,18 @@ public class Continent {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void view(int indent) {
+        this.viewWithoutCountry();
+
+        for (Country country : this.getCountries()) {
+            country.view(indent + 1);
+        }
+    }
+
+    public void viewWithoutCountry() {
+        System.out.format("Continent: %s | No.: %s | Number of army: %s\n", this.getName(), this.getOrder(),
+                this.getArmy());
     }
 }

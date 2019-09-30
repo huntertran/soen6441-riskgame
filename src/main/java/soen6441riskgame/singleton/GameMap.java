@@ -51,16 +51,22 @@ public class GameMap {
         return instance;
     }
 
-    public void reset(){
+    public void reset() {
         mapName = "";
         continents = new ArrayList<Continent>();
         countries = new ArrayList<Country>();
         graph = new int[1][1];
     }
 
-    public void showContinents(){
-        for(Continent continent : continents){
+    public void showContinents() {
+        for (Continent continent : continents) {
+            continent.view();
+        }
+    }
 
+    public void showCountries() {
+        for (Country country : countries) {
+            country.view();
         }
     }
 }

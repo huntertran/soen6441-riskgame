@@ -16,6 +16,7 @@ public final class App {
 
         MapController mapController = new MapController();
         mapController.loadMap("test");
+        mapController.showMap();
 
         // if (args.length == 0) {
         //     runFromBegining();
