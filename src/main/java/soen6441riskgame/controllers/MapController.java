@@ -85,6 +85,10 @@ public final class MapController {
         return result;
     }
 
+    public void resetMap(){
+        GameMap.getInstance().reset();
+    }
+
     public void loadMap(String fileName) {
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
         Path path = Paths.get(filePath);

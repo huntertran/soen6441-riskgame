@@ -13,23 +13,26 @@ public class MapControllerTest {
         // Setup
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
         MapController mapController = new MapController();
+        mapController.resetMap();
 
         // Action
         mapController.loadMap(filePath);
 
         // Assert
-        Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName() == "North_Africa");
+        Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName().equals("North_Africa"));
     }
 
+    @Test
     public void editContinentTest() {
         // Setup
-        MapController map = new MapController();
+        MapController mapController = new MapController();
+        mapController.resetMap();
         String arguments[] = { "-add", "Asia", "10" };
 
         // Action
-        map.editContinent(arguments);
+        mapController.editContinent(arguments);
 
         // Assert
-        Assert.assertTrue(map.isContinentExisted("Asia"));
+        Assert.assertTrue(mapController.isContinentExisted("Asia"));
     }
 }

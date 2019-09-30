@@ -50,4 +50,17 @@ public class GameMap {
     public static GameMap getInstance() {
         return instance;
     }
+
+    public void reset(){
+        MapName = "";
+        Continents = new ArrayList<Continent>();
+        countries = new ArrayList<Country>();
+        Graph = new int[1][1];
+    }
+
+    public void showContinents(){
+        for(Continent continent : Continents){
+
+        }
+    }
 }
