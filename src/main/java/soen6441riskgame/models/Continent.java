@@ -6,10 +6,23 @@ public class Continent {
     private String name;
     private int army;
     private ArrayList<Country> Countries;
+    private int order;
 
-    public Continent(String name, int army) {
+    public Continent(String name, int army, int... order) {
         this.setName(name);
         this.setArmy(army);
+
+        if (order.length > 0) {
+            this.setOrder(order[0]);
+        }
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public int getArmy() {

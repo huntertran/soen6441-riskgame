@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import main.java.soen6441riskgame.models.Continent;
+import main.java.soen6441riskgame.models.Coordinate;
+import main.java.soen6441riskgame.models.Country;
 import main.java.soen6441riskgame.singleton.GameMap;
 
 public final class MapController {
@@ -107,13 +110,15 @@ public final class MapController {
                     break;
                 }
                 case "[continents]": {
-                    loadContinentFromFile(index, lines);
+                    index = loadContinentsFromFile(index, lines);
                     break;
                 }
                 case "[countries]": {
+                    index = loadCountriesFromFile(index, lines);
                     break;
                 }
                 case "[borders]": {
+                    index = loadBordersFromFile(index, lines);
                     break;
                 }
                 }
@@ -124,7 +129,8 @@ public final class MapController {
         }
     }
 
-    private int loadContinentFromFile(int currentLineIndex, List<String> lines) {
+    private int loadContinentsFromFile(int currentLineIndex, List<String> lines) {
+        int continentOrder = 1;
         for (int index = currentLineIndex + 1; index < lines.size(); index++) {
             String currentLine = lines.get(index);
             String[] fragments = currentLine.split(" ");
@@ -133,7 +139,29 @@ public final class MapController {
 
             // String continentColor = fragments[2];
 
-            addContinent(continentName, Integer.toString(continentArmy));
+            addContinent(continentName, Integer.toString(continentArmy), continentOrder);
+
+            currentLineIndex = index;
+            continentOrder++;
+        }
+
+        return currentLineIndex + 1;
+    }
+
+    private int loadCountriesFromFile(int currentLineIndex, List<String> lines) {
+        for (int index = currentLineIndex + 1; index < lines.size(); index++) {
+            String currentLine = lines.get(index);
+
+            String[] fragments = currentLine.split(" ");
+
+            int countryOrder = Integer.parseInt(fragments[0]);
+            String countryName = fragments[1];
+            int continentOrder = Integer.parseInt(fragments[2]);
+            int x = Integer.parseInt(fragments[3]);
+            int y = Integer.parseInt(fragments[4]);
+            Coordinate coordinate = new Coordinate(x, y);
+
+            addCountry(countryOrder, countryName, continentOrder, coordinate);
 
             currentLineIndex = index;
         }
@@ -141,8 +169,20 @@ public final class MapController {
         return currentLineIndex + 1;
     }
 
-    public void addContinent(String continentName, String continentValue) {
-        // GameMap.getInstance()
+    public boolean isContinentExisted(String continentName) {
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (continent.getName() == continentName)
+                return true;
+        }
+
+        return false;
+    }
+
+    public void addContinent(String continentName, String continentValue, int... order) {
+        if (!isContinentExisted(continentName)) {
+            GameMap.getInstance().getContinents()
+                    .add(new Continent(continentName, Integer.parseInt(continentValue), order));
+        }
     }
 
     public void removeContinent(String continentName) {
@@ -151,6 +191,46 @@ public final class MapController {
 
     public void addCountry(String countryName, String continentName) {
 
+    }
+
+    private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
+        for (int index = currentLineIndex + 1; index < lines.size(); index++) {
+            String currentLine = lines.get(index);
+
+            String[] fragments = currentLine.split(" ");
+
+            int countryOrder = Integer.parseInt(fragments[0]);
+
+            int[] borderWithCountries = new int[fragments.length - 1];
+            for (int borderIndex = 0; index < borderWithCountries.length; borderIndex++) {
+                borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);
+            }
+
+            addBorders(countryOrder, borderWithCountries);
+
+            currentLineIndex = index;
+        }
+
+        return currentLineIndex + 1;
+    }
+
+    private void addBorders(int countryOrder, int... borderWithCountries) {
+        int[][] graph = GameMap.getInstance().getGraph();
+        for (int index = 0; index < borderWithCountries.length; index++) {
+            graph[countryOrder][borderWithCountries[index]] = 1;
+            graph[borderWithCountries[index]][countryOrder] = 1;
+        }
+    }
+
+    private void addCountry(int order, String name, int continentOrder, Coordinate coordinate) {
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (continent.getOrder() == continentOrder) {
+                Country country = new Country(order, name, coordinate, continent);
+
+                GameMap.getInstance().getCountries().add(country);
+                continent.getCountries().add(country);
+            }
+        }
     }
 
     public void removeCountry(String countryName) {

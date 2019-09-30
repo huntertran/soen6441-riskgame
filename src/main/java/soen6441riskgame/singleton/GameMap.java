@@ -1,11 +1,16 @@
 package main.java.soen6441riskgame.singleton;
 
 import main.java.soen6441riskgame.models.Continent;
+import main.java.soen6441riskgame.models.Country;
 
 import java.util.ArrayList;
 
 public class GameMap {
     private static final GameMap instance = new GameMap();
+    private String MapName;
+    private ArrayList<Continent> Continents = new ArrayList<Continent>();
+    private ArrayList<Country> countries = new ArrayList<Country>();
+    private int[][] Graph;
 
     private GameMap() {
     };
@@ -34,22 +39,15 @@ public class GameMap {
         this.MapName = mapName;
     }
 
-    public static GameMap getInstance() {
-        return instance;
+    public ArrayList<Country> getCountries() {
+        return countries;
     }
 
-    private String MapName;
+    public void setCountries(ArrayList<Country> countries) {
+        this.countries = countries;
+    }
 
-    private ArrayList<Continent> Continents;
-    
-    private int[][] Graph;
-    
-    public boolean continentExists(String continentName) {
-    	for(Continent continent : Continents) {
-    		if(continent.getName() == continentName)
-    			return true;
-    	}
-    	
-    	return false;
+    public static GameMap getInstance() {
+        return instance;
     }
 }
