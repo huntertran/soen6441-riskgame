@@ -7,36 +7,36 @@ import java.util.ArrayList;
 
 public class GameMap {
     private static final GameMap instance = new GameMap();
-    private String MapName;
-    private ArrayList<Continent> Continents = new ArrayList<Continent>();
+    private String mapName;
+    private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
-    private int[][] Graph;
+    private int[][] graph;
 
     private GameMap() {
     };
 
     public int[][] getGraph() {
-        return Graph;
+        return graph;
     }
 
     public void setGraph(int[][] graph) {
-        this.Graph = graph;
+        this.graph = graph;
     }
 
     public ArrayList<Continent> getContinents() {
-        return Continents;
+        return continents;
     }
 
     public void setContinents(ArrayList<Continent> continents) {
-        this.Continents = continents;
+        this.continents = continents;
     }
 
     public String getMapName() {
-        return MapName;
+        return mapName;
     }
 
     public void setMapName(String mapName) {
-        this.MapName = mapName;
+        this.mapName = mapName;
     }
 
     public ArrayList<Country> getCountries() {
@@ -52,14 +52,14 @@ public class GameMap {
     }
 
     public void reset(){
-        MapName = "";
-        Continents = new ArrayList<Continent>();
+        mapName = "";
+        continents = new ArrayList<Continent>();
         countries = new ArrayList<Country>();
-        Graph = new int[1][1];
+        graph = new int[1][1];
     }
 
     public void showContinents(){
-        for(Continent continent : Continents){
+        for(Continent continent : continents){
 
         }
     }
