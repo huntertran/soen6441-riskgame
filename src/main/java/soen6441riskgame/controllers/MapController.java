@@ -295,6 +295,15 @@ public final class MapController {
         }
     }
 
+    public boolean isCountryExisted(String countryName) {
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getName() == countryName)
+                return true;
+        }
+
+        return false;
+    }
+    
     private void addCountry(int order, String name, int continentOrder, Coordinate coordinate) {
         for (Continent continent : GameMap.getInstance().getContinents()) {
             if (continent.getOrder() == continentOrder) {
@@ -312,6 +321,22 @@ public final class MapController {
 
     public void addNeighbor(String countryName, String neighborCountryName) {
 
+    }
+    
+    public boolean checkIfNeighboringCountries(String countryName, String neighborCountryName) {
+    	int countryOrder = -1,neighbouringCountryOrder = -1;
+    	for (Country country : GameMap.getInstance().getCountries()) {
+            if (countryName.equals(country.getName())) {
+            	countryOrder = country.getOrder();
+            }
+            else if(neighborCountryName.equals(country.getName())) {
+            	neighbouringCountryOrder = country.getOrder();
+            }
+        }
+    	if(GameMap.getInstance().getBorders()[countryOrder-1][neighbouringCountryOrder-1] == 1 && countryOrder != -1 && neighbouringCountryOrder != -1)
+    		return true;
+
+        return false;
     }
 
     public void removeNeighbor(String countryName) {
