@@ -10,17 +10,17 @@ public class GameMap {
     private String mapName;
     private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
-    private int[][] graph;
+    private int[][] borders;
 
     private GameMap() {
     };
 
-    public int[][] getGraph() {
-        return graph;
+    public int[][] getBorders() {
+        return borders;
     }
 
-    public void setGraph(int[][] graph) {
-        this.graph = graph;
+    public void setBorders(int[][] graph) {
+        this.borders = graph;
     }
 
     public ArrayList<Continent> getContinents() {
@@ -55,7 +55,7 @@ public class GameMap {
         mapName = "";
         continents = new ArrayList<Continent>();
         countries = new ArrayList<Country>();
-        graph = new int[1][1];
+        borders = new int[1][1];
     }
 
     public void showContinents() {

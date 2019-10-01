@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -88,11 +89,50 @@ public final class MapController {
         // 2. some countries are isolated from the rest
         // 3. empty continents
         // 4. one country is linked to another but no link back
+        // There is no need to check for the last one, because not happened in our implementation
+
+        result = isNotEnoughCountries(6) && getIsolatedCountries().size() > 0 && getEmptyContinents().size() > 0;
 
         return result;
     }
 
-    public void resetMap(){
+    private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
+        return GameMap.getInstance().getCountries().size() < minimumNumberOfCountries;
+    }
+
+    private ArrayList<Country> getIsolatedCountries() {
+        int[][] borders = GameMap.getInstance().getBorders();
+        int borderSize = borders[0].length;
+        ArrayList<Country> result = new ArrayList<Country>();
+
+        for (int row = 0; row < borderSize; row++) {
+            int rowSum = 0;
+
+            for (int col = 0; col < borderSize; col++) {
+                rowSum += borders[row][col];
+            }
+
+            if (rowSum == 0) {
+                result.add(GameMap.getInstance().getCountries().get(row));
+            }
+        }
+
+        return result;
+    }
+
+    private ArrayList<Continent> getEmptyContinents() {
+        ArrayList<Continent> result = new ArrayList<Continent>();
+
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (continent.getCountries().size() == 0) {
+                result.add(continent);
+            }
+        }
+
+        return result;
+    }
+
+    public void resetMap() {
         GameMap.getInstance().reset();
     }
 
@@ -218,7 +258,7 @@ public final class MapController {
 
     private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
         int numberOfCountry = GameMap.getInstance().getCountries().size();
-        GameMap.getInstance().setGraph(new int[numberOfCountry][numberOfCountry]);
+        GameMap.getInstance().setBorders(new int[numberOfCountry][numberOfCountry]);
 
         for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
             String currentLine = lines.get(index);
@@ -241,7 +281,7 @@ public final class MapController {
     }
 
     private void addBorders(int countryOrder, int... borderWithCountries) {
-        int[][] graph = GameMap.getInstance().getGraph();
+        int[][] graph = GameMap.getInstance().getBorders();
         for (int index = 0; index < borderWithCountries.length; index++) {
             graph[countryOrder - 1][borderWithCountries[index] - 1] = 1;
             graph[borderWithCountries[index] - 1][countryOrder - 1] = 1;

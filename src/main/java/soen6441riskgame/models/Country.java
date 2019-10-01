@@ -61,8 +61,8 @@ public class Country implements Viewable {
 
     private ArrayList<Country> getNeighbors() {
         if (neighbors.isEmpty()) {
-            for (int index = 0; index < GameMap.getInstance().getGraph()[this.getOrder() - 1].length; index++) {
-                if (GameMap.getInstance().getGraph()[this.getOrder() - 1][index] == 1) {
+            for (int index = 0; index < GameMap.getInstance().getBorders()[this.getOrder() - 1].length; index++) {
+                if (GameMap.getInstance().getBorders()[this.getOrder() - 1][index] == 1) {
                     neighbors.add(GameMap.getInstance().getCountries().get(index));
                 }
             }
