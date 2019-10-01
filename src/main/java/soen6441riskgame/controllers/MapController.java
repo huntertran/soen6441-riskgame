@@ -176,7 +176,7 @@ public final class MapController {
                     index = loadBordersFromFile(index, lines);
                     break;
                 }
-                case NONE:{
+                case NONE: {
                     break;
                 }
                 }
@@ -260,7 +260,7 @@ public final class MapController {
     }
 
     public void addCountry(String countryName, String continentName) {
-
+        
     }
 
     private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
@@ -303,7 +303,7 @@ public final class MapController {
 
         return false;
     }
-    
+
     private void addCountry(int order, String name, int continentOrder, Coordinate coordinate) {
         for (Continent continent : GameMap.getInstance().getContinents()) {
             if (continent.getOrder() == continentOrder) {
@@ -315,26 +315,44 @@ public final class MapController {
         }
     }
 
+    private Country getCountryFromName(String countryName) {
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getName().equals(countryName)) {
+                return country;
+            }
+        }
+
+        return null;
+    }
+
     public void removeCountry(String countryName) {
 
     }
 
     public void addNeighbor(String countryName, String neighborCountryName) {
+        Country country = getCountryFromName(countryName);
+        Country neighbor = getCountryFromName(neighborCountryName);
 
+        if (country == null || neighbor == null) {
+            System.out.println("The country name or neighbor country name is not existed!");
+            return;
+        }
+
+        addBorders(country.getOrder(), neighbor.getOrder());
     }
-    
+
     public boolean checkIfNeighboringCountries(String countryName, String neighborCountryName) {
-    	int countryOrder = -1,neighbouringCountryOrder = -1;
-    	for (Country country : GameMap.getInstance().getCountries()) {
+        int countryOrder = -1, neighbouringCountryOrder = -1;
+        for (Country country : GameMap.getInstance().getCountries()) {
             if (countryName.equals(country.getName())) {
-            	countryOrder = country.getOrder();
-            }
-            else if(neighborCountryName.equals(country.getName())) {
-            	neighbouringCountryOrder = country.getOrder();
+                countryOrder = country.getOrder();
+            } else if (neighborCountryName.equals(country.getName())) {
+                neighbouringCountryOrder = country.getOrder();
             }
         }
-    	if(GameMap.getInstance().getBorders()[countryOrder-1][neighbouringCountryOrder-1] == 1 && countryOrder != -1 && neighbouringCountryOrder != -1)
-    		return true;
+        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
+                && countryOrder != -1 && neighbouringCountryOrder != -1)
+            return true;
 
         return false;
     }
