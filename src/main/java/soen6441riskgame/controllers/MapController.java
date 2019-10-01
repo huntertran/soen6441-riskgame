@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import main.java.soen6441riskgame.models.Continent;
 import main.java.soen6441riskgame.models.Coordinate;
 import main.java.soen6441riskgame.models.Country;
+import main.java.soen6441riskgame.models.MapPart;
 import main.java.soen6441riskgame.singleton.GameMap;
 
 public final class MapController {
@@ -84,12 +85,13 @@ public final class MapController {
     public boolean validateMap() {
         boolean result = false;
 
-        // 3 types of errors:
+        // Types of errors:
         // 1. less than 6 countries
         // 2. some countries are isolated from the rest
         // 3. empty continents
         // 4. one country is linked to another but no link back
-        // There is no need to check for the last one, because not happened in our implementation
+        // There is no need to check for the last one, because not happened in our
+        // implementation
 
         result = isNotEnoughCountries(6) && getIsolatedCountries().size() > 0 && getEmptyContinents().size() > 0;
 
@@ -137,6 +139,7 @@ public final class MapController {
     }
 
     public void loadMap(String fileName) {
+        // TODO: change back when done testing/integration
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
         Path path = Paths.get(filePath);
 
@@ -151,25 +154,29 @@ public final class MapController {
                 }
 
                 String firstWord = currentLine.split(" ")[0];
+                MapPart part = MapPart.fromString(firstWord);
 
-                switch (firstWord) {
-                case "name": {
+                switch (part) {
+                case NAME: {
                     GameMap.getInstance().setMapName(currentLine.split("name")[1].trim());
                     break;
                 }
-                case "[files]": {
+                case FILES: {
                     break;
                 }
-                case "[continents]": {
+                case CONTINENTS: {
                     index = loadContinentsFromFile(index, lines);
                     break;
                 }
-                case "[countries]": {
+                case COUNTRIES: {
                     index = loadCountriesFromFile(index, lines);
                     break;
                 }
-                case "[borders]": {
+                case BORDERS: {
                     index = loadBordersFromFile(index, lines);
+                    break;
+                }
+                case NONE:{
                     break;
                 }
                 }

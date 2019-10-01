@@ -14,6 +14,8 @@ public final class App {
     public static void main(String[] args) {
         System.out.println("SOEN 6441 - Risk Domination game");
 
+        // TODO: change back after done testing/integration
+
         MapController mapController = new MapController();
         mapController.loadMap("test");
         mapController.showMap();
