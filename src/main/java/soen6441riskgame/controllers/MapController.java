@@ -288,6 +288,15 @@ public final class MapController {
         }
     }
 
+    public boolean isCountryExisted(String countryName) {
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getName() == countryName)
+                return true;
+        }
+
+        return false;
+    }
+    
     private void addCountry(int order, String name, int continentOrder, Coordinate coordinate) {
         for (Continent continent : GameMap.getInstance().getContinents()) {
             if (continent.getOrder() == continentOrder) {

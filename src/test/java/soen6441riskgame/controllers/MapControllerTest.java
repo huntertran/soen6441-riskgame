@@ -35,4 +35,20 @@ public class MapControllerTest {
         // Assert
         Assert.assertTrue(mapController.isContinentExisted("Asia"));
     }
+    
+    @Test
+    public void editCountryTest() {
+    	//Setup
+    	MapController mapController = new MapController();
+    	mapController.resetMap();
+    	String arguments[] = { "-add", "Japan", "12" };
+
+        // Action
+        mapController.editCountry(arguments);
+
+        // Assert
+        Assert.assertTrue(mapController.isCountryExisted("Japan"));
+    }
+    
+    
 }
