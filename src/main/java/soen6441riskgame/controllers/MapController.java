@@ -83,6 +83,12 @@ public final class MapController {
     public boolean validateMap() {
         boolean result = false;
 
+        // 3 types of errors:
+        // 1. less than 6 countries
+        // 2. some countries are isolated from the rest
+        // 3. empty continents
+        // 4. one country is linked to another but no link back
+
         return result;
     }
 
