@@ -1,4 +1,4 @@
-package main.java.soen6441riskgame.models;
+package main.java.soen6441riskgame.enums;
 
 public enum MapPart {
     NAME("name"), FILES("[files]"), CONTINENTS("[continents]"), COUNTRIES("[countries]"), BORDERS("[borders]"),

@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 import main.java.soen6441riskgame.models.Continent;
 import main.java.soen6441riskgame.models.Coordinate;
 import main.java.soen6441riskgame.models.Country;
-import main.java.soen6441riskgame.models.MapPart;
+import main.java.soen6441riskgame.enums.CommonCommandArgs;
+import main.java.soen6441riskgame.enums.MapPart;
 import main.java.soen6441riskgame.singleton.GameMap;
 
 public final class MapController {
@@ -31,7 +32,7 @@ public final class MapController {
                     .add(new Continent(continentName, Integer.parseInt(continentValue), order));
         }
     }
-    
+
     private void updateCountryContinent(Country country, Continent continent) {
         GameMap.getInstance().getCountries().add(country);
         continent.getCountries().add(country);
@@ -92,8 +93,8 @@ public final class MapController {
         return false;
     }
 
-    public void createNewCountry(String countryName, Continent continent){
-        if(getCountryFromName(countryName) != null){
+    public void createNewCountry(String countryName, Continent continent) {
+        if (getCountryFromName(countryName) != null) {
             return;
         }
 
@@ -110,52 +111,61 @@ public final class MapController {
     }
 
     public void editContinent(String[] args) {
-        // -add and -remove
-        String continentCommand = args[0].toLowerCase();
+        CommonCommandArgs continentCommand = CommonCommandArgs.fromString(args[0]);
 
         switch (continentCommand) {
-        case "-add": {
+        case ADD: {
             addContinent(args[1], args[2]);
             break;
         }
-        case "-remove": {
+        case REMOVE: {
             removeContinent(args[1]);
+            break;
+        }
+        case NONE: {
+            System.out.println("Incorrect command");
             break;
         }
         }
     }
 
     public void editCountry(String[] args) {
-        // -add and -remove
-        String countryCommand = args[0].toLowerCase();
+        CommonCommandArgs countryCommand = CommonCommandArgs.fromString(args[0]);
 
         switch (countryCommand) {
-        case "-add": {
+        case ADD: {
             addCountry(args[1], args[2]);
             break;
         }
-        case "-remove": {
+        case REMOVE: {
             removeCountry(args[1]);
+            break;
+        }
+        case NONE: {
+            System.out.println("Incorrect command");
             break;
         }
         }
     }
 
     public void editMap(String fileName) {
-
+        loadMap(fileName);
     }
 
     public void editNeighbor(String[] args) {
-        // -add and -remove
-        String neighborCommand = args[0].toLowerCase();
+        CommonCommandArgs neighborCommand = CommonCommandArgs.fromString(args[0]);
 
         switch (neighborCommand) {
-        case "-add": {
+        case ADD: {
             addNeighbor(args[1], args[2]);
             break;
         }
-        case "-remove": {
+        case REMOVE: {
             removeNeighbor(args[1]);
+            break;
+        }
+        case NONE: {
+            System.out.println("Incorrect command");
             break;
         }
         }

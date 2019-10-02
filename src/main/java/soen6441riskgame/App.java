@@ -28,20 +28,10 @@ public final class App {
     }
 
     public static void jumpToCommand(String[] args) {
-        // Map Editor
-        // editcontinent -add continentname continentvalue-remove continentname
-        // editcountry -add countryname continentname-remove countryname
-        // editneighbor-add countrynameneighborcountryname-remove
-        // countrynameneighborcountryname
-        // showmap(show all continentsandcountriesand their neighbors)
-        // savemap filename
-        // editmap filename
-        // validatemap
-
-        MapController mapController = new MapController();
-
         String command = args[0].toLowerCase();
         String[] remainingArgs = Arrays.copyOfRange(args, 1, args.length);
+
+        MapController mapController = new MapController();
 
         switch (command) {
         case MapEditorCommands.EDITCONTINENT: {
