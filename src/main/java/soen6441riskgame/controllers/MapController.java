@@ -17,9 +17,96 @@ import main.java.soen6441riskgame.models.MapPart;
 import main.java.soen6441riskgame.singleton.GameMap;
 
 public final class MapController {
-    public void start(String[]... args) {
-        Scanner scanner = new Scanner(System.in);
-        scanner.close();
+    private void addBorders(int countryOrder, int... borderWithCountries) {
+        int[][] graph = GameMap.getInstance().getBorders();
+        for (int index = 0; index < borderWithCountries.length; index++) {
+            graph[countryOrder - 1][borderWithCountries[index] - 1] = 1;
+            graph[borderWithCountries[index] - 1][countryOrder - 1] = 1;
+        }
+    }
+
+    public void addContinent(String continentName, String continentValue, int... order) {
+        if (!isContinentExisted(continentName)) {
+            GameMap.getInstance().getContinents()
+                    .add(new Continent(continentName, Integer.parseInt(continentValue), order));
+        }
+    }
+    
+    private void updateCountryContinent(Country country, Continent continent) {
+        GameMap.getInstance().getCountries().add(country);
+        continent.getCountries().add(country);
+    }
+
+    private void addCountryFromMapFile(int order, String name, int continentOrder, Coordinate coordinate) {
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (continent.getOrder() == continentOrder) {
+                Country country = new Country(order, name, coordinate, continent);
+                updateCountryContinent(country, continent);
+            }
+        }
+    }
+
+    public void addCountry(String countryName, String continentName) {
+        Continent continent = getContinentFromName(continentName);
+        Country country = getCountryFromName(countryName);
+
+        if (continent == null) {
+            System.out.format("Continent %s is not existed", continentName);
+            return;
+        }
+
+        if (country == null) {
+            createNewCountry(countryName, continent);
+        } else {
+            continent.getCountries().add(country);
+        }
+
+        System.out.format("Country %s is added to continent %s", countryName, continentName);
+    }
+
+    public void addNeighbor(String countryName, String neighborCountryName) {
+        Country country = getCountryFromName(countryName);
+        Country neighbor = getCountryFromName(neighborCountryName);
+
+        if (country == null || neighbor == null) {
+            System.out.println("The country name or neighbor country name is not existed!");
+            return;
+        }
+
+        addBorders(country.getOrder(), neighbor.getOrder());
+    }
+
+    public boolean checkIfNeighboringCountries(String countryName, String neighborCountryName) {
+        int countryOrder = -1, neighbouringCountryOrder = -1;
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (countryName.equals(country.getName())) {
+                countryOrder = country.getOrder();
+            } else if (neighborCountryName.equals(country.getName())) {
+                neighbouringCountryOrder = country.getOrder();
+            }
+        }
+        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
+                && countryOrder != -1 && neighbouringCountryOrder != -1)
+            return true;
+
+        return false;
+    }
+
+    public void createNewCountry(String countryName, Continent continent){
+        if(getCountryFromName(countryName) != null){
+            return;
+        }
+
+        int newCountryOrder = GameMap.getInstance().getCountries().size() + 1;
+
+        Country newCountry = new Country(newCountryOrder, countryName, new Coordinate(0, 0), continent);
+
+        int[][] newBorders = Arrays.copyOf(GameMap.getInstance().getBorders(), newCountryOrder);
+        GameMap.getInstance().setBorders(newBorders);
+
+        updateCountryContinent(newCountry, continent);
+
+        System.out.format("Country %s is created", countryName);
     }
 
     public void editContinent(String[] args) {
@@ -54,6 +141,10 @@ public final class MapController {
         }
     }
 
+    public void editMap(String fileName) {
+
+    }
+
     public void editNeighbor(String[] args) {
         // -add and -remove
         String neighborCommand = args[0].toLowerCase();
@@ -70,37 +161,35 @@ public final class MapController {
         }
     }
 
-    public void showMap() {
-        GameMap.getInstance().showContinents();
-        // GameMap.getInstance().showCountries();
+    public Continent getContinentFromName(String continentName) {
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (continent.getName() == continentName)
+                return continent;
+        }
+
+        return null;
     }
 
-    public void saveMap(String fileName) {
+    private Country getCountryFromName(String countryName) {
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getName().equals(countryName)) {
+                return country;
+            }
+        }
 
+        return null;
     }
 
-    public void editMap(String fileName) {
+    private ArrayList<Continent> getEmptyContinents() {
+        ArrayList<Continent> result = new ArrayList<Continent>();
 
-    }
-
-    public boolean validateMap() {
-        boolean result = false;
-
-        // Types of errors:
-        // 1. less than 6 countries
-        // 2. some countries are isolated from the rest
-        // 3. empty continents
-        // 4. one country is linked to another but no link back
-        // There is no need to check for the last one, because not happened in our
-        // implementation
-
-        result = isNotEnoughCountries(6) && getIsolatedCountries().size() > 0 && getEmptyContinents().size() > 0;
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (continent.getCountries().size() == 0) {
+                result.add(continent);
+            }
+        }
 
         return result;
-    }
-
-    private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
-        return GameMap.getInstance().getCountries().size() < minimumNumberOfCountries;
     }
 
     private ArrayList<Country> getIsolatedCountries() {
@@ -123,20 +212,96 @@ public final class MapController {
         return result;
     }
 
-    private ArrayList<Continent> getEmptyContinents() {
-        ArrayList<Continent> result = new ArrayList<Continent>();
+    public boolean isContinentExisted(String continentName) {
+        Continent continent = getContinentFromName(continentName);
 
-        for (Continent continent : GameMap.getInstance().getContinents()) {
-            if (continent.getCountries().size() == 0) {
-                result.add(continent);
-            }
-        }
-
-        return result;
+        return continent != null;
     }
 
-    public void resetMap() {
-        GameMap.getInstance().reset();
+    public boolean isCountryExisted(String countryName) {
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getName() == countryName)
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
+        return GameMap.getInstance().getCountries().size() < minimumNumberOfCountries;
+    }
+
+    private boolean isStillInCurrentDataBlock(int index, List<String> lines) {
+        if (index < lines.size()) {
+            String currentLine = lines.get(index);
+            return currentLine != "" && currentLine.contains(" ");
+        }
+
+        return false;
+    }
+
+    private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
+        int numberOfCountry = GameMap.getInstance().getCountries().size();
+        GameMap.getInstance().setBorders(new int[numberOfCountry][numberOfCountry]);
+
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            String currentLine = lines.get(index);
+
+            String[] fragments = currentLine.split(" ");
+
+            int countryOrder = Integer.parseInt(fragments[0]);
+
+            int[] borderWithCountries = new int[fragments.length - 1];
+            for (int borderIndex = 0; borderIndex < borderWithCountries.length; borderIndex++) {
+                borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);
+            }
+
+            addBorders(countryOrder, borderWithCountries);
+
+            currentLineIndex = index;
+        }
+
+        return currentLineIndex + 1;
+    }
+
+    private int loadContinentsFromFile(int currentLineIndex, List<String> lines) {
+        int continentOrder = 1;
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            String currentLine = lines.get(index);
+            String[] fragments = currentLine.split(" ");
+            String continentName = fragments[0];
+            int continentArmy = Integer.parseInt(fragments[1]);
+
+            // String continentColor = fragments[2];
+
+            addContinent(continentName, Integer.toString(continentArmy), continentOrder);
+
+            currentLineIndex = index;
+            continentOrder++;
+        }
+
+        return currentLineIndex + 1;
+    }
+
+    private int loadCountriesFromFile(int currentLineIndex, List<String> lines) {
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            String currentLine = lines.get(index);
+
+            String[] fragments = currentLine.split(" ");
+
+            int countryOrder = Integer.parseInt(fragments[0]);
+            String countryName = fragments[1];
+            int continentOrder = Integer.parseInt(fragments[2]);
+            int x = Integer.parseInt(fragments[3]);
+            int y = Integer.parseInt(fragments[4]);
+            Coordinate coordinate = new Coordinate(x, y);
+
+            addCountryFromMapFile(countryOrder, countryName, continentOrder, coordinate);
+
+            currentLineIndex = index;
+        }
+
+        return currentLineIndex + 1;
     }
 
     public void loadMap(String fileName) {
@@ -191,77 +356,6 @@ public final class MapController {
         }
     }
 
-    private boolean isStillInCurrentDataBlock(int index, List<String> lines) {
-        if (index < lines.size()) {
-            String currentLine = lines.get(index);
-            return currentLine != "" && currentLine.contains(" ");
-        }
-
-        return false;
-    }
-
-    private int loadContinentsFromFile(int currentLineIndex, List<String> lines) {
-        int continentOrder = 1;
-        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
-            String currentLine = lines.get(index);
-            String[] fragments = currentLine.split(" ");
-            String continentName = fragments[0];
-            int continentArmy = Integer.parseInt(fragments[1]);
-
-            // String continentColor = fragments[2];
-
-            addContinent(continentName, Integer.toString(continentArmy), continentOrder);
-
-            currentLineIndex = index;
-            continentOrder++;
-        }
-
-        return currentLineIndex + 1;
-    }
-
-    private int loadCountriesFromFile(int currentLineIndex, List<String> lines) {
-        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
-            String currentLine = lines.get(index);
-
-            String[] fragments = currentLine.split(" ");
-
-            int countryOrder = Integer.parseInt(fragments[0]);
-            String countryName = fragments[1];
-            int continentOrder = Integer.parseInt(fragments[2]);
-            int x = Integer.parseInt(fragments[3]);
-            int y = Integer.parseInt(fragments[4]);
-            Coordinate coordinate = new Coordinate(x, y);
-
-            addCountry(countryOrder, countryName, continentOrder, coordinate);
-
-            currentLineIndex = index;
-        }
-
-        return currentLineIndex + 1;
-    }
-
-    public boolean isContinentExisted(String continentName) {
-        Continent continent = getContinentFromName(continentName);
-
-        return continent != null;
-    }
-
-    public Continent getContinentFromName(String continentName) {
-        for (Continent continent : GameMap.getInstance().getContinents()) {
-            if (continent.getName() == continentName)
-                return continent;
-        }
-
-        return null;
-    }
-
-    public void addContinent(String continentName, String continentValue, int... order) {
-        if (!isContinentExisted(continentName)) {
-            GameMap.getInstance().getContinents()
-                    .add(new Continent(continentName, Integer.parseInt(continentValue), order));
-        }
-    }
-
     public void removeContinent(String continentName) {
         System.out.println(
                 "Remove continent will make all country inside that continent invalid, thus make the map invalid.");
@@ -281,137 +375,45 @@ public final class MapController {
         }
     }
 
-    public void addCountry(String countryName, String continentName) {
-        Continent continent = getContinentFromName(continentName);
-        Country country = getCountryFromName(countryName);
-
-        if (continent == null) {
-            System.out.format("Continent %s is not existed", continentName);
-            return;
-        }
-
-        if (country == null) {
-            createNewCountry(countryName, continent);
-        } else {
-            continent.getCountries().add(country);
-        }
-
-        System.out.format("Country %s is added to continent %s", countryName, continentName);
-    }
-
-    public void createNewCountry(String countryName, Continent continent){
-        if(getCountryFromName(countryName) != null){
-            return;
-        }
-
-        int newCountryOrder = GameMap.getInstance().getCountries().size() + 1;
-
-        Country newCountry = new Country(newCountryOrder, countryName, new Coordinate(0, 0), continent);
-
-        int[][] newBorders = Arrays.copyOf(GameMap.getInstance().getBorders(), newCountryOrder);
-        GameMap.getInstance().setBorders(newBorders);
-
-        continent.getCountries().add(newCountry);
-        GameMap.getInstance().getCountries().add(newCountry);
-
-        System.out.format("Country %s is created", countryName);
-    }
-
-    private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
-        int numberOfCountry = GameMap.getInstance().getCountries().size();
-        GameMap.getInstance().setBorders(new int[numberOfCountry][numberOfCountry]);
-
-        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
-            String currentLine = lines.get(index);
-
-            String[] fragments = currentLine.split(" ");
-
-            int countryOrder = Integer.parseInt(fragments[0]);
-
-            int[] borderWithCountries = new int[fragments.length - 1];
-            for (int borderIndex = 0; borderIndex < borderWithCountries.length; borderIndex++) {
-                borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);
-            }
-
-            addBorders(countryOrder, borderWithCountries);
-
-            currentLineIndex = index;
-        }
-
-        return currentLineIndex + 1;
-    }
-
-    private void addBorders(int countryOrder, int... borderWithCountries) {
-        int[][] graph = GameMap.getInstance().getBorders();
-        for (int index = 0; index < borderWithCountries.length; index++) {
-            graph[countryOrder - 1][borderWithCountries[index] - 1] = 1;
-            graph[borderWithCountries[index] - 1][countryOrder - 1] = 1;
-        }
-    }
-
-    public boolean isCountryExisted(String countryName) {
-        for (Country country : GameMap.getInstance().getCountries()) {
-            if (country.getName() == countryName)
-                return true;
-        }
-
-        return false;
-    }
-
-    private void addCountry(int order, String name, int continentOrder, Coordinate coordinate) {
-        for (Continent continent : GameMap.getInstance().getContinents()) {
-            if (continent.getOrder() == continentOrder) {
-                Country country = new Country(order, name, coordinate, continent);
-
-                GameMap.getInstance().getCountries().add(country);
-                continent.getCountries().add(country);
-            }
-        }
-    }
-
-    private Country getCountryFromName(String countryName) {
-        for (Country country : GameMap.getInstance().getCountries()) {
-            if (country.getName().equals(countryName)) {
-                return country;
-            }
-        }
-
-        return null;
-    }
-
     public void removeCountry(String countryName) {
 
     }
 
-    public void addNeighbor(String countryName, String neighborCountryName) {
-        Country country = getCountryFromName(countryName);
-        Country neighbor = getCountryFromName(neighborCountryName);
-
-        if (country == null || neighbor == null) {
-            System.out.println("The country name or neighbor country name is not existed!");
-            return;
-        }
-
-        addBorders(country.getOrder(), neighbor.getOrder());
-    }
-
-    public boolean checkIfNeighboringCountries(String countryName, String neighborCountryName) {
-        int countryOrder = -1, neighbouringCountryOrder = -1;
-        for (Country country : GameMap.getInstance().getCountries()) {
-            if (countryName.equals(country.getName())) {
-                countryOrder = country.getOrder();
-            } else if (neighborCountryName.equals(country.getName())) {
-                neighbouringCountryOrder = country.getOrder();
-            }
-        }
-        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
-                && countryOrder != -1 && neighbouringCountryOrder != -1)
-            return true;
-
-        return false;
-    }
-
     public void removeNeighbor(String countryName) {
 
+    }
+
+    public void resetMap() {
+        GameMap.getInstance().reset();
+    }
+
+    public void saveMap(String fileName) {
+
+    }
+
+    public void showMap() {
+        GameMap.getInstance().showContinents();
+        // GameMap.getInstance().showCountries();
+    }
+
+    public void start(String[]... args) {
+        Scanner scanner = new Scanner(System.in);
+        scanner.close();
+    }
+
+    public boolean validateMap() {
+        boolean result = false;
+
+        // Types of errors:
+        // 1. less than 6 countries
+        // 2. some countries are isolated from the rest
+        // 3. empty continents
+        // 4. one country is linked to another but no link back
+        // There is no need to check for the last one, because not happened in our
+        // implementation
+
+        result = isNotEnoughCountries(6) && getIsolatedCountries().size() > 0 && getEmptyContinents().size() > 0;
+
+        return result;
     }
 }
