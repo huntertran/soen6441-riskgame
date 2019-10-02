@@ -240,12 +240,18 @@ public final class MapController {
     }
 
     public boolean isContinentExisted(String continentName) {
+        Continent continent = getContinentFromName(continentName);
+
+        return continent != null;
+    }
+
+    public Continent getContinentFromName(String continentName) {
         for (Continent continent : GameMap.getInstance().getContinents()) {
             if (continent.getName() == continentName)
-                return true;
+                return continent;
         }
 
-        return false;
+        return null;
     }
 
     public void addContinent(String continentName, String continentValue, int... order) {
@@ -256,11 +262,22 @@ public final class MapController {
     }
 
     public void removeContinent(String continentName) {
+        System.out.println(
+                "Remove continent will make all country inside that continent invalid, thus make the map invalid.");
 
+        Continent continentToRemove = getContinentFromName(continentName);
+
+        for (Country country : continentToRemove.getCountries()) {
+            country.setContinent(null);
+        }
+
+        if (continentToRemove != null) {
+            GameMap.getInstance().getContinents().remove(continentToRemove);
+        }
     }
 
     public void addCountry(String countryName, String continentName) {
-        
+
     }
 
     private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
