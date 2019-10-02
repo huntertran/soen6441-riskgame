@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -267,17 +268,53 @@ public final class MapController {
 
         Continent continentToRemove = getContinentFromName(continentName);
 
-        for (Country country : continentToRemove.getCountries()) {
-            country.setContinent(null);
-        }
-
         if (continentToRemove != null) {
+            for (Country country : continentToRemove.getCountries()) {
+                country.setContinent(null);
+            }
+
             GameMap.getInstance().getContinents().remove(continentToRemove);
+
+            System.out.format("Continent %s is removed", continentToRemove.getName());
+        } else {
+            System.out.format("Continent %s is not existed", continentName);
         }
     }
 
     public void addCountry(String countryName, String continentName) {
+        Continent continent = getContinentFromName(continentName);
+        Country country = getCountryFromName(countryName);
 
+        if (continent == null) {
+            System.out.format("Continent %s is not existed", continentName);
+            return;
+        }
+
+        if (country == null) {
+            createNewCountry(countryName, continent);
+        } else {
+            continent.getCountries().add(country);
+        }
+
+        System.out.format("Country %s is added to continent %s", countryName, continentName);
+    }
+
+    public void createNewCountry(String countryName, Continent continent){
+        if(getCountryFromName(countryName) != null){
+            return;
+        }
+
+        int newCountryOrder = GameMap.getInstance().getCountries().size() + 1;
+
+        Country newCountry = new Country(newCountryOrder, countryName, new Coordinate(0, 0), continent);
+
+        int[][] newBorders = Arrays.copyOf(GameMap.getInstance().getBorders(), newCountryOrder);
+        GameMap.getInstance().setBorders(newBorders);
+
+        continent.getCountries().add(newCountry);
+        GameMap.getInstance().getCountries().add(newCountry);
+
+        System.out.format("Country %s is created", countryName);
     }
 
     private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
