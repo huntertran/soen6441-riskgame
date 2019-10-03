@@ -77,19 +77,17 @@ public final class MapController {
         addBorders(country.getOrder(), neighbor.getOrder());
     }
 
-    public boolean checkIfNeighboringCountries(String countryName, String neighborCountryName) {
-        int countryOrder = -1, neighbouringCountryOrder = -1;
-        for (Country country : GameMap.getInstance().getCountries()) {
-            if (countryName.equals(country.getName())) {
-                countryOrder = country.getOrder();
-            } else if (neighborCountryName.equals(country.getName())) {
-                neighbouringCountryOrder = country.getOrder();
-            }
-        }
+    public boolean isNeighboringCountries(String countryName, String neighborCountryName) {
+        int countryOrder = -1;
+        int neighbouringCountryOrder = -1;
+        countryOrder = getCountryFromName(countryName).getOrder();
+        neighbouringCountryOrder = getCountryFromName(neighborCountryName).getOrder();
+        
         if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
-                && countryOrder != -1 && neighbouringCountryOrder != -1)
-            return true;
-
+                && countryOrder != -1 && neighbouringCountryOrder != -1) {
+        	return true;
+        }
+        
         return false;
     }
 

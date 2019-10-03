@@ -27,9 +27,9 @@ public class MapControllerTest {
         // Setup
         MapController mapController = new MapController();
         mapController.resetMap();
-        String arguments[] = { "-add", "Asia", "10" };
 
         // Action
+        String arguments[] = { "-add", "Asia", "10" };
         mapController.editContinent(arguments);
 
         // Assert
@@ -41,9 +41,9 @@ public class MapControllerTest {
         // Setup
         MapController mapController = new MapController();
         mapController.resetMap();
-        String arguments[] = { "-remove", "Asia" };
 
         // Action
+        String arguments[] = { "-remove", "Asia" };
         mapController.editContinent(arguments);
 
         // Assert
@@ -51,17 +51,31 @@ public class MapControllerTest {
     }
     
     @Test
-    public void editCountryTest() {
+    public void editCountryTest1() {
     	//Setup
     	MapController mapController = new MapController();
     	mapController.resetMap();
-    	String arguments[] = { "-add", "Japan", "12" };
-
+    	
         // Action
+    	String arguments[] = { "-add", "Spain", "Europe" };
         mapController.editCountry(arguments);
 
         // Assert
-        Assert.assertTrue(mapController.isCountryExisted("Japan"));
+        Assert.assertTrue(mapController.isCountryExisted("Spain"));
+    }
+    
+    @Test
+    public void editCountryTest2() {
+    	//Setup
+    	MapController mapController = new MapController();
+    	mapController.resetMap();
+    	
+        // Action
+    	String arguments[] = { "-remove", "Spain" };
+        mapController.editCountry(arguments);
+
+        // Assert
+        Assert.assertTrue( (mapController.isCountryExisted("Spain") == false) );
     }
     
     @Test
@@ -75,7 +89,7 @@ public class MapControllerTest {
         mapController.editNeighbor(arguments);
 
         // Assert
-        Assert.assertTrue(mapController.checkIfNeighboringCountries("Japan","China"));
+        Assert.assertTrue(mapController.isNeighboringCountries("Japan","China"));
     }
     
     @Test
@@ -89,7 +103,7 @@ public class MapControllerTest {
         mapController.editNeighbor(arguments);
 
         // Assert
-        Assert.assertTrue(mapController.checkIfNeighboringCountries("Japan","China"));
+        Assert.assertTrue(mapController.isNeighboringCountries("Japan","China"));
     }
     
 }
