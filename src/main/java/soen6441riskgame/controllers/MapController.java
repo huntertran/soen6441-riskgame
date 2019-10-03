@@ -161,7 +161,7 @@ public final class MapController {
             break;
         }
         case REMOVE: {
-            removeNeighbor(args[1]);
+            removeNeighbor(args[1], args[2]);
             break;
         }
         case NONE: {
@@ -386,8 +386,17 @@ public final class MapController {
 
     }
 
-    public void removeNeighbor(String countryName) {
+    public void removeNeighbor(String countryName, String neighborCountryName) {
+        Country country = getCountryFromName(countryName);
+        Country neighbor = getCountryFromName(neighborCountryName);
 
+        if(country == null || neighbor == null) {
+            System.out.println("One or both countries is not existed");
+            return;
+        }
+
+        GameMap.getInstance().getBorders()[country.getOrder() - 1][neighbor.getOrder() - 1] = 0;
+        GameMap.getInstance().getBorders()[country.getOrder() - 1][neighbor.getOrder() - 1] = 0;
     }
 
     public void resetMap() {
