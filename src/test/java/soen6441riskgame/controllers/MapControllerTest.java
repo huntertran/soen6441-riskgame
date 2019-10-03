@@ -23,7 +23,7 @@ public class MapControllerTest {
     }
 
     @Test
-    public void editContinentTest() {
+    public void editContinentTest1() {
         // Setup
         MapController mapController = new MapController();
         mapController.resetMap();
@@ -34,6 +34,20 @@ public class MapControllerTest {
 
         // Assert
         Assert.assertTrue(mapController.isContinentExisted("Asia"));
+    }
+    
+    @Test
+    public void editContinentTest2() {
+        // Setup
+        MapController mapController = new MapController();
+        mapController.resetMap();
+        String arguments[] = { "-remove", "Asia" };
+
+        // Action
+        mapController.editContinent(arguments);
+
+        // Assert
+        Assert.assertTrue( (mapController.isContinentExisted("Asia") == false) );
     }
     
     @Test
@@ -56,6 +70,20 @@ public class MapControllerTest {
     	MapController mapController = new MapController();
     	mapController.resetMap();
     	String arguments[] = { "-add", "Japan", "China" };
+
+        // Action
+        mapController.editNeighbor(arguments);
+
+        // Assert
+        Assert.assertTrue(mapController.checkIfNeighboringCountries("Japan","China"));
+    }
+    
+    @Test
+    public void addContinentTest() {
+    	//Setup
+    	MapController mapController = new MapController();
+    	mapController.resetMap();
+    	String arguments[] = { "Antartica", "10" };
 
         // Action
         mapController.editNeighbor(arguments);

@@ -229,12 +229,9 @@ public final class MapController {
     }
 
     public boolean isCountryExisted(String countryName) {
-        for (Country country : GameMap.getInstance().getCountries()) {
-            if (country.getName() == countryName)
-                return true;
-        }
+    	Country country = getCountryFromName(countryName);
 
-        return false;
+        return country != null;
     }
 
     private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
