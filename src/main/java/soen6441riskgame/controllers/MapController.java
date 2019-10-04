@@ -18,6 +18,8 @@ import main.java.soen6441riskgame.enums.MapPart;
 import main.java.soen6441riskgame.singleton.GameMap;
 
 public final class MapController {
+    private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
+
     private void addBorders(int countryOrder, int... borderWithCountries) {
         int[][] graph = GameMap.getInstance().getBorders();
         for (int index = 0; index < borderWithCountries.length; index++) {
@@ -82,12 +84,12 @@ public final class MapController {
         int neighbouringCountryOrder = -1;
         countryOrder = getCountryFromName(countryName).getOrder();
         neighbouringCountryOrder = getCountryFromName(neighborCountryName).getOrder();
-        
+
         if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
                 && countryOrder != -1 && neighbouringCountryOrder != -1) {
         	return true;
         }
-        
+
         return false;
     }
 
@@ -311,8 +313,10 @@ public final class MapController {
 
     public void loadMap(String fileName) {
         // TODO: change back when done testing/integration
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
-        Path path = Paths.get(filePath);
+        // String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        // Path path = Paths.get(filePath);
+
+        Path path = Paths.get(fileName);
 
         List<String> lines;
 
@@ -426,7 +430,7 @@ public final class MapController {
         // There is no need to check for the last one, because not happened in our
         // implementation
 
-        result = isNotEnoughCountries(6) && getIsolatedCountries().size() > 0 && getEmptyContinents().size() > 0;
+        result = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES) && getIsolatedCountries().size() > 0 && getEmptyContinents().size() > 0;
 
         return result;
     }
