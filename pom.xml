@@ -18,6 +18,8 @@
         </dependency>
     </dependencies>
     <build>
+        <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
+        <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
