@@ -116,9 +116,23 @@ public class MapControllerTest {
     	String arguments[] = { "-remove", "India" };
         mapController.editCountry(arguments);
 
-        System.out.println(mapController.isCountryExisted("India"));
         // Assert
-        Assert.assertTrue( mapController.isCountryExisted("India") );
+        Assert.assertFalse( mapController.isCountryExisted("India") );
+    }
+    
+    @Test
+    public void removeNeighborTest() {
+    	//Setup
+    	mapController.addContinent("Asia", "15");
+    	mapController.addCountry("China", "Asia");
+    	mapController.addCountry("Pakistan", "Asia");
+    	mapController.addNeighbor("China", "Pakistan");
+    	
+    	//Action
+    	mapController.removeNeighbor("China", "Pakistan");
+    	
+    	//Assert
+    	Assert.assertFalse(mapController.isNeighboringCountries("China","Pakistan"));
     }
     /*
     @Test
