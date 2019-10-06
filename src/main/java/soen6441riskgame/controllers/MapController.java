@@ -551,7 +551,38 @@ public final class MapController {
      * @param countryName name of the country to remove
      */
     public void removeCountry(String countryName) {
-        // TODO: implement remove country
+        Country country = getCountryFromName(countryName);
+
+        if (country == null) {
+            System.out.format("Country %s is not existed", countryName);
+            return;
+        }
+
+        // Remove it from continent
+        country.getContinent().getCountries().remove(country);
+        // Remove it from list country
+        GameMap.getInstance().getCountries().remove(country);
+
+        // Remove it border
+        int countryOrder = country.getOrder();
+        removeBorder(countryOrder - 1);
+    }
+
+    private void removeBorder(int borderLocation) {
+        int[][] originalBorder = GameMap.getInstance().getBorders();
+        int size = originalBorder[0].length - 1;
+
+        int[][] newBorders = new int[size][size];
+
+        for (int row = 0; row < borderLocation; row++) {
+            newBorders[row] = Arrays.copyOfRange(originalBorder[row], 0, borderLocation - 1);
+        }
+
+        for (int row = borderLocation + 1; row < size; row++) {
+            newBorders[row] = Arrays.copyOfRange(originalBorder[row], borderLocation + 1, size - 1);
+        }
+
+        GameMap.getInstance().setBorders(newBorders);
     }
 
     /**
