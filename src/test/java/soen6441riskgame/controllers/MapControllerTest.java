@@ -2,7 +2,6 @@ package test.java.soen6441riskgame.controllers;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -49,6 +48,18 @@ public class MapControllerTest {
     }
     
     @Test
+    public void removeContinentTest() {
+    	//Setup
+    	mapController.addContinent("Australia", "20");
+    	
+    	//Action
+    	mapController.removeContinent("Australia");
+    	
+    	//Assert
+    	Assert.assertNull(mapController.getContinentFromName("Australia"));
+    	
+    }
+    @Test
     public void addCountryTest() {
     	//Setup
     	mapController.addContinent("Asia","15");
@@ -58,6 +69,19 @@ public class MapControllerTest {
     	
     	//Assert
     	Assert.assertTrue(mapController.isCountryExisted("Bhutan"));
+    }
+    
+    @Test
+    public void removeCountryTest() {
+    	//Setup
+    	mapController.addContinent("Asia","15");
+    	mapController.addCountry("Vietnam", "Asia");
+    	
+    	//Action
+    	mapController.removeCountry("Vietnam");
+    	
+    	//Assert
+    	Assert.assertFalse(mapController.isCountryExisted("Vietnam"));
     }
     
     @Test
@@ -71,7 +95,7 @@ public class MapControllerTest {
     	mapController.addNeighbor("Bangladesh", "Myanmmar");
     	
     	//Assert
-    	mapController.isNeighboringCountries("Bangladesh", "Myanmmar");
+    	Assert.assertTrue(mapController.isNeighboringCountries("Bangladesh", "Myanmmar"));
     }
     
     @Test
@@ -134,21 +158,36 @@ public class MapControllerTest {
     	//Assert
     	Assert.assertFalse(mapController.isNeighboringCountries("China","Pakistan"));
     }
-    /*
+    
     @Test
-    public void editNeighborTest() {
+    public void editNeighborTest1() {
     	//Setup
-    	MapController mapController = new MapController();
-    	mapController.resetMap();
-    	String arguments[] = { "-add", "Japan", "China" };
+    	mapController.addContinent("Asia", "11");
+    	mapController.addCountry("South Korea", "Asia");
+    	mapController.addCountry("North Korea", "Asia");
+    	String arguments[] = { "-add", "South Korea", "North Korea" };
 
         // Action
         mapController.editNeighbor(arguments);
 
         // Assert
-        Assert.assertTrue(mapController.isNeighboringCountries("Japan","China"));
+        Assert.assertTrue(mapController.isNeighboringCountries("South Korea","North Korea"));
     }
-    */
+    
+    @Test
+    public void editNeighborTest2() {
+    	//Setup
+    	mapController.addContinent("Asia", "11");
+    	mapController.addCountry("South Korea", "Asia");
+    	mapController.addCountry("North Korea", "Asia");
+    	String arguments[] = { "-add", "South Korea", "North Korea" };
+
+        // Action
+        mapController.editNeighbor(arguments);
+
+        // Assert
+        Assert.assertTrue(mapController.isNeighboringCountries("South Korea","North Korea"));
+    }
     
     
 }
