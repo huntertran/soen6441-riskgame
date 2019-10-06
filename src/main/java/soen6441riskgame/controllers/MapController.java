@@ -225,7 +225,7 @@ public final class MapController {
      * @param countryName
      * @return null if country name is not existed in map
      */
-    private Country getCountryFromName(String countryName) {
+    public Country getCountryFromName(String countryName) {
         for (Country country : GameMap.getInstance().getCountries()) {
             if (country.getName().equals(countryName)) {
                 return country;

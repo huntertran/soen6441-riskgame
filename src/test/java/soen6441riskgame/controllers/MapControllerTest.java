@@ -11,12 +11,19 @@ import main.java.soen6441riskgame.singleton.GameMap;
 public class MapControllerTest {
 
 	MapController mapController;
+	
+	/**
+	 * This function will run before every test case
+	 */
 	@Before
 	public void runBeforeEachTestCase() {
 		mapController = new MapController();
 		mapController.resetMap();
 	}
 
+	/**
+	 * This function will run after all test cases have been executed
+	 */
 	@AfterClass
 	public static void doAfterClass() {
 		MapController mapController = new MapController();
@@ -27,14 +34,23 @@ public class MapControllerTest {
     public void loadMapTest() {
         // Setup
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
-        MapController mapController = new MapController();
-        mapController.resetMap();
 
         // Action
         mapController.loadMap(filePath);
 
         // Assert
         Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName().equals("North_Africa"));
+    }
+    
+    @Test
+    public void showMapTest() {
+        // Setup
+    	mapController.addContinent("Asia","15");
+    	mapController.addCountry("Bangladesh", "Asia");
+    	mapController.addCountry("Myanmmar", "Asia");
+    	
+        // Action
+        mapController.showMap();
     }
     
     @Test
@@ -115,7 +131,7 @@ public class MapControllerTest {
         mapController.editContinent(arguments);
 
         // Assert
-        Assert.assertTrue( (mapController.isContinentExisted("Asia") == false) );
+        Assert.assertFalse( mapController.isContinentExisted("Asia") );
     }
     
     @Test
@@ -141,7 +157,7 @@ public class MapControllerTest {
         mapController.editCountry(arguments);
 
         // Assert
-        Assert.assertFalse( mapController.isCountryExisted("India") );
+        Assert.assertFalse(mapController.isCountryExisted("India"));
     }
     
     @Test
@@ -188,6 +204,5 @@ public class MapControllerTest {
         // Assert
         Assert.assertTrue(mapController.isNeighboringCountries("South Korea","North Korea"));
     }
-    
     
 }
