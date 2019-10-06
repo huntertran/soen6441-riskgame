@@ -2,15 +2,42 @@ package test.java.soen6441riskgame.controllers;
 
 import org.junit.Assert;
 import org.junit.Before;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import main.java.soen6441riskgame.controllers.MapController;
 import main.java.soen6441riskgame.singleton.GameMap;
 
+@RunWith(Parameterized.class)
 public class MapControllerTest {
 
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] { { "Asia", "Vietnam", "Laos", "13" },
+				{ "Europe", "Spain", "France", "12" }, { "South Africa", "Guinea", "Sierra Leone", "8" },
+				{ "North America", "Canada", "USA", "11" } });
+	}
+
+	private String continent1;
+	private String country1;
+	private String country2;
+	private String continent1_value;
+
 	MapController mapController;
+
+	public MapControllerTest(String continent1, String country1, String country2, String continent1_value) {
+		this.continent1 = continent1;
+		this.country1 = country1;
+		this.country2 = country2;
+		this.continent1_value = continent1_value;
+	}
 
 	/**
 	 * This function will run before every test case
@@ -42,168 +69,167 @@ public class MapControllerTest {
 		Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName().equals("North_Africa"));
 	}
 
-	@Test
-	public void showMapTest() {
-		// Setup
-		mapController.addContinent("Asia", "15");
-		mapController.addCountry("Bangladesh", "Asia");
-		mapController.addCountry("Myanmmar", "Asia");
-
-		// Action
-		mapController.showMap();
-	}
+	/*
+	 * @Test public void showMapTest() { // Setup
+	 * mapController.addContinent(continent1, continent1_value);
+	 * mapController.addCountry(country1, continent1);
+	 * mapController.addCountry(country2, continent1);
+	 * 
+	 * // Action mapController.showMap(); }
+	 */
 
 	@Test
 	public void addContinentTest() {
 		// Action
-		mapController.addContinent("Antartica", "10");
+		mapController.addContinent(continent1, continent1_value);
 
 		// Assert
-		Assert.assertTrue(mapController.isContinentExisted("Antartica"));
-		Assert.assertEquals(10, mapController.getContinentFromName("Antartica").getArmy());
+		Assert.assertTrue(mapController.isContinentExisted(continent1));
+		Assert.assertEquals(continent1_value,
+				Integer.toString(mapController.getContinentFromName(continent1).getArmy()));
 	}
 
 	@Test
 	public void removeContinentTest() {
 		// Setup
-		mapController.addContinent("Australia", "20");
+		mapController.addContinent(continent1, continent1_value);
 
 		// Action
-		mapController.removeContinent("Australia");
+		mapController.removeContinent(continent1);
 
 		// Assert
-		Assert.assertNull(mapController.getContinentFromName("Australia"));
+		Assert.assertNull(mapController.getContinentFromName(continent1));
 
 	}
 
 	@Test
 	public void addCountryTest() {
 		// Setup
-		mapController.addContinent("Asia", "15");
+		mapController.addContinent(continent1, continent1_value);
 
 		// Action
-		mapController.addCountry("Bhutan", "Asia");
+		mapController.addCountry(country1, continent1);
 
 		// Assert
-		Assert.assertTrue(mapController.isCountryExisted("Bhutan"));
+		Assert.assertTrue(mapController.isCountryExisted(country1));
 	}
 
 	@Test
 	public void removeCountryTest() {
 		// Setup
-		mapController.addContinent("Asia", "15");
-		mapController.addCountry("Vietnam", "Asia");
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addCountry(country1, continent1);
 
 		// Action
-		mapController.removeCountry("Vietnam");
+		mapController.removeCountry(country1);
 
 		// Assert
-		Assert.assertFalse(mapController.isCountryExisted("Vietnam"));
+		Assert.assertFalse(mapController.isCountryExisted(country1));
 	}
 
 	@Test
 	public void addNeighborTest() {
 		// Setup
-		mapController.addContinent("Asia", "15");
-		mapController.addCountry("Bangladesh", "Asia");
-		mapController.addCountry("Myanmmar", "Asia");
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addCountry(country1, continent1);
+		mapController.addCountry(country2, continent1);
 
 		// Action
-		mapController.addNeighbor("Bangladesh", "Myanmmar");
+		mapController.addNeighbor(country1, country2);
 
 		// Assert
-		Assert.assertTrue(mapController.isNeighboringCountries("Bangladesh", "Myanmmar"));
+		Assert.assertTrue(mapController.isNeighboringCountries(country1, country2));
 	}
 
 	@Test
 	public void editContinentTest1() {
 		// Action
-		String arguments[] = { "-add", "Asia", "10" };
+		String arguments[] = { "-add", continent1, continent1_value };
 		mapController.editContinent(arguments);
 
 		// Assert
-		Assert.assertTrue(mapController.isContinentExisted("Asia"));
+		Assert.assertTrue(mapController.isContinentExisted(continent1));
 	}
 
 	@Test
 	public void editContinentTest2() {
 		// Action
-		String arguments[] = { "-remove", "Asia" };
+		String arguments[] = { "-remove", continent1 };
 		mapController.editContinent(arguments);
 
 		// Assert
-		Assert.assertFalse(mapController.isContinentExisted("Asia"));
+		Assert.assertFalse(mapController.isContinentExisted(continent1));
 	}
 
 	@Test
 	public void editCountryTest1() {
 		// Setup
-		mapController.addContinent("Europe", "10");
+		mapController.addContinent(continent1, continent1_value);
 
 		// Action
-		String arguments[] = { "-add", "Spain", "Europe" };
+		String arguments[] = { "-add", country1, continent1 };
 		mapController.editCountry(arguments);
 
 		// Assert
-		Assert.assertTrue(mapController.isCountryExisted("Spain"));
+		Assert.assertTrue(mapController.isCountryExisted(country1));
 	}
 
 	@Test
 	public void editCountryTest2() {
 		// Setup
-		mapController.addContinent("Asia", "50");
-		mapController.addCountry("India", "Asia");
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addCountry(country1, continent1);
 		// Action
-		String arguments[] = { "-remove", "India" };
+		String arguments[] = { "-remove", country1 };
 		mapController.editCountry(arguments);
 
 		// Assert
-		Assert.assertFalse(mapController.isCountryExisted("India"));
+		Assert.assertFalse(mapController.isCountryExisted(country1));
 	}
 
 	@Test
 	public void removeNeighborTest() {
 		// Setup
-		mapController.addContinent("Asia", "15");
-		mapController.addCountry("China", "Asia");
-		mapController.addCountry("Pakistan", "Asia");
-		mapController.addNeighbor("China", "Pakistan");
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addCountry(country1, continent1);
+		mapController.addCountry(country2, continent1);
+		mapController.addNeighbor(country1, country2);
 
 		// Action
-		mapController.removeNeighbor("China", "Pakistan");
+		mapController.removeNeighbor(country1, country2);
 
 		// Assert
-		Assert.assertFalse(mapController.isNeighboringCountries("China", "Pakistan"));
+		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
 	}
 
 	@Test
 	public void editNeighborTest1() {
 		// Setup
-		mapController.addContinent("Asia", "11");
-		mapController.addCountry("South Korea", "Asia");
-		mapController.addCountry("North Korea", "Asia");
-		String arguments[] = { "-add", "South Korea", "North Korea" };
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addCountry(country1, continent1);
+		mapController.addCountry(country2, continent1);
+		String arguments[] = { "-add", country1, country2 };
 
 		// Action
 		mapController.editNeighbor(arguments);
 
 		// Assert
-		Assert.assertTrue(mapController.isNeighboringCountries("South Korea", "North Korea"));
+		Assert.assertTrue(mapController.isNeighboringCountries(country1, country2));
 	}
 
 	@Test
 	public void editNeighborTest2() {
 		// Setup
-		mapController.addContinent("Asia", "11");
-		mapController.addCountry("South Korea", "Asia");
-		mapController.addCountry("North Korea", "Asia");
-		String arguments[] = { "-add", "South Korea", "North Korea" };
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addCountry(country1, continent1);
+		mapController.addCountry(country2, continent1);
+		String arguments[] = { "-add", country1, country2 };
 
 		// Action
 		mapController.editNeighbor(arguments);
 
 		// Assert
-		Assert.assertTrue(mapController.isNeighboringCountries("South Korea", "North Korea"));
+		Assert.assertTrue(mapController.isNeighboringCountries(country1, country2));
 	}
 
 }
