@@ -6,14 +6,12 @@ import main.java.soen6441riskgame.singleton.GameMap;
 
 public class Country implements Viewable {
     private Coordinate coordinate;
-    private int order;
     private int armyAmount;
     private String name;
     private Continent continent;
     private ArrayList<Country> neighbors = new ArrayList<Country>();
 
-    public Country(int order, String name, Coordinate coordinate, Continent continent) {
-        this.setOrder(order);
+    public Country(String name, Coordinate coordinate, Continent continent) {
         this.setName(name);
         this.setCoordinate(coordinate);
         this.setContinent(continent);
@@ -43,12 +41,11 @@ public class Country implements Viewable {
         this.armyAmount = armyAmount;
     }
 
+    /**
+     * return the order of the country in the country list, starting with 1
+     */
     public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
+        return GameMap.getInstance().getCountries().indexOf(this) + 1;
     }
 
     public Coordinate getCoordinate() {
