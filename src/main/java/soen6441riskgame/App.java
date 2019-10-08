@@ -17,15 +17,15 @@ public final class App {
 
         // TODO: change back after done testing/integration
 
-        MapController mapController = new MapController();
-        mapController.loadMap("test");
-        mapController.showMap();
+        // MapController mapController = new MapController();
+        // mapController.loadMap("test");
+        // mapController.showMap();
 
-        // if (args.length == 0) {
-        // runFromBegining();
-        // } else {
-        // jumpToCommand(args);
-        // }
+        if (args.length == 0) {
+            runFromBegining();
+        } else {
+            jumpToCommand(args);
+        }
     }
 
     public static void jumpToCommand(String[] args) {
