@@ -20,25 +20,29 @@ public class MapControllerTest {
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] { { "Russia", "Asia", "Vietnam", "Laos", "13", "12" },
-				{ "North America", "Europe", "Spain", "France", "12", "13" }, { "Asia", "South Africa", "Guinea", "Sierra Leone", "8","20" },
-				{ "South Africa", "North America", "Canada", "USA", "11","14" } });
+		return Arrays.asList(new Object[][] { { "Russia", "Asia", "Vietnam", "Laos", "India", "Pakistan", "13", "12" },
+				{ "North America", "Europe", "Spain", "France", "India", "Pakistan", "12", "13" }, { "Asia", "South Africa", "Guinea", "Sierra Leone", "India", "Pakistan", "8","20" },
+				{ "South Africa", "North America", "Canada", "USA", "India", "Pakistan", "11","14" } });
 	}
 
 	private String continent1;
 	private String continent2;
 	private String country1;
 	private String country2;
+	private String country3;
+	private String country4;
 	private String continent1_value;
 	private String continent2_value;
 
 	MapController mapController;
 	
-	public MapControllerTest(String continent1, String continent2, String country1, String country2, String continent1_value, String continent2_value) {
+	public MapControllerTest(String continent1, String continent2, String country1, String country2, String country3, String country4, String continent1_value, String continent2_value) {
 		this.continent1 = continent1;
 		this.continent2 = continent2;
 		this.country1 = country1;
 		this.country2 = country2;
+		this.country3 = country3;
+		this.country4 = country4;
 		this.continent1_value = continent1_value;
 		this.continent2_value = continent2_value;
 	}
@@ -174,12 +178,18 @@ public class MapControllerTest {
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addCountry(country1, continent1);
 		mapController.addCountry(country2, continent1);
+		mapController.addCountry(country3, continent1);
+		mapController.addCountry(country4, continent1);
 
 		// Action
 		mapController.addNeighbor(country1, country2);
+		mapController.addNeighbor(country2, country3);
+		mapController.addNeighbor(country3, country4);
 
 		// Assert
 		Assert.assertTrue(mapController.isNeighboringCountries(country1, country2));
+		Assert.assertTrue(mapController.isNeighboringCountries(country3, country4));
+		Assert.assertTrue(mapController.isNeighboringCountries(country2, country3));
 	}
 
 	/**
@@ -238,12 +248,16 @@ public class MapControllerTest {
 		// Setup
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addCountry(country1, continent1);
+		mapController.addCountry(country2, continent1);
 		// Action
 		String arguments[] = { "-remove", country1 };
 		mapController.editCountry(arguments);
+		String arguments1[] = { "-remove", country2 };
+		mapController.editCountry(arguments1);
 
 		// Assert
 		Assert.assertFalse(mapController.isCountryExisted(country1));
+		Assert.assertFalse(mapController.isCountryExisted(country2));
 	}
 
 	/**
@@ -256,13 +270,20 @@ public class MapControllerTest {
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addCountry(country1, continent1);
 		mapController.addCountry(country2, continent1);
+		mapController.addCountry(country3, continent1);
+		mapController.addCountry(country4, continent1);
 		mapController.addNeighbor(country1, country2);
+		mapController.addNeighbor(country2, country3);
+		mapController.addNeighbor(country3, country4);
 
 		// Action
 		mapController.removeNeighbor(country1, country2);
+		mapController.removeNeighbor(country2, country3);
 
 		// Assert
 		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
+		Assert.assertFalse(mapController.isNeighboringCountries(country2, country3));
+		Assert.assertTrue(mapController.isNeighboringCountries(country3, country4));
 	}
 
 	/**
