@@ -59,7 +59,7 @@ public class Country implements Viewable {
         this.coordinate = coordinate;
     }
 
-    private ArrayList<Country> getNeighbors() {
+    public ArrayList<Country> getNeighbors() {
         if (neighbors.isEmpty()) {
             neighbors.clear();
         }

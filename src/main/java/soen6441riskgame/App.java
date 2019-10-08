@@ -1,5 +1,6 @@
 package main.java.soen6441riskgame;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -21,9 +22,9 @@ public final class App {
         mapController.showMap();
 
         // if (args.length == 0) {
-        //     runFromBegining();
+        // runFromBegining();
         // } else {
-        //     jumpToCommand(args);
+        // jumpToCommand(args);
         // }
     }
 
@@ -51,7 +52,11 @@ public final class App {
             break;
         }
         case MapEditorCommands.SAVEMAP: {
-            mapController.saveMap(remainingArgs[0]);
+            try {
+                mapController.saveMap(remainingArgs[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             break;
         }
         case MapEditorCommands.EDITMAP: {
