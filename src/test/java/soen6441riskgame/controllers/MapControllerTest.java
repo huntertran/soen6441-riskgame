@@ -34,7 +34,7 @@ public class MapControllerTest {
 	private String continent1_value;
 	private String continent2_value;
 
-	MapController mapController;
+	MapController mapController = new MapController();
 	
 	public MapControllerTest(String continent1, String continent2, String country1, String country2, String country3, String country4, String continent1_value, String continent2_value) {
 		this.continent1 = continent1;
@@ -52,7 +52,6 @@ public class MapControllerTest {
 	 */
 	@Before
 	public void runBeforeEachTestCase() {
-		mapController = new MapController();
 		mapController.resetMap();
 	}
 
