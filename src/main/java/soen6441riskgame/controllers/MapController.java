@@ -646,7 +646,7 @@ public final class MapController {
      * @param country
      * @param continent
      */
-    private void updateCountryContinent(Country country, Continent continent) {
+    public void updateCountryContinent(Country country, Continent continent) {
         GameMap.getInstance().getCountries().add(country);
         continent.getCountries().add(country);
     }
