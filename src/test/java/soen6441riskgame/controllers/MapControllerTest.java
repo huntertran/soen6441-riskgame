@@ -57,15 +57,6 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * This function will run after all test cases have been executed and reset the map.
-	 */
-	@AfterClass
-	public static void doAfterClass() {
-		MapController mapController = new MapController();
-		mapController.resetMap();
-	}
-
-	/**
 	 * This loadMapTest function tests if the map loaded from a file is working properly.
 	 */
 	@Test
@@ -325,20 +316,4 @@ public class MapControllerTest {
 		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
 	}
 	
-	@Test
-	public void updateCountryContinentTest() {
-		//Setup
-		mapController.addContinent(continent1, continent1_value);
-		mapController.addContinent(continent2, continent2_value);
-		mapController.addCountry(country1, continent1);
-		
-		//Action
-		mapController.updateCountryContinent(mapController.getCountryFromName(country1), mapController.getContinentFromName(continent2));
-		
-		//Assert
-		Assert.assertEquals(continent2, mapController.getCountryFromName(country1).getContinent().getName());
-		Assert.assertTrue(mapController.getContinentFromName(continent2).getCountries().contains(mapController.getCountryFromName(country1)));
-		Assert.assertFalse(mapController.getContinentFromName(continent1).getCountries().contains(mapController.getCountryFromName(country1)));
-	}
-
 }
