@@ -557,15 +557,15 @@ public final class MapController {
             System.out.format("Country %s is not existed", countryName);
             return;
         }
+        
+        // Remove it border
+        int countryOrder = country.getOrder();
+        removeBorder(countryOrder - 1);
 
         // Remove it from continent
         country.getContinent().getCountries().remove(country);
         // Remove it from list country
         GameMap.getInstance().getCountries().remove(country);
-
-        // Remove it border
-        int countryOrder = country.getOrder();
-        removeBorder(countryOrder - 1);
     }
 
     private void removeBorder(int borderLocation) {
