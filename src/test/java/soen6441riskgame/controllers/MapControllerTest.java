@@ -158,7 +158,6 @@ public class MapControllerTest {
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addCountry(country1, continent1);
 		mapController.addCountry(country2, continent1);
-		mapController.addNeighbor(country1, country2);
 
 		// Action
 		mapController.removeCountry(country1);
@@ -167,7 +166,6 @@ public class MapControllerTest {
 		// Assert
 		Assert.assertFalse(mapController.isCountryExisted(country1));
 		Assert.assertFalse(mapController.isCountryExisted(country2));
-		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
 	}
 
 	/**
@@ -251,7 +249,7 @@ public class MapControllerTest {
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addCountry(country1, continent1);
 		mapController.addCountry(country2, continent1);
-		mapController.addNeighbor(country1, country2);
+		
 		// Action
 		String arguments[] = { "-remove", country1 };
 		mapController.editCountry(arguments);
@@ -261,7 +259,6 @@ public class MapControllerTest {
 		// Assert
 		Assert.assertFalse(mapController.isCountryExisted(country1));
 		Assert.assertFalse(mapController.isCountryExisted(country2));
-		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
 	}
 
 	/**
@@ -326,6 +323,22 @@ public class MapControllerTest {
 
 		// Assert
 		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
+	}
+	
+	@Test
+	public void updateCountryContinentTest() {
+		//Setup
+		mapController.addContinent(continent1, continent1_value);
+		mapController.addContinent(continent2, continent2_value);
+		mapController.addCountry(country1, continent1);
+		
+		//Action
+		mapController.updateCountryContinent(mapController.getCountryFromName(country1), mapController.getContinentFromName(continent2));
+		
+		//Assert
+		Assert.assertEquals(continent2, mapController.getCountryFromName(country1).getContinent().getName());
+		Assert.assertTrue(mapController.getContinentFromName(continent2).getCountries().contains(mapController.getCountryFromName(country1)));
+		Assert.assertFalse(mapController.getContinentFromName(continent1).getCountries().contains(mapController.getCountryFromName(country1)));
 	}
 
 }
