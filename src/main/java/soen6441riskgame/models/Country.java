@@ -9,7 +9,6 @@ public class Country implements Viewable {
     private int armyAmount;
     private String name;
     private Continent continent;
-    private ArrayList<Country> neighbors = new ArrayList<Country>();
 
     public Country(String name, Coordinate coordinate, Continent continent) {
         this.setName(name);
@@ -57,12 +56,13 @@ public class Country implements Viewable {
     }
 
     public ArrayList<Country> getNeighbors() {
-        if (neighbors.isEmpty()) {
-            neighbors.clear();
-        }
+        ArrayList<Country> neighbors = new ArrayList<Country>();
 
-        for (int index = 0; index < GameMap.getInstance().getBorders()[this.getOrder() - 1].length; index++) {
-            if (GameMap.getInstance().getBorders()[this.getOrder() - 1][index] == 1) {
+        int[][] borders = GameMap.getInstance().getBorders();
+        int countryOrder = this.getOrder();
+
+        for (int index = 0; index < borders[countryOrder - 1].length; index++) {
+            if (borders[countryOrder - 1][index] == 1) {
                 neighbors.add(GameMap.getInstance().getCountries().get(index));
             }
         }
