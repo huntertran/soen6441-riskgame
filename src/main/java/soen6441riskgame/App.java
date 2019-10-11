@@ -9,9 +9,9 @@ import java.util.Scanner;
 import soen6441riskgame.commands.MapEditorCommands;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
-import main.java.soen6441riskgame.models.Continent;
-import main.java.soen6441riskgame.models.Country;
-import main.java.soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.singleton.GameMap;
 
 public final class App {
     private App() {
