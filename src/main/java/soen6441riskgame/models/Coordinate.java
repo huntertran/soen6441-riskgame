@@ -1,4 +1,4 @@
-package main.java.soen6441riskgame.models;
+package soen6441riskgame.models;
 
 public class Coordinate {
     private int x;

@@ -1,4 +1,4 @@
-package main.java.soen6441riskgame;
+package soen6441riskgame;
 
 import java.io.Serializable;
 
@@ -12,13 +12,13 @@ public class Aggressiveness implements Strategy, Serializable {
     /**
      * this Class should be for " controlling the game for players with an
      * aggressive strategy. Only one game is possible during runtime
-     * 
-     * 
+     *
+     *
      *
      */
 
     /**
-     * 
+     *
      * i think
      */
 
@@ -29,17 +29,17 @@ public class Aggressiveness implements Strategy, Serializable {
     /**
      * for " using to assure only that one instance of the game (only one game) is
      * created.
-     * 
-     * 
+     *
+     *
      * @return Current game.
-     * 
+     *
      */
 
     /**
      * for "using to process automatic actions during Setup Phase for players with
      * an aggressive strategy.
-     * 
-     * 
-     * 
+     *
+     *
+     *
      */
 }

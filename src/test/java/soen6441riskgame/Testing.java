@@ -1,4 +1,4 @@
-package test.java.soen6441riskgame;
+package soen6441riskgame;
 
 public class Testing {
 

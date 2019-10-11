@@ -1,4 +1,4 @@
-package test.java.soen6441riskgame.controllers;
+package soen6441riskgame.controllers;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,14 +6,13 @@ import org.junit.Before;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import main.java.soen6441riskgame.controllers.MapController;
-import main.java.soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.controllers.MapController;
+import soen6441riskgame.singleton.GameMap;
 
 @RunWith(Parameterized.class)
 public class MapControllerTest {
@@ -35,7 +34,7 @@ public class MapControllerTest {
 	private String continent2_value;
 
 	MapController mapController = new MapController();
-	
+
 	public MapControllerTest(String continent1, String continent2, String country1, String country2, String country3, String country4, String continent1_value, String continent2_value) {
 		this.continent1 = continent1;
 		this.continent2 = continent2;
@@ -75,7 +74,7 @@ public class MapControllerTest {
 	 * mapController.addContinent(continent1, continent1_value);
 	 * mapController.addCountry(country1, continent1);
 	 * mapController.addCountry(country2, continent1);
-	 * 
+	 *
 	 * // Action mapController.showMap(); }
 	 */
 
@@ -88,7 +87,7 @@ public class MapControllerTest {
 		// Action
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addContinent(continent2, continent2_value);
-		
+
 		// Assert
 		Assert.assertTrue(mapController.isContinentExisted(continent1));
 		Assert.assertEquals(continent1_value,
@@ -119,7 +118,7 @@ public class MapControllerTest {
 		Assert.assertNotEquals(continent1, mapController.getCountryFromName(country2).getContinent());
 
 	}
-	
+
 	/**
 	 * Tests add Country method
 	 * It calls the add country method and tests whether that country has been created.
@@ -239,7 +238,7 @@ public class MapControllerTest {
 		mapController.addContinent(continent1, continent1_value);
 		mapController.addCountry(country1, continent1);
 		mapController.addCountry(country2, continent1);
-		
+
 		// Action
 		String arguments[] = { "-remove", country1 };
 		mapController.editCountry(arguments);
@@ -314,5 +313,5 @@ public class MapControllerTest {
 		// Assert
 		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
 	}
-	
+
 }

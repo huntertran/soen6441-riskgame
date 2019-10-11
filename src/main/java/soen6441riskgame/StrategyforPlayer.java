@@ -1,4 +1,4 @@
-package main.java.soen6441riskgame;
+package soen6441riskgame;
 
 public class StrategyforPlayer {
 

@@ -1,12 +1,12 @@
-package main.java.soen6441riskgame;
+package soen6441riskgame;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import main.java.soen6441riskgame.commands.MapEditorCommands;
-import main.java.soen6441riskgame.controllers.GameController;
-import main.java.soen6441riskgame.controllers.MapController;
+import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.controllers.GameController;
+import soen6441riskgame.controllers.MapController;
 
 public final class App {
     private App() {
@@ -14,12 +14,6 @@ public final class App {
 
     public static void main(String[] args) {
         System.out.println("SOEN 6441 - Risk Domination game");
-
-        // TODO: change back after done testing/integration
-
-        // MapController mapController = new MapController();
-        // mapController.loadMap("test");
-        // mapController.showMap();
 
         if (args.length == 0) {
             runFromBegining();

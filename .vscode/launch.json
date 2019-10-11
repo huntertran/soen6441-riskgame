@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Debug (Launch)-App<soen6441riskgame>",
             "request": "launch",
-            "mainClass": "main.java.soen6441riskgame.App",
+            "mainClass": "soen6441riskgame.App",
             "projectName": "soen6441riskgame"
         }
     ]

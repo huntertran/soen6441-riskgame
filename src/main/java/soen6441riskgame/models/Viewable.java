@@ -1,4 +1,4 @@
-package main.java.soen6441riskgame.models;
+package soen6441riskgame.models;
 
 public interface Viewable {
     public void view(int indent);
