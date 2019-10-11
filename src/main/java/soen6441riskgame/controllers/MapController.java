@@ -612,20 +612,25 @@ public final class MapController {
         FileWriter writer = new FileWriter(fileName);
         ArrayList<Continent> continents = GameMap.getInstance().getContinents();
         writer.write("[continents]");
+        writer.write("\n");
         for (Continent continent : continents) {
-            writer.write(continent.getName() + " " + continent.getArmy());
+            writer.write(continent.getName() + " " + continent.getArmy() + "\n");
         }
+        writer.write("\n");
 
         ArrayList<Country> countries = GameMap.getInstance().getCountries();
         writer.write("[countries]");
+        writer.write("\n");
         for (Country country : countries) {
-            // int countryOrder = country.getOrder();
-            // String countryName = country.getName();
+            //int countryOrder = country.getOrder();
+            //String countryName = country.getName();
             // int continentOrder = country.getContinent().getOrder();
             // Coordinate location = country.getCoordinate();
 
-            writer.write(country.getOrder() + " " + country.getName() + " " + country.getArmyAmount());
+            writer.write(country.getOrder() + " " + country.getName() + " " + country.getArmyAmount()
+            + "\n");
         }
+        writer.write("\n");
 
         writer.write("[borders]");
 

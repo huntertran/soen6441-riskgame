@@ -3,6 +3,7 @@ package soen6441riskgame.controllers;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -20,8 +21,9 @@ public class MapControllerTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] { { "Russia", "Asia", "Vietnam", "Laos", "India", "Pakistan", "13", "12" },
-				{ "North America", "Europe", "Spain", "France", "India", "Pakistan", "12", "13" }, { "Asia", "South Africa", "Guinea", "Sierra Leone", "India", "Pakistan", "8","20" },
-				{ "South Africa", "North America", "Canada", "USA", "India", "Pakistan", "11","14" } });
+				{ "North America", "Europe", "Spain", "France", "India", "Pakistan", "12", "13" },
+				{ "Asia", "South Africa", "Guinea", "Sierra Leone", "India", "Pakistan", "8", "20" },
+				{ "South Africa", "North America", "Canada", "USA", "India", "Pakistan", "11", "14" } });
 	}
 
 	private String continent1;
@@ -35,7 +37,8 @@ public class MapControllerTest {
 
 	MapController mapController = new MapController();
 
-	public MapControllerTest(String continent1, String continent2, String country1, String country2, String country3, String country4, String continent1_value, String continent2_value) {
+	public MapControllerTest(String continent1, String continent2, String country1, String country2, String country3,
+			String country4, String continent1_value, String continent2_value) {
 		this.continent1 = continent1;
 		this.continent2 = continent2;
 		this.country1 = country1;
@@ -55,7 +58,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * This loadMapTest function tests if the map loaded from a file is working properly.
+	 * This loadMapTest function tests if the map loaded from a file is working
+	 * properly.
 	 */
 	@Test
 	public void loadMapTest() {
@@ -79,8 +83,8 @@ public class MapControllerTest {
 	 */
 
 	/**
-	 * Tests add Continent method
-	 * It calls addContinent method and tests whether the continent is created and has the same control value as passed.
+	 * Tests add Continent method It calls addContinent method and tests whether the
+	 * continent is created and has the same control value as passed.
 	 */
 	@Test
 	public void addContinentTest() {
@@ -98,9 +102,9 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests remove continent method
-	 * And tests whether the continent has been removed
-	 * And the countries in that continent are now existing without continent
+	 * Tests remove continent method And tests whether the continent has been
+	 * removed And the countries in that continent are now existing without
+	 * continent
 	 */
 	@Test
 	public void removeContinentTest() {
@@ -120,8 +124,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests add Country method
-	 * It calls the add country method and tests whether that country has been created.
+	 * Tests add Country method It calls the add country method and tests whether
+	 * that country has been created.
 	 */
 	@Test
 	public void addCountryTest() {
@@ -138,8 +142,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests remove Country method
-	 * It calls the remove country method and tests whether that country has been removed.
+	 * Tests remove Country method It calls the remove country method and tests
+	 * whether that country has been removed.
 	 */
 	@Test
 	public void removeCountryTest() {
@@ -158,8 +162,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests add Neighbor method
-	 * It calls the add neighbor method and tests whether the 2 countries are neighbors.
+	 * Tests add Neighbor method It calls the add neighbor method and tests whether
+	 * the 2 countries are neighbors.
 	 */
 	@Test
 	public void addNeighborTest() {
@@ -182,8 +186,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests edit Continent method
-	 * It adds continent using edit continent method and tests whether that continent exists.
+	 * Tests edit Continent method It adds continent using edit continent method and
+	 * tests whether that continent exists.
 	 */
 	@Test
 	public void editContinentTest1() {
@@ -198,8 +202,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests edit Continent method
-	 * It removes continent using edit continent method and tests whether that continent does not exist.
+	 * Tests edit Continent method It removes continent using edit continent method
+	 * and tests whether that continent does not exist.
 	 */
 	@Test
 	public void editContinentTest2() {
@@ -212,8 +216,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests edit Country method
-	 * It adds country using edit country method and tests whether that country exists.
+	 * Tests edit Country method It adds country using edit country method and tests
+	 * whether that country exists.
 	 */
 	@Test
 	public void editCountryTest1() {
@@ -229,8 +233,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests edit Country method
-	 * It removes country using edit country method and tests whether that country does not exist.
+	 * Tests edit Country method It removes country using edit country method and
+	 * tests whether that country does not exist.
 	 */
 	@Test
 	public void editCountryTest2() {
@@ -251,8 +255,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests remove Neighbor method
-	 * It calls the remove neighbor method and tests whether the 2 countries are not neighbors.
+	 * Tests remove Neighbor method It calls the remove neighbor method and tests
+	 * whether the 2 countries are not neighbors.
 	 */
 	@Test
 	public void removeNeighborTest() {
@@ -277,8 +281,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests edit Neighbor method
-	 * It adds neighbor using edit neighbor method and tests whether the 2 countries are neighbors.
+	 * Tests edit Neighbor method It adds neighbor using edit neighbor method and
+	 * tests whether the 2 countries are neighbors.
 	 */
 	@Test
 	public void editNeighborTest1() {
@@ -296,8 +300,8 @@ public class MapControllerTest {
 	}
 
 	/**
-	 * Tests edit Neighbor method
-	 * It removes neighbor using edit neighbor method and tests whether the 2 countries are not neighbors.
+	 * Tests edit Neighbor method It removes neighbor using edit neighbor method and
+	 * tests whether the 2 countries are not neighbors.
 	 */
 	@Test
 	public void editNeighborTest2() {
@@ -312,6 +316,25 @@ public class MapControllerTest {
 
 		// Assert
 		Assert.assertFalse(mapController.isNeighboringCountries(country1, country2));
+	}
+
+	@Test
+	public void saveMapTest() {
+		// setup
+		String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+		mapController.loadMap(filePath);
+
+		String savedMapFilePath = "./src/test/java/soen6441riskgame/maps/SavedRiskEurope.map";
+
+		// action
+		try {
+			mapController.saveMap(savedMapFilePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// assert
+		Assert.assertTrue(true);
 	}
 
 }
