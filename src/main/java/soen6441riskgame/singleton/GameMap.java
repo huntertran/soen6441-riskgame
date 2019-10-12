@@ -1,7 +1,7 @@
-package main.java.soen6441riskgame.singleton;
+package soen6441riskgame.singleton;
 
-import main.java.soen6441riskgame.models.Continent;
-import main.java.soen6441riskgame.models.Country;
+import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.Country;
 
 import java.util.ArrayList;
 

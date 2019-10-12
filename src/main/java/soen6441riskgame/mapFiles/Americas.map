@@ -1,0 +1,197 @@
+[Map]
+image=Americas 1792.bmp
+wrap=no
+scroll=horizontal
+author=Don Morris
+warn=yes
+
+[Continents]
+Caribbean Islands=16
+Central America=10
+Great Plains=20
+Guiana=3
+Louisiana=10
+Lower Canada=16
+Northern Mexico=6
+Northern States=10
+Northwest Territory=12
+Ohio=7
+South America=13
+Southern Mexico=15
+Southern States=11
+Upper Canada=10
+
+[Territories]
+Antigua,959,768,Caribbean Islands,Guadeloupe,Puerto Rico
+Barbados,1077,892,Caribbean Islands,St. Lucia,St. Johns,British Guiana
+Cuba,630,761,Caribbean Islands,Havana,Santiago de Cuba
+Dominica,1041,819,Caribbean Islands,Guadeloupe,Martinique
+Grenada,1007,895,Caribbean Islands,St. Lucia,Trinidad
+Guadeloupe,1017,781,Caribbean Islands,Antigua,Dominica
+Haiti,776,796,Caribbean Islands,Santo Domingo,Southern Bahamas,Santiago de Cuba,Jamaica
+Havana,550,744,Caribbean Islands,Cuba,New Orleans,East Florida,Yucatan
+Jamaica,673,836,Caribbean Islands,Haiti,Santiago de Cuba,Mosquito Coast,Panama
+Martinique,1031,847,Caribbean Islands,Dominica,St. Lucia
+Northern Bahamas,691,732,Caribbean Islands,North Carolina,East Florida,Southern Bahamas,Santiago de Cuba
+Puerto Rico,891,806,Caribbean Islands,Santo Domingo,Curacao,Antigua
+Santiago de Cuba,680,775,Caribbean Islands,Cuba,Haiti,Jamaica,Northern Bahamas,Southern Bahamas
+Santo Domingo,815,792,Caribbean Islands,Haiti,Puerto Rico
+Southern Bahamas,754,741,Caribbean Islands,Haiti,Northern Bahamas,Santiago de Cuba,Massachusetts
+St. Lucia,1024,881,Caribbean Islands,Barbados,Grenada,Martinique
+
+British Honduras,431,864,Central America,Yucatan,Campeche,Guatemala
+Campeche,399,831,Central America,British Honduras,Yucatan,Tabasco,Guatemala,Chiapas
+Costa Rica,542,1022,Central America,Mosquito Coast,Panama,Nicaragua
+Guatemala,403,908,Central America,British Honduras,Campeche,Chiapas,Salvador,Honduras
+Honduras,480,914,Central America,Guatemala,Mosquito Coast,Nicaragua,Salvador
+Mosquito Coast,532,942,Central America,Jamaica,Costa Rica,Nicaragua,Honduras
+Nicaragua,497,956,Central America,Costa Rica,Mosquito Coast,Honduras
+Panama,647,1033,Central America,Jamaica,Costa Rica,Cartagena,Antioqura
+Salvador,437,938,Central America,Guatemala,Honduras
+Yucatan,442,797,Central America,Havana,British Honduras,Campeche
+
+Apache lands,66,580,Great Plains,Coahuila,Chihuahua,Comanche lands,San Antonio
+Arapaho lands,70,440,Great Plains,Pawnee lands,Arikira lands,Kiowa lands,Skidi Pawnee
+Arikira lands,71,370,Great Plains,Arapaho lands,Cheyenne lands,Ponca lands,Skidi Pawnee
+Cheyenne lands,59,297,Great Plains,Arikira lands,Santee Sioux lands,Crow lands,Ponca lands
+Comanche lands,99,539,Great Plains,Apache lands,Caddo lands,Wichita lands,Kiowa lands,Tejas,San Antonio
+Crow lands,51,180,Great Plains,Cheyenne lands,Santee Sioux lands,Mandan lands,Assiniboin lands
+Dacotah Sioux lands,293,306,Great Plains,Iowa lands,Mesquakie lands,Santee Sioux lands,Chippewa lands,Yankton Sioux lands,Omaha lands,Ponca lands
+Iowa lands,338,349,Great Plains,Dacotah Sioux lands,Mesquakie lands,Sauk lands,Oto lands,Omaha lands
+Kansa lands,358,420,Great Plains,Arkansas,Illinois,Pawnee lands,Oto lands,Kikapoo lands,Osage lands
+Kiowa lands,134,466,Great Plains,Arapaho lands,Comanche lands,Caddo lands,Pawnee lands,Wichita lands,Osage lands
+Mandan lands,167,172,Great Plains,Crow lands,Santee Sioux lands,Assiniboin lands,Cree lands,Yankton Sioux lands
+Omaha lands,238,360,Great Plains,Dacotah Sioux lands,Iowa lands,Pawnee lands,Ponca lands,Skidi Pawnee,Oto lands
+Osage lands,345,454,Great Plains,Kansa lands,Kiowa lands,Arkansas,Caddo lands,Pawnee lands,Quapaw lands
+Oto lands,351,390,Great Plains,Iowa lands,Kansa lands,Sauk lands,Pawnee lands,Omaha lands
+Pawnee lands,233,409,Great Plains,Arapaho lands,Kansa lands,Kiowa lands,Omaha lands,Osage lands,Oto lands,Skidi Pawnee
+Ponca lands,184,327,Great Plains,Arikira lands,Cheyenne lands,Dacotah Sioux lands,Omaha lands,Santee Sioux lands,Skidi Pawnee
+Santee Sioux lands,134,282,Great Plains,Cheyenne lands,Crow lands,Dacotah Sioux lands,Mandan lands,Ponca lands,Yankton Sioux lands
+Skidi Pawnee,150,383,Great Plains,Arapaho lands,Arikira lands,Omaha lands,Pawnee lands,Ponca lands
+Wichita lands,180,499,Great Plains,Comanche lands,Kiowa lands,Caddo lands
+Yankton Sioux lands,232,252,Great Plains,Dacotah Sioux lands,Mandan lands,Santee Sioux lands,Chippewa lands,Cree lands
+
+British Guiana,1083,1085,Guiana,Barbados,Angostura,Venezuela,Dutch Guiana
+Dutch Guiana,1160,1085,Guiana,British Guiana,French Guiana
+French Guiana,1241,1126,Guiana,Dutch Guiana
+
+Arkansas,420,482,Louisiana,Kansa lands,Osage lands,Tennesee,Illinois,Quapaw lands,Mississippi
+Caddo lands,275,505,Louisiana,Comanche lands,Kiowa lands,Osage lands,Wichita lands,Natchez,Los Adaes,Tejas,Quapaw lands
+Choctaw lands,442,545,Louisiana,West Florida,New Orleans,Chickasaw lands,Mississippi,Creek lands
+Creek lands,501,553,Louisiana,Choctaw lands,West Florida,Appalachian mountains,Chickasaw lands,Georgia
+Illinois,442,435,Louisiana,Kansa lands,Arkansas,Tennesee,Mascouten lands,Shawnee lands,Kentucky,Kikapoo lands
+Mississippi,413,530,Louisiana,Arkansas,Choctaw lands,Natchez,New Orleans,Quapaw lands,Chickasaw lands,Tennesee
+Natchez,346,536,Louisiana,Caddo lands,Mississippi,New Orleans,Los Adaes,Quapaw lands
+New Orleans,384,582,Louisiana,Havana,Choctaw lands,Mississippi,Natchez,West Florida,Los Adaes,Vera Cruz
+Quapaw lands,355,496,Louisiana,Osage lands,Arkansas,Caddo lands,Mississippi,Natchez
+West Florida,479,582,Louisiana,Choctaw lands,Creek lands,New Orleans,East Florida,Georgia
+
+Abenaki lands,871,281,Lower Canada,Maine,Gaspe,New Hampshire,Montreal,Lake Champlain,Quebec
+Canada,769,172,Lower Canada,Canadian wilderness,Moose Factory,Lower Canada,Montreal,Ontario,Quebec,Tadoussac
+Canadian wilderness,939,66,Lower Canada,Canada,Labrador,Moose Factory,James Bay,Montagnais lands,Tadoussac
+Gaspe,942,256,Lower Canada,Abenaki lands,Maine,New Brunswick
+Halifax,1031,370,Lower Canada,Prince Edward Island,New Brunswick,Isle Royale,Nova Scotia
+Isle Royale,1080,366,Lower Canada,Halifax,St. Johns
+Labrador,1116,191,Lower Canada,Canadian wilderness,Montagnais lands,Newfoundland
+Lower Canada,727,244,Lower Canada,Canada,Adirondack mountains,Montreal,Upper Canada,Ontario
+Montagnais lands,982,183,Lower Canada,Canadian wilderness,Labrador,Tadoussac
+Montreal,781,244,Lower Canada,Abenaki lands,Canada,Lower Canada,Adirondack mountains,Lake Champlain,Quebec
+New Brunswick,959,313,Lower Canada,Gaspe,Halifax,Maine,Prince Edward Island
+Newfoundland,1179,303,Lower Canada,Labrador,St. Johns
+Nova Scotia,980,373,Lower Canada,Halifax,Massachusetts
+Prince Edward Island,1044,341,Lower Canada,Halifax,New Brunswick
+Quebec,831,237,Lower Canada,Abenaki lands,Canada,Montreal,Tadoussac
+St. Johns,1233,359,Lower Canada,Barbados,Isle Royale,Newfoundland
+Tadoussac,890,194,Lower Canada,Canada,Canadian wilderness,Montagnais lands,Quebec
+
+Chihuahua,51,652,Northern Mexico,Apache lands,Durango,Coahuila
+Coahuila,134,656,Northern Mexico,Apache lands,Chihuahua,Matamoros,Durango,Zacatecas,Laredo,San Antonio
+Laredo,207,656,Northern Mexico,Coahuila,Matamoros,San Antonio
+Los Adaes,317,565,Northern Mexico,Caddo lands,Natchez,New Orleans,Tejas
+San Antonio,191,607,Northern Mexico,Apache lands,Comanche lands,Coahuila,Laredo,Tejas
+Tejas,267,580,Northern Mexico,Comanche lands,Caddo lands,Los Adaes,San Antonio
+
+Adirondack mountains,769,290,Northern States,Lower Canada,Montreal,Lake Champlain,New York
+Connecticutt & Rhode Island,813,396,Northern States,Massachusetts,New York
+Fort Niagra,703,306,Northern States,Pittsburgh,Northern Allegheny mountains,Upper Canada,New York
+Lake Champlain,808,310,Northern States,Abenaki lands,Montreal,Adirondack mountains,New Hampshire,New York,Massachusetts
+Maine,903,326,Northern States,Abenaki lands,Gaspe,New Brunswick,New Hampshire
+Massachusetts,831,363,Northern States,Southern Bahamas,Nova Scotia,Lake Champlain,New Hampshire,New York,Connecticutt & Rhode Island
+New Hampshire,851,326,Northern States,Abenaki lands,Lake Champlain,Maine,Massachusetts
+New Jersey & Delaware,754,399,Northern States,New York,Maryland,Pennsylvania
+New York,756,347,Northern States,Adirondack mountains,Fort Niagra,Lake Champlain,Massachusetts,New Jersey & Delaware,Northern Allegheny mountains,Pennsylvania,Connecticutt & Rhode Island
+Northern Allegheny mountains,703,345,Northern States,Fort Niagra,New York,Pittsburgh,Pennsylvania
+
+Chippewa lands,389,256,Northwest Territory,Dacotah Sioux lands,Yankton Sioux lands,Mesquakie lands,Cree lands,Menominie lands
+Fort Detroit,574,332,Northwest Territory,Miami lands,Potawatomi lands,Upper Canada,Fort Michilimackinac
+Fort Michilimackinac,530,300,Northwest Territory,Fort Detroit,Potawatomi lands,Menominie lands
+Kikapoo lands,434,387,Northwest Territory,Kansa lands,Illinois,Sauk lands,Potawatomi lands,Mascouten lands
+Mascouten lands,489,393,Northwest Territory,Illinois,Kikapoo lands,Miami lands,Potawatomi lands,Shawnee lands
+Menominie lands,435,282,Northwest Territory,Chippewa lands,Fort Michilimackinac,Ottawa lands,Mesquakie lands,Sauk lands,Potawatomi lands
+Mesquakie lands,403,313,Northwest Territory,Dacotah Sioux lands,Iowa lands,Chippewa lands,Menominie lands,Sauk lands
+Miami lands,551,366,Northwest Territory,Fort Detroit,Mascouten lands,Potawatomi lands,Shawnee lands,Ohio
+Potawatomi lands,491,360,Northwest Territory,Fort Detroit,Fort Michilimackinac,Kikapoo lands,Mascouten lands,Menominie lands,Miami lands,Sauk lands
+Sauk lands,409,368,Northwest Territory,Iowa lands,Oto lands,Kikapoo lands,Menominie lands,Mesquakie lands,Potawatomi lands
+Shawnee lands,536,397,Northwest Territory,Illinois,Mascouten lands,Miami lands,Kentucky,Ohio
+
+Cherokee lands,554,480,Ohio,Tennesee,Appalachian mountains,Kentucky,Chickasaw lands,North Carolina
+Chickasaw lands,494,506,Ohio,Choctaw lands,Creek lands,Mississippi,Cherokee lands,Tennesee,Appalachian mountains
+Kentucky,552,443,Ohio,Illinois,Shawnee lands,Cherokee lands,Pittsburgh,Tennesee,North Carolina,Blue Ridge mountains,Ohio,Southern Allegheny mountains
+Ohio,600,383,Ohio,Miami lands,Shawnee lands,Kentucky,Pittsburgh,Southern Allegheny mountains
+Pittsburgh,649,366,Ohio,Fort Niagra,Northern Allegheny mountains,Kentucky,Ohio,Blue Ridge mountains,Maryland,Southern Allegheny mountains,Pennsylvania
+Southern Allegheny mountains,621,416,Ohio,Kentucky,Ohio,Pittsburgh
+Tennesee,471,476,Ohio,Arkansas,Illinois,Cherokee lands,Chickasaw lands,Kentucky,Mississippi
+
+Angostura,990,1008,South America,British Guiana,Venezuela,Caracas,Orinoco jungles,Trinidad
+Antioqura,739,1121,South America,New Granada,Mompas,Bogota,Cartagena,Panama
+Bogota,833,1128,South America,Antioqura,New Granada
+Caracas,916,972,South America,Angostura,Coro,Orinoco jungles,Trinidad
+Cartagena,736,999,South America,Panama,Antioqura,Maracaibo,Mompas
+Coro,840,989,South America,Caracas,New Granada,Maracaibo,Orinoco jungles,Curacao
+Curacao,849,945,South America,Puerto Rico,Coro
+Maracaibo,783,1016,South America,Cartagena,Coro,New Granada,Mompas
+Mompas,743,1048,South America,Antioqura,Cartagena,Maracaibo,New Granada
+New Granada,826,1072,South America,Antioqura,Bogota,Coro,Maracaibo,Mompas,Venezuela,Orinoco jungles
+Orinoco jungles,902,1046,South America,Angostura,Caracas,Coro,New Granada,Venezuela
+Trinidad,982,922,South America,Grenada,Angostura,Caracas
+Venezuela,963,1120,South America,British Guiana,Angostura,New Granada,Orinoco jungles
+
+Chiapas,353,892,Southern Mexico,Guatemala,Oaxaca,Vera Cruz,Tabasco,Campeche
+Durango,84,726,Southern Mexico,Chihuahua,Coahuila,Tepic,Zacatecas
+Guerrero,208,870,Southern Mexico,Oaxaca,Puebla,Michoacan
+Hidalgo,187,774,Southern Mexico,Mexico,Matamoros,Tamaulipas,Zacatecas,Vera Cruz
+Jalisco,128,818,Southern Mexico,Tepic,Mexico,Zacatecas,Michoacan
+Matamoros,192,722,Southern Mexico,Coahuila,Laredo,Hidalgo,Tamaulipas
+Mexico,206,805,Southern Mexico,Hidalgo,Jalisco,Vera Cruz,Puebla,Michoacan
+Michoacan,182,835,Southern Mexico,Guerrero,Jalisco,Mexico,Puebla
+Oaxaca,267,882,Southern Mexico,Chiapas,Guerrero,Vera Cruz,Puebla
+Puebla,217,844,Southern Mexico,Guerrero,Mexico,Michoacan,Oaxaca,Vera Cruz
+Tabasco,350,849,Southern Mexico,Campeche,Chiapas,Vera Cruz
+Tamaulipas,224,742,Southern Mexico,Hidalgo,Matamoros,Vera Cruz
+Tepic,93,793,Southern Mexico,Durango,Jalisco,Zacatecas
+Vera Cruz,277,842,Southern Mexico,New Orleans,Chiapas,Hidalgo,Mexico,Oaxaca,Puebla,Tabasco,Tamaulipas
+Zacatecas,130,760,Southern Mexico,Coahuila,Durango,Hidalgo,Jalisco,Tepic
+
+Appalachian mountains,577,513,Southern States,Creek lands,Cherokee lands,Chickasaw lands,North Carolina,Georgia,South Carolina
+Blue Ridge mountains,653,459,Southern States,Kentucky,Pittsburgh,North Carolina,Virginia,Maryland
+East Florida,586,607,Southern States,Havana,Northern Bahamas,West Florida,Seminole lands,Georgia,Everglade swamp
+Everglade swamp,621,684,Southern States,East Florida,Seminole lands
+Georgia,575,563,Southern States,Appalachian mountains,East Florida,South Carolina,Creek lands,West Florida
+Maryland,706,428,Southern States,New Jersey & Delaware,Pittsburgh,Blue Ridge mountains,Virginia,Pennsylvania
+North Carolina,680,504,Southern States,Northern Bahamas,Kentucky,Appalachian mountains,Blue Ridge mountains,South Carolina,Virginia,Cherokee lands
+Pennsylvania,712,385,Southern States,New Jersey & Delaware,New York,Northern Allegheny mountains,Pittsburgh,Maryland
+Seminole lands,590,652,Southern States,East Florida,Everglade swamp
+South Carolina,629,532,Southern States,Appalachian mountains,Georgia,North Carolina
+Virginia,702,463,Southern States,Blue Ridge mountains,Maryland,North Carolina
+
+Assiniboin lands,97,43,Upper Canada,Crow lands,Mandan lands,Hudsons Bay,Cree lands
+Cree lands,281,130,Upper Canada,Mandan lands,Yankton Sioux lands,Chippewa lands,Assiniboin lands,Hudsons Bay,Ojibwa lands
+Hudsons Bay,368,39,Upper Canada,Assiniboin lands,Cree lands,Ruperts Land,Ojibwa lands
+James Bay,700,77,Upper Canada,Canadian wilderness,Moose Factory
+Moose Factory,642,167,Upper Canada,Canada,Canadian wilderness,James Bay,Ruperts Land,Ontario
+Ojibwa lands,420,137,Upper Canada,Cree lands,Hudsons Bay,Ottawa lands,Ruperts Land,Ontario
+Ontario,583,183,Upper Canada,Canada,Lower Canada,Moose Factory,Ojibwa lands,Ottawa lands,Ruperts Land,Upper Canada
+Ottawa lands,566,227,Upper Canada,Menominie lands,Ojibwa lands,Ontario,Upper Canada
+Ruperts Land,526,84,Upper Canada,Hudsons Bay,Moose Factory,Ojibwa lands,Ontario
+Upper Canada,642,289,Upper Canada,Lower Canada,Fort Niagra,Fort Detroit,Ontario,Ottawa lands
+

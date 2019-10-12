@@ -1,4 +1,4 @@
-package main.java.soen6441riskgame.enums;
+package soen6441riskgame.enums;
 
 public enum CommonCommandArgs {
     ADD("-add"), REMOVE("-remove"), NONE("");

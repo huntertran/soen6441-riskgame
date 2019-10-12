@@ -1,11 +1,11 @@
-package main.java.soen6441riskgame;
+package soen6441riskgame;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
-import main.java.soen6441riskgame.commands.MapEditorCommands;
-import main.java.soen6441riskgame.controllers.GameController;
-import main.java.soen6441riskgame.controllers.MapController;
+import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.controllers.GameController;
+import soen6441riskgame.controllers.MapController;
 
 public final class App {
     private App() {
