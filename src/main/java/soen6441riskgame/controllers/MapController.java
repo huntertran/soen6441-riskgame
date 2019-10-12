@@ -509,6 +509,8 @@ public final class MapController {
 
             }
 
+            validateMap();
+
             System.out.println("Map loaded");
             showMap();
         } catch (IOException e) {

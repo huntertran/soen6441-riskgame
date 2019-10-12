@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import soen6441riskgame.commands.GameCommands;
 import soen6441riskgame.commands.MapEditorCommands;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
@@ -53,40 +54,39 @@ public final class App {
         case MapEditorCommands.SAVEMAP: {
             try {
                 FileWriter writer = new FileWriter(remainingArgs[0]);
-				ArrayList<Continent> continents = GameMap.getInstance().getContinents();
-				writer.write("[continents]");
-				for (Continent continent : continents) {
-				    writer.write(continent.getName() + " " + continent.getArmy() + "\n");
-				}
-				writer.write("\n");
-				
-				ArrayList<Country> countries = GameMap.getInstance().getCountries();
-				writer.write("[countries]");
-				for (Country country : countries) {
-				    // int countryOrder = country.getOrder();
-				    // String countryName = country.getName();
-				    // int continentOrder = country.getContinent().getOrder();
-				    // Coordinate location = country.getCoordinate();
-				
-				    writer.write(country.getOrder() + " " + country.getName() + " " + country.getArmyAmount()
-				    + "\n");
-				}
-				
-				writer.write("[borders]");
-				
-				for(Country country:GameMap.getInstance().getCountries()){
-				    ArrayList<Country> neighbors = country.getNeighbors();
-				
-				    String neighborLine = Integer.toString(country.getOrder());
-				
-				    for(Country neighbor:neighbors){
-				        neighborLine += " " + neighbor.getOrder();
-				    }
-				
-				    writer.write(neighborLine);
-				}
-				
-				writer.close();
+                ArrayList<Continent> continents = GameMap.getInstance().getContinents();
+                writer.write("[continents]");
+                for (Continent continent : continents) {
+                    writer.write(continent.getName() + " " + continent.getArmy() + "\n");
+                }
+                writer.write("\n");
+
+                ArrayList<Country> countries = GameMap.getInstance().getCountries();
+                writer.write("[countries]");
+                for (Country country : countries) {
+                    // int countryOrder = country.getOrder();
+                    // String countryName = country.getName();
+                    // int continentOrder = country.getContinent().getOrder();
+                    // Coordinate location = country.getCoordinate();
+
+                    writer.write(country.getOrder() + " " + country.getName() + " " + country.getArmyAmount() + "\n");
+                }
+
+                writer.write("[borders]");
+
+                for (Country country : GameMap.getInstance().getCountries()) {
+                    ArrayList<Country> neighbors = country.getNeighbors();
+
+                    String neighborLine = Integer.toString(country.getOrder());
+
+                    for (Country neighbor : neighbors) {
+                        neighborLine += " " + neighbor.getOrder();
+                    }
+
+                    writer.write(neighborLine);
+                }
+
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -104,7 +104,7 @@ public final class App {
             mapController.loadMap(remainingArgs[0]);
             break;
         }
-        }
+    }
     }
 
     public static void runFromBegining() {
