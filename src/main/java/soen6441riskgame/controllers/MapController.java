@@ -658,16 +658,6 @@ public final class MapController {
     }
 
     /**
-     * Start the map editor
-     *
-     * @param args
-     */
-    public void start(String[]... args) {
-        Scanner scanner = new Scanner(System.in);
-        scanner.close();
-    }
-
-    /**
      * add the country to country list in GameMap, and add to continent's country
      * list in GameMap this function should be remove when Dependency Injection
      * implemented

@@ -27,6 +27,7 @@ public final class App {
         String[] remainingArgs = Arrays.copyOfRange(args, 1, args.length);
 
         MapController mapController = new MapController();
+        GameController gameController = new GameController();
 
         switch (command) {
         case MapEditorCommands.EDITCONTINENT: {
@@ -61,28 +62,44 @@ public final class App {
             mapController.loadMap(remainingArgs[0]);
             break;
         }
-    }
+        case GameCommands.GAMEPLAYER: {
+            // TODO
+            break;
+        }
+        case GameCommands.POPULATECOUNTRIES: {
+            // TODO
+            break;
+        }
+        case GameCommands.PLACEARMY: {
+            // TODO
+            break;
+        }
+        case GameCommands.PLACEALL: {
+            // TODO
+            break;
+        }
+        case GameCommands.REINFORCE: {
+            // TODO
+            break;
+        }
+        case GameCommands.FORTIFY: {
+            // TODO
+            break;
+        }
+        }
     }
 
     public static void runFromBegining() {
-        System.out.println("1: Use map editor");
-        System.out.println("2: Play the game");
-
-        System.out.print("Please choose what you want to do: ");
-
         Scanner scanner = new Scanner(System.in);
-        int chosenOption = scanner.nextInt();
 
-        switch (chosenOption) {
-        case 1: {
-            MapController mapController = new MapController();
-            mapController.start();
-            break;
-        }
-        case 2: {
-            GameController gameController = new GameController();
-            gameController.start();
-        }
+        System.out.println("GAME START");
+        System.out.print("Enter your action: ");
+        String command = scanner.nextLine();
+
+        while (command != GameCommands.EXIT) {
+            jumpToCommand(command.split(" "));
+            System.out.print("Enter your action: ");
+            command = scanner.nextLine();
         }
 
         scanner.close();
