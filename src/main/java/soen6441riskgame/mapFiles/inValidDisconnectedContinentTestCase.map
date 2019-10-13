@@ -1,0 +1,10 @@
+[Continents]
+Continent1=10
+Continent2=20
+
+[Territories]
+Country1,127,46,Continent1,Country2,Country3
+Country2,193,85,Continent1,Country1,Country4
+
+Country3,252,33,Continent2,Country1,Country2
+Country4,314,94,Continent2,Country2

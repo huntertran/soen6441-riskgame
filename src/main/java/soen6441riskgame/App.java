@@ -68,15 +68,16 @@ public final class App {
             break;
         }
         case GameCommands.GAMEPLAYER: {
-            // TODO
+            gameController.handlePlayerAddAndRemoveCommand(remainingArgs);
             break;
         }
         case GameCommands.POPULATECOUNTRIES: {
-            // TODO
+            gameController.populateCountries();
+            gameController.initPlayersUnplacedArmies();
             break;
         }
         case GameCommands.PLACEARMY: {
-            // TODO
+            gameController.handlePlaceArmyCommand(remainingArgs[0]);
             break;
         }
         case GameCommands.PLACEALL: {
@@ -91,7 +92,7 @@ public final class App {
             // TODO
             break;
         }
-        }
+    }
     }
 
     public static void runFromBegining() {

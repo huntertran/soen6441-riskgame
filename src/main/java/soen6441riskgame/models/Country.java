@@ -9,11 +9,21 @@ public class Country implements Viewable {
     private int armyAmount;
     private String name;
     private Continent continent;
+    private Player conquerer;
 
     public Country(String name, Coordinate coordinate, Continent continent) {
         this.setName(name);
         this.setCoordinate(coordinate);
         this.setContinent(continent);
+    }
+
+    public Player getConquerer() {
+        return conquerer;
+    }
+
+    public void setConquerer(Player conquerer) {
+        System.out.format("Player %d conquered %d", conquerer.getName(), this.getName());
+        this.conquerer = conquerer;
     }
 
     public Continent getContinent() {
@@ -38,6 +48,7 @@ public class Country implements Viewable {
 
     public void setArmyAmount(int armyAmount) {
         this.armyAmount = armyAmount;
+        System.out.format("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(), getConquerer().getName());
     }
 
     /**
@@ -68,6 +79,10 @@ public class Country implements Viewable {
         }
 
         return neighbors;
+    }
+
+    public boolean isConquered(){
+        return this.getConquerer() != null;
     }
 
     public void view(int indent) {
