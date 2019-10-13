@@ -199,7 +199,6 @@ public final class MapController {
 
     public void editMap(String fileName) {
         loadMap(fileName);
-        // TODO: implement edit map feature
     }
 
     /**
