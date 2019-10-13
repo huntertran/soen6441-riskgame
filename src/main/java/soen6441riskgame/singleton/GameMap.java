@@ -2,6 +2,7 @@ package soen6441riskgame.singleton;
 
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
 
 import java.util.ArrayList;
 
@@ -10,10 +11,15 @@ public class GameMap {
     private String mapName;
     private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
+    private ArrayList<Player> players = new ArrayList<Player>();
     private int[][] borders;
 
     private GameMap() {
     };
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
     public int[][] getBorders() {
         return borders;
@@ -68,5 +74,21 @@ public class GameMap {
         for (Country country : countries) {
             country.view();
         }
+    }
+
+    /**
+     * get country object from name
+     *
+     * @param countryName
+     * @return null if country name is not existed in map
+     */
+    public Country getCountryFromName(String countryName) {
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getName().equals(countryName)) {
+                return country;
+            }
+        }
+
+        return null;
     }
 }

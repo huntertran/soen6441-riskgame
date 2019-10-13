@@ -1,264 +1,104 @@
 package soen6441riskgame.models;
-import soen6441riskgame.enums.Colors;
+
 import java.util.ArrayList;
 
-/**
- * 
- * 
- * This is a main class to read and store different elements of the country.
- *
- * @version 1.0.0
- */
-public class Country {
+import soen6441riskgame.singleton.GameMap;
 
-	/** The country id. */
-	private int countryId;
+public class Country implements Viewable {
+    private Coordinate coordinate;
+    private int armyAmount;
+    private String name;
+    private Continent continent;
+    private Player conquerer;
 
-	/** The country name. */
-	private String countryName;
+    public Country(String name, Coordinate coordinate, Continent continent) {
+        this.setName(name);
+        this.setCoordinate(coordinate);
+        this.setContinent(continent);
+    }
 
-	/** The continent ID. */
-	private int continentID;
+    public Player getConquerer() {
+        return conquerer;
+    }
 
-	/** The x coordinate. */
-	private int xCoordinate;
+    public void setConquerer(Player conquerer) {
+        System.out.format("Player %d conquered %d", conquerer.getName(), this.getName());
+        this.conquerer = conquerer;
+    }
 
-	/** The y coordinate. */
-	private int yCoordinate;
+    public Continent getContinent() {
+        return continent;
+    }
 
-	/** The player id. */
-	private int playerId;
+    public void setContinent(Continent continent) {
+        this.continent = continent;
+    }
 
-	/** The army numbers. */
-	private int armyNumbers;
+    public String getName() {
+        return name;
+    }
 
-	/** The country color. */
-	private Colors countryColor;
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public int getArmyAmount() {
+        return armyAmount;
+    }
 
-	/**
-	 * This method is used to get played id.
-	 * @return playerId ID of the player
-	 */
-	public int getPlayerId() {
-		return playerId;
-	}
+    public void setArmyAmount(int armyAmount) {
+        this.armyAmount = armyAmount;
+        System.out.format("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(), getConquerer().getName());
+    }
 
+    /**
+     * return the order of the country in the country list, starting with 1
+     */
+    public int getOrder() {
+        return GameMap.getInstance().getCountries().indexOf(this) + 1;
+    }
 
-	/**
-	 * This method is used to set played id.
-	 * @param playerId ID of the player
-	 */
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
-	}
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
 
-	/**
-	 * This method is used to get color of country.
-	 * @return countryColor, get color of country
-	 */
-	public Colors getCountryColor() {
-		return countryColor;
-	}
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
-	/**
-	 * This method is used to set color of country.
-	 * @param countryColor the new country color
-	 */
-	public void setCountryColor(Colors countryColor) {
-		this.countryColor = countryColor;
-	}
+    public ArrayList<Country> getNeighbors() {
+        ArrayList<Country> neighbors = new ArrayList<Country>();
 
-	/** The neighbors string. */
-	private ArrayList<String> neighboursString = new ArrayList<>();
+        int[][] borders = GameMap.getInstance().getBorders();
+        int countryOrder = this.getOrder();
 
-	/** The neighbors of country. */
-	private ArrayList<Country> neighboursOfCountry= new ArrayList<>();
+        for (int index = 0; index < borders[countryOrder - 1].length; index++) {
+            if (borders[countryOrder - 1][index] == 1) {
+                neighbors.add(GameMap.getInstance().getCountries().get(index));
+            }
+        }
 
-	/**
-	 * The Constructor is created to set the all parameters of the country Element.
-	 * @param countryId ID of country
-	 * @param countryName name of country
-	 */
-	public Country(int countryId, String countryName) {
-		this.countryId = countryId;
-		this.countryName = countryName;
-	}
-	/**
-	 * The Constructor is created to set the all parameters of the country Element.
-	 * @param countryId ID of country
-	 * @param countryName name of country
-	 * @param xCoordinate x coordinates  of country
-	 * @param yCoordinate y coordinates  of country
-	 */
-	public Country (int countryId, String countryName, int xCoordinate, int yCoordinate){
-		this.countryId = countryId;
-		this.countryName = countryName;
-		this.xCoordinate =xCoordinate;
-		this.yCoordinate = yCoordinate;
-	}
+        return neighbors;
+    }
 
-	/**
-	 * This method is used to get an integer value of the country which is set as Country ID.
-	 * @return the country ID Integer
-	 */
-	public int getCountryId(){
-		return countryId;
-	}
+    public boolean isConquered(){
+        return this.getConquerer() != null;
+    }
 
-	/**
-	 * This method is used to set country id.
-	 * @param countryId iD of country
-	 */
-	public void setCountryId(int countryId) {
-		this.countryId = countryId;
-	}
+    public void view(int indent) {
+        this.viewWithoutNeighbors(indent);
 
-	/**
-	 * This method is used to get the name of the Country.
-	 * @return the country Name String
-	 */
-	public String getCountryName(){
-		return countryName;
-	}
+        this.printIndent(indent + 1);
 
-	/**
-	 * This method is used to set country name.
-	 * @param countryName name of country
-	 */
-	public void setCountryName(String countryName) {
-		this.countryName = countryName;
-	}
+        System.out.println("Neighbors:");
+        for (Country country : this.getNeighbors()) {
+            country.viewWithoutNeighbors(indent + 2);
+        }
 
-	/**
-	 * This method is used to get the X-coordinate of the corresponding Country.
-	 * @return the integer value of x coordinate
-	 */
-	public int getxCoordinate(){
-		return xCoordinate;
-	}
+    }
 
-
-	/**
-	 * This method is used to set x coordinates.
-	 * @param xCoordinate x coordinates  of country
-	 */
-	public void setxCoordinate(int xCoordinate) {
-		this.xCoordinate = xCoordinate;
-	}
-
-	/**
-	 * This method is used to get the Y-coordinate of the corresponding Country.
-	 * @return the integer value of y coordinate
-	 */
-	public int getyCoordinate() {
-		return yCoordinate;
-	}
-
-	/**
-	 * This method is used to set y coordinates.
-	 * @param yCoordinate y coordinates  of country
-	 */
-	public void setyCoordinate(int yCoordinate) {
-		this.yCoordinate = yCoordinate;
-	}
-
-	/**
-	 * This method is used to get an integer value of the continent which is set as Country ID.
-	 * @return the continent ID.
-	 */
-	public int getContinentID() {
-		return continentID;
-	}
-
-	/**
-	 * This method is used to sets an integer value of the continent which is set as Country ID.
-	 * @param continentID the new continent ID
-	 */
-	public void setContinentID(int continentID) {
-		this.continentID = continentID;
-	}
-
-	/**
-	 * This method is used to get all the neighbours that a country has as an Array list.
-	 * @return arrayList of the neighbouring country
-	 */
-	public ArrayList<Country> getNeighboursOfCountry() {
-		return neighboursOfCountry;
-	}
-
-	/**
-	 * From the country-neighbour HashMap adds the neighbours to the country individually.
-	 * @param neighbour the neighbour
-	 */
-	public void addNeighboursToTheCountries(Country neighbour){
-		neighboursOfCountry.add(neighbour);
-	}
-
-	/**
-	 * This method is used to get the list of neighbour Strings.
-	 * @return neighboursString
-	 */
-	public ArrayList<String> getNeighboursString() {
-		return neighboursString;
-	}
-
-	/**
-	 * This method is used to add name for neighbour string.
-	 * @param newNeighbour the new neighbour
-	 */
-	public void addNeighborString(String newNeighbour) {
-		if (!neighboursString.contains(newNeighbour)) {
-			neighboursString.add(newNeighbour);
-		}
-	}
-	
-
-	/**
-	 * This method is used to get number of armies.
-	 * @return armyNumbers number of armies
-	 */
-	public int getnoOfArmies() {
-		return armyNumbers;
-	}
-	
-
-	/**
-	 * This method is used to set number of armies.
-	 * @param armies Number of armies
-	 */
-	public void setnoOfArmies(int armies) {
-		 armyNumbers= armies;
-	}
-
-	/**
-	 * This method is used to increment the count of army.
-	 */
-	public void increaseArmyCount() {
-		armyNumbers++;
-	}
-
-	/**
-	 * This method is used to increment the count of army and put the count in army numbers.
-	 * @param count count of the army
-	 */
-	public void increaseArmyCount(int count) {
-		armyNumbers += count;
-	}
-
-	/**
-	 * This method is used to decrease the count of army.
-	 */
-	public void decreseArmyCount() {
-		armyNumbers--;
-	}
-
-	/**
-	 * This method is used to decrement the count of army and put the count in army numbers.
-	 * @param count count of the army
-	 */
-	public void decreaseArmyCount(int count) {
-		armyNumbers -= count;
-	}
-
+    public void viewWithoutNeighbors(int indent) {
+        this.printIndent(indent);
+        System.out.format("Country: %s | No.: %s | Army: %s\n", this.getName(), this.getOrder(), this.getArmyAmount());
+    }
 }
