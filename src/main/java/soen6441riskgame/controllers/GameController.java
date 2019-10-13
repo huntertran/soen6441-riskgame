@@ -7,6 +7,7 @@ import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.utils.Parser;
 
 public class GameController {
 
@@ -101,12 +102,12 @@ public class GameController {
     /**
      * automatically randomly place all remaining unplacedarmiesfor all players
      */
-    public void handlePlaceAllCommand(){
-        for(Player player : GameMap.getInstance().getPlayers()){
+    public void handlePlaceAllCommand() {
+        for (Player player : GameMap.getInstance().getPlayers()) {
             ArrayList<Country> conqueredCountries = player.getConqueredCountries();
             Random random = new Random();
 
-            for(Country country : conqueredCountries){
+            for (Country country : conqueredCountries) {
                 int armiesToPlace = random.nextInt(player.getUnplacedArmies());
                 country.increaseArmies(armiesToPlace);
             }
@@ -135,4 +136,57 @@ public class GameController {
         }
     }
 
+    private Player getCurrentPlayer(){
+        Player currentPlayer = null;
+
+        for(Player player : GameMap.getInstance().getPlayers()){
+            if(player.isPlaying()){
+                currentPlayer = player;
+                break;
+            }
+        }
+
+        if(currentPlayer == null){
+            GameMap.getInstance().getPlayers().get(0).setPlaying(true);
+
+            currentPlayer = GameMap.getInstance().getPlayers().get(0);
+        }
+
+        return currentPlayer;
+    }
+
+    private void calculateReinforcementArmies(Player currentPlayer){
+        ArrayList<Country> conqueredCountries = currentPlayer.getConqueredCountries();
+        int armiesFromAllConqueredCountries = Math.round(conqueredCountries.size() / 3);
+        int armiesFromConqueredContinents = 0;
+
+        int newUnplacedArmies = currentPlayer.getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;
+        currentPlayer.setUnplacedArmies(newUnplacedArmies);
+    }
+
+    public void enterReinforcement() {
+        Player currentPlayer = getCurrentPlayer();
+        System.out.format("Player %s is in turn", currentPlayer.getName());
+        calculateReinforcementArmies(currentPlayer);
+    }
+
+    public void handelReinforceCommand(String[] args){
+        Country country = GameMap.getInstance().getCountryFromName(args[0]);
+
+        int numberOfArmies = Parser.parseWithDefault(args[1], 0);
+
+        if(country == null){
+            System.out.format("Country %s is not existed", country);
+            return;
+        }
+
+        Player currentPlayer = getCurrentPlayer();
+
+        if(!country.getConquerer().equals(currentPlayer)){
+            System.out.format("The country %s is not belong to %s", country.getName(), currentPlayer.getName());
+            return;
+        }
+
+        country.increaseArmies(numberOfArmies);
+    }
 }
