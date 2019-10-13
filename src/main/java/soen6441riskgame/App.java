@@ -92,7 +92,7 @@ public final class App {
             // TODO
             break;
         }
-        }
+    }
     }
 
     public static void runFromBegining() {

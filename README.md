@@ -18,6 +18,10 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 
 <!-- /TOC -->
 
+**Build Status**
+
+![](https://github.com/huntertran/soen6441-riskgame/workflows/Java%20CI/badge.svg)
+
 # 1. Members
 <a id="markdown-members" name="members"></a>
 - 40124288 - Van Tuan Tran
