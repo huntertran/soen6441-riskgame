@@ -83,9 +83,19 @@ public class GameMap {
      * @return null if country name is not existed in map
      */
     public Country getCountryFromName(String countryName) {
-        for (Country country : GameMap.getInstance().getCountries()) {
+        for (Country country : getCountries()) {
             if (country.getName().equals(countryName)) {
                 return country;
+            }
+        }
+
+        return null;
+    }
+
+    public Player getPlayerFromName(String name) {
+        for (Player player : getPlayers()) {
+            if (player.getName().equals(name)) {
+                return player;
             }
         }
 

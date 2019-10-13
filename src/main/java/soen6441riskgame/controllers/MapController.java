@@ -59,7 +59,7 @@ public final class MapController {
      */
     public void addCountry(String countryName, String continentName) {
         Continent continent = getContinentFromName(continentName);
-        Country country = getCountryFromName(countryName);
+        Country country = GameMap.getInstance().getCountryFromName(countryName);
 
         if (continent == null) {
             System.out.format("Continent %s is not existed", continentName);
@@ -99,8 +99,8 @@ public final class MapController {
      * @param neighborCountryName
      */
     public void addNeighbor(String countryName, String neighborCountryName) {
-        Country country = getCountryFromName(countryName);
-        Country neighbor = getCountryFromName(neighborCountryName);
+        Country country = GameMap.getInstance().getCountryFromName(countryName);
+        Country neighbor = GameMap.getInstance().getCountryFromName(neighborCountryName);
 
         if (country == null || neighbor == null) {
             System.out.println("The country name or neighbor country name is not existed!");
@@ -117,7 +117,7 @@ public final class MapController {
      * @param continent   the name of continent that country belong to
      */
     public void createNewCountry(String countryName, Continent continent) {
-        if (getCountryFromName(countryName) != null) {
+        if (GameMap.getInstance().getCountryFromName(countryName) != null) {
             return;
         }
 
@@ -240,21 +240,21 @@ public final class MapController {
         return null;
     }
 
-    /**
-     * get country object from name
-     *
-     * @param countryName
-     * @return null if country name is not existed in map
-     */
-    public Country getCountryFromName(String countryName) {
-        for (Country country : GameMap.getInstance().getCountries()) {
-            if (country.getName().equals(countryName)) {
-                return country;
-            }
-        }
+    // /**
+    //  * get country object from name
+    //  *
+    //  * @param countryName
+    //  * @return null if country name is not existed in map
+    //  */
+    // public Country getCountryFromName(String countryName) {
+    //     for (Country country : GameMap.getInstance().getCountries()) {
+    //         if (country.getName().equals(countryName)) {
+    //             return country;
+    //         }
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     /**
      * get all continents that have no country
@@ -318,7 +318,7 @@ public final class MapController {
      * @return
      */
     public boolean isCountryExisted(String countryName) {
-        Country country = getCountryFromName(countryName);
+        Country country = GameMap.getInstance().getCountryFromName(countryName);
 
         return country != null;
     }
@@ -333,8 +333,8 @@ public final class MapController {
     public boolean isNeighboringCountries(String countryName, String neighborCountryName) {
         int countryOrder = -1;
         int neighbouringCountryOrder = -1;
-        countryOrder = getCountryFromName(countryName).getOrder();
-        neighbouringCountryOrder = getCountryFromName(neighborCountryName).getOrder();
+        countryOrder = GameMap.getInstance().getCountryFromName(countryName).getOrder();
+        neighbouringCountryOrder = GameMap.getInstance().getCountryFromName(neighborCountryName).getOrder();
 
         if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
                 && countryOrder != -1 && neighbouringCountryOrder != -1) {
@@ -548,7 +548,7 @@ public final class MapController {
      * @param countryName name of the country to remove
      */
     public void removeCountry(String countryName) {
-        Country country = getCountryFromName(countryName);
+        Country country = GameMap.getInstance().getCountryFromName(countryName);
 
         if (country == null) {
             System.out.format("Country %s is not existed", countryName);
@@ -589,8 +589,8 @@ public final class MapController {
      * @param neighborCountryName
      */
     public void removeNeighbor(String countryName, String neighborCountryName) {
-        Country country = getCountryFromName(countryName);
-        Country neighbor = getCountryFromName(neighborCountryName);
+        Country country = GameMap.getInstance().getCountryFromName(countryName);
+        Country neighbor = GameMap.getInstance().getCountryFromName(neighborCountryName);
 
         if (country == null || neighbor == null) {
             System.out.println("One or both countries is not existed");

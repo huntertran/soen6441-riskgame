@@ -118,8 +118,8 @@ public class MapControllerTest {
 
 		// Assert
 		Assert.assertNull(mapController.getContinentFromName(continent1));
-		Assert.assertNotEquals(continent1, mapController.getCountryFromName(country1).getContinent());
-		Assert.assertNotEquals(continent1, mapController.getCountryFromName(country2).getContinent());
+		Assert.assertNotEquals(continent1, GameMap.getInstance().getCountryFromName(country1).getContinent());
+		Assert.assertNotEquals(continent1, GameMap.getInstance().getCountryFromName(country2).getContinent());
 
 	}
 

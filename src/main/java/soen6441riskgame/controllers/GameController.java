@@ -81,7 +81,7 @@ public class GameController {
             return;
         }
 
-        if(!country.getConquerer().isPlaying()){
+        if (!country.getConquerer().isPlaying()) {
             System.out.println("Country not belong to the current player");
             return;
         }
@@ -89,7 +89,7 @@ public class GameController {
         placeArmy(country, country.getConquerer());
     }
 
-    public void placeArmy(Country country, Player player){
+    public void placeArmy(Country country, Player player) {
         int originalArmy = country.getArmyAmount();
 
         country.setArmyAmount(originalArmy + 1);
@@ -99,7 +99,7 @@ public class GameController {
     }
 
     private void addPlayer(String name) {
-        Player player = getPlayerFromName(name);
+        Player player = GameMap.getInstance().getPlayerFromName(name);
 
         if (player == null) {
             player = new Player();
@@ -110,7 +110,7 @@ public class GameController {
     }
 
     private void removePlayer(String name) {
-        Player player = getPlayerFromName(name);
+        Player player = GameMap.getInstance().getPlayerFromName(name);
 
         if (player != null) {
             GameMap.getInstance().getPlayers().remove(player);
@@ -120,13 +120,5 @@ public class GameController {
         }
     }
 
-    private Player getPlayerFromName(String name) {
-        for (Player player : GameMap.getInstance().getPlayers()) {
-            if (player.getName().equals(name)) {
-                return player;
-            }
-        }
 
-        return null;
-    }
 }
