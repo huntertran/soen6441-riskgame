@@ -9,9 +9,18 @@ public class Player {
     private int armies;
     private int unplacedArmies;
     private boolean isPlaying = false;
+    private boolean isLost = false;
 
     public String getName() {
         return name;
+    }
+
+    public boolean isLost() {
+        return isLost;
+    }
+
+    public void setLost(boolean isLost) {
+        this.isLost = isLost;
     }
 
     public ArrayList<Country> getConqueredCountries() {

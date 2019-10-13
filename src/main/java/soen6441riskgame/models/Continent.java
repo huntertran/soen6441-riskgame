@@ -49,6 +49,24 @@ public class Continent implements Viewable {
         this.name = name;
     }
 
+    public Player getConquerer() {
+        ArrayList<Country> countries = getCountries();
+
+        if (countries.size() == 0) {
+            return null;
+        }
+
+        Player countryConquerer = countries.get(0).getConquerer();
+        for (Country country : countries) {
+            Player conquerer = country.getConquerer();
+            if (!conquerer.equals(countryConquerer)) {
+                return null;
+            }
+        }
+
+        return countryConquerer;
+    }
+
     public void view(int indent) {
         this.viewWithoutCountry();
 
