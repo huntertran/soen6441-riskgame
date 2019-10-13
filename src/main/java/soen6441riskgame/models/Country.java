@@ -48,7 +48,8 @@ public class Country implements Viewable {
 
     public void setArmyAmount(int armyAmount) {
         this.armyAmount = armyAmount;
-        System.out.format("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(), getConquerer().getName());
+        System.out.format("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(),
+                getConquerer().getName());
     }
 
     /**
@@ -81,8 +82,28 @@ public class Country implements Viewable {
         return neighbors;
     }
 
-    public boolean isConquered(){
+    public boolean isConquered() {
         return this.getConquerer() != null;
+    }
+
+    /**
+     * Increase armies inside this country
+     * 
+     * @param amount of armies from unplaced armies of the conquerer
+     */
+    public void increaseArmies(int amount) {
+        Player conquerer = this.getConquerer();
+
+        if (amount > conquerer.getUnplacedArmies()) {
+            System.out.println(
+                    "The amount of armies you want to place in this country is bigger than the amount of armies you have");
+        }
+
+        int newArmiesAmount = this.getArmyAmount() + amount;
+        this.setArmyAmount(newArmiesAmount);
+
+        int newUnplacedArmiesOfConquerer = conquerer.getUnplacedArmies() - amount;
+        conquerer.setUnplacedArmies(newUnplacedArmiesOfConquerer);
     }
 
     public void view(int indent) {

@@ -81,7 +81,7 @@ public final class App {
             break;
         }
         case GameCommands.PLACEALL: {
-            // TODO
+            gameController.handlePlaceAllCommand();
             break;
         }
         case GameCommands.REINFORCE: {

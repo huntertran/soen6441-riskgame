@@ -89,13 +89,28 @@ public class GameController {
         placeArmy(country, country.getConquerer());
     }
 
-    public void placeArmy(Country country, Player player) {
+    private void placeArmy(Country country, Player player) {
         int originalArmy = country.getArmyAmount();
 
         country.setArmyAmount(originalArmy + 1);
 
         int newUnplacedArmies = player.getUnplacedArmies() - 1;
         player.setUnplacedArmies(newUnplacedArmies);
+    }
+
+    /**
+     * automatically randomly place all remaining unplacedarmiesfor all players
+     */
+    public void handlePlaceAllCommand(){
+        for(Player player : GameMap.getInstance().getPlayers()){
+            ArrayList<Country> conqueredCountries = player.getConqueredCountries();
+            Random random = new Random();
+
+            for(Country country : conqueredCountries){
+                int armiesToPlace = random.nextInt(player.getUnplacedArmies());
+                country.increaseArmies(armiesToPlace);
+            }
+        }
     }
 
     private void addPlayer(String name) {
@@ -119,6 +134,5 @@ public class GameController {
             System.out.format("Player %d not exist in game", name);
         }
     }
-
 
 }

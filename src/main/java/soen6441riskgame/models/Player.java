@@ -1,5 +1,9 @@
 package soen6441riskgame.models;
 
+import java.util.ArrayList;
+
+import soen6441riskgame.singleton.GameMap;
+
 public class Player {
     private String name;
     private int armies;
@@ -8,6 +12,18 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<Country> getConqueredCountries() {
+        ArrayList<Country> conquered = new ArrayList<>();
+
+        for (Country country : GameMap.getInstance().getCountries()) {
+            if (country.getConquerer().equals(this)) {
+                conquered.add(country);
+            }
+        }
+
+        return conquered;
     }
 
     public boolean isPlaying() {
