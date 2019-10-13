@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import soen6441riskgame.commands.GameCommands;
 import soen6441riskgame.commands.MapEditorCommands;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
@@ -12,7 +13,7 @@ public final class App {
     private App() {
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.out.println("SOEN 6441 - Risk Domination game");
 
         if (args.length == 0) {
@@ -22,7 +23,7 @@ public final class App {
         }
     }
 
-    public static void jumpToCommand(String[] args) throws IOException {
+    public static void jumpToCommand(String[] args) {
         String command = args[0].toLowerCase();
         String[] remainingArgs = Arrays.copyOfRange(args, 1, args.length);
 
@@ -47,8 +48,12 @@ public final class App {
             break;
         }
         case MapEditorCommands.SAVEMAP: {
-            mapController.saveMap(remainingArgs[0]);
-        break;
+            try {
+                mapController.saveMap(remainingArgs[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            break;
         }
         case MapEditorCommands.EDITMAP: {
             mapController.editMap(remainingArgs[0]);
@@ -96,7 +101,7 @@ public final class App {
         System.out.print("Enter your action: ");
         String command = scanner.nextLine();
 
-        while (command != GameCommands.EXIT) {
+        while (!command.equals(GameCommands.EXIT)) {
             jumpToCommand(command.split(" "));
             System.out.print("Enter your action: ");
             command = scanner.nextLine();
