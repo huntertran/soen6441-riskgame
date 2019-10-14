@@ -138,6 +138,10 @@ public class GameController {
     }
 
     private Player getCurrentPlayer() {
+        return getCurrentPlayer(false);
+    }
+
+    private Player getCurrentPlayer(boolean isShowMessage) {
         Player currentPlayer = null;
         ArrayList<Player> players = GameMap.getInstance().getPlayers();
 
@@ -156,6 +160,10 @@ public class GameController {
                     currentPlayer = player;
                 }
             }
+        }
+
+        if (isShowMessage) {
+            System.out.format("Player %s is in turn", currentPlayer.getName());
         }
 
         return currentPlayer;
@@ -193,8 +201,7 @@ public class GameController {
     }
 
     public void enterReinforcement() {
-        Player currentPlayer = getCurrentPlayer();
-        System.out.format("Player %s is in turn", currentPlayer.getName());
+        Player currentPlayer = getCurrentPlayer(true);
         calculateReinforcementArmies(currentPlayer);
     }
 

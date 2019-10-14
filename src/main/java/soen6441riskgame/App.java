@@ -90,11 +90,16 @@ public final class App {
             break;
         }
         case GameCommands.REINFORCE: {
+            gameController.enterReinforcement();
             gameController.handleReinforceCommand(args);
             break;
         }
         case GameCommands.FORTIFY: {
             gameController.handleFortifyCommand(args);
+            break;
+        }
+        default:{
+            System.out.println("Command not exist!");
             break;
         }
         }
