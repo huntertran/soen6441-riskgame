@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is used to take the input from from the console.
  * 

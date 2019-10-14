@@ -13,6 +13,7 @@ import soen6441riskgame.utils.Parser;
 public class GameController {
 
     public static int MAX_INITIAL_ARMY_AMOUNT = 50;
+    public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
 
     public void handlePlayerAddAndRemoveCommand(String[] arg) {
         CommonCommandArgs playerCommand = CommonCommandArgs.fromString(arg[0]);
@@ -54,7 +55,7 @@ public class GameController {
                 countryToAssign.setConquerer(player);
 
                 // user need to place at least 1 army to the country he owned
-                countryToAssign.setArmyAmount(1);
+                countryToAssign.setArmyAmount(MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY);
                 numberOfAssignedCountry++;
             }
         }
@@ -88,7 +89,13 @@ public class GameController {
             return;
         }
 
-        placeArmy(country, country.getConquerer());
+        Player currentPlayer = getCurrentPlayer();
+        if (currentPlayer.getUnplacedArmies() != 0) {
+            placeArmy(country, country.getConquerer());
+        } else {
+            turnToNextPlayer();
+            getCurrentPlayer(true);
+        }
     }
 
     private void placeArmy(Country country, Player player) {
@@ -115,10 +122,32 @@ public class GameController {
         }
     }
 
-    
-
     private Player getCurrentPlayer() {
         return getCurrentPlayer(false);
+    }
+
+    public void startRoundRobinPlayers() {
+        Player currentPlayer = getCurrentPlayer();
+        ArrayList<Player> players = GameMap.getInstance().getPlayers();
+
+        if (currentPlayer == null) {
+            // set first player
+            for (Player player : players) {
+                if (!player.isLost()) {
+                    player.setPlaying(true);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void turnToNextPlayer() {
+        Player currentPlayer = getCurrentPlayer();
+
+        if (currentPlayer != null) {
+            currentPlayer.setPlaying(false);
+            currentPlayer.getNextPlayer().setPlaying(true);
+        }
     }
 
     private Player getCurrentPlayer(boolean isShowMessage) {
@@ -129,16 +158,6 @@ public class GameController {
             if (player.isPlaying() && !player.isLost()) {
                 currentPlayer = player;
                 break;
-            }
-        }
-
-        if (currentPlayer == null) {
-            // set first player
-            for (Player player : players) {
-                if (!player.isLost()) {
-                    player.setPlaying(true);
-                    currentPlayer = player;
-                }
             }
         }
 

@@ -82,6 +82,7 @@ public final class App {
             break;
         }
         case GameCommands.PLACEARMY: {
+            gameController.startRoundRobinPlayers();
             gameController.handlePlaceArmyCommand(remainingArgs[0]);
             break;
         }

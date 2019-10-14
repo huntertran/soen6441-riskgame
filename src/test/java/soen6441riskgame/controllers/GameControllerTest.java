@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import soen6441riskgame.enums.PrintConsoleAndUserInput;
 
-// TODO: Auto-generated Javadoc
 /**
  * This is the test class for game controller. methods from game controller is
  * going to tested from here
