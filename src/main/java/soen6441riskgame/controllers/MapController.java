@@ -233,7 +233,7 @@ public final class MapController {
      */
     public Continent getContinentFromName(String continentName) {
         for (Continent continent : GameMap.getInstance().getContinents()) {
-            if (continent.getName() == continentName)
+            if (continent.getName().equals(continentName))
                 return continent;
         }
 
