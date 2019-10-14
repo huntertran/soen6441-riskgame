@@ -19,11 +19,11 @@ public class GameController {
 
         switch (playerCommand) {
         case ADD: {
-            addPlayer(arg[1]);
+            GameMap.getInstance().addPlayer(arg[1]);
             break;
         }
         case REMOVE: {
-            removePlayer(arg[1]);
+            GameMap.getInstance().removePlayer(arg[1]);
             break;
         }
         case NONE: {
@@ -115,26 +115,7 @@ public class GameController {
         }
     }
 
-    private void addPlayer(String name) {
-        Player player = GameMap.getInstance().getPlayerFromName(name);
-
-        if (player == null) {
-            player = new Player(name);
-            GameMap.getInstance().getPlayers().add(player);
-            System.out.format("Player %d added", name);
-        }
-    }
-
-    private void removePlayer(String name) {
-        Player player = GameMap.getInstance().getPlayerFromName(name);
-
-        if (player != null) {
-            GameMap.getInstance().getPlayers().remove(player);
-            System.out.format("Player %d removed", name);
-        } else {
-            System.out.format("Player %d not exist in game", name);
-        }
-    }
+    
 
     private Player getCurrentPlayer() {
         return getCurrentPlayer(false);

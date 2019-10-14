@@ -10,9 +10,34 @@ public class Player {
     private int unplacedArmies;
     private boolean isPlaying = false;
     private boolean isLost = false;
+    private Player nextPlayer;
+    private Player previousPlayer;
 
-    public Player(String name){
+    public Player(String name) {
         this.name = name;
+    }
+
+    public Player getPreviousPlayer() {
+        return previousPlayer;
+    }
+
+    public void setPreviousPlayer(Player previousPlayer) {
+        this.previousPlayer = previousPlayer;
+
+        if (previousPlayer.getNextPlayer() != this) {
+            previousPlayer.setNextPlayer(this);
+        }
+    }
+
+    public Player getNextPlayer() {
+        return nextPlayer;
+    }
+
+    public void setNextPlayer(Player nextPlayer) {
+        this.nextPlayer = nextPlayer;
+        if (nextPlayer.getPreviousPlayer() != this) {
+            nextPlayer.setPreviousPlayer(this);
+        }
     }
 
     public String getName() {

@@ -102,6 +102,43 @@ public class GameMap {
         return null;
     }
 
+    public void addPlayer(String name) {
+        Player player = getPlayerFromName(name);
+
+        if (player == null) {
+
+            player = new Player(name);
+
+            Player previousPlayer = players.get(players.size() - 1);
+            Player nextPlayer = players.get(0);
+
+            player.setPreviousPlayer(previousPlayer);
+            player.setNextPlayer(nextPlayer);
+
+            players.add(player);
+            System.out.format("Player %d added", name);
+        }
+    }
+
+    public void removePlayer(String name) {
+        Player player = getPlayerFromName(name);
+
+        if (player != null) {
+
+            Player previousPlayer = player.getPreviousPlayer();
+            Player nextPlayer = player.getNextPlayer();
+
+            previousPlayer.setNextPlayer(nextPlayer);
+            nextPlayer.setPreviousPlayer(previousPlayer);
+
+            players.remove(player);
+
+            System.out.format("Player %d removed", name);
+        } else {
+            System.out.format("Player %d not exist in game", name);
+        }
+    }
+
     /**
      * check if 2 country is neighbor in map
      *
