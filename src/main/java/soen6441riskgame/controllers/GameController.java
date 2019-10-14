@@ -182,6 +182,10 @@ public class GameController {
         int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries(currentPlayer);
         int armiesFromConqueredContinents = getArmiesFromConqueredContinents(currentPlayer);
 
+        if (armiesFromAllConqueredCountries < 3) {
+            armiesFromAllConqueredCountries = 3;
+        }
+
         int newUnplacedArmies = currentPlayer.getUnplacedArmies() + armiesFromAllConqueredCountries
                 + armiesFromConqueredContinents;
 
