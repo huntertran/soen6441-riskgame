@@ -85,14 +85,14 @@ public final class App {
             break;
         }
         case GameCommands.REINFORCE: {
-            // TODO
+            gameController.handleReinforceCommand(args);
             break;
         }
         case GameCommands.FORTIFY: {
-            // TODO
+            gameController.handleFortifyCommand(args);
             break;
         }
-    }
+        }
     }
 
     public static void runFromBegining() {

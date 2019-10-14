@@ -194,7 +194,7 @@ public class GameController {
         calculateReinforcementArmies(currentPlayer);
     }
 
-    public void handelReinforceCommand(String[] args) {
+    public void handleReinforceCommand(String[] args) {
         Country country = GameMap.getInstance().getCountryFromName(args[0]);
 
         int numberOfArmies = Parser.parseWithDefault(args[1], 0);
