@@ -119,8 +119,7 @@ public class GameController {
         Player player = GameMap.getInstance().getPlayerFromName(name);
 
         if (player == null) {
-            player = new Player();
-            player.setName(name);
+            player = new Player(name);
             GameMap.getInstance().getPlayers().add(player);
             System.out.format("Player %d added", name);
         }

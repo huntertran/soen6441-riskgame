@@ -11,6 +11,10 @@ public class Player {
     private boolean isPlaying = false;
     private boolean isLost = false;
 
+    public Player(String name){
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
