@@ -241,19 +241,19 @@ public final class MapController {
     }
 
     // /**
-    //  * get country object from name
-    //  *
-    //  * @param countryName
-    //  * @return null if country name is not existed in map
-    //  */
+    // * get country object from name
+    // *
+    // * @param countryName
+    // * @return null if country name is not existed in map
+    // */
     // public Country getCountryFromName(String countryName) {
-    //     for (Country country : GameMap.getInstance().getCountries()) {
-    //         if (country.getName().equals(countryName)) {
-    //             return country;
-    //         }
-    //     }
+    // for (Country country : GameMap.getInstance().getCountries()) {
+    // if (country.getName().equals(countryName)) {
+    // return country;
+    // }
+    // }
 
-    //     return null;
+    // return null;
     // }
 
     /**
@@ -323,8 +323,6 @@ public final class MapController {
         return country != null;
     }
 
-
-
     /**
      * check if the number of country is lower than the minimum amount of country
      * required currently the minimum required is {@MINIMUM_AMOUNT_OF_COUNTRIES}
@@ -333,7 +331,15 @@ public final class MapController {
      * @return
      */
     private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
-        return GameMap.getInstance().getCountries().size() < minimumNumberOfCountries;
+        int numberOfCountry = GameMap.getInstance().getCountries().size();
+        boolean isNotEnoughCountries = numberOfCountry < minimumNumberOfCountries;
+
+        if (isNotEnoughCountries) {
+            System.out.format("Not enough countries. Created: %d - Minimum required: %s", numberOfCountry,
+                    minimumNumberOfCountries);
+        }
+
+        return isNotEnoughCountries;
     }
 
     /**
@@ -485,13 +491,9 @@ public final class MapController {
                     break;
                 }
                 }
-
             }
 
-            validateMap();
-
             System.out.println("Map loaded");
-            showMap();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -591,26 +593,18 @@ public final class MapController {
 
     public void saveMap(String fileName) throws IOException {
         FileWriter writer = new FileWriter(fileName);
-        ArrayList<Continent> continents = GameMap.getInstance().getContinents();
-        writer.write("[continents]\n");
-        for (Continent continent : continents) {
-            writer.write(continent.getName() + " " + continent.getArmy() + "\n");
-        }
-        writer.write("\n");
 
-        ArrayList<Country> countries = GameMap.getInstance().getCountries();
-        writer.write("[countries]\n");
-        for (Country country : countries) {
-            // int countryOrder = country.getOrder();
-            // String countryName = country.getName();
-            // int continentOrder = country.getContinent().getOrder();
-            // Coordinate location = country.getCoordinate();
+        writeContinentsToFile(writer);
 
-            writer.write(country.getOrder() + " " + country.getName() + " " + country.getContinent().getOrder() + " "
-                    + country.getArmyAmount() + "\n");
-        }
-        writer.write("\n");
+        writeCountriesToFile(writer);
 
+        writeBordersToFile(writer);
+
+        writer.close();
+
+    }
+
+    private void writeBordersToFile(FileWriter writer) throws IOException {
         writer.write("[borders]\n");
 
         for (Country country : GameMap.getInstance().getCountries()) {
@@ -624,9 +618,25 @@ public final class MapController {
 
             writer.write(neighborLine + "\n");
         }
+    }
 
-        writer.close();
+    private void writeCountriesToFile(FileWriter writer) throws IOException {
+        ArrayList<Country> countries = GameMap.getInstance().getCountries();
+        writer.write("[countries]\n");
+        for (Country country : countries) {
+            writer.write(country.getOrder() + " " + country.getName() + " " + country.getContinent().getOrder() + " "
+                    + country.getArmyAmount() + "\n");
+        }
+        writer.write("\n");
+    }
 
+    private void writeContinentsToFile(FileWriter writer) throws IOException {
+        ArrayList<Continent> continents = GameMap.getInstance().getContinents();
+        writer.write("[continents]\n");
+        for (Continent continent : continents) {
+            writer.write(continent.getName() + " " + continent.getArmy() + "\n");
+        }
+        writer.write("\n");
     }
 
     /**
@@ -634,7 +644,6 @@ public final class MapController {
      */
     public void showMap() {
         GameMap.getInstance().showContinents();
-        // GameMap.getInstance().showCountries();
     }
 
     /**
@@ -659,11 +668,28 @@ public final class MapController {
      * @return
      */
     public boolean validateMap() {
-        boolean result = false;
+        boolean isNotEnoughCountries = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES);
 
-        result = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES) && getIsolatedCountries().size() > 0
-                && getEmptyContinents().size() > 0;
+        ArrayList<Country> isolatedCountries = getIsolatedCountries();
+        boolean isIsolatedCountryExisted = isolatedCountries.size() > 0;
 
-        return result;
+        ArrayList<Continent> emptyContinents = getEmptyContinents();
+        boolean isEmptyContinentExisted = emptyContinents.size() > 0;
+
+        if (isIsolatedCountryExisted) {
+            System.out.println("Isolated countries existed:");
+            for (Country country : isolatedCountries) {
+                country.view(1);
+            }
+        }
+
+        if (isEmptyContinentExisted) {
+            System.out.println("Empty continent existed:");
+            for (Continent continent : emptyContinents) {
+                continent.view(1);
+            }
+        }
+
+        return isNotEnoughCountries && isIsolatedCountryExisted && isEmptyContinentExisted;
     }
 }

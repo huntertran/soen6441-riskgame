@@ -15,7 +15,7 @@ public enum CommonCommandArgs {
 
     public static CommonCommandArgs fromString(String argumentString) {
         for (CommonCommandArgs argument : values()) {
-            if (argument.getArgument().replace("-","").equals(argumentString.toLowerCase().replace("-",""))) {
+            if (argument.getArgument().replace("-", "").equals(argumentString.toLowerCase().replace("-", ""))) {
                 return argument;
             }
         }

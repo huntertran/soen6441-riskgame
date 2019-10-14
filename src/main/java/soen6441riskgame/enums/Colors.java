@@ -2,58 +2,62 @@ package soen6441riskgame.enums;
 
 /**
  * This class adds colors in game for differentiation
+ * 
  * @version 1.0.0
  */
 public enum Colors {
-	
+
     /**
      * 
-     *  red. */
-	RED,
-	
-	
-    /** 
+     * red.
+     */
+    RED,
+
+    /**
      * 
-     * pink. */
+     * pink.
+     */
     PINK,
-    
-    /** 
+
+    /**
      * 
-     * white. */
+     * white.
+     */
     WHITE,
-    
-    /** 
+
+    /**
      * 
-     * yellow. */
+     * yellow.
+     */
     YELLOW,
-    
-    /** 
+
+    /**
      * 
-     * green. */
+     * green.
+     */
     GREEN,
-    
-    /** 
+
+    /**
      * 
-     * blue. */
+     * blue.
+     */
     BLUE,
-    
-    /** 
+
+    /**
      * 
-     * purple. */
+     * purple.
+     */
     MAGENTA,
-    
-    /** 
+
+    /**
      * 
-     * black. */
+     * black.
+     */
     BLACK,
-    
-    /** 
+
+    /**
      * 
-     * orange. */
+     * orange.
+     */
     ORANGE
 }
-
-
-
-
-
