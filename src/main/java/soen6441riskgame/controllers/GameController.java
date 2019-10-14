@@ -221,7 +221,13 @@ public class GameController {
             return;
         }
 
-        country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
+        if (currentPlayer.getUnplacedArmies() != 0) {
+            country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
+        } else {
+            turnToNextPlayer();
+            getCurrentPlayer(true);
+        }
+
     }
 
     /**
