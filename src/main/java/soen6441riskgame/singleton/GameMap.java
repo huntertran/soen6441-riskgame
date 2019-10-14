@@ -101,4 +101,36 @@ public class GameMap {
 
         return null;
     }
+
+    /**
+     * check if 2 country is neighbor in map
+     *
+     * @param countryName
+     * @param neighborCountryName
+     * @return false if any of two countries is not existed
+     */
+    public boolean isNeighboringCountries(String countryName, String neighborCountryName) {
+        Country country = getCountryFromName(countryName);
+        Country neighbor = getCountryFromName(neighborCountryName);
+
+        if (country == null || neighbor == null) {
+            return false;
+        }
+
+        return isNeighboringCountries(country, neighbor);
+    }
+
+    public boolean isNeighboringCountries(Country country, Country neighborCountry) {
+        int countryOrder = -1;
+        int neighbouringCountryOrder = -1;
+        countryOrder = country.getOrder();
+        neighbouringCountryOrder = neighborCountry.getOrder();
+
+        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
+                && countryOrder != -1 && neighbouringCountryOrder != -1) {
+            return true;
+        }
+
+        return false;
+    }
 }

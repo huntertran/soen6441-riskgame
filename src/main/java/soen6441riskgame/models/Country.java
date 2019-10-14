@@ -87,11 +87,11 @@ public class Country implements Viewable {
     }
 
     /**
-     * Increase armies inside this country
+     * Increase armies inside this country from unplaced armies
      * 
      * @param amount of armies from unplaced armies of the conquerer
      */
-    public void increaseArmies(int amount) {
+    public void receiveArmiesFromUnPlacedArmies(int amount) {
         Player conquerer = this.getConquerer();
 
         if (amount > conquerer.getUnplacedArmies()) {
@@ -99,11 +99,37 @@ public class Country implements Viewable {
                     "The amount of armies you want to place in this country is bigger than the amount of armies you have");
         }
 
-        int newArmiesAmount = this.getArmyAmount() + amount;
-        this.setArmyAmount(newArmiesAmount);
+        this.increaseArmies(amount);
 
         int newUnplacedArmiesOfConquerer = conquerer.getUnplacedArmies() - amount;
         conquerer.setUnplacedArmies(newUnplacedArmiesOfConquerer);
+    }
+
+    public void increaseArmies(int amount) {
+        int newArmiesAmount = this.getArmyAmount() + amount;
+        this.setArmyAmount(newArmiesAmount);
+    }
+
+    public void decreaseArmies(int amount) {
+        int newArmiesAmount = this.getArmyAmount() - amount;
+        this.setArmyAmount(newArmiesAmount);
+    }
+
+    public void moveArmies(Country toCountry, int armiesToMove) {
+        if (!GameMap.getInstance().isNeighboringCountries(this, toCountry)) {
+            System.out.format("Country %s and %s is not neighbor", this.getName(), toCountry.getName());
+            return;
+        }
+
+        if (armiesToMove > this.getArmyAmount() - 1) {
+            System.out.println("The 'fromcountry' must have at least 1 army after fortification");
+            System.out.format("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left",
+                    armiesToMove, this.getName(), toCountry.getName(), this.getArmyAmount());
+            return;
+        }
+
+        this.decreaseArmies(armiesToMove);
+        toCountry.increaseArmies(armiesToMove);
     }
 
     public void view(int indent) {

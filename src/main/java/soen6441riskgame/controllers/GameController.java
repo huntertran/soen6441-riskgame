@@ -110,7 +110,7 @@ public class GameController {
 
             for (Country country : conqueredCountries) {
                 int armiesToPlace = random.nextInt(player.getUnplacedArmies());
-                country.increaseArmies(armiesToPlace);
+                country.receiveArmiesFromUnPlacedArmies(armiesToPlace);
             }
         }
     }
@@ -211,6 +211,32 @@ public class GameController {
             return;
         }
 
-        country.increaseArmies(numberOfArmies);
+        country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
+    }
+
+    /**
+     * move any number of armies from one country to another if they are connected
+     * 
+     * If args[0] is "none" then user choose not to do a move
+     * 
+     * @param args[0] from country
+     * @param args[1] to country
+     * @param args[2] number of armies
+     */
+    public void handleFortifyCommand(String[] args) {
+        if (args[0].toLowerCase().equals("none")) {
+            return;
+        }
+
+        Country fromCountry = GameMap.getInstance().getCountryFromName(args[0]);
+        Country toCountry = GameMap.getInstance().getCountryFromName(args[1]);
+        int numberOfArmies = Parser.parseWithDefault(args[2], 0);
+
+        if (fromCountry == null || toCountry == null) {
+            System.out.println("The country name(s) not existed");
+            return;
+        }
+
+        fromCountry.moveArmies(toCountry, numberOfArmies);
     }
 }

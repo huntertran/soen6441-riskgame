@@ -323,26 +323,7 @@ public final class MapController {
         return country != null;
     }
 
-    /**
-     * check if 2 country is neighbor in map
-     *
-     * @param countryName
-     * @param neighborCountryName
-     * @return false if any of two countries is not existed
-     */
-    public boolean isNeighboringCountries(String countryName, String neighborCountryName) {
-        int countryOrder = -1;
-        int neighbouringCountryOrder = -1;
-        countryOrder = GameMap.getInstance().getCountryFromName(countryName).getOrder();
-        neighbouringCountryOrder = GameMap.getInstance().getCountryFromName(neighborCountryName).getOrder();
 
-        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
-                && countryOrder != -1 && neighbouringCountryOrder != -1) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * check if the number of country is lower than the minimum amount of country
