@@ -19,8 +19,13 @@ public class GameControllerTest {
 
     @Before
     public void before() throws IOException {
+
+        GameMap testingInstanceGameMap = new GameMap();
+        GameMap.setTestingInstance(testingInstanceGameMap);
+
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
         mapController = new MapController();
+        mapController.resetMap();
         mapController.loadMap(filePath);
 
         gameController = new GameController();
@@ -103,7 +108,7 @@ public class GameControllerTest {
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(rogerAddArgs);
-    
+
         gameController.populateCountries();
 
         boolean isOneCountryNotAssigned = false;

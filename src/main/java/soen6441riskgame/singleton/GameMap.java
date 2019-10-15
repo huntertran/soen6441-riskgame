@@ -8,15 +8,19 @@ import soen6441riskgame.utils.ConsolePrinter;
 import java.util.ArrayList;
 
 public class GameMap {
-    private static final GameMap instance = new GameMap();
+    private static GameMap instance = new GameMap();
     private String mapName;
     private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
     private ArrayList<Player> players = new ArrayList<Player>();
     private int[][] borders;
 
-    private GameMap() {
+    public GameMap() {
     };
+
+    public static void setTestingInstance(GameMap newTestingInstance){
+        instance = newTestingInstance;
+    }
 
     public ArrayList<Player> getPlayers() {
         return players;
