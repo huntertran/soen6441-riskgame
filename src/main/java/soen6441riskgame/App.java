@@ -101,11 +101,11 @@ public final class App {
         }
         case GameCommands.REINFORCE: {
             gameController.enterReinforcement();
-            gameController.handleReinforceCommand(args);
+            gameController.handleReinforceCommand(remainingArgs);
             break;
         }
         case GameCommands.FORTIFY: {
-            gameController.handleFortifyCommand(args);
+            gameController.handleFortifyCommand(remainingArgs);
             break;
         }
         default: {

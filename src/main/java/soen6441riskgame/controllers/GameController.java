@@ -18,6 +18,7 @@ public class GameController {
 
     /**
      * handle <code>editplayer</code> command
+     * 
      * @param args [0] -add/-remove
      * @param args [1] player name
      */
@@ -88,9 +89,11 @@ public class GameController {
     }
 
     /**
-     * Handle place army command for current player.
-     * The player is selected in a round-robin rule
-     * @param countryName name of the country to place army. The country must belong to current player
+     * Handle place army command for current player. The player is selected in a
+     * round-robin rule
+     * 
+     * @param countryName name of the country to place army. The country must belong
+     *                    to current player
      */
     public void handlePlaceArmyCommand(String countryName) {
         Country country = GameMap.getInstance().getCountryFromName(countryName);
@@ -116,8 +119,9 @@ public class GameController {
 
     /**
      * Place army for player
+     * 
      * @param country the country to place army
-     * @param player the player to place army
+     * @param player  the player to place army
      */
     private void placeArmy(Country country, Player player) {
         int originalArmy = country.getArmyAmount();
@@ -145,6 +149,7 @@ public class GameController {
 
     /**
      * get current player without print the message
+     * 
      * @return current player
      */
     private Player getCurrentPlayer() {
@@ -183,6 +188,7 @@ public class GameController {
 
     /**
      * get current player
+     * 
      * @param isShowMessage if true, print the current player to screen
      * @return current player
      */
@@ -191,9 +197,17 @@ public class GameController {
         ArrayList<Player> players = GameMap.getInstance().getPlayers();
 
         for (Player player : players) {
-            if (player.isPlaying() && !player.isLost()) {
+            if (player.isPlaying()) {
                 currentPlayer = player;
-                break;
+            }
+        }
+
+        if (currentPlayer == null) {
+            for (Player player : players) {
+                if (!player.isLost()) {
+                    currentPlayer = player;
+                    break;
+                }
             }
         }
 
@@ -205,8 +219,9 @@ public class GameController {
     }
 
     /**
-     * REINFORCEMENT PHASE
-     * get the number of armies player will get for reinforcement phase for all the country player have.
+     * REINFORCEMENT PHASE get the number of armies player will get for
+     * reinforcement phase for all the country player have.
+     * 
      * @param currentPlayer current player
      * @return the number of armies. Minimum number of armies are 3
      */
@@ -216,8 +231,9 @@ public class GameController {
     }
 
     /**
-     * REINFORCEMENT PHASE
-     * get the number of armies player will have for the conquered continent
+     * REINFORCEMENT PHASE get the number of armies player will have for the
+     * conquered continent
+     * 
      * @param currentPlayer current player
      * @return the number of armies. 0 if user don't own any continent.
      */
@@ -225,7 +241,7 @@ public class GameController {
         int armiesFromConqueredContinents = 0;
 
         for (Continent continent : GameMap.getInstance().getContinents()) {
-            if (continent.getConquerer().equals(currentPlayer)) {
+            if(currentPlayer.equals(continent.getConquerer())){
                 armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();
             }
         }
@@ -234,8 +250,9 @@ public class GameController {
     }
 
     /**
-     * REINFORCEMENT PHASE
-     * calculate the number of armies a player will have for his reinforcement phase
+     * REINFORCEMENT PHASE calculate the number of armies a player will have for his
+     * reinforcement phase
+     * 
      * @param currentPlayer the current player
      */
     private void calculateReinforcementArmies(Player currentPlayer) {
@@ -253,8 +270,7 @@ public class GameController {
     }
 
     /**
-     * REINFORCEMENT PHASE
-     * enter reinforcement phase
+     * REINFORCEMENT PHASE enter reinforcement phase
      */
     public void enterReinforcement() {
         Player currentPlayer = getCurrentPlayer(true);
@@ -262,8 +278,8 @@ public class GameController {
     }
 
     /**
-     * REINFORCEMENT PHASE
-     * handle <code>reinforce</code> command
+     * REINFORCEMENT PHASE handle <code>reinforce</code> command
+     * 
      * @param args [0] country name
      * @param args [1] number of armies to reinforce
      */
@@ -280,7 +296,8 @@ public class GameController {
         Player currentPlayer = getCurrentPlayer();
 
         if (!country.getConquerer().equals(currentPlayer)) {
-            ConsolePrinter.printFormat("The country %s is not belong to %s", country.getName(), currentPlayer.getName());
+            ConsolePrinter.printFormat("The country %s is not belong to %s", country.getName(),
+                    currentPlayer.getName());
             return;
         }
 
