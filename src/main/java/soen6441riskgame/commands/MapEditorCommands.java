@@ -1,5 +1,8 @@
 package soen6441riskgame.commands;
 
+/**
+ * All command for map editing
+ */
 public final class MapEditorCommands {
     public static final String EDITCONTINENT = "editcontinent";
     public static final String EDITCOUNTRY = "editcountry";

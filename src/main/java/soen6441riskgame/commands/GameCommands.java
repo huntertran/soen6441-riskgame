@@ -1,5 +1,8 @@
 package soen6441riskgame.commands;
 
+/**
+ * All commands for playing game
+ */
 public final class GameCommands {
     // public static final String MAPEDITOR = "mapeditor";
     // public static final String PLAYGAME = "playgame";
