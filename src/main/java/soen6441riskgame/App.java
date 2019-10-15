@@ -51,12 +51,17 @@ public final class App {
             try {
                 mapController.saveMap(remainingArgs[0]);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Error: " + e.getMessage());
             }
+
             break;
         }
         case MapEditorCommands.EDITMAP: {
-            mapController.editMap(remainingArgs[0]);
+            try {
+                mapController.editMap(remainingArgs[0]);
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
             break;
         }
         case MapEditorCommands.VALIDATEMAP: {
@@ -64,10 +69,14 @@ public final class App {
             break;
         }
         case MapEditorCommands.LOADMAP: {
-            mapController.loadMap(remainingArgs[0]);
+            try {
+                mapController.loadMap(remainingArgs[0]);
 
-            if (mapController.isMapValid()) {
-                mapController.showMap();
+                if (mapController.isMapValid()) {
+                    mapController.showMap();
+                }
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
             }
 
             break;
@@ -99,7 +108,7 @@ public final class App {
             gameController.handleFortifyCommand(args);
             break;
         }
-        default:{
+        default: {
             System.out.println("Command not exist!");
             break;
         }

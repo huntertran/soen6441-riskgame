@@ -60,9 +60,11 @@ public class MapControllerTest {
 	/**
 	 * This loadMapTest function tests if the map loaded from a file is working
 	 * properly.
+	 *
+	 * @throws IOException
 	 */
 	@Test
-	public void loadMapTest() {
+	public void loadMapTest() throws IOException {
 		// Setup
 		String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
 
@@ -319,7 +321,7 @@ public class MapControllerTest {
 	}
 
 	@Test
-	public void saveMapTest() {
+	public void saveMapTest() throws IOException {
 		// setup
 		String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
 		mapController.loadMap(filePath);

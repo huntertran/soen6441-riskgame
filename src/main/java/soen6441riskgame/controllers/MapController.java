@@ -201,8 +201,13 @@ public final class MapController {
         }
     }
 
-    public void editMap(String fileName) {
-        loadMap(fileName);
+    public void editMap(String fileName) throws IOException {
+        try {
+            loadMap(fileName);
+        } catch (IOException e) {
+            // file not existed. Create new map
+            saveMap(fileName);
+        }
     }
 
     /**
@@ -455,53 +460,48 @@ public final class MapController {
      * @param fileName the exact path to map file, end with .map extension for
      *                 example:
      *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
+     * @throws IOException
      */
-    public void loadMap(String fileName) {
+    public void loadMap(String fileName) throws IOException {
         Path path = Paths.get(fileName);
 
-        List<String> lines;
-
-        try {
-            lines = Files.lines(path).collect(Collectors.toList());
-            for (int index = 0; index < lines.size(); index++) {
-                String currentLine = lines.get(index);
-                if (currentLine.startsWith(";")) {
-                    continue;
-                }
-
-                String firstWord = currentLine.split(" ")[0];
-                MapPart part = MapPart.fromString(firstWord);
-
-                switch (part) {
-                case NAME: {
-                    GameMap.getInstance().setMapName(currentLine.split("name")[1].trim());
-                    break;
-                }
-                case FILES: {
-                    break;
-                }
-                case CONTINENTS: {
-                    index = loadContinentsFromFile(index, lines);
-                    break;
-                }
-                case COUNTRIES: {
-                    index = loadCountriesFromFile(index, lines);
-                    break;
-                }
-                case BORDERS: {
-                    index = loadBordersFromFile(index, lines);
-                    break;
-                }
-                case NONE: {
-                    break;
-                }
-                }
+        List<String> lines = Files.lines(path).collect(Collectors.toList());
+        for (int index = 0; index < lines.size(); index++) {
+            String currentLine = lines.get(index);
+            if (currentLine.startsWith(";")) {
+                continue;
             }
 
-            System.out.println("Map loaded");
-        } catch (IOException e) {
-            e.printStackTrace();
+            String firstWord = currentLine.split(" ")[0];
+            MapPart part = MapPart.fromString(firstWord);
+
+            switch (part) {
+            case NAME: {
+                GameMap.getInstance().setMapName(currentLine.split("name")[1].trim());
+                break;
+            }
+            case FILES: {
+                break;
+            }
+            case CONTINENTS: {
+                index = loadContinentsFromFile(index, lines);
+                break;
+            }
+            case COUNTRIES: {
+                index = loadCountriesFromFile(index, lines);
+                break;
+            }
+            case BORDERS: {
+                index = loadBordersFromFile(index, lines);
+                break;
+            }
+            case NONE: {
+                break;
+            }
+            }
         }
+
+        System.out.println("Map loaded");
     }
 
     /**
@@ -597,6 +597,11 @@ public final class MapController {
     }
 
     public void saveMap(String fileName) throws IOException {
+        if (!isMapValid()) {
+            System.out.println("Invalid map. Map not saved");
+            return;
+        }
+
         FileWriter writer = new FileWriter(fileName);
 
         writeContinentsToFile(writer);
@@ -606,7 +611,6 @@ public final class MapController {
         writeBordersToFile(writer);
 
         writer.close();
-
     }
 
     private void writeBordersToFile(FileWriter writer) throws IOException {
@@ -675,6 +679,10 @@ public final class MapController {
     public boolean isMapValid() {
         boolean isNotEnoughCountries = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES);
 
+        if (isNotEnoughCountries) {
+            return false;
+        }
+
         ArrayList<Country> isolatedCountries = getIsolatedCountries();
         boolean isIsolatedCountryExisted = isolatedCountries.size() > 0;
 
@@ -699,10 +707,9 @@ public final class MapController {
     }
 
     public void validateMap() {
-        if(isMapValid()){
+        if (isMapValid()) {
             System.out.println("Map valid");
-        }
-        else {
+        } else {
             System.out.println("Invalid map");
         }
     }
