@@ -3,6 +3,7 @@ package soen6441riskgame.singleton;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
+import soen6441riskgame.utils.ConsolePrinter;
 
 import java.util.ArrayList;
 
@@ -116,7 +117,7 @@ public class GameMap {
             player.setNextPlayer(nextPlayer);
 
             players.add(player);
-            System.out.format("Player %d added", name);
+            ConsolePrinter.printFormat("Player %d added", name);
         }
     }
 
@@ -133,9 +134,9 @@ public class GameMap {
 
             players.remove(player);
 
-            System.out.format("Player %d removed", name);
+            ConsolePrinter.printFormat("Player %d removed", name);
         } else {
-            System.out.format("Player %d not exist in game", name);
+            ConsolePrinter.printFormat("Player %d not exist in game", name);
         }
     }
 

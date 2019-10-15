@@ -8,6 +8,7 @@ import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
 public class GameController {
@@ -16,6 +17,11 @@ public class GameController {
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
 
     public void handlePlayerAddAndRemoveCommand(String[] arg) {
+        if (arg.length == 0) {
+            System.out.println("Missing parameter(s)");
+            return;
+        }
+
         CommonCommandArgs playerCommand = CommonCommandArgs.fromString(arg[0]);
 
         switch (playerCommand) {
@@ -80,7 +86,7 @@ public class GameController {
         Country country = GameMap.getInstance().getCountryFromName(countryName);
 
         if (country == null) {
-            System.out.format("Country %s not existed", countryName);
+            ConsolePrinter.printFormat("Country %s not existed", countryName);
             return;
         }
 
@@ -162,7 +168,7 @@ public class GameController {
         }
 
         if (isShowMessage) {
-            System.out.format("Player %s is in turn", currentPlayer.getName());
+            ConsolePrinter.printFormat("Player %s is in turn", currentPlayer.getName());
         }
 
         return currentPlayer;
@@ -210,14 +216,14 @@ public class GameController {
         int numberOfArmies = Parser.parseWithDefault(args[1], 0);
 
         if (country == null) {
-            System.out.format("Country %s is not existed", country);
+            ConsolePrinter.printFormat("Country %s is not existed", country);
             return;
         }
 
         Player currentPlayer = getCurrentPlayer();
 
         if (!country.getConquerer().equals(currentPlayer)) {
-            System.out.format("The country %s is not belong to %s", country.getName(), currentPlayer.getName());
+            ConsolePrinter.printFormat("The country %s is not belong to %s", country.getName(), currentPlayer.getName());
             return;
         }
 

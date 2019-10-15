@@ -3,6 +3,7 @@ package soen6441riskgame.models;
 import java.util.ArrayList;
 
 import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.utils.ConsolePrinter;
 
 public class Country implements Viewable {
     private Coordinate coordinate;
@@ -22,7 +23,7 @@ public class Country implements Viewable {
     }
 
     public void setConquerer(Player conquerer) {
-        System.out.format("Player %d conquered %d", conquerer.getName(), this.getName());
+        ConsolePrinter.printFormat("Player %d conquered %d", conquerer.getName(), this.getName());
         this.conquerer = conquerer;
     }
 
@@ -48,7 +49,7 @@ public class Country implements Viewable {
 
     public void setArmyAmount(int armyAmount) {
         this.armyAmount = armyAmount;
-        System.out.format("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(),
+        ConsolePrinter.printFormat("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(),
                 getConquerer().getName());
     }
 
@@ -117,13 +118,13 @@ public class Country implements Viewable {
 
     public void moveArmies(Country toCountry, int armiesToMove) {
         if (!GameMap.getInstance().isNeighboringCountries(this, toCountry)) {
-            System.out.format("Country %s and %s is not neighbor", this.getName(), toCountry.getName());
+            ConsolePrinter.printFormat("Country %s and %s is not neighbor", this.getName(), toCountry.getName());
             return;
         }
 
         if (armiesToMove > this.getArmyAmount() - 1) {
             System.out.println("The 'fromcountry' must have at least 1 army after fortification");
-            System.out.format("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left",
+            ConsolePrinter.printFormat("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left",
                     armiesToMove, this.getName(), toCountry.getName(), this.getArmyAmount());
             return;
         }
@@ -146,6 +147,6 @@ public class Country implements Viewable {
 
     public void viewWithoutNeighbors(int indent) {
         this.printIndent(indent);
-        System.out.format("Country: %s | No.: %s | Army: %s\n", this.getName(), this.getOrder(), this.getArmyAmount());
+        ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s\n", this.getName(), this.getOrder(), this.getArmyAmount());
     }
 }

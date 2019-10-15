@@ -2,6 +2,8 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 
+import soen6441riskgame.utils.ConsolePrinter;
+
 public class Continent implements Viewable {
     private String name;
     private int army;
@@ -76,7 +78,7 @@ public class Continent implements Viewable {
     }
 
     public void viewWithoutCountry() {
-        System.out.format("Continent: %s | No.: %s | Number of army: %s\n", this.getName(), this.getOrder(),
+        ConsolePrinter.printFormat("Continent: %s | No.: %s | Number of army: %s\n", this.getName(), this.getOrder(),
                 this.getArmy());
     }
 }

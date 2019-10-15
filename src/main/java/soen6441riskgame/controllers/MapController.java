@@ -16,6 +16,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.enums.MapPart;
 import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.utils.ConsolePrinter;
 
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
@@ -47,6 +48,10 @@ public final class MapController {
         if (!isContinentExisted(continentName)) {
             GameMap.getInstance().getContinents()
                     .add(new Continent(continentName, Integer.parseInt(continentValue), order));
+
+            ConsolePrinter.printFormat("New continent added: %s with %s armies", continentName, continentValue);
+        } else {
+            ConsolePrinter.printFormat("Continent with name %s existed", continentName);
         }
     }
 
@@ -62,7 +67,7 @@ public final class MapController {
         Country country = GameMap.getInstance().getCountryFromName(countryName);
 
         if (continent == null) {
-            System.out.format("Continent %s is not existed", continentName);
+            ConsolePrinter.printFormat("Continent %s is not existed", continentName);
             return;
         }
 
@@ -72,7 +77,7 @@ public final class MapController {
             continent.getCountries().add(country);
         }
 
-        System.out.format("Country %s is added to continent %s", countryName, continentName);
+        ConsolePrinter.printFormat("Country %s is added to continent %s", countryName, continentName);
     }
 
     /**
@@ -129,7 +134,7 @@ public final class MapController {
 
         updateCountryContinent(newCountry, continent);
 
-        System.out.format("Country %s is created", countryName);
+        ConsolePrinter.printFormat("Country %s is created", countryName);
     }
 
     private void increaseBorder(int newBorderSize) {
@@ -335,7 +340,7 @@ public final class MapController {
         boolean isNotEnoughCountries = numberOfCountry < minimumNumberOfCountries;
 
         if (isNotEnoughCountries) {
-            System.out.format("Not enough countries. Created: %d - Minimum required: %s", numberOfCountry,
+            ConsolePrinter.printFormat("Not enough countries. Created: %d - Minimum required: %s", numberOfCountry,
                     minimumNumberOfCountries);
         }
 
@@ -518,9 +523,9 @@ public final class MapController {
 
             GameMap.getInstance().getContinents().remove(continentToRemove);
 
-            System.out.format("Continent %s is removed", continentToRemove.getName());
+            ConsolePrinter.printFormat("Continent %s is removed", continentToRemove.getName());
         } else {
-            System.out.format("Continent %s is not existed", continentName);
+            ConsolePrinter.printFormat("Continent %s is not existed", continentName);
         }
     }
 
@@ -534,7 +539,7 @@ public final class MapController {
         Country country = GameMap.getInstance().getCountryFromName(countryName);
 
         if (country == null) {
-            System.out.format("Country %s is not existed", countryName);
+            ConsolePrinter.printFormat("Country %s is not existed", countryName);
             return;
         }
 
@@ -667,7 +672,7 @@ public final class MapController {
      *
      * @return
      */
-    public boolean validateMap() {
+    public boolean isMapValid() {
         boolean isNotEnoughCountries = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES);
 
         ArrayList<Country> isolatedCountries = getIsolatedCountries();
@@ -690,6 +695,15 @@ public final class MapController {
             }
         }
 
-        return isNotEnoughCountries && isIsolatedCountryExisted && isEmptyContinentExisted;
+        return !isNotEnoughCountries && !isIsolatedCountryExisted && !isEmptyContinentExisted;
+    }
+
+    public void validateMap() {
+        if(isMapValid()){
+            System.out.println("Map valid");
+        }
+        else {
+            System.out.println("Invalid map");
+        }
     }
 }

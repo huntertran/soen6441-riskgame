@@ -1,8 +1,8 @@
 package soen6441riskgame.commands;
 
 public final class GameCommands {
-    public static final String MAPEDITOR = "mapeditor";
-    public static final String PLAYGAME = "playgame";
+    // public static final String MAPEDITOR = "mapeditor";
+    // public static final String PLAYGAME = "playgame";
 
     // Startup phase
     public static final String GAMEPLAYER = "gameplayer";

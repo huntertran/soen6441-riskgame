@@ -66,7 +66,7 @@ public final class App {
         case MapEditorCommands.LOADMAP: {
             mapController.loadMap(remainingArgs[0]);
 
-            if (mapController.validateMap()) {
+            if (mapController.isMapValid()) {
                 mapController.showMap();
             }
 
