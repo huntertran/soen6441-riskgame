@@ -466,7 +466,7 @@ public final class MapController {
         Path path = Paths.get(fileName);
 
         List<String> lines = Files.lines(path).collect(Collectors.toList());
-        //resetMap();
+        resetMap();
         for (int index = 0; index < lines.size(); index++) {
             String currentLine = lines.get(index);
             if (currentLine.startsWith(";")) {
