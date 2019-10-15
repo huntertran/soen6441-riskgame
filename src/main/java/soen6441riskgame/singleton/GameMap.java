@@ -111,7 +111,12 @@ public class GameMap {
             player = new Player(name);
             players.add(player);
 
-            Player previousPlayer = players.get(players.size() - 1);
+            int previousPlayerIndex = 0;
+            if (players.size() > 1) {
+                previousPlayerIndex = players.size() - 2;
+            }
+
+            Player previousPlayer = players.get(previousPlayerIndex);
             Player nextPlayer = players.get(0);
 
             player.setPreviousPlayer(previousPlayer);

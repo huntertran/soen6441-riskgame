@@ -3,11 +3,13 @@ package soen6441riskgame.controllers;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameMap;
 
@@ -32,28 +34,90 @@ public class GameControllerTest {
     @Test
     public void handlePlayerAddCommandTest() {
         // Setup
-        String[] args = new String[] { "-add", "TJ" };
+        String[] tjAddArgs = new String[] { "-add", "TJ" };
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
 
         // Action
-        gameController.handlePlayerAddAndRemoveCommand(args);
+        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+
+        Player tjPlayer = GameMap.getInstance().getPlayerFromName(tjAddArgs[1]);
+        Player hunterPlayer = GameMap.getInstance().getPlayerFromName(hunterAddArgs[1]);
+        Player benPlayer = GameMap.getInstance().getPlayerFromName(benAddArgs[1]);
+
+        Player tjNextPlayer = tjPlayer.getNextPlayer();
+        Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
+        Player hunterNextPlayer = hunterPlayer.getNextPlayer();
 
         // Assert
-        Player tjPlayer = GameMap.getInstance().getPlayerFromName(args[1]);
         assertNotNull(tjPlayer);
+        assertNotNull(hunterPlayer);
+        assertNotNull(benPlayer);
+
+        assertSame(hunterPlayer, tjNextPlayer);
+        assertSame(benPlayer, hunterNextPlayer);
+        assertSame(benPlayer, tjPreviousPlayer);
     }
-    
+
     @Test
-    public void handlePlayerRemoveCommandTest(){
+    public void handlePlayerRemoveCommandTest() {
         // Setup
-        String[] args= new String[]{"-add", "TJ"};
-        String[] args1= new String[]{"-remove","TJ"};
-        
+        String[] tjAddArgs = new String[] { "-add", "TJ" };
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
+        String[] hunterRemoveArgs = new String[] { "-remove", "hunter" };
+
         // Action
-        gameController.handlePlayerAddAndRemoveCommand(args);
-        gameController.handlePlayerAddAndRemoveCommand(args1);
+        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterRemoveArgs);
+        Player tjPlayer = GameMap.getInstance().getPlayerFromName(tjAddArgs[1]);
+        Player hunterPlayer = GameMap.getInstance().getPlayerFromName(hunterAddArgs[1]);
+        Player benPlayer = GameMap.getInstance().getPlayerFromName(benAddArgs[1]);
+        Player tjNextPlayer = tjPlayer.getNextPlayer();
+        Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
+        Player benPreviousPlayer = benPlayer.getPreviousPlayer();
+        Player benNextPlayer = benPlayer.getNextPlayer();
 
         // Assert
-        Player tjPlayer= GameMap.getInstance().getPlayerFromName(args[1]);
-        assertNull(tjPlayer);
+        assertNull(hunterPlayer);
+        assertSame(benPlayer, tjNextPlayer);
+        assertSame(benPlayer, tjPreviousPlayer);
+        assertSame(tjPlayer, benPreviousPlayer);
+        assertSame(tjPlayer, benNextPlayer);
+    }
+
+    @Test
+    public void populateCountriesTest() {
+        // Setup
+        String[] tjAddArgs = new String[] { "-add", "TJ" };
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
+        String[] rogerAddArgs = new String[] { "-add", "roger" };
+
+        //Action
+        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(rogerAddArgs);
+    
+        gameController.populateCountries();
+
+        boolean isOneCountryNotAssigned = false;
+
+        ArrayList<Country> countries = GameMap.getInstance().getCountries();
+        for(Country country : countries){
+            Player conquerer = country.getConquerer();
+            if(conquerer == null){
+                isOneCountryNotAssigned = true;
+                break;
+            }
+        }
+
+        // Assert
+        assertFalse(isOneCountryNotAssigned);
     }
 }

@@ -23,7 +23,7 @@ public class Country implements Viewable {
     }
 
     public void setConquerer(Player conquerer) {
-        ConsolePrinter.printFormat("Player %d conquered %d", conquerer.getName(), this.getName());
+        ConsolePrinter.printFormat("Player %s conquered %s", conquerer.getName(), this.getName());
         this.conquerer = conquerer;
     }
 
