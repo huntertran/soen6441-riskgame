@@ -98,20 +98,20 @@ public class GameControllerTest {
         String[] benAddArgs = new String[] { "-add", "ben" };
         String[] rogerAddArgs = new String[] { "-add", "roger" };
 
-        //Action
+        // Action
         gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(rogerAddArgs);
-    
+
         gameController.populateCountries();
 
         boolean isOneCountryNotAssigned = false;
 
         ArrayList<Country> countries = GameMap.getInstance().getCountries();
-        for(Country country : countries){
+        for (Country country : countries) {
             Player conquerer = country.getConquerer();
-            if(conquerer == null){
+            if (conquerer == null) {
                 isOneCountryNotAssigned = true;
                 break;
             }
@@ -119,5 +119,40 @@ public class GameControllerTest {
 
         // Assert
         assertFalse(isOneCountryNotAssigned);
+    }
+
+    @Test
+    public void initPlayersUnplacedArmiesTest() {
+        // Setup
+        String[] tjAddArgs = new String[] { "-add", "TJ" };
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
+        String[] rogerAddArgs = new String[] { "-add", "roger" };
+
+        // Action
+        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(rogerAddArgs);
+
+        gameController.initPlayersUnplacedArmies();
+
+        int unplacedArmiesEachPlayer = -1;
+        boolean isUnplacedArmiesDifferentForOnePlayer = false;
+
+        ArrayList<Player> players = GameMap.getInstance().getPlayers();
+        for (Player player : players) {
+            if (unplacedArmiesEachPlayer == -1) {
+                unplacedArmiesEachPlayer = player.getUnplacedArmies();
+            } else {
+                if (unplacedArmiesEachPlayer != player.getUnplacedArmies()) {
+                    isUnplacedArmiesDifferentForOnePlayer = true;
+                }
+            }
+
+        }
+
+        // Assert
+        assertFalse(isUnplacedArmiesDifferentForOnePlayer);
     }
 }
