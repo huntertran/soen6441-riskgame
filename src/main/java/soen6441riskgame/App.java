@@ -51,7 +51,7 @@ public final class App {
             try {
                 mapController.saveMap(remainingArgs[0]);
             } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("Error: " + e.getClass().getName());
             }
 
             break;
@@ -60,7 +60,7 @@ public final class App {
             try {
                 mapController.editMap(remainingArgs[0]);
             } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("Error: " + e.getClass().getName());
             }
             break;
         }
@@ -76,7 +76,7 @@ public final class App {
                     mapController.showMap();
                 }
             } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("Error: " + e.getClass().getName());
             }
 
             break;
