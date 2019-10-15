@@ -109,6 +109,7 @@ public class GameMap {
         if (player == null) {
 
             player = new Player(name);
+            players.add(player);
 
             Player previousPlayer = players.get(players.size() - 1);
             Player nextPlayer = players.get(0);
@@ -116,8 +117,7 @@ public class GameMap {
             player.setPreviousPlayer(previousPlayer);
             player.setNextPlayer(nextPlayer);
 
-            players.add(player);
-            ConsolePrinter.printFormat("Player %d added", name);
+            ConsolePrinter.printFormat("Player %s added", name);
         }
     }
 
@@ -125,14 +125,13 @@ public class GameMap {
         Player player = getPlayerFromName(name);
 
         if (player != null) {
+            players.remove(player);
 
             Player previousPlayer = player.getPreviousPlayer();
             Player nextPlayer = player.getNextPlayer();
 
             previousPlayer.setNextPlayer(nextPlayer);
             nextPlayer.setPreviousPlayer(previousPlayer);
-
-            players.remove(player);
 
             ConsolePrinter.printFormat("Player %d removed", name);
         } else {

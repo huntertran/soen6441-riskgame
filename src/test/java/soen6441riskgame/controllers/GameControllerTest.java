@@ -2,71 +2,43 @@ package soen6441riskgame.controllers;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import soen6441riskgame.enums.PrintConsoleAndUserInput;
+import soen6441riskgame.models.Player;
+import soen6441riskgame.singleton.GameMap;
 
-/**
- * This is the test class for game controller. methods from game controller is
- * going to tested from here
- * 
- * 
- * @version 1.0.0
- *
- */
 public class GameControllerTest {
+    MapController mapController;
+    GameController gameController;
 
-	/** The print. */
-	PrintConsoleAndUserInput print = new PrintConsoleAndUserInput();
+    @Before
+    public void before() throws IOException {
+        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        mapController = new MapController();
+        mapController.loadMap(filePath);
 
-	/** The map file list test. */
-	ArrayList<String> mapFileListTest = new ArrayList<String>();
+        gameController = new GameController();
+    }
 
-	/** The map file list. */
-	ArrayList<String> mapFileList = new ArrayList<String>();
+    @After
+    public void after() {
+        mapController.resetMap();
+    }
 
-	/**
-	 * THis function is getting the map files and listing in an array list when
-	 * starting the class.
-	 * 
-	 * @throws Exception if there is no files in the directory
-	 */
-	@Before
-	public void setUpBeforeClass() throws Exception {
-		getFileListFromFolder();
-		mapFileList = print.listofMapsinDirectory();
+    @Test
+    public void handlePlayerAddAndRemoveCommandTest() {
+        // Setup
+        String[] args = new String[] { "-add", "TJ" };
 
-	}
+        // Action
+        gameController.handlePlayerAddAndRemoveCommand(args);
 
-	/**
-	 * Checking is the functions list is giving proper files name or not.
-	 */
-	@Test
-	public void testListOfMapsinDirectory() {
-		assertEquals(mapFileList, mapFileListTest);
-
-	}
-
-	/**
-	 * This function is going to get the files from the specific folder.
-	 */
-	@Ignore
-	public void getFileListFromFolder() {
-		File folder = new File(PrintConsoleAndUserInput.getMapDir());
-		File[] listOfFiles = folder.listFiles();
-		int i = 0;
-		for (File file : listOfFiles) {
-			if (file.isFile()) {
-				if (file.getName().toLowerCase().contains(".map")) {
-					mapFileListTest.add(listOfFiles[i].getName());
-				}
-			}
-			i++;
-		}
-	}
+        // Assert
+        Player tjPlayer = GameMap.getInstance().getPlayerFromName(args[1]);
+        assertNotNull(tjPlayer);
+    }
 }

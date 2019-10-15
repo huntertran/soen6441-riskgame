@@ -18,24 +18,24 @@ public class GameController {
 
     /**
      * handle <code>editplayer</code> command
-     * @param arg [0] -add/-remove
-     * @param arg [1] player name
+     * @param args [0] -add/-remove
+     * @param args [1] player name
      */
-    public void handlePlayerAddAndRemoveCommand(String[] arg) {
-        if (arg.length == 0) {
+    public void handlePlayerAddAndRemoveCommand(String[] args) {
+        if (args.length == 0) {
             System.out.println("Missing parameter(s)");
             return;
         }
 
-        CommonCommandArgs playerCommand = CommonCommandArgs.fromString(arg[0]);
+        CommonCommandArgs playerCommand = CommonCommandArgs.fromString(args[0]);
 
         switch (playerCommand) {
         case ADD: {
-            GameMap.getInstance().addPlayer(arg[1]);
+            GameMap.getInstance().addPlayer(args[1]);
             break;
         }
         case REMOVE: {
-            GameMap.getInstance().removePlayer(arg[1]);
+            GameMap.getInstance().removePlayer(args[1]);
             break;
         }
         case NONE: {
