@@ -10,52 +10,52 @@ The_Balkans 4
 East_Europe 4
 
 [countries]
-1 Malta 1 0
-2 Tunisia 1 0
-3 Algeria 1 0
-4 Morocco 1 0
-5 Spain 2 0
-6 Portugal 2 0
-7 France 3 0
-8 Luxembourg 3 0
-9 Belgium 3 0
-10 Netherlands 3 0
-11 England 4 0
-12 Wales 4 0
-13 Scotland 4 0
-14 Northern_Ireland 4 0
-15 Ireland 4 0
-16 Finland 5 0
-17 Sweden 5 0
-18 Norway 5 0
-19 Denmark 5 0
-20 Iceland 5 0
-21 Poland 6 0
-22 Slovakia 6 0
-23 Czech_Republic 6 0
-24 Austria 6 0
-25 Germany 6 0
-26 Switzerland 6 0
-27 Italy 7 0
-28 Slovenia 7 0
-29 Croatia 7 0
-30 Bosnia_and_Herzegovina 7 0
-31 Serbia_and_Montenegro 7 0
-32 Albania 7 0
-33 Hungary 8 0
-34 Romania 8 0
-35 Moldova 8 0
-36 Serbia 8 0
-37 Bulgaria 8 0
-38 Former_Yugoslav_Republic_of_Macedonia 8 0
-39 Greece 8 0
-40 Turkey 8 0
-41 Russia 9 0
-42 Estonia 9 0
-43 Latvia 9 0
-44 Lithuania 9 0
-45 Belarus 9 0
-46 Ukraine 9 0
+1 Malta 1 0 564 416
+2 Tunisia 1 0 514 411
+3 Algeria 1 0 451 411
+4 Morocco 1 0 380 412
+5 Spain 2 0 405 350
+6 Portugal 2 0 358 347
+7 France 3 0 459 291
+8 Luxembourg 3 0 503 259
+9 Belgium 3 0 472 249
+10 Netherlands 3 0 483 222
+11 England 4 0 448 229
+12 Wales 4 0 425 214
+13 Scotland 4 0 432 177
+14 Northern_Ireland 4 0 402 183
+15 Ireland 4 0 397 214
+16 Finland 5 0 593 111
+17 Sweden 5 0 546 151
+18 Norway 5 0 509 136
+19 Denmark 5 0 506 186
+20 Iceland 5 0 385 74
+21 Poland 6 0 573 228
+22 Slovakia 6 0 590 259
+23 Czech_Republic 6 0 550 257
+24 Austria 6 0 543 280
+25 Germany 6 0 520 245
+26 Switzerland 6 0 491 289
+27 Italy 7 0 533 338
+28 Slovenia 7 0 560 293
+29 Croatia 7 0 550 316
+30 Bosnia_and_Herzegovina 7 0 576 313
+31 Serbia_and_Montenegro 7 0 581 337
+32 Albania 7 0 589 358
+33 Hungary 8 0 586 280
+34 Romania 8 0 625 285
+35 Moldova 8 0 657 262
+36 Serbia 8 0 600 315
+37 Bulgaria 8 0 633 322
+38 Former_Yugoslav_Republic_of_Macedonia 8 0 617 349
+39 Greece 8 0 625 381
+40 Turkey 8 0 663 350
+41 Russia 9 0 639 150
+42 Estonia 9 0 599 150
+43 Latvia 9 0 606 174
+44 Lithuania 9 0 598 194
+45 Belarus 9 0 633 208
+46 Ukraine 9 0 637 240
 
 [borders]
 1 2 27 39
