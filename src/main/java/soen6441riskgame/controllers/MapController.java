@@ -634,7 +634,8 @@ public final class MapController {
         writer.write("[countries]\n");
         for (Country country : countries) {
             writer.write(country.getOrder() + " " + country.getName() + " " + country.getContinent().getOrder() + " "
-                    + country.getArmyAmount() + "\n");
+                    + country.getArmyAmount() + country.getCoordinate().getX() + " " + country.getCoordinate().getY()
+                    + "\n");
         }
         writer.write("\n");
     }
