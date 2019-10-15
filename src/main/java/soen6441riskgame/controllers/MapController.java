@@ -47,7 +47,7 @@ public final class MapController {
     public void addContinent(String continentName, String continentValue, int... order) {
         if (!isContinentExisted(continentName)) {
             GameMap.getInstance().getContinents()
-                    .add(new Continent(continentName, Integer.parseInt(continentValue), order));
+                    .add(new Continent(continentName, Integer.parseInt(continentValue)));
 
             ConsolePrinter.printFormat("New continent added: %s with %s armies", continentName, continentValue);
         } else {

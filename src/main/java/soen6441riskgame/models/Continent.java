@@ -2,29 +2,21 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 
+import soen6441riskgame.singleton.GameMap;
 import soen6441riskgame.utils.ConsolePrinter;
 
 public class Continent implements Viewable {
     private String name;
     private int army;
     private ArrayList<Country> countries = new ArrayList<Country>();
-    private int order;
 
-    public Continent(String name, int army, int... order) {
+    public Continent(String name, int army) {
         this.setName(name);
         this.setArmy(army);
-
-        if (order.length > 0) {
-            this.setOrder(order[0]);
-        }
     }
 
     public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
+        return GameMap.getInstance().getContinents().indexOf(this) + 1;
     }
 
     public int getArmy() {
