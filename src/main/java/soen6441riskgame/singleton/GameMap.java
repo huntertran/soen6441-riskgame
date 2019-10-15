@@ -133,9 +133,9 @@ public class GameMap {
             previousPlayer.setNextPlayer(nextPlayer);
             nextPlayer.setPreviousPlayer(previousPlayer);
 
-            ConsolePrinter.printFormat("Player %d removed", name);
+            ConsolePrinter.printFormat("Player %s removed", name);
         } else {
-            ConsolePrinter.printFormat("Player %d not exist in game", name);
+            ConsolePrinter.printFormat("Player %s not exist in game", name);
         }
     }
 

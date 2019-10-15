@@ -30,7 +30,7 @@ public class GameControllerTest {
     }
 
     @Test
-    public void handlePlayerAddAndRemoveCommandTest() {
+    public void handlePlayerAddCommandTest() {
         // Setup
         String[] args = new String[] { "-add", "TJ" };
 
@@ -40,5 +40,20 @@ public class GameControllerTest {
         // Assert
         Player tjPlayer = GameMap.getInstance().getPlayerFromName(args[1]);
         assertNotNull(tjPlayer);
+    }
+    
+    @Test
+    public void handlePlayerRemoveCommandTest(){
+        // Setup
+        String[] args= new String[]{"-add", "TJ"};
+        String[] args1= new String[]{"-remove","TJ"};
+        
+        // Action
+        gameController.handlePlayerAddAndRemoveCommand(args);
+        gameController.handlePlayerAddAndRemoveCommand(args1);
+
+        // Assert
+        Player tjPlayer= GameMap.getInstance().getPlayerFromName(args[1]);
+        assertNull(tjPlayer);
     }
 }
