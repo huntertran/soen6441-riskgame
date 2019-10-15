@@ -22,6 +22,28 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 
 ![](https://github.com/huntertran/soen6441-riskgame/workflows/Java%20CI/badge.svg)
 
+**Pack and run from console**
+
+To pack the project, simply run:
+
+```s
+mvn package
+```
+
+a file called `soen6441riskgame-1.0-SNAPSHOT.jar` will be created in `\target` folder
+
+To run the project (with or without commands and args)
+
+```s
+# change directory to target folder, or the folder contain the compiled .jar file
+
+cd target
+
+# run the .jar file with java
+
+java -jar .\soen6441riskgame-1.0-SNAPSHOT.jar [your_command] [your_args]
+```
+
 # 1. Members
 <a id="markdown-members" name="members"></a>
 - 40124288 - Van Tuan Tran
@@ -74,7 +96,7 @@ Once a player is finished with these three phases, the next player’s turn star
 
 ### 3.2.1. Reinformcements Phase
 <a id="markdown-reinformcements-phase" name="reinformcements-phase"></a>
-In the reinforcements phase, the player is given a number of armies that depends on the number of countries he owns (# of countries owned divided by 3, rounded down). If the player owns all the countries of an entire continent, the player is given an amount of armies corresponding to the continent’s control value. 
+In the reinforcements phase, the player is given a number of armies that depends on the number of countries he owns (# of countries owned divided by 3, rounded down). If the player owns all the countries of an entire continent, the player is given an amount of armies corresponding to the continent’s control value.
 
 Finally, if the player owns three cards of different sorts or the same sorts, he can exchange them for armies. The number of armies a player will get for cards is first 5, then increases by 5 every time any player does so (i.e. 5, 10, 15, …).
 
