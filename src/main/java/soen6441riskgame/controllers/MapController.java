@@ -560,11 +560,21 @@ public final class MapController {
         int[][] newBorders = new int[size][size];
 
         for (int row = 0; row < borderLocation; row++) {
-            newBorders[row] = Arrays.copyOfRange(originalBorder[row], 0, borderLocation - 1);
+            for (int col = 0; col < borderLocation; col++) {
+                newBorders[row][col] = originalBorder[row][col];
+            }
         }
 
-        for (int row = borderLocation + 1; row < size; row++) {
-            newBorders[row] = Arrays.copyOfRange(originalBorder[row], borderLocation + 1, size - 1);
+        // for (int row = borderLocation + 1; row < size; row++) {
+        // for (int col = borderLocation + 1; col < size; col++) {
+        // newBorders[row - 1][col - 1] = originalBorder[row][col];
+        // }
+        // }
+
+        for (int row = size - 1; row >= borderLocation; row--) {
+            for (int col = size - 1; col >= borderLocation; col--) {
+                newBorders[row][col] = originalBorder[row + 1][col + 1];
+            }
         }
 
         GameMap.getInstance().setBorders(newBorders);
@@ -727,7 +737,8 @@ public final class MapController {
             }
         }
 
-        return !isNotEnoughCountries && !isIsolatedCountryExisted && !isEmptyContinentExisted && !isCountryWithNoContinentExisted;
+        return !isNotEnoughCountries && !isIsolatedCountryExisted && !isEmptyContinentExisted
+                && !isCountryWithNoContinentExisted;
     }
 
     public void validateMap() {

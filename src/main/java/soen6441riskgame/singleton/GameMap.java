@@ -18,7 +18,7 @@ public class GameMap {
     public GameMap() {
     };
 
-    public static void setTestingInstance(GameMap newTestingInstance){
+    public static void setTestingInstance(GameMap newTestingInstance) {
         instance = newTestingInstance;
     }
 
@@ -178,5 +178,18 @@ public class GameMap {
         }
 
         return false;
+    }
+
+    public void printBorders() {
+        int[][] borders = GameMap.getInstance().getBorders();
+        ArrayList<Country> countries = GameMap.getInstance().getCountries();
+
+        String[] countryNames = new String[countries.size()];
+
+        for (int index = 0; index < countries.size(); index++) {
+            countryNames[index] = countries.get(index).getName();
+        }
+
+        ConsolePrinter.print2dArray(borders, countryNames);
     }
 }

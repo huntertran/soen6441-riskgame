@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -357,7 +355,7 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // action: make the map invalid
-        while(GameMap.getInstance().getCountries().size() > 5){
+        while (GameMap.getInstance().getCountries().size() > 5) {
             mapController.removeCountry(GameMap.getInstance().getCountries().get(0).getName());
         }
 
@@ -374,7 +372,7 @@ public class MapControllerTest {
         // action: make the map invalid
         Country targetCountry = GameMap.getInstance().getCountries().get(0);
 
-        while(targetCountry.getNeighbors().size() > 0){
+        while (targetCountry.getNeighbors().size() > 0) {
             mapController.removeNeighbor(targetCountry.getName(), targetCountry.getNeighbors().get(0).getName());
         }
 
@@ -382,20 +380,27 @@ public class MapControllerTest {
         assertFalse(mapController.isMapValid());
     }
 
-    // @Test
-    // public void validateMapEmptyContinentTest() throws IOException {
-    //     // setup
-    //     String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
-    //     mapController.loadMap(filePath);
+    @Test
+    public void validateMapEmptyContinentTest() throws IOException {
+        // setup
+        // String filePath = "C:/Users/t_tuan/Downloads/test.map";
+        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        mapController.loadMap(filePath);
 
-    //     // action: make the map invalid
-    //     Continent targetContinent = GameMap.getInstance().getContinents().get(0);
+        // action: make the map invalid
+        Continent targetContinent = GameMap.getInstance().getContinents().get(0);
 
-    //     while(targetContinent.getCountries().size() > 0){
-    //         mapController.removeCountry(targetContinent.getCountries().get(0).getName());
-    //     }
+        System.out.println("Before remove countries:");
+        GameMap.getInstance().printBorders();
 
-    //     // assert
-    //     assertFalse(mapController.isMapValid());
-    // }
+        while (targetContinent.getCountries().size() > 0) {
+            mapController.removeCountry(targetContinent.getCountries().get(0).getName());
+        }
+
+        System.out.println("After remove countries:");
+        GameMap.getInstance().printBorders();
+
+        // assert
+        assertFalse(mapController.isMapValid());
+    }
 }
