@@ -304,7 +304,7 @@ public class GameController {
             return;
         }
 
-        Player currentPlayer = getCurrentPlayer();
+        Player currentPlayer = getCurrentPlayer(false);
 
         if (!country.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s is not belong to %s", country.getName(),
