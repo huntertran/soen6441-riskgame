@@ -98,6 +98,7 @@ public class Country implements Viewable {
         if (amount > conquerer.getUnplacedArmies()) {
             System.out.println(
                     "The amount of armies you want to place in this country is bigger than the amount of armies you have");
+            return;
         }
 
         this.increaseArmies(amount);
@@ -147,6 +148,7 @@ public class Country implements Viewable {
 
     public void viewWithoutNeighbors(int indent) {
         this.printIndent(indent);
-        ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s\n", this.getName(), this.getOrder(), this.getArmyAmount());
+        ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s\n", this.getName(), this.getOrder(),
+                this.getArmyAmount());
     }
 }

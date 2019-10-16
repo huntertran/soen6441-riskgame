@@ -108,6 +108,10 @@ public final class App {
             gameController.handleFortifyCommand(remainingArgs);
             break;
         }
+        case GameCommands.CURRENTPLAYER:{
+            gameController.showCurrentPlayer();
+            break;
+        }
         default: {
             System.out.println("Command not exist!");
             break;

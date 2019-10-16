@@ -186,6 +186,17 @@ public class GameController {
         }
     }
 
+    public void showCurrentPlayer() {
+        Player player = getCurrentPlayer();
+        ConsolePrinter.printFormat("Player %s is in turn", player.getName());
+        ConsolePrinter.printFormat("    Un-placed Armies: %d", player.getUnplacedArmies());
+        ConsolePrinter.printFormat("    Countries conquered:");
+
+        for (Country country : player.getConqueredCountries()) {
+            country.viewWithoutNeighbors(2);
+        }
+    }
+
     /**
      * get current player
      * 
@@ -241,7 +252,7 @@ public class GameController {
         int armiesFromConqueredContinents = 0;
 
         for (Continent continent : GameMap.getInstance().getContinents()) {
-            if(currentPlayer.equals(continent.getConquerer())){
+            if (currentPlayer.equals(continent.getConquerer())) {
                 armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();
             }
         }

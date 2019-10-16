@@ -19,6 +19,9 @@ public final class GameCommands {
     // Fortification phase
     public static final String FORTIFY = "fortify";
 
+    // Current player
+    public static final String CURRENTPLAYER = "currentplayer";
+
     // EXIT GAME
     public static final String EXIT = "exit";
 }
