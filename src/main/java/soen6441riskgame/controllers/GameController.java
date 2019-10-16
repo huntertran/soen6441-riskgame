@@ -56,13 +56,20 @@ public class GameController {
         int totalCountry = GameMap.getInstance().getCountries().size();
         int totalPlayer = GameMap.getInstance().getPlayers().size();
         int numberOfAssignedCountry = 0;
-
+        int player_counter = 0;
+        
         Random random = new Random();
 
         while (numberOfAssignedCountry < totalCountry) {
+        	
+        	if(player_counter == totalPlayer) {
+        		player_counter = 0;
+        	}
+        	
             int nextIndexCountryToAssign = random.nextInt(totalCountry);
-            int playerIndexToAssign = random.nextInt(totalPlayer);
-
+           // int playerIndexToAssign = random.nextInt(totalPlayer);
+            int playerIndexToAssign = player_counter;
+            
             Country countryToAssign = GameMap.getInstance().getCountries().get(nextIndexCountryToAssign);
 
             if (!countryToAssign.isConquered()) {
@@ -72,6 +79,7 @@ public class GameController {
                 // user need to place at least 1 army to the country he owned
                 countryToAssign.setArmyAmount(MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY);
                 numberOfAssignedCountry++;
+                player_counter++;
             }
         }
 
