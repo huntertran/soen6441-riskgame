@@ -34,45 +34,9 @@ public class GamePlayTest {
         mapController.resetMap();
     }
 
-    @Test
-    public void playTest() {
-        // validate map
-        mapController.validateMap();
-
-        // add players
-        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "TJ" });
-        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "hunter" });
-        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "ben" });
-
-        // populate countries
-        gameController.populateCountries();
-
-        // get current player
-        gameController.showCurrentPlayer();
-        Player player = gameController.getCurrentPlayer();
-
-        // place army
-        System.out.println("Country to place: " + player.getConqueredCountries().get(0).getName());
-        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
-        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
-        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
-
-        // place all
-        gameController.handlePlaceAllCommand();
-
-        // reinforce
+    private void fortify() {
         for (int index = 0; index < 3; index++) {
-            player = gameController.getCurrentPlayer();
-
-            while (player.getUnplacedArmies() > 0) {
-                String[] reinforceArgs = new String[] { player.getConqueredCountries().get(0).getName(), "1" };
-                gameController.handleReinforceCommand(reinforceArgs);
-            }
-        }
-
-        // fortify
-        for (int index = 0; index < 3; index++) {
-            player = gameController.getCurrentPlayer();
+            Player player = gameController.getCurrentPlayer();
 
             ArrayList<Country> countries = player.getConqueredCountries();
 
@@ -103,6 +67,53 @@ public class GamePlayTest {
 
                 gameController.handleFortifyCommand(fortifyArgs);
             }
+        }
+
+        gameController.handleFortifyCommand(new String[] { "none" });
+    }
+
+    @Test
+    public void playTest() {
+        // validate map
+        mapController.validateMap();
+
+        // add players
+        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "TJ" });
+        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "hunter" });
+        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "ben" });
+
+        // populate countries
+        gameController.populateCountries();
+        gameController.initPlayersUnplacedArmies();
+
+        // get current player
+        gameController.showCurrentPlayer();
+        Player player = gameController.getCurrentPlayer();
+
+        // place army
+        System.out.println("Country to place: " + player.getConqueredCountries().get(0).getName());
+        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
+        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
+        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
+
+        // place all
+        gameController.handlePlaceAllCommand();
+
+        // reinforce
+        gameController.enterReinforcement();
+
+        for (int index = 0; index < 3; index++) {
+            player = gameController.getCurrentPlayer();
+
+            while (player.getUnplacedArmies() > 0) {
+                String[] reinforceArgs = new String[] { player.getConqueredCountries().get(0).getName(), "1" };
+                gameController.handleReinforceCommand(reinforceArgs);
+            }
+        }
+
+        // fortify
+        for (int index = 0; index < 3; index++) {
+            fortify();
         }
     }
 }
