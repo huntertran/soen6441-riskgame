@@ -18,7 +18,7 @@ public class GameController {
 
     /**
      * handle <code>editplayer</code> command
-     * 
+     *
      * @param args [0] -add/-remove
      * @param args [1] player name
      */
@@ -91,7 +91,7 @@ public class GameController {
     /**
      * Handle place army command for current player. The player is selected in a
      * round-robin rule
-     * 
+     *
      * @param countryName name of the country to place army. The country must belong
      *                    to current player
      */
@@ -119,7 +119,7 @@ public class GameController {
 
     /**
      * Place army for player
-     * 
+     *
      * @param country the country to place army
      * @param player  the player to place army
      */
@@ -136,42 +136,43 @@ public class GameController {
      * automatically randomly place all remaining unplacedarmiesfor all players
      */
     public void handlePlaceAllCommand() {
+        Random random = new Random();
+
         for (Player player : GameMap.getInstance().getPlayers()) {
             ArrayList<Country> conqueredCountries = player.getConqueredCountries();
-            Random random = new Random();
 
-            for (Country country : conqueredCountries) {
-                int armiesToPlace = random.nextInt(player.getUnplacedArmies());
-                country.receiveArmiesFromUnPlacedArmies(armiesToPlace);
+            if (player.getUnplacedArmies() > 0) {
+                for (Country country : conqueredCountries) {
+                    int armiesToPlace = random.nextInt(player.getUnplacedArmies());
+                    country.receiveArmiesFromUnPlacedArmies(armiesToPlace);
+                }
             }
         }
     }
 
     /**
      * get current player without print the message
-     * 
+     *
      * @return current player
      */
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return getCurrentPlayer(false);
     }
 
     /**
      * start round-robin for list of players, exclude lost players
      */
-    public void startRoundRobinPlayers() {
-        Player currentPlayer = getCurrentPlayer();
+    public Player startRoundRobinPlayers() {
         ArrayList<Player> players = GameMap.getInstance().getPlayers();
-
-        if (currentPlayer == null) {
-            // set first player
-            for (Player player : players) {
-                if (!player.isLost()) {
-                    player.setPlaying(true);
-                    break;
-                }
+        // set first player
+        for (Player player : players) {
+            if (!player.isLost()) {
+                player.setPlaying(true);
+                return player;
             }
         }
+
+        return null;
     }
 
     /**
@@ -199,7 +200,7 @@ public class GameController {
 
     /**
      * get current player
-     * 
+     *
      * @param isShowMessage if true, print the current player to screen
      * @return current player
      */
@@ -214,12 +215,7 @@ public class GameController {
         }
 
         if (currentPlayer == null) {
-            for (Player player : players) {
-                if (!player.isLost()) {
-                    currentPlayer = player;
-                    break;
-                }
-            }
+            currentPlayer = startRoundRobinPlayers();
         }
 
         if (isShowMessage) {
@@ -232,7 +228,7 @@ public class GameController {
     /**
      * REINFORCEMENT PHASE get the number of armies player will get for
      * reinforcement phase for all the country player have.
-     * 
+     *
      * @param currentPlayer current player
      * @return the number of armies. Minimum number of armies are 3
      */
@@ -244,7 +240,7 @@ public class GameController {
     /**
      * REINFORCEMENT PHASE get the number of armies player will have for the
      * conquered continent
-     * 
+     *
      * @param currentPlayer current player
      * @return the number of armies. 0 if user don't own any continent.
      */
@@ -263,7 +259,7 @@ public class GameController {
     /**
      * REINFORCEMENT PHASE calculate the number of armies a player will have for his
      * reinforcement phase
-     * 
+     *
      * @param currentPlayer the current player
      */
     private void calculateReinforcementArmies(Player currentPlayer) {
@@ -290,7 +286,7 @@ public class GameController {
 
     /**
      * REINFORCEMENT PHASE handle <code>reinforce</code> command
-     * 
+     *
      * @param args [0] country name
      * @param args [1] number of armies to reinforce
      */
