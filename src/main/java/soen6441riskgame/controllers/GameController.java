@@ -11,6 +11,9 @@ import soen6441riskgame.singleton.GameMap;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
+/**
+ * Control the game
+ */
 public class GameController {
 
     public static int MAX_INITIAL_ARMY_AMOUNT = 50;

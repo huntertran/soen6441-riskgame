@@ -1,11 +1,25 @@
 package soen6441riskgame.utils;
 
+/**
+ * Helper to print out to console with proper format
+ */
 public class ConsolePrinter {
+    /**
+     * print the string with format and args replaced, end with a linebreak
+     *
+     * @param format string with format
+     * @param args   args in string
+     */
     public static void printFormat(String format, Object... args) {
         System.out.format(format, args);
         System.out.println();
     }
 
+    /**
+     * print the array in matrix style, with header
+     * @param array
+     * @param headers if header is empty or null, the index will be printed
+     */
     public static void print2dArray(int[][] array, String[] headers) {
         if (headers == null || headers.length == 0) {
             if (array.length > 0) {

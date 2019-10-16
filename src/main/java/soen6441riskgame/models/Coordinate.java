@@ -1,5 +1,8 @@
 package soen6441riskgame.models;
 
+/**
+ * Coordinate of an entity on bitmap file, not used in console application
+ */
 public class Coordinate {
     private int x;
     private int y;

@@ -1,5 +1,8 @@
 package soen6441riskgame.models;
 
+/**
+ * indicate an object is printable to console with/without indentation
+ */
 public interface Viewable {
     public void view(int indent);
 

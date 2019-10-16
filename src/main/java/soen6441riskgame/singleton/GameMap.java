@@ -7,6 +7,9 @@ import soen6441riskgame.utils.ConsolePrinter;
 
 import java.util.ArrayList;
 
+/**
+ * Hold the game and map data
+ */
 public class GameMap {
     private static GameMap instance = new GameMap();
     private String mapName;
@@ -18,6 +21,11 @@ public class GameMap {
     public GameMap() {
     };
 
+    /**
+     * set a new instance for unit testing
+     *
+     * @param newTestingInstance
+     */
     public static void setTestingInstance(GameMap newTestingInstance) {
         instance = newTestingInstance;
     }
@@ -62,11 +70,15 @@ public class GameMap {
         return instance;
     }
 
+    /**
+     * reset the map
+     */
     public void reset() {
         mapName = "";
         continents = new ArrayList<Continent>();
         countries = new ArrayList<Country>();
         borders = new int[1][1];
+        players = new ArrayList<Player>();
     }
 
     public void showContinents() {
@@ -97,6 +109,12 @@ public class GameMap {
         return null;
     }
 
+    /**
+     * get player object from name
+     *
+     * @param name
+     * @return null if player name is not in the list
+     */
     public Player getPlayerFromName(String name) {
         for (Player player : getPlayers()) {
             if (player.getName().equals(name)) {
@@ -107,6 +125,11 @@ public class GameMap {
         return null;
     }
 
+    /**
+     * add a new player and link to next/previous player
+     *
+     * @param name
+     */
     public void addPlayer(String name) {
         Player player = getPlayerFromName(name);
 
@@ -130,6 +153,11 @@ public class GameMap {
         }
     }
 
+    /**
+     * remove a player and destroy link to next/previous player
+     *
+     * @param name
+     */
     public void removePlayer(String name) {
         Player player = getPlayerFromName(name);
 
@@ -166,6 +194,13 @@ public class GameMap {
         return isNeighboringCountries(country, neighbor);
     }
 
+    /**
+     * check if 2 country is neighbor in map
+     *
+     * @param country         country object
+     * @param neighborCountry neigbor country object
+     * @return false if any of two countries is not existed
+     */
     public boolean isNeighboringCountries(Country country, Country neighborCountry) {
         int countryOrder = -1;
         int neighbouringCountryOrder = -1;
@@ -180,6 +215,9 @@ public class GameMap {
         return false;
     }
 
+    /**
+     * Print the current border in matrix style
+     */
     public void printBorders() {
         int[][] borders = GameMap.getInstance().getBorders();
         ArrayList<Country> countries = GameMap.getInstance().getCountries();

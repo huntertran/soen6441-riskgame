@@ -18,6 +18,9 @@ import soen6441riskgame.enums.MapPart;
 import soen6441riskgame.singleton.GameMap;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * Control the map
+ */
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
 
@@ -136,6 +139,11 @@ public final class MapController {
         ConsolePrinter.printFormat("Country %s is created", countryName);
     }
 
+    /**
+     * Increase border
+     *
+     * @param newBorderSize location of the border to insert
+     */
     private void increaseBorder(int newBorderSize) {
         int[][] originalBorder = GameMap.getInstance().getBorders();
         int[][] newBorders = new int[newBorderSize][newBorderSize];
@@ -248,22 +256,6 @@ public final class MapController {
 
         return null;
     }
-
-    // /**
-    // * get country object from name
-    // *
-    // * @param countryName
-    // * @return null if country name is not existed in map
-    // */
-    // public Country getCountryFromName(String countryName) {
-    // for (Country country : GameMap.getInstance().getCountries()) {
-    // if (country.getName().equals(countryName)) {
-    // return country;
-    // }
-    // }
-
-    // return null;
-    // }
 
     /**
      * get all continents that have no country
@@ -553,6 +545,11 @@ public final class MapController {
         GameMap.getInstance().getCountries().remove(country);
     }
 
+    /**
+     * Remove border
+     *
+     * @param borderLocation location of the border to remove
+     */
     private void removeBorder(int borderLocation) {
         int[][] originalBorder = GameMap.getInstance().getBorders();
         int size = originalBorder[0].length - 1;
@@ -564,12 +561,6 @@ public final class MapController {
                 newBorders[row][col] = originalBorder[row][col];
             }
         }
-
-        // for (int row = borderLocation + 1; row < size; row++) {
-        // for (int col = borderLocation + 1; col < size; col++) {
-        // newBorders[row - 1][col - 1] = originalBorder[row][col];
-        // }
-        // }
 
         for (int row = size - 1; row >= borderLocation; row--) {
             for (int col = size - 1; col >= borderLocation; col--) {
@@ -623,6 +614,12 @@ public final class MapController {
         writer.close();
     }
 
+    /**
+     * Write borders information to file
+     *
+     * @param writer file writer
+     * @throws IOException file not found or not exist
+     */
     private void writeBordersToFile(FileWriter writer) throws IOException {
         writer.write("[borders]\n");
 
@@ -639,6 +636,12 @@ public final class MapController {
         }
     }
 
+    /**
+     * Write countries information to file
+     *
+     * @param writer file writer
+     * @throws IOException file not found or not exist
+     */
     private void writeCountriesToFile(FileWriter writer) throws IOException {
         ArrayList<Country> countries = GameMap.getInstance().getCountries();
         writer.write("[countries]\n");
@@ -650,6 +653,12 @@ public final class MapController {
         writer.write("\n");
     }
 
+    /**
+     * Write continent information to file
+     *
+     * @param writer file writer
+     * @throws IOException file not found or not exist
+     */
     private void writeContinentsToFile(FileWriter writer) throws IOException {
         ArrayList<Continent> continents = GameMap.getInstance().getContinents();
         writer.write("[continents]\n");
@@ -679,6 +688,11 @@ public final class MapController {
         continent.getCountries().add(country);
     }
 
+    /**
+     * get the country that not belong to any continent
+     *
+     * @return list of countries
+     */
     private ArrayList<Country> getCountriesHaveNoContinent() {
         ArrayList<Country> countriesWithNoContinent = new ArrayList<Country>();
         ArrayList<Country> countries = GameMap.getInstance().getCountries();
@@ -741,6 +755,9 @@ public final class MapController {
                 && !isCountryWithNoContinentExisted;
     }
 
+    /**
+     * handle the map validation command
+     */
     public void validateMap() {
         if (isMapValid()) {
             System.out.println("Map valid");

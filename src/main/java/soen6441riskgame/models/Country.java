@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import soen6441riskgame.singleton.GameMap;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * Hold country data
+ */
 public class Country implements Viewable {
     private Coordinate coordinate;
     private int armyAmount;
@@ -68,6 +71,11 @@ public class Country implements Viewable {
         this.coordinate = coordinate;
     }
 
+    /**
+     * get the neighbors of this country
+     *
+     * @return if no neighbors, return an empty list
+     */
     public ArrayList<Country> getNeighbors() {
         ArrayList<Country> neighbors = new ArrayList<Country>();
 
@@ -107,16 +115,33 @@ public class Country implements Viewable {
         conquerer.setUnplacedArmies(newUnplacedArmiesOfConquerer);
     }
 
+    /**
+     * Increase armies inside this country from unplaced armies
+     *
+     * @param amount of armies from unplaced armies of the conquerer
+     */
     public void increaseArmies(int amount) {
         int newArmiesAmount = this.getArmyAmount() + amount;
         this.setArmyAmount(newArmiesAmount);
     }
 
+    /**
+     * decrease armies inside this country from unplaced armies
+     *
+     * @param amount of armies from unplaced armies of the conquerer
+     */
     public void decreaseArmies(int amount) {
         int newArmiesAmount = this.getArmyAmount() - amount;
         this.setArmyAmount(newArmiesAmount);
     }
 
+    /**
+     * move armies from this country to another neighbor country (have the same
+     * conquerer)
+     *
+     * @param toCountry the destination country
+     * @param armiesToMove number of armies to move
+     */
     public void moveArmies(Country toCountry, int armiesToMove) {
         if (!GameMap.getInstance().isNeighboringCountries(this, toCountry)) {
             ConsolePrinter.printFormat("Country %s and %s is not neighbor", this.getName(), toCountry.getName());

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import soen6441riskgame.singleton.GameMap;
 
+/**
+ * Hold player data
+ * Each player is a node in a linked list
+ */
 public class Player {
     private String name;
     private int armies;
@@ -17,6 +21,10 @@ public class Player {
         this.name = name;
     }
 
+    /**
+     * get previous player on the linked list
+     * @return
+     */
     public Player getPreviousPlayer() {
         return previousPlayer;
     }
@@ -29,6 +37,10 @@ public class Player {
         }
     }
 
+    /**
+     * get next player on the linked list
+     * @return
+     */
     public Player getNextPlayer() {
         return nextPlayer;
     }
@@ -52,6 +64,10 @@ public class Player {
         this.isLost = isLost;
     }
 
+    /**
+     * get all the conquered country of this player
+     * @return empty list if no country
+     */
     public ArrayList<Country> getConqueredCountries() {
         ArrayList<Country> conquered = new ArrayList<>();
 

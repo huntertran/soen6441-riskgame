@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import soen6441riskgame.singleton.GameMap;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * Hold continent data
+ */
 public class Continent implements Viewable {
     private String name;
     private int army;
@@ -15,6 +18,9 @@ public class Continent implements Viewable {
         this.setArmy(army);
     }
 
+    /**
+     * get the continent order from list, start with 1
+     */
     public int getOrder() {
         return GameMap.getInstance().getContinents().indexOf(this) + 1;
     }
@@ -43,6 +49,10 @@ public class Continent implements Viewable {
         this.name = name;
     }
 
+    /**
+     * get continent conquerer
+     * @return null if not conquered by any player
+     */
     public Player getConquerer() {
         ArrayList<Country> countries = getCountries();
 
