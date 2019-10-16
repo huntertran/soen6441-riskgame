@@ -46,8 +46,7 @@ public final class MapController {
      */
     public void addContinent(String continentName, String continentValue, int... order) {
         if (!isContinentExisted(continentName)) {
-            GameMap.getInstance().getContinents()
-                    .add(new Continent(continentName, Integer.parseInt(continentValue)));
+            GameMap.getInstance().getContinents().add(new Continent(continentName, Integer.parseInt(continentValue)));
 
             ConsolePrinter.printFormat("New continent added: %s with %s armies", continentName, continentValue);
         } else {
@@ -635,8 +634,8 @@ public final class MapController {
         writer.write("[countries]\n");
         for (Country country : countries) {
             writer.write(country.getOrder() + " " + country.getName() + " " + country.getContinent().getOrder() + " "
-                    + country.getArmyAmount() + " " + country.getCoordinate().getX() + " " + country.getCoordinate().getY()
-                    + "\n");
+                    + country.getArmyAmount() + " " + country.getCoordinate().getX() + " "
+                    + country.getCoordinate().getY() + "\n");
         }
         writer.write("\n");
     }
@@ -670,6 +669,19 @@ public final class MapController {
         continent.getCountries().add(country);
     }
 
+    private ArrayList<Country> getCountriesHaveNoContinent() {
+        ArrayList<Country> countriesWithNoContinent = new ArrayList<Country>();
+        ArrayList<Country> countries = GameMap.getInstance().getCountries();
+
+        for (Country country : countries) {
+            if (country.getContinent() == null) {
+                countriesWithNoContinent.add(country);
+            }
+        }
+
+        return countriesWithNoContinent;
+    }
+
     /**
      * validate the map Types of errors: 1. less than 6 countries 2. some countries
      * are isolated from the rest 3. empty continents 4. one country is linked to
@@ -691,6 +703,9 @@ public final class MapController {
         ArrayList<Continent> emptyContinents = getEmptyContinents();
         boolean isEmptyContinentExisted = emptyContinents.size() > 0;
 
+        ArrayList<Country> countriesWithNoContinent = getCountriesHaveNoContinent();
+        boolean isCountryWithNoContinentExisted = countriesWithNoContinent.size() > 0;
+
         if (isIsolatedCountryExisted) {
             System.out.println("Isolated countries existed:");
             for (Country country : isolatedCountries) {
@@ -705,7 +720,14 @@ public final class MapController {
             }
         }
 
-        return !isNotEnoughCountries && !isIsolatedCountryExisted && !isEmptyContinentExisted;
+        if (isCountryWithNoContinentExisted) {
+            System.out.println("Country that not belong to any continent existed:");
+            for (Country country : countriesWithNoContinent) {
+                country.viewWithoutNeighbors(1);
+            }
+        }
+
+        return !isNotEnoughCountries && !isIsolatedCountryExisted && !isEmptyContinentExisted && !isCountryWithNoContinentExisted;
     }
 
     public void validateMap() {

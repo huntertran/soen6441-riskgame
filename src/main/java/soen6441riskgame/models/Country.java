@@ -89,7 +89,7 @@ public class Country implements Viewable {
 
     /**
      * Increase armies inside this country from unplaced armies
-     * 
+     *
      * @param amount of armies from unplaced armies of the conquerer
      */
     public void receiveArmiesFromUnPlacedArmies(int amount) {
@@ -148,7 +148,7 @@ public class Country implements Viewable {
 
     public void viewWithoutNeighbors(int indent) {
         this.printIndent(indent);
-        ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s\n", this.getName(), this.getOrder(),
+        ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s", this.getName(), this.getOrder(),
                 this.getArmyAmount());
     }
 }
