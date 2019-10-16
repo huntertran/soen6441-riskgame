@@ -1,11 +1,13 @@
 package soen6441riskgame.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameMap;
 
@@ -59,13 +61,48 @@ public class GamePlayTest {
         gameController.handlePlaceAllCommand();
 
         // reinforce
-        player = gameController.getCurrentPlayer();
+        for (int index = 0; index < 3; index++) {
+            player = gameController.getCurrentPlayer();
 
-        String[] reinforceArgs = new String[] { player.getConqueredCountries().get(0).getName(), "1" };
+            while (player.getUnplacedArmies() > 0) {
+                String[] reinforceArgs = new String[] { player.getConqueredCountries().get(0).getName(), "1" };
+                gameController.handleReinforceCommand(reinforceArgs);
+            }
+        }
 
-        gameController.handleReinforceCommand(reinforceArgs);
+        // fortify
+        for (int index = 0; index < 3; index++) {
+            player = gameController.getCurrentPlayer();
 
+            ArrayList<Country> countries = player.getConqueredCountries();
 
+            Country fromCountry = null;
+            for (Country country : countries) {
+                if (country.getArmyAmount() > 1) {
+                    fromCountry = country;
+                    break;
+                }
+            }
 
+            Country toCountry = null;
+            if (fromCountry != null) {
+                ArrayList<Country> toCountries = fromCountry.getNeighbors();
+                for (Country country : toCountries) {
+                    if (country.getConquerer().equals(player) && !country.equals(fromCountry)) {
+                        toCountry = country;
+                        break;
+                    }
+                }
+            }
+
+            if (fromCountry != null && toCountry != null) {
+                System.out.println("From country: " + fromCountry.getName());
+                System.out.println("To country: " + toCountry.getName());
+
+                String[] fortifyArgs = new String[] { fromCountry.getName(), toCountry.getName(), "1" };
+
+                gameController.handleFortifyCommand(fortifyArgs);
+            }
+        }
     }
 }
