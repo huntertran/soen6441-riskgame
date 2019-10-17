@@ -44,6 +44,17 @@ cd target
 java -jar .\soen6441riskgame-1.0-SNAPSHOT.jar [your_command] [your_args]
 ```
 
+**Generate the javadoc**
+
+```s
+# go to the root directory of the project
+mvn javadoc:javadoc
+```
+
+The javadoc files will be generated at `\target\site\apidocs`
+
+> Copy this folder to `\docs` to update Github pages for javadocs
+
 # 1. Members
 <a id="markdown-members" name="members"></a>
 - 40124288 - Van Tuan Tran
