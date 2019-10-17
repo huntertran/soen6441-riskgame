@@ -108,7 +108,8 @@ public class GameController {
      */
     public void handlePlaceArmyCommand(String countryName) {
         Country country = GameMap.getInstance().getCountryFromName(countryName);
-
+        Player currentPlayer = getCurrentPlayer();
+        
         if (country == null) {
             ConsolePrinter.printFormat("Country %s not existed", countryName);
             return;
@@ -119,7 +120,6 @@ public class GameController {
             return;
         }
 
-        Player currentPlayer = getCurrentPlayer();
         if (currentPlayer.getUnplacedArmies() != 0) {
             placeArmy(country, country.getConquerer());
         } else {
