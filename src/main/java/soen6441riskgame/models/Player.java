@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.enums.GamePhase;
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 
 /**
  * Hold player data Each player is a node in a linked list
@@ -85,7 +85,7 @@ public class Player {
     public ArrayList<Country> getConqueredCountries() {
         ArrayList<Country> conquered = new ArrayList<>();
 
-        for (Country country : GameMap.getInstance().getCountries()) {
+        for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {
             if (country.getConquerer().equals(this)) {
                 conquered.add(country);
             }
@@ -143,7 +143,7 @@ public class Player {
     public int getArmiesFromConqueredContinents() {
         int armiesFromConqueredContinents = 0;
 
-        for (Continent continent : GameMap.getInstance().getContinents()) {
+        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
             if (this.equals(continent.getConquerer())) {
                 armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();
             }

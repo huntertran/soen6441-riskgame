@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 
 public class GamePlayTest {
     MapController mapController;
@@ -18,8 +18,8 @@ public class GamePlayTest {
     @Before
     public void before() throws IOException {
 
-        GameMap testingInstanceGameMap = new GameMap();
-        GameMap.setTestingInstance(testingInstanceGameMap);
+        GameBoard testingInstanceGameMap = new GameBoard();
+        GameBoard.setTestingInstance(testingInstanceGameMap);
 
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
         mapController = new MapController();

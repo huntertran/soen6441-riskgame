@@ -15,7 +15,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 
 @RunWith(Parameterized.class)
 public class MapControllerTest {
@@ -56,8 +56,8 @@ public class MapControllerTest {
      */
     @Before
     public void runBeforeEachTestCase() {
-        GameMap testingInstanceGameMap = new GameMap();
-        GameMap.setTestingInstance(testingInstanceGameMap);
+        GameBoard testingInstanceGameMap = new GameBoard();
+        GameBoard.setTestingInstance(testingInstanceGameMap);
         mapController.resetMap();
     }
 
@@ -76,7 +76,7 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // Assert
-        Assert.assertTrue(GameMap.getInstance().getContinents().get(0).getName().equals("North_Africa"));
+        Assert.assertTrue(GameBoard.getInstance().getGameBoardMap().getContinents().get(0).getName().equals("North_Africa"));
     }
 
     /**
@@ -115,8 +115,8 @@ public class MapControllerTest {
 
         // Assert
         Assert.assertNull(mapController.getContinentFromName(continent1));
-        Assert.assertNotEquals(continent1, GameMap.getInstance().getCountryFromName(country1).getContinent());
-        Assert.assertNotEquals(continent1, GameMap.getInstance().getCountryFromName(country2).getContinent());
+        Assert.assertNotEquals(continent1, GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1).getContinent());
+        Assert.assertNotEquals(continent1, GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2).getContinent());
 
     }
 
@@ -176,10 +176,10 @@ public class MapControllerTest {
         mapController.addNeighbor(country2, country3);
         mapController.addNeighbor(country3, country4);
 
-        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
-        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
-        Country countryObject3 = GameMap.getInstance().getCountryFromName(country3);
-        Country countryObject4 = GameMap.getInstance().getCountryFromName(country4);
+        Country countryObject1 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1);
+        Country countryObject2 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2);
+        Country countryObject3 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country3);
+        Country countryObject4 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country4);
 
         // Assert
         Assert.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
@@ -276,10 +276,10 @@ public class MapControllerTest {
         mapController.removeNeighbor(country1, country2);
         mapController.removeNeighbor(country2, country3);
 
-        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
-        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
-        Country countryObject3 = GameMap.getInstance().getCountryFromName(country3);
-        Country countryObject4 = GameMap.getInstance().getCountryFromName(country4);
+        Country countryObject1 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1);
+        Country countryObject2 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2);
+        Country countryObject3 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country3);
+        Country countryObject4 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country4);
 
         // Assert
         Assert.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
@@ -302,8 +302,8 @@ public class MapControllerTest {
         // Action
         mapController.editNeighbor(arguments);
 
-        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
-        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
+        Country countryObject1 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1);
+        Country countryObject2 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2);
 
         // Assert
         Assert.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
@@ -324,8 +324,8 @@ public class MapControllerTest {
         // Action
         mapController.editNeighbor(arguments);
 
-        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
-        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
+        Country countryObject1 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1);
+        Country countryObject2 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2);
 
         // Assert
         Assert.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
@@ -357,7 +357,7 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // action: make the map invalid
-        mapController.removeContinent(GameMap.getInstance().getContinents().get(0).getName());
+        mapController.removeContinent(GameBoard.getInstance().getGameBoardMap().getContinents().get(0).getName());
 
         // assert
         assertFalse(mapController.isMapValid());
@@ -370,8 +370,8 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // action: make the map invalid
-        while (GameMap.getInstance().getCountries().size() > 5) {
-            mapController.removeCountry(GameMap.getInstance().getCountries().get(0).getName());
+        while (GameBoard.getInstance().getGameBoardMap().getCountries().size() > 5) {
+            mapController.removeCountry(GameBoard.getInstance().getGameBoardMap().getCountries().get(0).getName());
         }
 
         // assert
@@ -385,7 +385,7 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // action: make the map invalid
-        Country targetCountry = GameMap.getInstance().getCountries().get(0);
+        Country targetCountry = GameBoard.getInstance().getGameBoardMap().getCountries().get(0);
 
         while (targetCountry.getNeighbors().size() > 0) {
             mapController.removeNeighbor(targetCountry.getName(), targetCountry.getNeighbors().get(0).getName());
@@ -403,17 +403,17 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // action: make the map invalid
-        Continent targetContinent = GameMap.getInstance().getContinents().get(0);
+        Continent targetContinent = GameBoard.getInstance().getGameBoardMap().getContinents().get(0);
 
         System.out.println("Before remove countries:");
-        GameMap.getInstance().printBorders();
+        GameBoard.getInstance().getGameBoardMap().printBorders();
 
         while (targetContinent.getCountries().size() > 0) {
             mapController.removeCountry(targetContinent.getCountries().get(0).getName());
         }
 
         System.out.println("After remove countries:");
-        GameMap.getInstance().printBorders();
+        GameBoard.getInstance().getGameBoardMap().printBorders();
 
         // assert
         assertFalse(mapController.isMapValid());

@@ -7,7 +7,7 @@ import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
@@ -35,11 +35,11 @@ public class GameController {
 
         switch (playerCommand) {
         case ADD: {
-            GameMap.getInstance().addPlayer(args[1]);
+            GameBoard.getInstance().addPlayer(args[1]);
             break;
         }
         case REMOVE: {
-            GameMap.getInstance().removePlayer(args[1]);
+            GameBoard.getInstance().removePlayer(args[1]);
             break;
         }
         case NONE: {
@@ -53,8 +53,8 @@ public class GameController {
      * random assign countries to players
      */
     public void populateCountries() {
-        int totalCountry = GameMap.getInstance().getCountries().size();
-        int totalPlayer = GameMap.getInstance().getPlayers().size();
+        int totalCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
+        int totalPlayer = GameBoard.getInstance().getPlayers().size();
         int numberOfAssignedCountry = 0;
         int player_counter = 0;
 
@@ -70,10 +70,10 @@ public class GameController {
             // int playerIndexToAssign = random.nextInt(totalPlayer);
             int playerIndexToAssign = player_counter;
 
-            Country countryToAssign = GameMap.getInstance().getCountries().get(nextIndexCountryToAssign);
+            Country countryToAssign = GameBoard.getInstance().getGameBoardMap().getCountries().get(nextIndexCountryToAssign);
 
             if (!countryToAssign.isConquered()) {
-                Player player = GameMap.getInstance().getPlayers().get(playerIndexToAssign);
+                Player player = GameBoard.getInstance().getPlayers().get(playerIndexToAssign);
                 countryToAssign.setConquerer(player);
 
                 // user need to place at least 1 army to the country he owned
@@ -91,7 +91,7 @@ public class GameController {
      * players
      */
     public void initPlayersUnplacedArmies() {
-        ArrayList<Player> players = GameMap.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getPlayers();
         int unplacedArmiesEachPlayer = MAX_INITIAL_ARMY_AMOUNT / players.size();
 
         for (Player player : players) {
@@ -107,7 +107,7 @@ public class GameController {
      *                    to current player
      */
     public void handlePlaceArmyCommand(String countryName) {
-        Country country = GameMap.getInstance().getCountryFromName(countryName);
+        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
         Player currentPlayer = getCurrentPlayer();
 
         if (country == null) {
@@ -134,7 +134,7 @@ public class GameController {
     public void handlePlaceAllCommand() {
         Random random = new Random();
 
-        for (Player player : GameMap.getInstance().getPlayers()) {
+        for (Player player : GameBoard.getInstance().getPlayers()) {
             ArrayList<Country> conqueredCountries = player.getConqueredCountries();
 
             if (player.getUnplacedArmies() > 0) {
@@ -159,7 +159,7 @@ public class GameController {
      * start round-robin for list of players, exclude lost players
      */
     public Player startRoundRobinPlayers() {
-        ArrayList<Player> players = GameMap.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getPlayers();
         // set first player
         for (Player player : players) {
             if (!player.isLost()) {
@@ -206,7 +206,7 @@ public class GameController {
      */
     private Player getCurrentPlayer(boolean isShowMessage) {
         Player currentPlayer = null;
-        ArrayList<Player> players = GameMap.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getPlayers();
 
         for (Player player : players) {
             if (player.isPlaying()) {
@@ -249,7 +249,7 @@ public class GameController {
      * @param args [1] number of armies to reinforce
      */
     public void handleReinforceCommand(String[] args) {
-        Country country = GameMap.getInstance().getCountryFromName(args[0]);
+        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
 
         int numberOfArmies = Parser.parseWithDefault(args[1], 0);
 
@@ -301,8 +301,8 @@ public class GameController {
             return;
         }
 
-        Country fromCountry = GameMap.getInstance().getCountryFromName(args[0]);
-        Country toCountry = GameMap.getInstance().getCountryFromName(args[1]);
+        Country fromCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
+        Country toCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
         int numberOfArmies = Parser.parseWithDefault(args[2], 0);
 
         if (fromCountry == null || toCountry == null) {

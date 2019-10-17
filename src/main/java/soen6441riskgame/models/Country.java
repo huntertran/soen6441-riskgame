@@ -2,7 +2,7 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
@@ -60,7 +60,7 @@ public class Country implements Viewable {
      * return the order of the country in the country list, starting with 1
      */
     public int getOrder() {
-        return GameMap.getInstance().getCountries().indexOf(this) + 1;
+        return GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;
     }
 
     public Coordinate getCoordinate() {
@@ -79,12 +79,12 @@ public class Country implements Viewable {
     public ArrayList<Country> getNeighbors() {
         ArrayList<Country> neighbors = new ArrayList<Country>();
 
-        int[][] borders = GameMap.getInstance().getBorders();
+        int[][] borders = GameBoard.getInstance().getGameBoardMap().getBorders();
         int countryOrder = this.getOrder();
 
         for (int index = 0; index < borders[countryOrder - 1].length; index++) {
             if (borders[countryOrder - 1][index] == 1) {
-                neighbors.add(GameMap.getInstance().getCountries().get(index));
+                neighbors.add(GameBoard.getInstance().getGameBoardMap().getCountries().get(index));
             }
         }
 
@@ -200,7 +200,7 @@ public class Country implements Viewable {
         int neighbouringCountryOrder = -1;
         countryOrder = getOrder();
         neighbouringCountryOrder = neighborCountry.getOrder();
-        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
+        if (GameBoard.getInstance().getGameBoardMap().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
                 && countryOrder != -1 && neighbouringCountryOrder != -1) {
             return true;
         }
