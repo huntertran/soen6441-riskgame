@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 
 public class GameControllerTest {
     MapController mapController;
@@ -20,8 +20,8 @@ public class GameControllerTest {
     @Before
     public void before() throws IOException {
 
-        GameMap testingInstanceGameMap = new GameMap();
-        GameMap.setTestingInstance(testingInstanceGameMap);
+        GameBoard testingInstanceGameMap = new GameBoard();
+        GameBoard.setTestingInstance(testingInstanceGameMap);
 
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
         mapController = new MapController();
@@ -48,9 +48,9 @@ public class GameControllerTest {
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
 
-        Player tjPlayer = GameMap.getInstance().getPlayerFromName(tjAddArgs[1]);
-        Player hunterPlayer = GameMap.getInstance().getPlayerFromName(hunterAddArgs[1]);
-        Player benPlayer = GameMap.getInstance().getPlayerFromName(benAddArgs[1]);
+        Player tjPlayer = GameBoard.getInstance().getPlayerFromName(tjAddArgs[1]);
+        Player hunterPlayer = GameBoard.getInstance().getPlayerFromName(hunterAddArgs[1]);
+        Player benPlayer = GameBoard.getInstance().getPlayerFromName(benAddArgs[1]);
 
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
@@ -79,9 +79,9 @@ public class GameControllerTest {
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(hunterRemoveArgs);
-        Player tjPlayer = GameMap.getInstance().getPlayerFromName(tjAddArgs[1]);
-        Player hunterPlayer = GameMap.getInstance().getPlayerFromName(hunterAddArgs[1]);
-        Player benPlayer = GameMap.getInstance().getPlayerFromName(benAddArgs[1]);
+        Player tjPlayer = GameBoard.getInstance().getPlayerFromName(tjAddArgs[1]);
+        Player hunterPlayer = GameBoard.getInstance().getPlayerFromName(hunterAddArgs[1]);
+        Player benPlayer = GameBoard.getInstance().getPlayerFromName(benAddArgs[1]);
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
         Player benPreviousPlayer = benPlayer.getPreviousPlayer();
@@ -113,7 +113,7 @@ public class GameControllerTest {
 
         boolean isOneCountryNotAssigned = false;
 
-        ArrayList<Country> countries = GameMap.getInstance().getCountries();
+        ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
         for (Country country : countries) {
             Player conquerer = country.getConquerer();
             if (conquerer == null) {
@@ -145,7 +145,7 @@ public class GameControllerTest {
         int unplacedArmiesEachPlayer = -1;
         boolean isUnplacedArmiesDifferentForOnePlayer = false;
 
-        ArrayList<Player> players = GameMap.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getGameBoardMap().printBorders();
         for (Player player : players) {
             if (unplacedArmiesEachPlayer == -1) {
                 unplacedArmiesEachPlayer = player.getUnplacedArmies();

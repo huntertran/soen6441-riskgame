@@ -2,7 +2,7 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 
-import soen6441riskgame.singleton.GameMap;
+import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
@@ -22,7 +22,7 @@ public class Continent implements Viewable {
      * get the continent order from list, start with 1
      */
     public int getOrder() {
-        return GameMap.getInstance().getContinents().indexOf(this) + 1;
+        return GameBoard.getInstance().getGameBoardMap().getContinents().indexOf(this) + 1;
     }
 
     public int getArmy() {
