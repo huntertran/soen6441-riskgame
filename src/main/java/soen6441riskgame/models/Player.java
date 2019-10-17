@@ -2,6 +2,7 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 
+import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameMap;
 
@@ -33,7 +34,7 @@ public class Player {
 
     /**
      * get previous player on the linked list
-     * 
+     *
      * @return
      */
     public Player getPreviousPlayer() {
@@ -50,6 +51,7 @@ public class Player {
 
     /**
      * get next player on the linked list
+     *
      * @return
      */
     public Player getNextPlayer() {
@@ -77,6 +79,7 @@ public class Player {
 
     /**
      * get all the conquered country of this player
+     *
      * @return empty list if no country
      */
     public ArrayList<Country> getConqueredCountries() {
@@ -117,5 +120,51 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * REINFORCEMENT PHASE get the number of armies player will get for
+     * reinforcement phase for all the country player have.
+     *
+     * @return the number of armies. Minimum number of armies are 3
+     */
+    public int getArmiesFromAllConqueredCountries() {
+        ArrayList<Country> conqueredCountries = getConqueredCountries();
+        return Math.round(conqueredCountries.size() / 3);
+    }
+
+    /**
+     * REINFORCEMENT PHASE get the number of armies player will have for the
+     * conquered continent
+     *
+     * @param currentPlayer current player
+     * @return the number of armies. 0 if user don't own any continent.
+     */
+    public int getArmiesFromConqueredContinents() {
+        int armiesFromConqueredContinents = 0;
+
+        for (Continent continent : GameMap.getInstance().getContinents()) {
+            if (this.equals(continent.getConquerer())) {
+                armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();
+            }
+        }
+
+        return armiesFromConqueredContinents;
+    }
+
+    /**
+     * REINFORCEMENT PHASE calculate the number of armies a player will have for his
+     * reinforcement phase
+     *
+     * @param gameController
+     */
+    public void calculateReinforcementArmies(GameController gameController) {
+        int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries();
+        int armiesFromConqueredContinents = getArmiesFromConqueredContinents();
+        if (armiesFromAllConqueredCountries < 3) {
+            armiesFromAllConqueredCountries = 3;
+        }
+        int newUnplacedArmies = getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;
+        setUnplacedArmies(newUnplacedArmies);
     }
 }

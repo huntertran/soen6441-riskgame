@@ -5,7 +5,6 @@ import java.util.Random;
 
 import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.enums.GamePhase;
-import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameMap;
@@ -122,26 +121,11 @@ public class GameController {
         }
 
         if (currentPlayer.getUnplacedArmies() != 0) {
-            placeArmy(country, country.getConquerer());
+            country.placeArmy(country.getConquerer());
         } else {
             turnToNextPlayer();
             getCurrentPlayer(true);
         }
-    }
-
-    /**
-     * Place army for player
-     *
-     * @param country the country to place army
-     * @param player  the player to place army
-     */
-    private void placeArmy(Country country, Player player) {
-        int originalArmy = country.getArmyAmount();
-
-        country.setArmyAmount(originalArmy + 1);
-
-        int newUnplacedArmies = player.getUnplacedArmies() - 1;
-        player.setUnplacedArmies(newUnplacedArmies);
     }
 
     /**
@@ -241,56 +225,7 @@ public class GameController {
         return currentPlayer;
     }
 
-    /**
-     * REINFORCEMENT PHASE get the number of armies player will get for
-     * reinforcement phase for all the country player have.
-     *
-     * @param currentPlayer current player
-     * @return the number of armies. Minimum number of armies are 3
-     */
-    private int getArmiesFromAllConqueredCountries(Player currentPlayer) {
-        ArrayList<Country> conqueredCountries = currentPlayer.getConqueredCountries();
-        return Math.round(conqueredCountries.size() / 3);
-    }
 
-    /**
-     * REINFORCEMENT PHASE get the number of armies player will have for the
-     * conquered continent
-     *
-     * @param currentPlayer current player
-     * @return the number of armies. 0 if user don't own any continent.
-     */
-    private int getArmiesFromConqueredContinents(Player currentPlayer) {
-        int armiesFromConqueredContinents = 0;
-
-        for (Continent continent : GameMap.getInstance().getContinents()) {
-            if (currentPlayer.equals(continent.getConquerer())) {
-                armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();
-            }
-        }
-
-        return armiesFromConqueredContinents;
-    }
-
-    /**
-     * REINFORCEMENT PHASE calculate the number of armies a player will have for his
-     * reinforcement phase
-     *
-     * @param currentPlayer the current player
-     */
-    private void calculateReinforcementArmies(Player currentPlayer) {
-        int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries(currentPlayer);
-        int armiesFromConqueredContinents = getArmiesFromConqueredContinents(currentPlayer);
-
-        if (armiesFromAllConqueredCountries < 3) {
-            armiesFromAllConqueredCountries = 3;
-        }
-
-        int newUnplacedArmies = currentPlayer.getUnplacedArmies() + armiesFromAllConqueredCountries
-                + armiesFromConqueredContinents;
-
-        currentPlayer.setUnplacedArmies(newUnplacedArmies);
-    }
 
     /**
      * REINFORCEMENT PHASE enter reinforcement phase
@@ -299,7 +234,7 @@ public class GameController {
         Player currentPlayer = getCurrentPlayer(true);
 
         if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
-            calculateReinforcementArmies(currentPlayer);
+            currentPlayer.calculateReinforcementArmies(this);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
         } else {
             ConsolePrinter.printFormat("Player %s cannot use reinforce in FORTIFICATION phase",
