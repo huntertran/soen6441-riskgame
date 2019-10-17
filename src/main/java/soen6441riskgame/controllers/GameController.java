@@ -200,6 +200,9 @@ public class GameController {
         }
     }
 
+    /**
+     * print the current player to console
+     */
     public void showCurrentPlayer() {
         Player player = getCurrentPlayer();
         ConsolePrinter.printFormat("Player %s is in turn", player.getName());
