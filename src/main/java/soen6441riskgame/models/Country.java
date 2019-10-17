@@ -143,7 +143,7 @@ public class Country implements Viewable {
      * @param armiesToMove number of armies to move
      */
     public void moveArmies(Country toCountry, int armiesToMove) {
-        if (!GameMap.getInstance().isNeighboringCountries(this, toCountry)) {
+        if (!this.isNeighboringCountries(toCountry)) {
             ConsolePrinter.printFormat("Country %s and %s is not neighbor", this.getName(), toCountry.getName());
             return;
         }
@@ -187,5 +187,23 @@ public class Country implements Viewable {
         setArmyAmount(originalArmy + 1);
         int newUnplacedArmies = player.getUnplacedArmies() - 1;
         player.setUnplacedArmies(newUnplacedArmies);
+    }
+
+    /**
+     * check if 2 country is neighbor in map
+     *
+     * @param neighborCountry neighbor country object
+     * @return false if any of two countries is not existed
+     */
+    public boolean isNeighboringCountries(Country neighborCountry) {
+        int countryOrder = -1;
+        int neighbouringCountryOrder = -1;
+        countryOrder = getOrder();
+        neighbouringCountryOrder = neighborCountry.getOrder();
+        if (GameMap.getInstance().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
+                && countryOrder != -1 && neighbouringCountryOrder != -1) {
+            return true;
+        }
+        return false;
     }
 }
