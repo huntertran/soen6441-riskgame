@@ -2,11 +2,11 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 
+import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameMap;
 
 /**
- * Hold player data
- * Each player is a node in a linked list
+ * Hold player data Each player is a node in a linked list
  */
 public class Player {
     private String name;
@@ -16,13 +16,23 @@ public class Player {
     private boolean isLost = false;
     private Player nextPlayer;
     private Player previousPlayer;
+    private GamePhase currentPhase;
 
     public Player(String name) {
         this.name = name;
     }
 
+    public GamePhase getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public void setCurrentPhase(GamePhase currentPhase) {
+        this.currentPhase = currentPhase;
+    }
+
     /**
      * get previous player on the linked list
+     * 
      * @return
      */
     public Player getPreviousPlayer() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import soen6441riskgame.enums.CommonCommandArgs;
+import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
@@ -57,19 +58,19 @@ public class GameController {
         int totalPlayer = GameMap.getInstance().getPlayers().size();
         int numberOfAssignedCountry = 0;
         int player_counter = 0;
-        
+
         Random random = new Random();
 
         while (numberOfAssignedCountry < totalCountry) {
-        	
-        	if(player_counter == totalPlayer) {
-        		player_counter = 0;
-        	}
-        	
+
+            if (player_counter == totalPlayer) {
+                player_counter = 0;
+            }
+
             int nextIndexCountryToAssign = random.nextInt(totalCountry);
-           // int playerIndexToAssign = random.nextInt(totalPlayer);
+            // int playerIndexToAssign = random.nextInt(totalPlayer);
             int playerIndexToAssign = player_counter;
-            
+
             Country countryToAssign = GameMap.getInstance().getCountries().get(nextIndexCountryToAssign);
 
             if (!countryToAssign.isConquered()) {
@@ -109,7 +110,7 @@ public class GameController {
     public void handlePlaceArmyCommand(String countryName) {
         Country country = GameMap.getInstance().getCountryFromName(countryName);
         Player currentPlayer = getCurrentPlayer();
-        
+
         if (country == null) {
             ConsolePrinter.printFormat("Country %s not existed", countryName);
             return;
@@ -194,6 +195,7 @@ public class GameController {
 
         if (currentPlayer != null) {
             currentPlayer.setPlaying(false);
+            currentPlayer.setCurrentPhase(GamePhase.WAITING_TO_TURN);
             currentPlayer.getNextPlayer().setPlaying(true);
         }
     }
@@ -292,7 +294,11 @@ public class GameController {
      */
     public void enterReinforcement() {
         Player currentPlayer = getCurrentPlayer(true);
-        calculateReinforcementArmies(currentPlayer);
+
+        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+            calculateReinforcementArmies(currentPlayer);
+            currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
+        }
     }
 
     /**
