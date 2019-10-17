@@ -145,7 +145,7 @@ public class GameControllerTest {
         int unplacedArmiesEachPlayer = -1;
         boolean isUnplacedArmiesDifferentForOnePlayer = false;
 
-        ArrayList<Player> players = GameBoard.getInstance().getGameBoardMap().printBorders();
+        ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
         for (Player player : players) {
             if (unplacedArmiesEachPlayer == -1) {
                 unplacedArmiesEachPlayer = player.getUnplacedArmies();
