@@ -17,7 +17,7 @@ public final class App {
         System.out.println("SOEN 6441 - Risk Domination game");
 
         if (args.length == 0) {
-            runFromBegining();
+            runFromBeginning();
         } else {
             jumpToCommand(args);
         }
@@ -119,7 +119,7 @@ public final class App {
         }
     }
 
-    public static void runFromBegining() {
+    public static void runFromBeginning() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("GAME START");

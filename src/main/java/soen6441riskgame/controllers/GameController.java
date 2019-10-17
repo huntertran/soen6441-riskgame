@@ -21,7 +21,7 @@ public class GameController {
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
 
     /**
-     * handle <code>editplayer</code> command
+     * handle <code>gameplayer</code> command
      *
      * @param args [0] -add/-remove
      * @param args [1] player name
@@ -145,7 +145,7 @@ public class GameController {
     }
 
     /**
-     * automatically randomly place all remaining unplacedarmiesfor all players
+     * automatically randomly place all remaining unplaced armies for all players
      */
     public void handlePlaceAllCommand() {
         Random random = new Random();

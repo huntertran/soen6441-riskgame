@@ -198,7 +198,7 @@ public class GameMap {
      * check if 2 country is neighbor in map
      *
      * @param country         country object
-     * @param neighborCountry neigbor country object
+     * @param neighborCountry neighbor country object
      * @return false if any of two countries is not existed
      */
     public boolean isNeighboringCountries(Country country, Country neighborCountry) {

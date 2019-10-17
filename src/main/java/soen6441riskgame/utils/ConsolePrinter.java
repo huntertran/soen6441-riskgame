@@ -5,7 +5,7 @@ package soen6441riskgame.utils;
  */
 public class ConsolePrinter {
     /**
-     * print the string with format and args replaced, end with a linebreak
+     * print the string with format and args replaced, end with a line break
      *
      * @param format string with format
      * @param args   args in string
