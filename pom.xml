@@ -51,6 +51,17 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
 
+            <!-- Generate javadoc: mvn javadoc:javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <reportOutputDirectory>${basedir}</reportOutputDirectory>
+                    <destDir>/docs</destDir>
+                </configuration>
+            </plugin>
+
             <!--
                 You can run jacoco in the default profile with:
                 mvn jacoco:prepare-agent test jacoco:report
@@ -86,16 +97,6 @@
     </build>
     <reporting>
         <plugins>
-            <!-- Generate javadoc: mvn javadoc:javadoc -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <reportOutputDirectory>${basedir}</reportOutputDirectory>
-                    <destDir>docs</destDir>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
