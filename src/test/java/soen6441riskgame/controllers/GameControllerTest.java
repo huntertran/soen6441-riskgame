@@ -48,9 +48,9 @@ public class GameControllerTest {
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
 
-        Player tjPlayer = GameBoard.getInstance().getPlayerFromName(tjAddArgs[1]);
-        Player hunterPlayer = GameBoard.getInstance().getPlayerFromName(hunterAddArgs[1]);
-        Player benPlayer = GameBoard.getInstance().getPlayerFromName(benAddArgs[1]);
+        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tjAddArgs[1]);
+        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunterAddArgs[1]);
+        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(benAddArgs[1]);
 
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
@@ -79,9 +79,9 @@ public class GameControllerTest {
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(hunterRemoveArgs);
-        Player tjPlayer = GameBoard.getInstance().getPlayerFromName(tjAddArgs[1]);
-        Player hunterPlayer = GameBoard.getInstance().getPlayerFromName(hunterAddArgs[1]);
-        Player benPlayer = GameBoard.getInstance().getPlayerFromName(benAddArgs[1]);
+        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tjAddArgs[1]);
+        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunterAddArgs[1]);
+        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(benAddArgs[1]);
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
         Player benPreviousPlayer = benPlayer.getPreviousPlayer();

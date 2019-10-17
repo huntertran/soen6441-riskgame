@@ -35,11 +35,11 @@ public class GameController {
 
         switch (playerCommand) {
         case ADD: {
-            GameBoard.getInstance().addPlayer(args[1]);
+            GameBoard.getInstance().getGameBoardPlayer().addPlayer(args[1]);
             break;
         }
         case REMOVE: {
-            GameBoard.getInstance().removePlayer(args[1]);
+            GameBoard.getInstance().getGameBoardPlayer().removePlayer(args[1]);
             break;
         }
         case NONE: {
@@ -54,7 +54,7 @@ public class GameController {
      */
     public void populateCountries() {
         int totalCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
-        int totalPlayer = GameBoard.getInstance().getPlayers().size();
+        int totalPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayers().size();
         int numberOfAssignedCountry = 0;
         int player_counter = 0;
 
@@ -73,7 +73,7 @@ public class GameController {
             Country countryToAssign = GameBoard.getInstance().getGameBoardMap().getCountries().get(nextIndexCountryToAssign);
 
             if (!countryToAssign.isConquered()) {
-                Player player = GameBoard.getInstance().getPlayers().get(playerIndexToAssign);
+                Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
                 countryToAssign.setConquerer(player);
 
                 // user need to place at least 1 army to the country he owned
@@ -91,7 +91,7 @@ public class GameController {
      * players
      */
     public void initPlayersUnplacedArmies() {
-        ArrayList<Player> players = GameBoard.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
         int unplacedArmiesEachPlayer = MAX_INITIAL_ARMY_AMOUNT / players.size();
 
         for (Player player : players) {
@@ -134,7 +134,7 @@ public class GameController {
     public void handlePlaceAllCommand() {
         Random random = new Random();
 
-        for (Player player : GameBoard.getInstance().getPlayers()) {
+        for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {
             ArrayList<Country> conqueredCountries = player.getConqueredCountries();
 
             if (player.getUnplacedArmies() > 0) {
@@ -159,7 +159,7 @@ public class GameController {
      * start round-robin for list of players, exclude lost players
      */
     public Player startRoundRobinPlayers() {
-        ArrayList<Player> players = GameBoard.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
         // set first player
         for (Player player : players) {
             if (!player.isLost()) {
@@ -206,7 +206,7 @@ public class GameController {
      */
     private Player getCurrentPlayer(boolean isShowMessage) {
         Player currentPlayer = null;
-        ArrayList<Player> players = GameBoard.getInstance().getPlayers();
+        ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
 
         for (Player player : players) {
             if (player.isPlaying()) {
