@@ -1,6 +1,11 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - 'docs/**'
+    - 'doc/**'
+    - 'grades/**'
 
 jobs:
   build:
