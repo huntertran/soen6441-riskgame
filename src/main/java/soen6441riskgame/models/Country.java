@@ -139,7 +139,7 @@ public class Country implements Viewable {
      * move armies from this country to another neighbor country (have the same
      * conquerer)
      *
-     * @param toCountry the destination country
+     * @param toCountry    the destination country
      * @param armiesToMove number of armies to move
      */
     public void moveArmies(Country toCountry, int armiesToMove) {
@@ -175,5 +175,17 @@ public class Country implements Viewable {
         this.printIndent(indent);
         ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s", this.getName(), this.getOrder(),
                 this.getArmyAmount());
+    }
+
+    /**
+     * Place army for player
+     *
+     * @param player the player to place army
+     */
+    public void placeArmy(Player player) {
+        int originalArmy = getArmyAmount();
+        setArmyAmount(originalArmy + 1);
+        int newUnplacedArmies = player.getUnplacedArmies() - 1;
+        player.setUnplacedArmies(newUnplacedArmies);
     }
 }
