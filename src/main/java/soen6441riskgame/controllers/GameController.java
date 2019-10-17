@@ -298,9 +298,12 @@ public class GameController {
     public void enterReinforcement() {
         Player currentPlayer = getCurrentPlayer(true);
 
-        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+        if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
             calculateReinforcementArmies(currentPlayer);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
+        } else {
+            ConsolePrinter.printFormat("Player %s cannot use reinforce in FORTIFICATION phase",
+                    currentPlayer.getName());
         }
     }
 
@@ -330,9 +333,19 @@ public class GameController {
 
         if (currentPlayer.getUnplacedArmies() != 0) {
             country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
-        } else {
-            turnToNextPlayer();
-            getCurrentPlayer(true);
+        }
+        // else {
+        // if (currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT) {
+
+        // } else {
+        // turnToNextPlayer();
+        // getCurrentPlayer(true);
+        // }
+        // }
+
+        if (currentPlayer.getUnplacedArmies() == 0) {
+            ConsolePrinter.printFormat("Player %s enter FORTIFICATION phase", currentPlayer.getName());
+            currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
         }
 
     }
