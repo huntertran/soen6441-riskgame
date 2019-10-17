@@ -1,19 +1,18 @@
 package soen6441riskgame.controllers;
 
-import org.junit.Assert;
-import org.junit.Before;
-
 import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameMap;
@@ -177,10 +176,15 @@ public class MapControllerTest {
         mapController.addNeighbor(country2, country3);
         mapController.addNeighbor(country3, country4);
 
+        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
+        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
+        Country countryObject3 = GameMap.getInstance().getCountryFromName(country3);
+        Country countryObject4 = GameMap.getInstance().getCountryFromName(country4);
+
         // Assert
-        Assert.assertTrue(GameMap.getInstance().isNeighboringCountries(country1, country2));
-        Assert.assertTrue(GameMap.getInstance().isNeighboringCountries(country3, country4));
-        Assert.assertTrue(GameMap.getInstance().isNeighboringCountries(country2, country3));
+        Assert.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
+        Assert.assertTrue(countryObject2.isNeighboringCountries(countryObject3));
+        Assert.assertTrue(countryObject3.isNeighboringCountries(countryObject4));
     }
 
     /**
@@ -272,10 +276,15 @@ public class MapControllerTest {
         mapController.removeNeighbor(country1, country2);
         mapController.removeNeighbor(country2, country3);
 
+        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
+        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
+        Country countryObject3 = GameMap.getInstance().getCountryFromName(country3);
+        Country countryObject4 = GameMap.getInstance().getCountryFromName(country4);
+
         // Assert
-        Assert.assertFalse(GameMap.getInstance().isNeighboringCountries(country1, country2));
-        Assert.assertFalse(GameMap.getInstance().isNeighboringCountries(country2, country3));
-        Assert.assertTrue(GameMap.getInstance().isNeighboringCountries(country3, country4));
+        Assert.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
+        Assert.assertFalse(countryObject2.isNeighboringCountries(countryObject3));
+        Assert.assertTrue(countryObject3.isNeighboringCountries(countryObject4));
     }
 
     /**
@@ -293,8 +302,11 @@ public class MapControllerTest {
         // Action
         mapController.editNeighbor(arguments);
 
+        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
+        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
+
         // Assert
-        Assert.assertTrue(GameMap.getInstance().isNeighboringCountries(country1, country2));
+        Assert.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
     }
 
     /**
@@ -312,8 +324,11 @@ public class MapControllerTest {
         // Action
         mapController.editNeighbor(arguments);
 
+        Country countryObject1 = GameMap.getInstance().getCountryFromName(country1);
+        Country countryObject2 = GameMap.getInstance().getCountryFromName(country2);
+
         // Assert
-        Assert.assertFalse(GameMap.getInstance().isNeighboringCountries(country1, country2));
+        Assert.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
     }
 
     @Test
