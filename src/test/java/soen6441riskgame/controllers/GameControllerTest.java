@@ -1,13 +1,16 @@
 package soen6441riskgame.controllers;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
@@ -17,7 +20,7 @@ public class GameControllerTest {
     MapController mapController;
     GameController gameController;
 
-    @Before
+    @BeforeEach
     public void before() throws IOException {
 
         GameBoard testingInstanceGameMap = new GameBoard();
@@ -31,7 +34,7 @@ public class GameControllerTest {
         gameController = new GameController();
     }
 
-    @After
+    @AfterEach
     public void after() {
         mapController.resetMap();
     }

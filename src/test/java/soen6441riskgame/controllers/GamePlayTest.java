@@ -3,9 +3,9 @@ package soen6441riskgame.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
@@ -15,7 +15,7 @@ public class GamePlayTest {
     MapController mapController;
     GameController gameController;
 
-    @Before
+    @BeforeEach
     public void before() throws IOException {
 
         GameBoard testingInstanceGameMap = new GameBoard();
@@ -29,7 +29,7 @@ public class GamePlayTest {
         gameController = new GameController();
     }
 
-    @After
+    @AfterEach
     public void after() {
         mapController.resetMap();
     }
