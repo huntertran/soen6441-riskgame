@@ -1,26 +1,22 @@
 package soen6441riskgame.controllers;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 
-@RunWith(Parameterized.class)
 public class MapControllerTest {
 
-    @Parameters
+    @ParameterizedTest
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] { { "Russia", "Asia", "Vietnam", "Laos", "India", "Pakistan", "13", "12" },
                 { "North America", "Europe", "Spain", "France", "India", "Pakistan", "12", "13" },
@@ -28,33 +24,34 @@ public class MapControllerTest {
                 { "South Africa", "North America", "Canada", "USA", "India", "Pakistan", "11", "14" } });
     }
 
-    private String continent1;
-    private String continent2;
-    private String country1;
-    private String country2;
-    private String country3;
-    private String country4;
-    private String continent1_value;
-    private String continent2_value;
+    // private String continent1;
+    // private String continent2;
+    // private String country1;
+    // private String country2;
+    // private String country3;
+    // private String country4;
+    // private String continent1_value;
+    // private String continent2_value;
 
     MapController mapController = new MapController();
 
-    public MapControllerTest(String continent1, String continent2, String country1, String country2, String country3,
-            String country4, String continent1_value, String continent2_value) {
-        this.continent1 = continent1;
-        this.continent2 = continent2;
-        this.country1 = country1;
-        this.country2 = country2;
-        this.country3 = country3;
-        this.country4 = country4;
-        this.continent1_value = continent1_value;
-        this.continent2_value = continent2_value;
-    }
+    // public MapControllerTest(String continent1, String continent2, String
+    // country1, String country2, String country3,
+    // String country4, String continent1_value, String continent2_value) {
+    // this.continent1 = continent1;
+    // this.continent2 = continent2;
+    // this.country1 = country1;
+    // this.country2 = country2;
+    // this.country3 = country3;
+    // this.country4 = country4;
+    // this.continent1_value = continent1_value;
+    // this.continent2_value = continent2_value;
+    // }
 
     /**
      * This function will run before every test case
      */
-    @Before
+    @BeforeEach
     public void runBeforeEachTestCase() {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
@@ -75,27 +72,28 @@ public class MapControllerTest {
         // Action
         mapController.loadMap(filePath);
 
-        // Assert
-        Assert.assertTrue(GameBoard.getInstance().getGameBoardMap().getContinents().get(0).getName().equals("North_Africa"));
+        // Assertions
+        Assertions.assertTrue(
+                GameBoard.getInstance().getGameBoardMap().getContinents().get(0).getName().equals("North_Africa"));
     }
 
     /**
      * Tests add Continent method It calls addContinent method and tests whether the
      * continent is created and has the same control value as passed.
      */
-    @Test
-    public void addContinentTest() {
+    @ParameterizedTest
+    @CsvSource({
+        "Russia, 11",
+        "Asia, 14"
+    })
+    public void addContinentTest(String continentName, String continentValue) {
         // Action
-        mapController.addContinent(continent1, continent1_value);
-        mapController.addContinent(continent2, continent2_value);
+        mapController.addContinent(continentName, continentValue);
 
-        // Assert
-        Assert.assertTrue(mapController.isContinentExisted(continent1));
-        Assert.assertEquals(continent1_value,
-                Integer.toString(mapController.getContinentFromName(continent1).getArmy()));
-        Assert.assertTrue(mapController.isContinentExisted(continent2));
-        Assert.assertEquals(continent2_value,
-                Integer.toString(mapController.getContinentFromName(continent2).getArmy()));
+        // Assertions
+        Assertions.assertTrue(mapController.isContinentExisted(continentName));
+        Assertions.assertEquals(continentValue,
+                Integer.toString(mapController.getContinentFromName(continentName).getArmy()));
     }
 
     /**
@@ -113,10 +111,10 @@ public class MapControllerTest {
         // Action
         mapController.removeContinent(continent1);
 
-        // Assert
-        Assert.assertNull(mapController.getContinentFromName(continent1));
-        Assert.assertFalse(mapController.isCountryExisted(country1));
-        Assert.assertFalse(mapController.isCountryExisted(country2));
+        // Assertions
+        Assertions.assertNull(mapController.getContinentFromName(continent1));
+        Assertions.assertFalse(mapController.isCountryExisted(country1));
+        Assertions.assertFalse(mapController.isCountryExisted(country2));
     }
 
     /**
@@ -132,9 +130,9 @@ public class MapControllerTest {
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
 
-        // Assert
-        Assert.assertTrue(mapController.isCountryExisted(country1));
-        Assert.assertTrue(mapController.isCountryExisted(country2));
+        // Assertions
+        Assertions.assertTrue(mapController.isCountryExisted(country1));
+        Assertions.assertTrue(mapController.isCountryExisted(country2));
     }
 
     /**
@@ -152,9 +150,9 @@ public class MapControllerTest {
         mapController.removeCountry(country1);
         mapController.removeCountry(country2);
 
-        // Assert
-        Assert.assertFalse(mapController.isCountryExisted(country1));
-        Assert.assertFalse(mapController.isCountryExisted(country2));
+        // Assertions
+        Assertions.assertFalse(mapController.isCountryExisted(country1));
+        Assertions.assertFalse(mapController.isCountryExisted(country2));
     }
 
     /**
@@ -180,10 +178,10 @@ public class MapControllerTest {
         Country countryObject3 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country3);
         Country countryObject4 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country4);
 
-        // Assert
-        Assert.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
-        Assert.assertTrue(countryObject2.isNeighboringCountries(countryObject3));
-        Assert.assertTrue(countryObject3.isNeighboringCountries(countryObject4));
+        // Assertions
+        Assertions.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
+        Assertions.assertTrue(countryObject2.isNeighboringCountries(countryObject3));
+        Assertions.assertTrue(countryObject3.isNeighboringCountries(countryObject4));
     }
 
     /**
@@ -196,9 +194,9 @@ public class MapControllerTest {
         String arguments[] = { "-add", continent1, continent1_value };
         mapController.editContinent(arguments);
 
-        // Assert
-        Assert.assertTrue(mapController.isContinentExisted(continent1));
-        Assert.assertEquals(continent1_value,
+        // Assertions
+        Assertions.assertTrue(mapController.isContinentExisted(continent1));
+        Assertions.assertEquals(continent1_value,
                 Integer.toString(mapController.getContinentFromName(continent1).getArmy()));
     }
 
@@ -212,8 +210,8 @@ public class MapControllerTest {
         String arguments[] = { "-remove", continent1 };
         mapController.editContinent(arguments);
 
-        // Assert
-        Assert.assertFalse(mapController.isContinentExisted(continent1));
+        // Assertions
+        Assertions.assertFalse(mapController.isContinentExisted(continent1));
     }
 
     /**
@@ -229,8 +227,8 @@ public class MapControllerTest {
         String arguments[] = { "-add", country1, continent1 };
         mapController.editCountry(arguments);
 
-        // Assert
-        Assert.assertTrue(mapController.isCountryExisted(country1));
+        // Assertions
+        Assertions.assertTrue(mapController.isCountryExisted(country1));
     }
 
     /**
@@ -250,9 +248,9 @@ public class MapControllerTest {
         String arguments1[] = { "-remove", country2 };
         mapController.editCountry(arguments1);
 
-        // Assert
-        Assert.assertFalse(mapController.isCountryExisted(country1));
-        Assert.assertFalse(mapController.isCountryExisted(country2));
+        // Assertions
+        Assertions.assertFalse(mapController.isCountryExisted(country1));
+        Assertions.assertFalse(mapController.isCountryExisted(country2));
     }
 
     /**
@@ -280,10 +278,10 @@ public class MapControllerTest {
         Country countryObject3 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country3);
         Country countryObject4 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country4);
 
-        // Assert
-        Assert.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
-        Assert.assertFalse(countryObject2.isNeighboringCountries(countryObject3));
-        Assert.assertTrue(countryObject3.isNeighboringCountries(countryObject4));
+        // Assertions
+        Assertions.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
+        Assertions.assertFalse(countryObject2.isNeighboringCountries(countryObject3));
+        Assertions.assertTrue(countryObject3.isNeighboringCountries(countryObject4));
     }
 
     /**
@@ -304,8 +302,8 @@ public class MapControllerTest {
         Country countryObject1 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1);
         Country countryObject2 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2);
 
-        // Assert
-        Assert.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
+        // Assertions
+        Assertions.assertTrue(countryObject1.isNeighboringCountries(countryObject2));
     }
 
     /**
@@ -326,8 +324,8 @@ public class MapControllerTest {
         Country countryObject1 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1);
         Country countryObject2 = GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2);
 
-        // Assert
-        Assert.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
+        // Assertions
+        Assertions.assertFalse(countryObject1.isNeighboringCountries(countryObject2));
     }
 
     @Test
@@ -346,7 +344,7 @@ public class MapControllerTest {
         }
 
         // assert
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     @Test
@@ -361,7 +359,7 @@ public class MapControllerTest {
         }
 
         // assert
-        assertFalse(mapController.isMapValid());
+        Assertions.assertFalse(mapController.isMapValid());
     }
 
     @Test
@@ -378,7 +376,7 @@ public class MapControllerTest {
         }
 
         // assert
-        assertFalse(mapController.isMapValid());
+        Assertions.assertFalse(mapController.isMapValid());
     }
 
     @Test
@@ -402,6 +400,6 @@ public class MapControllerTest {
         GameBoard.getInstance().getGameBoardMap().printBorders();
 
         // assert
-        assertFalse(mapController.isMapValid());
+        Assertions.assertFalse(mapController.isMapValid());
     }
 }

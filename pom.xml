@@ -7,12 +7,13 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
     </properties>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -21,7 +22,6 @@
         <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
         <pluginManagement>
             <plugins>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
@@ -37,6 +37,24 @@
                             <artifactId>checkstyle-rules</artifactId>
                             <version>1.1.0</version>
                         </dependency>
+
+                      <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-runner</artifactId>
+                        <version>1.5.1</version>
+                      </dependency>
+
+                      <dependency>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                        <version>4.12</version>
+                      </dependency>
+
+                      <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-suite-api</artifactId>
+                        <version>1.5.1</version>
+                      </dependency>
                     </dependencies>
                     <configuration>
                         <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
@@ -49,6 +67,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
 
             <!-- Generate javadoc: mvn javadoc:javadoc -->
