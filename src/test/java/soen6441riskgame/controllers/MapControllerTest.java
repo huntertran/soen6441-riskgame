@@ -9,44 +9,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.Parser;
 
 public class MapControllerTest {
-
-    @ParameterizedTest
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] { { "Russia", "Asia", "Vietnam", "Laos", "India", "Pakistan", "13", "12" },
-                { "North America", "Europe", "Spain", "France", "India", "Pakistan", "12", "13" },
-                { "Asia", "South Africa", "Guinea", "Sierra Leone", "India", "Pakistan", "8", "20" },
-                { "South Africa", "North America", "Canada", "USA", "India", "Pakistan", "11", "14" } });
-    }
-
-    // private String continent1;
-    // private String continent2;
-    // private String country1;
-    // private String country2;
-    // private String country3;
-    // private String country4;
-    // private String continent1_value;
-    // private String continent2_value;
-
     MapController mapController = new MapController();
-
-    // public MapControllerTest(String continent1, String continent2, String
-    // country1, String country2, String country3,
-    // String country4, String continent1_value, String continent2_value) {
-    // this.continent1 = continent1;
-    // this.continent2 = continent2;
-    // this.country1 = country1;
-    // this.country2 = country2;
-    // this.country3 = country3;
-    // this.country4 = country4;
-    // this.continent1_value = continent1_value;
-    // this.continent2_value = continent2_value;
-    // }
 
     /**
      * This function will run before every test case
@@ -82,10 +53,7 @@ public class MapControllerTest {
      * continent is created and has the same control value as passed.
      */
     @ParameterizedTest
-    @CsvSource({
-        "Russia, 11",
-        "Asia, 14"
-    })
+    @CsvSource({ "Russia, 11", "Asia, 14" })
     public void addContinentTest(String continentName, String continentValue) {
         // Action
         mapController.addContinent(continentName, continentValue);
@@ -101,18 +69,19 @@ public class MapControllerTest {
      * removed And the countries in that continent are now existing without
      * continent
      */
-    @Test
-    public void removeContinentTest() {
+    @ParameterizedTest
+    @CsvSource({ "Russia, 11, Vietnam, Laos", "Asia, 14, India, Pakistan" })
+    public void removeContinentTest(String continent, String continentValue, String country1, String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
-        mapController.addCountry(country1, continent1);
-        mapController.addCountry(country2, continent1);
+        mapController.addContinent(continent, continentValue);
+        mapController.addCountry(country1, continent);
+        mapController.addCountry(country2, continent);
 
         // Action
-        mapController.removeContinent(continent1);
+        mapController.removeContinent(continent);
 
         // Assertions
-        Assertions.assertNull(mapController.getContinentFromName(continent1));
+        Assertions.assertNull(mapController.getContinentFromName(continent));
         Assertions.assertFalse(mapController.isCountryExisted(country1));
         Assertions.assertFalse(mapController.isCountryExisted(country2));
     }
@@ -121,8 +90,9 @@ public class MapControllerTest {
      * Tests add Country method It calls the add country method and tests whether
      * that country has been created.
      */
-    @Test
-    public void addCountryTest() {
+    @ParameterizedTest
+    @CsvSource({ "Russia, 11, Vietnam, Laos", "Asia, 14, India, Pakistan", })
+    public void addCountryTest(String continent1, String continent1_value, String country1, String country2) {
         // Setup
         mapController.addContinent(continent1, continent1_value);
 
@@ -139,8 +109,9 @@ public class MapControllerTest {
      * Tests remove Country method It calls the remove country method and tests
      * whether that country has been removed.
      */
-    @Test
-    public void removeCountryTest() {
+    @ParameterizedTest
+    @CsvSource({ "Russia, 11, Vietnam, Laos", "Asia, 14, India, Pakistan", })
+    public void removeCountryTest(String continent1, String continent1_value, String country1, String country2) {
         // Setup
         mapController.addContinent(continent1, continent1_value);
         mapController.addCountry(country1, continent1);
@@ -159,14 +130,15 @@ public class MapControllerTest {
      * Tests add Neighbor method It calls the add neighbor method and tests whether
      * the 2 countries are neighbors.
      */
-    @Test
-    public void addNeighborTest() {
+    @ParameterizedTest
+    @CsvSource({ "Vietnam, Laos, Cambodia, Thailand" })
+    public void addNeighborTest(String country1, String country2, String country3, String country4) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
-        mapController.addCountry(country1, continent1);
-        mapController.addCountry(country2, continent1);
-        mapController.addCountry(country3, continent1);
-        mapController.addCountry(country4, continent1);
+        mapController.addContinent("Russia", "14");
+        mapController.addCountry(country1, "Russia");
+        mapController.addCountry(country2, "Russia");
+        mapController.addCountry(country3, "Russia");
+        mapController.addCountry(country4, "Russia");
 
         // Action
         mapController.addNeighbor(country1, country2);
@@ -188,8 +160,9 @@ public class MapControllerTest {
      * Tests edit Continent method It adds continent using edit continent method and
      * tests whether that continent exists.
      */
-    @Test
-    public void editContinentTest1() {
+    @ParameterizedTest
+    @CsvSource({ "Russia, 11", "Asia, 14" })
+    public void editContinentTest1(String continent1, String continent1_value) {
         // Action
         String arguments[] = { "-add", continent1, continent1_value };
         mapController.editContinent(arguments);
@@ -204,8 +177,9 @@ public class MapControllerTest {
      * Tests edit Continent method It removes continent using edit continent method
      * and tests whether that continent does not exist.
      */
-    @Test
-    public void editContinentTest2() {
+    @ParameterizedTest
+    @ValueSource(strings = { "Russia", "Asia", "Europe" })
+    public void editContinentTest2(String continent1) {
         // Action
         String arguments[] = { "-remove", continent1 };
         mapController.editContinent(arguments);
@@ -218,49 +192,52 @@ public class MapControllerTest {
      * Tests edit Country method It adds country using edit country method and tests
      * whether that country exists.
      */
-    @Test
-    public void editCountryTest1() {
+    @ParameterizedTest
+    @CsvSource({ "-add, Vietnam, 1", "-add, India, 1" })
+    public void editCountryCommandTest(String arg, String country1, String countryExisted) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        String continent = "Russia";
+        mapController.addContinent(continent, "11");
+        boolean isCountryExisted = Parser.parseWithDefault(countryExisted, 0) == 1;
 
         // Action
-        String arguments[] = { "-add", country1, continent1 };
-        mapController.editCountry(arguments);
+        mapController.editCountry(new String[] { arg, country1, continent });
+        boolean actualIsCountryExisted = mapController.isCountryExisted(country1);
 
         // Assertions
-        Assertions.assertTrue(mapController.isCountryExisted(country1));
+        Assertions.assertEquals(isCountryExisted, actualIsCountryExisted);
     }
 
     /**
      * Tests edit Country method It removes country using edit country method and
      * tests whether that country does not exist.
      */
-    @Test
-    public void editCountryTest2() {
+    @ParameterizedTest
+    @ValueSource(strings = { "Vietnam", "Thailand" })
+    public void removeCountryCommand(String country) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
-        mapController.addCountry(country1, continent1);
-        mapController.addCountry(country2, continent1);
+        String continent = "Russia";
+        mapController.addContinent(continent, "11");
+        mapController.addCountry(country, continent);
 
         // Action
-        String arguments[] = { "-remove", country1 };
+        String arguments[] = { "-remove", country };
         mapController.editCountry(arguments);
-        String arguments1[] = { "-remove", country2 };
-        mapController.editCountry(arguments1);
 
         // Assertions
-        Assertions.assertFalse(mapController.isCountryExisted(country1));
-        Assertions.assertFalse(mapController.isCountryExisted(country2));
+        Assertions.assertFalse(mapController.isCountryExisted(country));
     }
 
     /**
      * Tests remove Neighbor method It calls the remove neighbor method and tests
      * whether the 2 countries are not neighbors.
      */
-    @Test
-    public void removeNeighborTest() {
+    @ParameterizedTest
+    @CsvSource({ "c1,c2,c3,c4", "b1,b2,b3,b4", "a1,a2,a3,a4" })
+    public void removeNeighborTest(String country1, String country2, String country3, String country4) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        String continent1 = "Asia";
+        mapController.addContinent(continent1, "14");
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
         mapController.addCountry(country3, continent1);
@@ -288,10 +265,12 @@ public class MapControllerTest {
      * Tests edit Neighbor method It adds neighbor using edit neighbor method and
      * tests whether the 2 countries are neighbors.
      */
-    @Test
-    public void editNeighborTest1() {
+    @ParameterizedTest
+    @CsvSource({ "c1,c2", "b1,b2", "a1,a2" })
+    public void editNeighborTest1(String country1, String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        String continent1 = "Asia";
+        mapController.addContinent(continent1, "14");
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
         String arguments[] = { "-add", country1, country2 };
@@ -310,10 +289,12 @@ public class MapControllerTest {
      * Tests edit Neighbor method It removes neighbor using edit neighbor method and
      * tests whether the 2 countries are not neighbors.
      */
-    @Test
-    public void editNeighborTest2() {
+    @ParameterizedTest
+    @CsvSource({ "c1,c2", "b1,b2", "a1,a2" })
+    public void editNeighborTest2(String country1, String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        String continent1 = "Asia";
+        mapController.addContinent(continent1, "14");
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
         String arguments[] = { "-remove", country1, country2 };
