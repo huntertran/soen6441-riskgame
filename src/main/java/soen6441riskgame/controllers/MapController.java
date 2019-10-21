@@ -10,11 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import soen6441riskgame.enums.CommonCommandArgs;
+import soen6441riskgame.enums.MapPart;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
-import soen6441riskgame.enums.CommonCommandArgs;
-import soen6441riskgame.enums.MapPart;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -49,7 +49,8 @@ public final class MapController {
      */
     public void addContinent(String continentName, String continentValue, int... order) {
         if (!isContinentExisted(continentName)) {
-            GameBoard.getInstance().getGameBoardMap().getContinents().add(new Continent(continentName, Integer.parseInt(continentValue)));
+            GameBoard.getInstance().getGameBoardMap().getContinents()
+                    .add(new Continent(continentName, Integer.parseInt(continentValue)));
 
             ConsolePrinter.printFormat("New continent added: %s with %s armies", continentName, continentValue);
         } else {
@@ -503,14 +504,19 @@ public final class MapController {
      * @param continentName name of the continent
      */
     public void removeContinent(String continentName) {
-        System.out.println(
-                "Remove continent will make all country inside that continent invalid, thus make the map invalid.");
+        System.out.println("Remove continent will remove all country inside that continent");
 
         Continent continentToRemove = getContinentFromName(continentName);
 
         if (continentToRemove != null) {
-            for (Country country : continentToRemove.getCountries()) {
-                country.setContinent(null);
+            String[] countriesToRemove = new String[continentToRemove.getCountries().size()];
+
+            for (int index = 0; index < countriesToRemove.length; index++) {
+                countriesToRemove[index] = continentToRemove.getCountries().get(index).getName();
+            }
+
+            for (String country : countriesToRemove) {
+                removeCountry(country);
             }
 
             GameBoard.getInstance().getGameBoardMap().getContinents().remove(continentToRemove);

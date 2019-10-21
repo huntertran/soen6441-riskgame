@@ -115,9 +115,8 @@ public class MapControllerTest {
 
         // Assert
         Assert.assertNull(mapController.getContinentFromName(continent1));
-        Assert.assertNotEquals(continent1, GameBoard.getInstance().getGameBoardMap().getCountryFromName(country1).getContinent());
-        Assert.assertNotEquals(continent1, GameBoard.getInstance().getGameBoardMap().getCountryFromName(country2).getContinent());
-
+        Assert.assertFalse(mapController.isCountryExisted(country1));
+        Assert.assertFalse(mapController.isCountryExisted(country2));
     }
 
     /**
@@ -348,19 +347,6 @@ public class MapControllerTest {
 
         // assert
         Assert.assertTrue(true);
-    }
-
-    @Test
-    public void validateMapCountryWithNoContinentTest() throws IOException {
-        // setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
-        mapController.loadMap(filePath);
-
-        // action: make the map invalid
-        mapController.removeContinent(GameBoard.getInstance().getGameBoardMap().getContinents().get(0).getName());
-
-        // assert
-        assertFalse(mapController.isMapValid());
     }
 
     @Test
