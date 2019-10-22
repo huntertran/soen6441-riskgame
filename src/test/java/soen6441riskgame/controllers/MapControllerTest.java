@@ -121,7 +121,10 @@ public class MapControllerTest {
     @ParameterizedTest
     @CsvSource({ "Russia, 11, Vietnam, Laos",
                  "Asia, 14, India, Pakistan" })
-    public void removeCountryTest(String continent1, String continent1_value, String country1, String country2) {
+    public void removeCountryTest(String continent1,
+                                  String continent1_value,
+                                  String country1,
+                                  String country2) {
         // Setup
         mapController.addContinent(continent1, continent1_value);
         mapController.addCountry(country1, continent1);
@@ -142,7 +145,10 @@ public class MapControllerTest {
      */
     @ParameterizedTest
     @CsvSource({ "Vietnam, Laos, Cambodia, Thailand" })
-    public void addNeighborTest(String country1, String country2, String country3, String country4) {
+    public void addNeighborTest(String country1,
+                                String country2,
+                                String country3,
+                                String country4) {
         // Setup
         mapController.addContinent("Russia", "14");
         mapController.addCountry(country1, "Russia");
@@ -238,12 +244,12 @@ public class MapControllerTest {
                                    String country3,
                                    String country4) {
         // Setup
-        String continent1 = "Asia";
-        mapController.addContinent(continent1, "14");
-        mapController.addCountry(country1, continent1);
-        mapController.addCountry(country2, continent1);
-        mapController.addCountry(country3, continent1);
-        mapController.addCountry(country4, continent1);
+        String continent = "Asia";
+        mapController.addContinent(continent, "14");
+        mapController.addCountry(country1, continent);
+        mapController.addCountry(country2, continent);
+        mapController.addCountry(country3, continent);
+        mapController.addCountry(country4, continent);
         mapController.addNeighbor(country1, country2);
         mapController.addNeighbor(country2, country3);
         mapController.addNeighbor(country3, country4);
@@ -279,10 +285,10 @@ public class MapControllerTest {
                                  String country2,
                                  String neighboringCountry) {
         // Setup
-        String continent1 = "Asia";
-        mapController.addContinent(continent1, "14");
-        mapController.addCountry(country1, continent1);
-        mapController.addCountry(country2, continent1);
+        String continent = "Asia";
+        mapController.addContinent(continent, "14");
+        mapController.addCountry(country1, continent);
+        mapController.addCountry(country2, continent);
 
         boolean isNeighbor = Parser.parseWithDefault(neighboringCountry, 0) == 1;
 
@@ -324,8 +330,15 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // action: make the map invalid
-        while (GameBoard.getInstance().getGameBoardMap().getCountries().size() > 5) {
-            mapController.removeCountry(GameBoard.getInstance().getGameBoardMap().getCountries().get(0).getName());
+        while (GameBoard.getInstance()
+                        .getGameBoardMap()
+                        .getCountries()
+                        .size() > 5) {
+            mapController.removeCountry(GameBoard.getInstance()
+                                                 .getGameBoardMap()
+                                                 .getCountries()
+                                                 .get(0)
+                                                 .getName());
         }
 
         // assert
