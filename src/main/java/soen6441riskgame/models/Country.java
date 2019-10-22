@@ -168,13 +168,18 @@ public class Country implements Viewable {
         for (Country country : this.getNeighbors()) {
             country.viewWithoutNeighbors(indent + 2);
         }
-
     }
 
     public void viewWithoutNeighbors(int indent) {
         this.printIndent(indent);
-        ConsolePrinter.printFormat("Country: %s | No.: %s | Army: %s", this.getName(), this.getOrder(),
-                this.getArmyAmount());
+        String printString = "Country: %s\t| No.: %s\t| Army: %s ";
+
+        if (this.getConquerer() != null) {
+            printString += "\t| Conquerer: %s";
+        }
+
+        ConsolePrinter.printFormat(printString, this.getName(), this.getOrder(), this.getArmyAmount(),
+                this.getConquerer());
     }
 
     /**

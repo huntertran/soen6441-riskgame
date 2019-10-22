@@ -51,6 +51,7 @@ public class Continent implements Viewable {
 
     /**
      * get continent conquerer
+     * 
      * @return null if not conquered by any player
      */
     public Player getConquerer() {
@@ -63,7 +64,7 @@ public class Continent implements Viewable {
         Player countryConquerer = countries.get(0).getConquerer();
         for (Country country : countries) {
             Player conquerer = country.getConquerer();
-            if (!conquerer.equals(countryConquerer)) {
+            if (conquerer != null && !conquerer.equals(countryConquerer)) {
                 return null;
             }
         }
@@ -80,7 +81,12 @@ public class Continent implements Viewable {
     }
 
     public void viewWithoutCountry() {
-        ConsolePrinter.printFormat("Continent: %s | No.: %s | Number of army: %s\n", this.getName(), this.getOrder(),
-                this.getArmy());
+        String printString = "Continent: %s\t| No.: %s\t| Number of army: %s";
+
+        if (this.getConquerer() != null) {
+            printString += "\t| Conquerer: %s";
+        }
+
+        ConsolePrinter.printFormat(printString, this.getName(), this.getOrder(), this.getArmy(), this.getConquerer());
     }
 }
