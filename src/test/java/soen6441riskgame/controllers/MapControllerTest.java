@@ -155,29 +155,12 @@ public class MapControllerTest {
     }
 
     /**
-     * Tests edit Continent method It adds continent using edit continent method and
-     * tests whether that continent exists.
-     */
-    @ParameterizedTest
-    @CsvSource({ "Russia, 11", "Asia, 14" })
-    public void editContinentTest1(String continent1, String continent1_value) {
-        // Action
-        String arguments[] = { "-add", continent1, continent1_value };
-        mapController.editContinent(arguments);
-
-        // Assertions
-        Assertions.assertTrue(mapController.isContinentExisted(continent1));
-        Assertions.assertEquals(continent1_value,
-                Integer.toString(mapController.getContinentFromName(continent1).getArmy()));
-    }
-
-    /**
      * Tests edit Continent method It removes continent using edit continent method
      * and tests whether that continent does not exist.
      */
     @ParameterizedTest
     @ValueSource(strings = { "Russia", "Asia", "Europe" })
-    public void editContinentTest2(String continent1) {
+    public void removeContinentTest(String continent1) {
         // Action
         String arguments[] = { "-remove", continent1 };
         mapController.editContinent(arguments);
@@ -260,13 +243,13 @@ public class MapControllerTest {
     }
 
     /**
-     * Tests edit Neighbor method It adds/remove neighbor using edit neighbor method and
-     * tests whether the 2 countries are neighbors.
+     * Tests edit Neighbor method It adds/remove neighbor using edit neighbor method
+     * and tests whether the 2 countries are neighbors.
      */
     @ParameterizedTest
     @CsvSource({ "-add, c1,c2, 1", "-add, b1,b2,1", "-add, a1,a2, 1", "-remove, c1,c2,0", "-remove, b1,b2,0",
             "-remove, a1,a2, 0" })
-    public void editNeighborTest1(String arg, String country1, String country2, String neighboringCountry) {
+    public void editNeighborTest(String arg, String country1, String country2, String neighboringCountry) {
         // Setup
         String continent1 = "Asia";
         mapController.addContinent(continent1, "14");
