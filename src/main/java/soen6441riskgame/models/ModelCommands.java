@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.utils.Parser;
 
 public class ModelCommands {
     public String cmd;
@@ -24,14 +25,40 @@ public class ModelCommands {
                         String[] params = paramsArray[i].split(" ");
 
                         for(int j = 0; j < params.length; j++) {
+                            // check for null or empty value after split
                             if((params[j] != null) && (!params[j].equals(""))) {
-                                if(params[j].toLowerCase().toString().equals(MapEditorCommands.ADD)) {
-                                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
-                                    break;
+                                
+                                // check specific validation criteria as per command
+                                if(params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
+                                    if(cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
+                                        Parser p = new Parser();
+                                        if(p.checkValidInput(params[j+2])) {
+                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                            break;
+                                        }
+                                    }
+                                    else {
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                        break;
+                                    }
                                 }
-                                else if(params[j].toLowerCase().toString().equals(MapEditorCommands.REMOVE)) {
+                                else if(params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
                                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
                                     break;
+                                }
+                                else if(cmd.equalsIgnoreCase(MapEditorCommands.REINFORCE)) {
+                                    Parser p = new Parser();
+                                    if(p.checkValidInput(params[1])) {
+                                        regularCommands.add(params[j].toLowerCase());
+                                        break;
+                                    }
+                                }
+                                else if(cmd.equalsIgnoreCase(MapEditorCommands.FORTIFY)) {
+                                    Parser p = new Parser();
+                                    if(p.checkValidInput(params[2])) {
+                                        regularCommands.add(params[j].toLowerCase());
+                                        break;
+                                    }
                                 }
                                 else {
                                     regularCommands.add(params[j].toLowerCase());
@@ -39,9 +66,13 @@ public class ModelCommands {
                                 }
                             }
                         }
-                    } 
+                    }
+                    catch (NumberFormatException e) {
+                        System.out.println("Invalid value detected.");
+                        continue;
+                    }
                     catch(Exception e) {
-                        System.out.println("Invalid command found");
+                        System.out.println("Invalid command detected.");
                         continue;
                     }
                 }
