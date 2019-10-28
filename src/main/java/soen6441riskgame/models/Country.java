@@ -53,7 +53,7 @@ public class Country implements Viewable {
     public void setArmyAmount(int armyAmount) {
         this.armyAmount = armyAmount;
         ConsolePrinter.printFormat("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(),
-                getConquerer().getName());
+                                   getConquerer().getName());
     }
 
     /**
@@ -105,7 +105,7 @@ public class Country implements Viewable {
 
         if (amount > conquerer.getUnplacedArmies()) {
             System.out.println(
-                    "The amount of armies you want to place in this country is bigger than the amount of armies you have");
+                               "The amount of armies you want to place in this country is bigger than the amount of armies you have");
             return;
         }
 
@@ -136,8 +136,7 @@ public class Country implements Viewable {
     }
 
     /**
-     * move armies from this country to another neighbor country (have the same
-     * conquerer)
+     * move armies from this country to another neighbor country (have the same conquerer)
      *
      * @param toCountry    the destination country
      * @param armiesToMove number of armies to move
@@ -151,7 +150,7 @@ public class Country implements Viewable {
         if (armiesToMove > this.getArmyAmount() - 1) {
             System.out.println("The 'fromcountry' must have at least 1 army after fortification");
             ConsolePrinter.printFormat("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left",
-                    armiesToMove, this.getName(), toCountry.getName(), this.getArmyAmount());
+                                       armiesToMove, this.getName(), toCountry.getName(), this.getArmyAmount());
             return;
         }
 
@@ -174,12 +173,18 @@ public class Country implements Viewable {
         this.printIndent(indent);
         String printString = "Country: %s\t| No.: %s\t| Army: %s ";
 
+        String conquererName = "";
+
         if (this.getConquerer() != null) {
             printString += "\t| Conquerer: %s";
+            conquererName = this.getConquerer().getName();
         }
 
-        ConsolePrinter.printFormat(printString, this.getName(), this.getOrder(), this.getArmyAmount(),
-                this.getConquerer());
+        ConsolePrinter.printFormat(printString,
+                                   this.getName(),
+                                   this.getOrder(),
+                                   this.getArmyAmount(),
+                                   conquererName);
     }
 
     /**
@@ -206,7 +211,7 @@ public class Country implements Viewable {
         countryOrder = getOrder();
         neighbouringCountryOrder = neighborCountry.getOrder();
         if (GameBoard.getInstance().getGameBoardMap().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
-                && countryOrder != -1 && neighbouringCountryOrder != -1) {
+            && countryOrder != -1 && neighbouringCountryOrder != -1) {
             return true;
         }
         return false;

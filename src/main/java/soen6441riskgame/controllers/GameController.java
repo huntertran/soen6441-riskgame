@@ -271,6 +271,7 @@ public class GameController {
 
         if (currentPlayer.getUnplacedArmies() != 0) {
             country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
+            currentPlayer.getCurrentPhaseActions().add("Fortify: " + country.getName());
         }
 
         if (currentPlayer.getUnplacedArmies() == 0) {

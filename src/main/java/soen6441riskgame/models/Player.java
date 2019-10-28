@@ -1,7 +1,11 @@
 package soen6441riskgame.models;
 
+import static javafx.collections.FXCollections.observableArrayList;
+
 import java.util.ArrayList;
 import java.util.Observable;
+import javafx.collections.ObservableList;
+
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
@@ -17,6 +21,7 @@ public class Player extends Observable {
     private Player nextPlayer;
     private Player previousPlayer;
     private GamePhase currentPhase;
+    private ObservableList<String> currentPhaseActions = observableArrayList();
 
     public Player(String name) {
         this.name = name;
@@ -30,9 +35,14 @@ public class Player extends Observable {
     public void setCurrentPhase(GamePhase currentPhase) {
         if (this.currentPhase != currentPhase) {
             this.currentPhase = currentPhase;
+            currentPhaseActions.clear();
             setChanged();
             notifyObservers();
         }
+    }
+
+    public ObservableList<String> getCurrentPhaseActions() {
+        return currentPhaseActions;
     }
 
     /**
