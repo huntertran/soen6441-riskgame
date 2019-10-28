@@ -1,7 +1,7 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
-
+import java.util.Observable;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
@@ -9,12 +9,11 @@ import soen6441riskgame.singleton.GameBoard;
 /**
  * Hold player data Each player is a node in a linked list
  */
-public class Player {
+public class Player extends Observable {
     private String name;
     private int armies;
     private int unplacedArmies;
     private boolean isPlaying = false;
-    private boolean isLost = false;
     private Player nextPlayer;
     private Player previousPlayer;
     private GamePhase currentPhase;
@@ -29,7 +28,11 @@ public class Player {
     }
 
     public void setCurrentPhase(GamePhase currentPhase) {
-        this.currentPhase = currentPhase;
+        if (this.currentPhase != currentPhase) {
+            this.currentPhase = currentPhase;
+            setChanged();
+            notifyObservers();
+        }
     }
 
     /**
@@ -67,14 +70,6 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isLost() {
-        return isLost;
-    }
-
-    public void setLost(boolean isLost) {
-        this.isLost = isLost;
     }
 
     /**
@@ -123,8 +118,8 @@ public class Player {
     }
 
     /**
-     * REINFORCEMENT PHASE get the number of armies player will get for
-     * reinforcement phase for all the country player have.
+     * REINFORCEMENT PHASE get the number of armies player will get for reinforcement phase for all the
+     * country player have.
      *
      * @return the number of armies. Minimum number of armies are 3
      */
@@ -134,8 +129,7 @@ public class Player {
     }
 
     /**
-     * REINFORCEMENT PHASE get the number of armies player will have for the
-     * conquered continent
+     * REINFORCEMENT PHASE get the number of armies player will have for the conquered continent
      *
      * @param currentPlayer current player
      * @return the number of armies. 0 if user don't own any continent.
@@ -153,8 +147,7 @@ public class Player {
     }
 
     /**
-     * REINFORCEMENT PHASE calculate the number of armies a player will have for his
-     * reinforcement phase
+     * REINFORCEMENT PHASE calculate the number of armies a player will have for his reinforcement phase
      *
      * @param gameController
      */

@@ -10,6 +10,7 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
+import soen6441riskgame.views.player.PhaseView;
 
 /**
  * Control the game
@@ -34,18 +35,18 @@ public class GameController {
         CommonCommandArgs playerCommand = CommonCommandArgs.fromString(args[0]);
 
         switch (playerCommand) {
-        case ADD: {
-            GameBoard.getInstance().getGameBoardPlayer().addPlayer(args[1]);
-            break;
-        }
-        case REMOVE: {
-            GameBoard.getInstance().getGameBoardPlayer().removePlayer(args[1]);
-            break;
-        }
-        case NONE: {
-            System.out.println("Incorrect command");
-            break;
-        }
+            case ADD: {
+                GameBoard.getInstance().getGameBoardPlayer().addPlayer(args[1]);
+                break;
+            }
+            case REMOVE: {
+                GameBoard.getInstance().getGameBoardPlayer().removePlayer(args[1]);
+                break;
+            }
+            case NONE: {
+                System.out.println("Incorrect command");
+                break;
+            }
         }
     }
 
@@ -70,7 +71,8 @@ public class GameController {
             // int playerIndexToAssign = random.nextInt(totalPlayer);
             int playerIndexToAssign = player_counter;
 
-            Country countryToAssign = GameBoard.getInstance().getGameBoardMap().getCountries().get(nextIndexCountryToAssign);
+            Country countryToAssign = GameBoard.getInstance().getGameBoardMap().getCountries()
+                                               .get(nextIndexCountryToAssign);
 
             if (!countryToAssign.isConquered()) {
                 Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
@@ -87,8 +89,7 @@ public class GameController {
     }
 
     /**
-     * allocate a number of initial armies to each players, depending on number of
-     * players
+     * allocate a number of initial armies to each players, depending on number of players
      */
     public void initPlayersUnplacedArmies() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
@@ -100,11 +101,9 @@ public class GameController {
     }
 
     /**
-     * Handle place army command for current player. The player is selected in a
-     * round-robin rule
+     * Handle place army command for current player. The player is selected in a round-robin rule
      *
-     * @param countryName name of the country to place army. The country must belong
-     *                    to current player
+     * @param countryName name of the country to place army. The country must belong to current player
      */
     public void handlePlaceArmyCommand(String countryName) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
@@ -160,9 +159,15 @@ public class GameController {
      */
     public Player startRoundRobinPlayers() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
+
+        PhaseView phaseView = new PhaseView();
+
         // set first player
         for (Player player : players) {
-            if (!player.isLost()) {
+
+            player.addObserver(phaseView);
+
+            if (player.getCurrentPhase() != GamePhase.LOST) {
                 player.setPlaying(true);
                 return player;
             }
@@ -225,8 +230,6 @@ public class GameController {
         return currentPlayer;
     }
 
-
-
     /**
      * REINFORCEMENT PHASE enter reinforcement phase
      */
@@ -238,7 +241,7 @@ public class GameController {
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
         } else {
             ConsolePrinter.printFormat("Player %s cannot use reinforce in FORTIFICATION phase",
-                    currentPlayer.getName());
+                                       currentPlayer.getName());
         }
     }
 
@@ -262,27 +265,18 @@ public class GameController {
 
         if (!country.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s is not belong to %s", country.getName(),
-                    currentPlayer.getName());
+                                       currentPlayer.getName());
             return;
         }
 
         if (currentPlayer.getUnplacedArmies() != 0) {
             country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
         }
-        // else {
-        // if (currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT) {
-
-        // } else {
-        // turnToNextPlayer();
-        // getCurrentPlayer(true);
-        // }
-        // }
 
         if (currentPlayer.getUnplacedArmies() == 0) {
             ConsolePrinter.printFormat("Player %s enter FORTIFICATION phase", currentPlayer.getName());
             currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
         }
-
     }
 
     /**
