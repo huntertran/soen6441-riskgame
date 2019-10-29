@@ -25,6 +25,6 @@ jobs:
     #     sudo apt-mark hold openjfx libopenjfx-jni libopenjfx-java
     - name: Build with Maven
       run: |
-        mvn package --file pom.xml
-        mvn compile
+        # mvn package --file pom.xml
+        # mvn compile
         mvn clean test

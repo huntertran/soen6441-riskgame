@@ -16,13 +16,13 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>javafx</groupId>
             <artifactId>jfxrt</artifactId>
             <version>${java.version}</version>
             <scope>system</scope>
             <systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
-        </dependency>
+        </dependency> -->
     </dependencies>
     <build>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
@@ -68,14 +68,14 @@
                         <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     </configuration>
                 </plugin>
-                <plugin>
+                <!-- <plugin>
                     <groupId>com.zenjava</groupId>
                     <artifactId>javafx-maven-plugin</artifactId>
                     <version>8.8.3</version>
-                    <!-- <configuration>
+                    <configuration>
                         <mainClass>your.package.with.Launcher</mainClass>
-                    </configuration> -->
-                </plugin>
+                    </configuration>
+                </plugin> -->
             </plugins>
         </pluginManagement>
         <plugins>
