@@ -124,6 +124,7 @@ public final class App {
 
     public static void jumpToCommand(ModelCommands args) {
         String command = args.cmd;
+        //String[] remainingArgs = Arrays.copyOfRange(args, 1, args.length);
 
         MapController mapController = new MapController();
         GameController gameController = new GameController();
@@ -181,6 +182,7 @@ public final class App {
                 } catch (IOException e) {
                     System.out.println("Error: " + e.getClass().getName());
                 }
+
                 break;
             }
             case GameCommands.GAMEPLAYER: {
@@ -231,10 +233,15 @@ public final class App {
 
         while (!command.equals(GameCommands.EXIT)) {
             ModelCommands cmds = new ModelCommands(command);
+            System.out.println(cmds.cmd);
+            System.out.println(cmds.regularCommands);
+            System.out.println(cmds.subRoutine);
+
             jumpToCommand(cmds);
             System.out.print("Enter your action: ");
             command = scanner.nextLine();
         }
+
         scanner.close();
     }
 }

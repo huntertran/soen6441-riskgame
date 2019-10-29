@@ -32,7 +32,7 @@ public class ModelCommands {
                                 if(params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
                                     if(cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
                                         Parser p = new Parser();
-                                        if(p.checkValidInput(params[j+2])) {
+                                        if(p.checkValidInputNumber(params[j+2])) {
                                             subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
                                             break;
                                         }
@@ -48,14 +48,14 @@ public class ModelCommands {
                                 }
                                 else if(cmd.equalsIgnoreCase(MapEditorCommands.REINFORCE)) {
                                     Parser p = new Parser();
-                                    if(p.checkValidInput(params[1])) {
+                                    if(p.checkValidInputNumber(params[1])) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
                                     }
                                 }
                                 else if(cmd.equalsIgnoreCase(MapEditorCommands.FORTIFY)) {
                                     Parser p = new Parser();
-                                    if(p.checkValidInput(params[2])) {
+                                    if(p.checkValidInputNumber(params[2])) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
                                     }
