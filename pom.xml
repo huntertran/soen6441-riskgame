@@ -16,6 +16,13 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javafx</groupId>
+            <artifactId>jfxrt</artifactId>
+            <version>${java.version}</version>
+            <scope>system</scope>
+            <systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
