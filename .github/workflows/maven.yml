@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
 
     steps:
     - uses: actions/checkout@v1
@@ -18,11 +18,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Install javafx
-      run: |
-        sudo apt purge openjfx
-        sudo apt install openjfx=8u161-b12-1ubuntu2 libopenjfx-jni=8u161-b12-1ubuntu2 libopenjfx-java=8u161-b12-1ubuntu2
-        sudo apt-mark hold openjfx libopenjfx-jni libopenjfx-java
+    # - name: Install javafx
+    #   run: |
+    #     sudo apt purge openjfx
+    #     sudo apt install openjfx=8u161-b12-1ubuntu2 libopenjfx-jni=8u161-b12-1ubuntu2 libopenjfx-java=8u161-b12-1ubuntu2
+    #     sudo apt-mark hold openjfx libopenjfx-jni libopenjfx-java
     - name: Build with Maven
       run: |
         mvn package --file pom.xml
