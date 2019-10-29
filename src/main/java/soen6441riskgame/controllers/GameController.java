@@ -10,13 +10,13 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
-import soen6441riskgame.views.player.PhaseView;
 
 /**
  * Control the game
  */
 public class GameController {
 
+    // TODO: issue #20: https://github.com/huntertran/soen6441-riskgame/issues/20
     public static int MAX_INITIAL_ARMY_AMOUNT = 50;
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
 
