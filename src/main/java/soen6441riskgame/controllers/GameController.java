@@ -162,6 +162,8 @@ public class GameController {
 
         PhaseView phaseView = new PhaseView();
 
+        // TODO: check if view is already added to player's observers
+
         // set first player
         for (Player player : players) {
 
@@ -243,6 +245,10 @@ public class GameController {
         if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
             currentPlayer.calculateReinforcementArmies(this);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
+        } else {
+            ConsolePrinter.printFormat("Player %s cannot reinforce armies in %s phase",
+                                       currentPlayer.getName(),
+                                       currentPlayer.getCurrentPhase().toString());
         }
 
         return currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT;
@@ -274,7 +280,7 @@ public class GameController {
 
         if (currentPlayer.getUnplacedArmies() != 0) {
             country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
-            currentPlayer.getCurrentPhaseActions().add("Fortify: " + country.getName());
+            currentPlayer.addCurrentPhaseAction("Reinforce: " + country.getName() + " with " + numberOfArmies);
         }
 
         if (currentPlayer.getUnplacedArmies() == 0) {

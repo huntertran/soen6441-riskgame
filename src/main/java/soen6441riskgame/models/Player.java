@@ -42,6 +42,12 @@ public class Player extends Observable {
         return currentPhaseActions;
     }
 
+    public void addCurrentPhaseAction(String action){
+        currentPhaseActions.add(action);
+        setChanged();
+        notifyObservers();
+    }
+
     /**
      * get previous player on the linked list
      *
