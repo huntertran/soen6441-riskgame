@@ -160,15 +160,8 @@ public class GameController {
     public Player startRoundRobinPlayers() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
 
-        PhaseView phaseView = new PhaseView();
-
-        // TODO: check if view is already added to player's observers
-
         // set first player
         for (Player player : players) {
-
-            player.addObserver(phaseView);
-
             if (player.getCurrentPhase() != GamePhase.LOST) {
                 player.setPlaying(true);
                 return player;
