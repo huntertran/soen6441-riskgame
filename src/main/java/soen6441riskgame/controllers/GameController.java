@@ -195,6 +195,7 @@ public class GameController {
     public void showCurrentPlayer() {
         Player player = getCurrentPlayer();
         ConsolePrinter.printFormat("Player %s is in turn", player.getName());
+        ConsolePrinter.printFormat("Current phase: %s", player.getCurrentPhase().toString());
         ConsolePrinter.printFormat("    Un-placed Armies: %d", player.getUnplacedArmies());
         ConsolePrinter.printFormat("    Countries conquered:");
 
@@ -232,17 +233,19 @@ public class GameController {
 
     /**
      * REINFORCEMENT PHASE enter reinforcement phase
+     *
+     * @return true if enter reinforcement phase successfully or the current player is already in
+     *         reinforcement phase
      */
-    public void enterReinforcement() {
+    public boolean enterReinforcement() {
         Player currentPlayer = getCurrentPlayer(true);
 
         if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
             currentPlayer.calculateReinforcementArmies(this);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
-        } else {
-            ConsolePrinter.printFormat("Player %s cannot use reinforce in FORTIFICATION phase",
-                                       currentPlayer.getName());
         }
+
+        return currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT;
     }
 
     /**
