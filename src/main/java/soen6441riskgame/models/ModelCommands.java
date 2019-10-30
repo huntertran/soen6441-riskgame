@@ -3,7 +3,7 @@ package soen6441riskgame.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.enums.CommonCommandArgs;
 
 public class ModelCommands {
     public String cmd;
@@ -15,7 +15,7 @@ public class ModelCommands {
         if((new_args != null) && (new_args != "")) {
             String[] temp_args = new_args.split(" ", 2);
             this.cmd = temp_args[0].toLowerCase();
-            
+
             if(temp_args.length > 1) {
                 String[] paramsArray = temp_args[1].split("-");
 
@@ -25,11 +25,14 @@ public class ModelCommands {
 
                         for(int j = 0; j < params.length; j++) {
                             if((params[j] != null) && (!params[j].equals(""))) {
-                                if(params[j].toLowerCase().toString().equals(MapEditorCommands.ADD)) {
+
+                                CommonCommandArgs command = CommonCommandArgs.fromString(params[j]);
+
+                                if(command == CommonCommandArgs.ADD) {
                                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
                                     break;
                                 }
-                                else if(params[j].toLowerCase().toString().equals(MapEditorCommands.REMOVE)) {
+                                else if(command == CommonCommandArgs.REMOVE) {
                                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
                                     break;
                                 }
@@ -39,7 +42,7 @@ public class ModelCommands {
                                 }
                             }
                         }
-                    } 
+                    }
                     catch(Exception e) {
                         System.out.println("Invalid command found");
                         continue;
@@ -48,4 +51,4 @@ public class ModelCommands {
             }
         }
     }
-} 
+}
