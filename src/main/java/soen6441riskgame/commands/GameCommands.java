@@ -13,6 +13,9 @@ public final class GameCommands {
 
     // Reinforcement phase
     public static final String REINFORCE = "reinforce";
+    
+    //Attack phase
+    public static final String ATTACK = "attack";
 
     // Fortification phase
     public static final String FORTIFY = "fortify";
