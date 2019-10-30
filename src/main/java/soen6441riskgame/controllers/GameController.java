@@ -309,4 +309,52 @@ public class GameController {
 
         fromCountry.moveArmies(toCountry, numberOfArmies);
     }
+    
+    public boolean enterAttackPhase() {
+        Player currentPlayer = getCurrentPlayer(true);
+
+        if (currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT) {
+            currentPlayer.setCurrentPhase(GamePhase.ATTACK);
+        } else if(currentPlayer.getCurrentPhase() != GamePhase.ATTACK) {
+            ConsolePrinter.printFormat("Player %s cannot use attack in %s phase",
+                                       currentPlayer.getName(),currentPlayer.getCurrentPhase());
+        }
+        
+        return currentPlayer.getCurrentPhase() == GamePhase.ATTACK;
+    }
+    
+    public void handleAttackCommand(String[] args) {
+        Player currentPlayer = getCurrentPlayer(false);
+        Country attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
+        Country defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
+        int numDice = Integer.parseInt(args[2]);
+        
+        //check if attacking country belongs to the current player
+        if (!attackingCountry.getConquerer().equals(currentPlayer)) {
+            ConsolePrinter.printFormat("The country %s does not belong to %s", attackingCountry.getName(),
+                                       currentPlayer.getName());
+            return;
+        }
+        //check if the defending country does not belong to the current player
+        else if(defendingCountry.getConquerer().equals(currentPlayer)) {
+            ConsolePrinter.printFormat("The country %s belongs to %s. You cannot attack your own country.", attackingCountry.getName(),
+                                       currentPlayer.getName());
+            return;
+        }
+        //the countries have to be neighbours
+        else if(!attackingCountry.isNeighboringCountries(defendingCountry)) {
+            ConsolePrinter.printFormat("The countries %s and %s are not neighbouring countries. You can only attack neighbouring countries.", attackingCountry.getName(),
+                                       defendingCountry.getName());
+            return;
+        }
+        //check if you have more than 2 army in attacking country
+        else if(attackingCountry.getArmyAmount() < 2) {
+            ConsolePrinter.printFormat("The country %s has less than 2 armies. You need atleast 2 armies to attack a country.", attackingCountry.getName());
+            return;
+        }
+        //check if numdice is less than or equal to the army in the attacking country - 1
+        
+        //check if the player has more armies than the numDice. numDice can be atmost 3.
+        
+    }
 }

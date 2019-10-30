@@ -214,6 +214,15 @@ public final class App {
 
                 break;
             }
+            case GameCommands.ATTACK: {
+                boolean isAttackEntered = gameController.enterAttackPhase();
+
+                if (isAttackEntered) {
+                    gameController.handleAttackCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                }
+
+                break;
+            }
             case GameCommands.FORTIFY: {
                 gameController.handleFortifyCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
                 break;
