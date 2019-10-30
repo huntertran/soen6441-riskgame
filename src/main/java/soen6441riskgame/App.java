@@ -186,7 +186,9 @@ public final class App {
                 break;
             }
             case GameCommands.GAMEPLAYER: {
-                gameController.handlePlayerAddAndRemoveCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                for (ModelCommandsPair sub : args.subRoutine) {
+                    gameController.handlePlayerAddAndRemoveCommand(sub.toStringArray());
+                }
                 break;
             }
             case GameCommands.POPULATECOUNTRIES: {
@@ -233,10 +235,6 @@ public final class App {
 
         while (!command.equals(GameCommands.EXIT)) {
             ModelCommands cmds = new ModelCommands(command);
-            System.out.println(cmds.cmd);
-            System.out.println(cmds.regularCommands);
-            System.out.println(cmds.subRoutine);
-
             jumpToCommand(cmds);
             System.out.print("Enter your action: ");
             command = scanner.nextLine();

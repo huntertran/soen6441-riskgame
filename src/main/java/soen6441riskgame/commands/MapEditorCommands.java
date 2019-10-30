@@ -17,4 +17,5 @@ public final class MapEditorCommands {
     public static final String REMOVE = "remove";
     public static final String REINFORCE = "reinforce";
     public static final String FORTIFY = "fortify";
+    public static final String GAMEPLAYER = "gameplayer";
 }

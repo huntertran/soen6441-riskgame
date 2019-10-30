@@ -4,7 +4,7 @@ package soen6441riskgame.enums;
  * Common command arguments for <code>-add</code> or <code>-remove</code>
  */
 public enum CommonCommandArgs {
-    ADD1("add"), REMOVE1("remove"), ADD("-add"), REMOVE("-remove"), NONE("");
+    ADD("-add"), REMOVE("-remove"), NONE("");
 
     private String argument;
 

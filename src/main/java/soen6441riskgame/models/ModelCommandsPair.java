@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelCommandsPair {
-    public String param;
-    public String value1;
-    public String value2;
+    public String param = "";
+    public String value1 = "";
+    public String value2 = "";
 
     public ModelCommandsPair(String new_param, String new_value1, String new_value2) {
         this.param = new_param.trim();

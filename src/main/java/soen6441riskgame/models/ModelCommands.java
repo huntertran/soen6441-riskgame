@@ -37,6 +37,10 @@ public class ModelCommands {
                                             break;
                                         }
                                     }
+                                    else if(cmd.equalsIgnoreCase(MapEditorCommands.GAMEPLAYER)) {
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
+                                        break;
+                                    }
                                     else {
                                         subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
                                         break;
