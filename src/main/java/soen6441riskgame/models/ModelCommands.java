@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.commands.GameCommands;
 import soen6441riskgame.utils.Parser;
 
 public class ModelCommands {
@@ -37,7 +38,7 @@ public class ModelCommands {
                                             break;
                                         }
                                     }
-                                    else if(cmd.equalsIgnoreCase(MapEditorCommands.GAMEPLAYER)) {
+                                    else if(cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
                                         subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
                                         break;
                                     }
@@ -50,14 +51,14 @@ public class ModelCommands {
                                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
                                     break;
                                 }
-                                else if(cmd.equalsIgnoreCase(MapEditorCommands.REINFORCE)) {
+                                else if(cmd.equalsIgnoreCase(GameCommands.REINFORCE)) {
                                     Parser p = new Parser();
                                     if(p.checkValidInputNumber(params[1])) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
                                     }
                                 }
-                                else if(cmd.equalsIgnoreCase(MapEditorCommands.FORTIFY)) {
+                                else if(cmd.equalsIgnoreCase(GameCommands.FORTIFY)) {
                                     Parser p = new Parser();
                                     if(p.checkValidInputNumber(params[2])) {
                                         regularCommands.add(params[j].toLowerCase());
