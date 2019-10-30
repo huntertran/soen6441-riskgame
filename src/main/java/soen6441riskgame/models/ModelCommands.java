@@ -3,7 +3,8 @@ package soen6441riskgame.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import soen6441riskgame.enums.CommonCommandArgs;
+import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.utils.Parser;
 
 public class ModelCommands {
     public String cmd;
@@ -15,7 +16,7 @@ public class ModelCommands {
         if((new_args != null) && (new_args != "")) {
             String[] temp_args = new_args.split(" ", 2);
             this.cmd = temp_args[0].toLowerCase();
-
+            
             if(temp_args.length > 1) {
                 String[] paramsArray = temp_args[1].split("-");
 
@@ -24,17 +25,44 @@ public class ModelCommands {
                         String[] params = paramsArray[i].split(" ");
 
                         for(int j = 0; j < params.length; j++) {
+                            // check for null or empty value after split
                             if((params[j] != null) && (!params[j].equals(""))) {
-
-                                CommonCommandArgs command = CommonCommandArgs.fromString(params[j]);
-
-                                if(command == CommonCommandArgs.ADD) {
-                                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
-                                    break;
+                                
+                                // check specific validation criteria as per command
+                                if(params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
+                                    if(cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
+                                        Parser p = new Parser();
+                                        if(p.checkValidInputNumber(params[j+2])) {
+                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                            break;
+                                        }
+                                    }
+                                    else if(cmd.equalsIgnoreCase(MapEditorCommands.GAMEPLAYER)) {
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
+                                        break;
+                                    }
+                                    else {
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                        break;
+                                    }
                                 }
-                                else if(command == CommonCommandArgs.REMOVE) {
+                                else if(params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
                                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
                                     break;
+                                }
+                                else if(cmd.equalsIgnoreCase(MapEditorCommands.REINFORCE)) {
+                                    Parser p = new Parser();
+                                    if(p.checkValidInputNumber(params[1])) {
+                                        regularCommands.add(params[j].toLowerCase());
+                                        break;
+                                    }
+                                }
+                                else if(cmd.equalsIgnoreCase(MapEditorCommands.FORTIFY)) {
+                                    Parser p = new Parser();
+                                    if(p.checkValidInputNumber(params[2])) {
+                                        regularCommands.add(params[j].toLowerCase());
+                                        break;
+                                    }
                                 }
                                 else {
                                     regularCommands.add(params[j].toLowerCase());
@@ -43,12 +71,16 @@ public class ModelCommands {
                             }
                         }
                     }
+                    catch (NumberFormatException e) {
+                        System.out.println("Invalid value detected.");
+                        continue;
+                    }
                     catch(Exception e) {
-                        System.out.println("Invalid command found");
+                        System.out.println("Invalid command detected.");
                         continue;
                     }
                 }
             }
         }
     }
-}
+} 
