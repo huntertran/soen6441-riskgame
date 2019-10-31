@@ -19,7 +19,8 @@ public class GameController {
     // TODO: issue #20: https://github.com/huntertran/soen6441-riskgame/issues/20
     public static int MAX_INITIAL_ARMY_AMOUNT = 50;
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
-
+    public static int attacker_numDice = 0;
+    public static int defender_numDice = 0;
     /**
      * handle <code>gameplayer</code> command
      *
@@ -324,6 +325,7 @@ public class GameController {
     }
     
     public void handleAttackCommand(String[] args) {
+        ConsolePrinter.printFormat("attack conditions testing");
         Player currentPlayer = getCurrentPlayer(false);
         Country attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         Country defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
@@ -352,9 +354,21 @@ public class GameController {
             ConsolePrinter.printFormat("The country %s has less than 2 armies. You need atleast 2 armies to attack a country.", attackingCountry.getName());
             return;
         }
-        //check if numdice is less than or equal to the army in the attacking country - 1
-        
         //check if the player has more armies than the numDice. numDice can be atmost 3.
+        else if( (attackingCountry.getArmyAmount()-1) < numDice) {
+            ConsolePrinter.printFormat("The number of armies available to attack are less than %s", numDice);
+            return;
+        }
+        //also numdice has to be less than 3
+        else if(numDice > 3) {
+            ConsolePrinter.printFormat("You can only attack with a maximum of 3 armies at a time");
+            return;
+        }
+       
+        //attack execution
+        else {
+            ConsolePrinter.printFormat("attack conditions met");
+        }
         
     }
 }

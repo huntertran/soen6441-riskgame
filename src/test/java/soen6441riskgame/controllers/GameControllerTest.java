@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
@@ -165,5 +167,46 @@ public class GameControllerTest {
 
         // Assert
         assertFalse(isUnplacedArmiesDifferentForOnePlayer);
+    }
+    
+    @Test
+    public void enterAttackPhaseTest() {
+        //Setup
+        String[] tjAddArgs = new String[] { "-add", "TJ" };
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
+        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);   
+        gameController.populateCountries();
+        gameController.enterReinforcement();
+        gameController.handleReinforceCommand(new String[] {"Spain","2"});
+        
+        // Action
+        gameController.enterAttackPhase();
+        
+        //Assertion
+        Player p1 = gameController.getCurrentPlayer();
+        assertTrue(p1.getCurrentPhase() == GamePhase.ATTACK);
+    }
+    
+    @Test
+    public void handleAttackCommandTest() {
+        //Setup
+        String[] tjAddArgs = new String[] { "-add", "TJ" };
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
+        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);   
+        gameController.populateCountries();
+        gameController.enterReinforcement();
+        gameController.handleReinforceCommand(new String[] {"Spain","2"});
+        gameController.enterAttackPhase();
+        
+        //Action
+        gameController.handleAttackCommand(new String[] {"Spain", "France", "1"});
+        
+        //Assert
     }
 }
