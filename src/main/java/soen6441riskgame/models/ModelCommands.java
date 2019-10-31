@@ -55,19 +55,32 @@ public class ModelCommands {
                                     Parser p = new Parser();
                                     if(p.checkValidInputNumber(params[1])) {
                                         regularCommands.add(params[j].toLowerCase());
+                                        regularCommands.add(params[j+1].toLowerCase());
                                         break;
                                     }
                                 }
                                 else if(cmd.equalsIgnoreCase(GameCommands.FORTIFY)) {
-                                    Parser p = new Parser();
-                                    if(p.checkValidInputNumber(params[2])) {
+                                    if(params.length == 2) {
+                                        Parser p = new Parser();
+                                        if(p.checkValidInputNumber(params[2])) {
+                                            regularCommands.add(params[j].toLowerCase());
+                                            regularCommands.add(params[j+1].toLowerCase());
+                                            regularCommands.add(params[j+2].toLowerCase());
+                                            break;
+                                        }
+                                        else {
+                                            throw new NumberFormatException();
+                                        }
+                                    }
+                                    else if (params[0].equalsIgnoreCase("none")) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
+                                    } else {
+                                        throw new Exception("Invalid Input");
                                     }
                                 }
                                 else {
                                     regularCommands.add(params[j].toLowerCase());
-                                    break;
                                 }
                             }
                         }
