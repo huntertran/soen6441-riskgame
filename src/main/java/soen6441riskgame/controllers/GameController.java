@@ -339,66 +339,104 @@ public class GameController {
         attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
         int numDice = Integer.parseInt(args[2]);
+        attacker_numDice = numDice; //saving the number of dice
         
+        //check if attack is valid
+        if(!isAttackValid()) {
+            return;
+        }
+    }
+    
+    public void handleDefendCommand(String[] args) {
+        defender_numDice = Integer.parseInt(args[0]);
+        
+        if(!isAttackValid()) {
+            ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
+            return;
+        }
+       
+        else if(defender_numDice > 2) {
+            ConsolePrinter.printFormat("You can only defend with a maximum of 2 armies at a time");
+            return;
+        }
+        else if(defender_numDice > defendingCountry.getArmyAmount()) {
+            ConsolePrinter.printFormat("Error. Number of dice rolls should be less than or equal to the number of armies in the defending country but atmost 2.");
+            return;
+        }
+        
+        int[] attackerDiceValues = new int[attacker_numDice];
+        int[] defenderDiceValues = new int[defender_numDice];
+        
+        String printDiceValues = "Attacker: ";
+        
+        for(int i = 1; i <= attacker_numDice; i++) {
+            attackerDiceValues[i] = rollDice();
+            printDiceValues += attackerDiceValues[i] + "    ";
+        }
+        printDiceValues += "\nDefender: ";
+        for(int i = 1; i <= defender_numDice; i++) {
+            defenderDiceValues[i] = rollDice();
+            printDiceValues += defenderDiceValues[i] + "    ";
+        }
+        ConsolePrinter.printFormat("%s", printDiceValues);
+        
+    }
+    
+    public boolean isAttackValid() {
+        Player currentPlayer = getCurrentPlayer(false);
         if(attackingCountry == null) {
             ConsolePrinter.printFormat("The country %s you have entered is non-existent", attackingCountry.getName());
-            return;
+            return false;
         }
         else if(defendingCountry == null) {
             ConsolePrinter.printFormat("The country %s you have entered is non-existent", defendingCountry.getName());
-            return;
+            return false;
         }
         
         //check if attacking country belongs to the current player
         else if (!attackingCountry.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s does not belong to %s", attackingCountry.getName(),
                                        currentPlayer.getName());
-            return;
+            return false;
         }
         //check if the defending country does not belong to the current player
         else if(defendingCountry.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s belongs to %s. You cannot attack your own country.", attackingCountry.getName(),
                                        currentPlayer.getName());
-            return;
+            return false;
         }
         //the countries have to be neighbours
         else if(!attackingCountry.isNeighboringCountries(defendingCountry)) {
             ConsolePrinter.printFormat("The countries %s and %s are not neighbouring countries. You can only attack neighbouring countries.", attackingCountry.getName(),
                                        defendingCountry.getName());
-            return;
+            return false;
         }
         //check if you have more than 2 army in attacking country
         else if(attackingCountry.getArmyAmount() < 2) {
             ConsolePrinter.printFormat("The country %s has less than 2 armies. You need atleast 2 armies to attack a country.", attackingCountry.getName());
-            return;
+            return false;
         }
         //check if the player has more armies than the numDice. numDice can be atmost 3.
-        else if( (attackingCountry.getArmyAmount()-1) < numDice) {
-            ConsolePrinter.printFormat("The number of armies available to attack are less than %s", numDice);
-            return;
+        else if( (attackingCountry.getArmyAmount()-1) < attacker_numDice) {
+            ConsolePrinter.printFormat("The number of armies available to attack are less than %s", attacker_numDice);
+            return false;
         }
         //also numdice has to be less than 3
-        else if(numDice > 3) {
+        else if(attacker_numDice > 3) {
             ConsolePrinter.printFormat("You can only attack with a maximum of 3 armies at a time");
-            return;
+            return false;
         }
        
         //attack execution
         else {
-            ConsolePrinter.printFormat("attack conditions met");
+            ConsolePrinter.printFormat("Attack conditions met. Enter defend command");
+            return true;
         }
-        attacker_numDice = numDice; //saving the number of dice
     }
     
-    public void handleDefendCommand(String[] args) {
-        defender_numDice = Integer.parseInt(args[0]);
-        
-        if(defender_numDice > 2) {
-            ConsolePrinter.printFormat("You can only defend with a maximum of 2 armies at a time");
-            return;
-        }
-        
-     //   else if()
+    public int rollDice() {
+        Random random = new Random();
+        return random.nextInt(6);
     }
     
     public void endAttackPhase() {
