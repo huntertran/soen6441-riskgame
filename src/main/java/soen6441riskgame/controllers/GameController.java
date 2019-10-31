@@ -380,6 +380,8 @@ public class GameController {
         }
         ConsolePrinter.printFormat("%s", printDiceValues);
         
+        //now we will check who loses an army
+        
     }
     
     public boolean isAttackValid() {
@@ -436,7 +438,7 @@ public class GameController {
     
     public int rollDice() {
         Random random = new Random();
-        return random.nextInt(6);
+        return random.nextInt(6) + 1;
     }
     
     public void endAttackPhase() {
