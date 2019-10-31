@@ -209,4 +209,22 @@ public class GameControllerTest {
         
         //Assert
     }
+    
+    @Test
+    public void endAttackPhaseTest() {
+        //Setup
+        String[] hunterAddArgs = new String[] { "-add", "hunter" };
+        String[] benAddArgs = new String[] { "-add", "ben" };
+        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);   
+        gameController.populateCountries();
+        gameController.enterReinforcement();
+        gameController.enterAttackPhase();
+        
+        //Action
+        gameController.handleAttackCommand(new String[] {"-noattack"});
+        
+        //Assert
+        assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
+    }
 }

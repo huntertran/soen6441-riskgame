@@ -16,6 +16,9 @@ public final class GameCommands {
     
     //Attack phase
     public static final String ATTACK = "attack";
+    
+    //Defend from attack
+    public static final String DEFEND = "defend";
 
     // Fortification phase
     public static final String FORTIFY = "fortify";

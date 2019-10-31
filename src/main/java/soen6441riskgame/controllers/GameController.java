@@ -21,6 +21,8 @@ public class GameController {
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
     public static int attacker_numDice = 0;
     public static int defender_numDice = 0;
+    public static Country attackingCountry = null;
+    public static Country defendingCountry = null;
     /**
      * handle <code>gameplayer</code> command
      *
@@ -327,12 +329,28 @@ public class GameController {
     public void handleAttackCommand(String[] args) {
         ConsolePrinter.printFormat("attack conditions testing");
         Player currentPlayer = getCurrentPlayer(false);
-        Country attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
-        Country defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
+        
+        //check if its no attack
+        if(args[0].toLowerCase().equals("-noattack")) {
+            endAttackPhase();
+            return;
+        }
+        
+        attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
+        defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
         int numDice = Integer.parseInt(args[2]);
         
+        if(attackingCountry == null) {
+            ConsolePrinter.printFormat("The country %s you have entered is non-existent", attackingCountry.getName());
+            return;
+        }
+        else if(defendingCountry == null) {
+            ConsolePrinter.printFormat("The country %s you have entered is non-existent", defendingCountry.getName());
+            return;
+        }
+        
         //check if attacking country belongs to the current player
-        if (!attackingCountry.getConquerer().equals(currentPlayer)) {
+        else if (!attackingCountry.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s does not belong to %s", attackingCountry.getName(),
                                        currentPlayer.getName());
             return;
@@ -369,6 +387,24 @@ public class GameController {
         else {
             ConsolePrinter.printFormat("attack conditions met");
         }
+        attacker_numDice = numDice; //saving the number of dice
+    }
+    
+    public void handleDefendCommand(String[] args) {
+        defender_numDice = Integer.parseInt(args[0]);
         
+        if(defender_numDice > 2) {
+            ConsolePrinter.printFormat("You can only defend with a maximum of 2 armies at a time");
+            return;
+        }
+        
+     //   else if()
+    }
+    
+    public void endAttackPhase() {
+        attacker_numDice = 0;
+        Player currentPlayer = getCurrentPlayer(true);
+        ConsolePrinter.printFormat("End of attack Phase. Player %s has entered fortification phase", currentPlayer.getName());
+        currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
     }
 }
