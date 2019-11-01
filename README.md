@@ -22,6 +22,10 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 
 ![](https://github.com/huntertran/soen6441-riskgame/workflows/Java%20CI/badge.svg)
 
+**Test Coverage**
+
+[![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/badge.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame)
+
 **Pack and run from console**
 
 To pack the project, simply run:
