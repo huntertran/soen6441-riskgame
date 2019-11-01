@@ -16,3 +16,4 @@ jobs:
         uses: codecov/codecov-action@v1.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./docs/testcoverage/jacoco.xml
