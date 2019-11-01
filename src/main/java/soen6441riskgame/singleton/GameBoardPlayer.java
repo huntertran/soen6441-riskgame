@@ -3,7 +3,7 @@ package soen6441riskgame.singleton;
 import java.util.ArrayList;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.utils.ConsolePrinter;
-import soen6441riskgame.views.player.PhaseView;
+import soen6441riskgame.views.PhaseView;
 
 public class GameBoardPlayer implements Resettable {
     private ArrayList<Player> players = new ArrayList<Player>();

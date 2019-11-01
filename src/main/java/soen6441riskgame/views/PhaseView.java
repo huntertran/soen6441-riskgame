@@ -1,4 +1,4 @@
-package soen6441riskgame.views.player;
+package soen6441riskgame.views;
 
 import java.util.Observable;
 import java.util.Observer;
