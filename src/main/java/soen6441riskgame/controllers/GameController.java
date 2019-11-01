@@ -328,16 +328,18 @@ public class GameController {
     
     public void handleAttackCommand(String[] args) {
         ConsolePrinter.printFormat("attack conditions testing");
-        Player currentPlayer = getCurrentPlayer(false);
+        //Player currentPlayer = getCurrentPlayer(false);
         
+        //System.out.println(args[0]+args[1]+args[2]);
         //check if its no attack
         if(args[0].toLowerCase().equals("-noattack")) {
             endAttackPhase();
             return;
         }
-        
+        //need to check whether these countries are existent or not
         attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
+
         int numDice = Integer.parseInt(args[2]);
         attacker_numDice = numDice; //saving the number of dice
         
@@ -349,7 +351,7 @@ public class GameController {
     
     public void handleDefendCommand(String[] args) {
         defender_numDice = Integer.parseInt(args[0]);
-        
+        System.out.println(args[0]);
         if(!isAttackValid()) {
             ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
             return;
@@ -369,19 +371,111 @@ public class GameController {
         
         String printDiceValues = "Attacker: ";
         
-        for(int i = 1; i <= attacker_numDice; i++) {
+        for(int i = 0; i < attacker_numDice; i++) {
             attackerDiceValues[i] = rollDice();
             printDiceValues += attackerDiceValues[i] + "    ";
         }
         printDiceValues += "\nDefender: ";
-        for(int i = 1; i <= defender_numDice; i++) {
+        for(int i = 0; i < defender_numDice; i++) {
             defenderDiceValues[i] = rollDice();
             printDiceValues += defenderDiceValues[i] + "    ";
         }
         ConsolePrinter.printFormat("%s", printDiceValues);
         
         //now we will check who loses an army
-        
+        if(defender_numDice == 1) {
+            if(getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
+                //defending army is lost
+                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.", defendingCountry.getConquerer().getName(), defendingCountry.getName(), defendingCountry.getArmyAmount());
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                }
+            else {
+                //attacking army is lost
+                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",attackingCountry.getConquerer().getName(), attackingCountry.getName(), attackingCountry.getArmyAmount());
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                }
+        }
+        else {
+            if(getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
+                //defending army is lost
+                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.", defendingCountry.getConquerer().getName(), defendingCountry.getName(), defendingCountry.getArmyAmount());
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                }
+            else {
+                //attacking army is lost
+                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",attackingCountry.getConquerer().getName(), attackingCountry.getName(), attackingCountry.getArmyAmount());
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                }
+            if(getMax(attackerDiceValues, true) > getMax(defenderDiceValues, true)) {
+                //defending army is lost
+                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.", defendingCountry.getConquerer().getName(), defendingCountry.getName(), defendingCountry.getArmyAmount());
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                }
+            else {
+                //attacking army is lost
+                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",attackingCountry.getConquerer().getName(), attackingCountry.getName(), attackingCountry.getArmyAmount());
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                }
+        }
+        //now check if defender's armies left is 0, set conquerer as attacker
+        if(defendingCountry.getArmyAmount() == 0) {
+            ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.", attackingCountry.getConquerer().getName(), attackingCountry.getName(), attackingCountry.getArmyAmount());
+            defendingCountry.setConquerer(attackingCountry.getConquerer());
+            //check if defender has any countries that he has conquered. if not remove him from the game.
+            if(defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {
+                //remove player
+                GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
+            };
+            if(checkHasGameEnded(attackingCountry.getConquerer())) {
+                setEndOfGamePhase();
+            }
+            else {
+                //move armies
+            }
+        }
+        //reinitialize variables to null
+        defendingCountry = null;
+        attackingCountry = null;
+        attacker_numDice = 0;
+        defender_numDice = 0;
+    }
+    
+    private boolean checkHasGameEnded(Player p) {
+        //check whether this player has won the game
+        Player currentPlayer = getCurrentPlayer(false);
+        boolean flag = true;
+        ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
+        for(Country country : countries) {
+            if(country.getConquerer() != currentPlayer) {
+                flag = false;
+            }
+        }
+   
+        return flag;
+    }
+    
+    // Method for getting the maximum value and second max value
+    private int getMax(int[] inputArray,boolean second_max){ 
+      int maxValue = inputArray[0]; 
+      int maxIndex = 0;
+      for(int i=1;i < inputArray.length;i++){ 
+          if(inputArray[i] > maxValue){ 
+             maxValue = inputArray[i]; 
+             maxIndex = i;
+          } 
+      }
+    
+      if(second_max) {
+          int secondMaxValue = -1;
+          for(int i=0;i < inputArray.length;i++){ 
+              if(inputArray[i] > secondMaxValue && maxIndex != i){ 
+                  secondMaxValue = inputArray[i]; 
+              } 
+          }
+          maxValue = secondMaxValue;
+      }
+      
+      return maxValue;   
     }
     
     public boolean isAttackValid() {
@@ -403,7 +497,7 @@ public class GameController {
         }
         //check if the defending country does not belong to the current player
         else if(defendingCountry.getConquerer().equals(currentPlayer)) {
-            ConsolePrinter.printFormat("The country %s belongs to %s. You cannot attack your own country.", attackingCountry.getName(),
+            ConsolePrinter.printFormat("The country %s belongs to %s. You cannot attack your own country.", defendingCountry.getName(),
                                        currentPlayer.getName());
             return false;
         }
@@ -431,12 +525,14 @@ public class GameController {
        
         //attack execution
         else {
-            ConsolePrinter.printFormat("Attack conditions met. Enter defend command");
+            if(defender_numDice == 0) {
+                ConsolePrinter.printFormat("Attack conditions met. Enter defend command");
+            }
             return true;
         }
     }
     
-    public int rollDice() {
+    private int rollDice() {
         Random random = new Random();
         return random.nextInt(6) + 1;
     }
@@ -446,5 +542,11 @@ public class GameController {
         Player currentPlayer = getCurrentPlayer(true);
         ConsolePrinter.printFormat("End of attack Phase. Player %s has entered fortification phase", currentPlayer.getName());
         currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
+    }
+    
+    public void setEndOfGamePhase() {
+        Player currentPlayer = getCurrentPlayer(true);
+        ConsolePrinter.printFormat("Congratulations, The player %s has won the game.", currentPlayer.getName());
+        currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);
     }
 }

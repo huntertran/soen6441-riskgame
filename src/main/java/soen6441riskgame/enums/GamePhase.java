@@ -8,5 +8,6 @@ public enum GamePhase {
                        WAITING_TO_TURN,
                        REINFORCEMENT,
                        ATTACK,
-                       FORTIFICATION
+                       FORTIFICATION,
+                       END_OF_GAME
 }
