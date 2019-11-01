@@ -144,7 +144,6 @@ public class Player extends Observable {
     /**
      * REINFORCEMENT PHASE get the number of armies player will have for the conquered continent
      *
-     * @param currentPlayer current player
      * @return the number of armies. 0 if user don't own any continent.
      */
     public int getArmiesFromConqueredContinents() {
