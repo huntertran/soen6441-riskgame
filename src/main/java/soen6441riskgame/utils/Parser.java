@@ -19,7 +19,7 @@ public class Parser {
         }
     }
 
-    public boolean checkValidInputNumber(String value) {
+    public static boolean checkValidInputNumber(String value) {
         boolean flag = true;
         try {
             // check for double, float, string
@@ -42,7 +42,7 @@ public class Parser {
         }
     }
 
-    public boolean checkValidInputString(String value) {
+    public static boolean checkValidInputString(String value) {
         boolean flag = true;
         try {
             // check for double, float, string

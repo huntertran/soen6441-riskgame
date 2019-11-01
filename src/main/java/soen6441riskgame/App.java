@@ -239,7 +239,6 @@ public final class App {
             System.out.print("Enter your action: ");
             command = scanner.nextLine();
         }
-
         scanner.close();
     }
 }
