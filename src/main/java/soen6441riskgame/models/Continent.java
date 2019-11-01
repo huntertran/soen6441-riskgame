@@ -1,6 +1,7 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
@@ -8,9 +9,10 @@ import soen6441riskgame.utils.ConsolePrinter;
 /**
  * Hold continent data
  */
-public class Continent implements Viewable {
+public class Continent extends Observable implements Viewable {
     private String name;
     private int army;
+    // private Player oldConquerer;
     private ArrayList<Country> countries = new ArrayList<Country>();
 
     public Continent(String name, int army) {

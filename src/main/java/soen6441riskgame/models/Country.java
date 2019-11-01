@@ -1,6 +1,7 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
@@ -8,7 +9,7 @@ import soen6441riskgame.utils.ConsolePrinter;
 /**
  * Hold country data
  */
-public class Country implements Viewable {
+public class Country extends Observable implements Viewable {
     private Coordinate coordinate;
     private int armyAmount;
     private String name;
@@ -27,7 +28,14 @@ public class Country implements Viewable {
 
     public void setConquerer(Player conquerer) {
         ConsolePrinter.printFormat("Player %s conquered %s", conquerer.getName(), this.getName());
+
+        if (conquerer != this.conquerer) {
+            setChanged();
+            notifyObservers();
+        }
+
         this.conquerer = conquerer;
+
     }
 
     public Continent getContinent() {
@@ -52,7 +60,9 @@ public class Country implements Viewable {
 
     public void setArmyAmount(int armyAmount) {
         this.armyAmount = armyAmount;
-        ConsolePrinter.printFormat("Country %s now have %d armies, belong to %s", getName(), getArmyAmount(),
+        ConsolePrinter.printFormat("Country %s now have %d armies, belong to %s",
+                                   getName(),
+                                   getArmyAmount(),
                                    getConquerer().getName());
     }
 
@@ -104,8 +114,7 @@ public class Country implements Viewable {
         Player conquerer = this.getConquerer();
 
         if (amount > conquerer.getUnplacedArmies()) {
-            System.out.println(
-                               "The amount of armies you want to place in this country is bigger than the amount of armies you have");
+            System.out.println("The amount of armies you want to place in this country is bigger than the amount of armies you have");
             return;
         }
 
@@ -150,7 +159,11 @@ public class Country implements Viewable {
         if (armiesToMove > this.getArmyAmount() - 1) {
             System.out.println("The 'fromcountry' must have at least 1 army after fortification");
             ConsolePrinter.printFormat("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left",
-                                       armiesToMove, this.getName(), toCountry.getName(), this.getArmyAmount());
+                                       armiesToMove,
+                                       this.getName(),
+                                       toCountry.getName(),
+                                       this.getArmyAmount());
+
             return;
         }
 
@@ -210,10 +223,17 @@ public class Country implements Viewable {
         int neighbouringCountryOrder = -1;
         countryOrder = getOrder();
         neighbouringCountryOrder = neighborCountry.getOrder();
-        if (GameBoard.getInstance().getGameBoardMap().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1
-            && countryOrder != -1 && neighbouringCountryOrder != -1) {
+
+        int relationshipWithNeighbor = GameBoard.getInstance()
+                                                .getGameBoardMap()
+                                                .getBorders()[countryOrder - 1][neighbouringCountryOrder - 1];
+
+        if (relationshipWithNeighbor == 1
+            && countryOrder != -1
+            && neighbouringCountryOrder != -1) {
             return true;
         }
+
         return false;
     }
 }

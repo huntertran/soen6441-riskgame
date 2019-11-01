@@ -12,7 +12,6 @@ import soen6441riskgame.singleton.GameBoard;
  */
 public class Player extends Observable {
     private String name;
-    private int armies;
     private int unplacedArmies;
     private boolean isPlaying = false;
     private Player nextPlayer;
@@ -42,7 +41,7 @@ public class Player extends Observable {
         return currentPhaseActions;
     }
 
-    public void addCurrentPhaseAction(String action){
+    public void addCurrentPhaseAction(String action) {
         currentPhaseActions.add(action);
         setChanged();
         notifyObservers();
@@ -85,6 +84,31 @@ public class Player extends Observable {
         return name;
     }
 
+    public int getTotalArmies() {
+        int totalArmies = 0;
+
+        ArrayList<Country> conqueredCountries = getConqueredCountries();
+        for (Country country : conqueredCountries) {
+            totalArmies += country.getArmyAmount();
+        }
+
+        totalArmies += getUnplacedArmies();
+
+        return totalArmies;
+    }
+
+    public ArrayList<Continent> getConqueredContinents() {
+        ArrayList<Continent> conquered = new ArrayList<>();
+
+        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
+            if (continent.getConquerer().equals(this)) {
+                conquered.add(continent);
+            }
+        }
+
+        return conquered;
+    }
+
     /**
      * get all the conquered country of this player
      *
@@ -116,18 +140,6 @@ public class Player extends Observable {
 
     public void setUnplacedArmies(int unplacedArmies) {
         this.unplacedArmies = unplacedArmies;
-    }
-
-    public int getArmies() {
-        return armies;
-    }
-
-    public void setArmies(int armies) {
-        this.armies = armies;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
