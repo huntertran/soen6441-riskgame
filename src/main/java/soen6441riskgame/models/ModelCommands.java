@@ -3,8 +3,8 @@ package soen6441riskgame.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import soen6441riskgame.commands.MapEditorCommands;
-import soen6441riskgame.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
+import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.utils.Parser;
 
 public class ModelCommands {
@@ -14,82 +14,78 @@ public class ModelCommands {
 
     public ModelCommands(String new_args) {
 
-        if((new_args != null) && (new_args != "")) {
+        if ((new_args != null) && (new_args != "")) {
             String[] temp_args = new_args.split(" ", 2);
             this.cmd = temp_args[0].toLowerCase();
-            
-            if(temp_args.length > 1) {
+
+            if (temp_args.length > 1) {
                 String[] paramsArray = temp_args[1].split("-");
 
-                for(int i = 0; i < paramsArray.length; i++) {
+                for (int i = 0; i < paramsArray.length; i++) {
                     try {
                         String[] params = paramsArray[i].split(" ");
 
-                        for(int j = 0; j < params.length; j++) {
+                        for (int j = 0; j < params.length; j++) {
                             // check for null or empty value after split
-                            if((params[j] != null) && (!params[j].equals(""))) {
-                                
+                            if ((params[j] != null) && (!params[j].equals(""))) {
+
                                 // check specific validation criteria as per command
-                                if(params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
-                                    if(cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
+                                if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
+                                    if (cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
                                         Parser p = new Parser();
-                                        if(p.checkValidInputNumber(params[j+2])) {
-                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                        if (p.checkValidInputNumber(params[j + 2])) {
+                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
+                                                                                 params[j + 1].toLowerCase(),
+                                                                                 params[j + 2].toLowerCase()));
                                             break;
                                         }
-                                    }
-                                    else if(cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
-                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
+                                    } else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
+                                                                             params[j + 1].toLowerCase()));
+                                        break;
+                                    } else {
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
+                                                                             params[j + 1].toLowerCase(),
+                                                                             params[j + 2].toLowerCase()));
                                         break;
                                     }
-                                    else {
-                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
-                                        break;
-                                    }
-                                }
-                                else if(params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
-                                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
+                                } else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
+                                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
+                                                                         params[j + 1].toLowerCase()));
                                     break;
-                                }
-                                else if(cmd.equalsIgnoreCase(GameCommands.REINFORCE)) {
+                                } else if (cmd.equalsIgnoreCase(GameCommands.REINFORCE)) {
                                     Parser p = new Parser();
-                                    if(p.checkValidInputNumber(params[1])) {
+                                    if (p.checkValidInputNumber(params[1])) {
                                         regularCommands.add(params[j].toLowerCase());
-                                        regularCommands.add(params[j+1].toLowerCase());
+                                        regularCommands.add(params[j + 1].toLowerCase());
                                         break;
                                     }
-                                }
-                                else if(cmd.equalsIgnoreCase(GameCommands.FORTIFY)) {
-                                    if(params.length == 2) {
+                                } else if (cmd.equalsIgnoreCase(GameCommands.FORTIFY)) {
+                                    if (params.length == 2) {
                                         Parser p = new Parser();
-                                        if(p.checkValidInputNumber(params[2])) {
+                                        if (p.checkValidInputNumber(params[2])) {
                                             regularCommands.add(params[j].toLowerCase());
-                                            regularCommands.add(params[j+1].toLowerCase());
-                                            regularCommands.add(params[j+2].toLowerCase());
+                                            regularCommands.add(params[j + 1].toLowerCase());
+                                            regularCommands.add(params[j + 2].toLowerCase());
                                             break;
-                                        }
-                                        else {
+                                        } else {
                                             throw new NumberFormatException();
                                         }
-                                    }
-                                    else if (params[0].equalsIgnoreCase("none")) {
+                                    } else if (params[0].equalsIgnoreCase("none")) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
                                     } else {
                                         throw new Exception("Invalid Input");
                                     }
-                                }
-                                else {
+                                } else {
                                     regularCommands.add(params[j].toLowerCase());
                                 }
                             }
                         }
-                    }
-                    catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Invalid value detected.");
                         continue;
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         System.out.println("Invalid command detected.");
                         continue;
                     }
@@ -97,4 +93,4 @@ public class ModelCommands {
             }
         }
     }
-} 
+}

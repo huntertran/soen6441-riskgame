@@ -1,4 +1,4 @@
-package soen6441riskgame.commands;
+package soen6441riskgame.models.commands;
 
 /**
  * All commands for playing game
@@ -13,10 +13,10 @@ public final class GameCommands {
 
     // Reinforcement phase
     public static final String REINFORCE = "reinforce";
-    
+
     //Attack phase
     public static final String ATTACK = "attack";
-    
+
     //Defend from attack
     public static final String DEFEND = "defend";
 

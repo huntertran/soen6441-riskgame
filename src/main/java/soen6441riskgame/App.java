@@ -3,8 +3,8 @@ package soen6441riskgame;
 import java.io.IOException;
 import java.util.Scanner;
 
-import soen6441riskgame.commands.GameCommands;
-import soen6441riskgame.commands.MapEditorCommands;
+import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.models.ModelCommands;
@@ -249,7 +249,7 @@ public final class App {
         catch(Exception e) {
             System.out.println(e);
         }
-        
+
     }
 
 
