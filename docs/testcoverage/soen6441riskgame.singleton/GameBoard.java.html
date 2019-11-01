@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameBoard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.singleton</a> &gt; <span class="el_source">GameBoard.java</span></div><h1>GameBoard.java</h1><pre class="source lang-java linenums">package soen6441riskgame.singleton;
+
+/**
+ * Hold the game and map data
+ */
+public class GameBoard implements Resettable {
+
+<span class="fc" id="L8">    private static GameBoard instance = new GameBoard();</span>
+
+<span class="fc" id="L10">    private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();</span>
+<span class="fc" id="L11">    private GameBoardMap gameBoardMap = new GameBoardMap();</span>
+
+<span class="fc" id="L13">    public GameBoard() {</span>
+<span class="fc" id="L14">    };</span>
+
+    public GameBoardPlayer getGameBoardPlayer() {
+<span class="fc" id="L17">        return gameBoardPlayer;</span>
+    }
+
+    public GameBoardMap getGameBoardMap() {
+<span class="fc" id="L21">        return gameBoardMap;</span>
+    }
+
+    /**
+     * set a new instance for unit testing
+     *
+     * @param newTestingInstance
+     */
+    public static void setTestingInstance(GameBoard newTestingInstance) {
+<span class="fc" id="L30">        instance = newTestingInstance;</span>
+<span class="fc" id="L31">    }</span>
+
+    public static GameBoard getInstance() {
+<span class="fc" id="L34">        return instance;</span>
+    }
+
+    /**
+     * reset the map
+     */
+    @Override
+    public void reset() {
+<span class="fc" id="L42">        gameBoardMap.reset();</span>
+<span class="fc" id="L43">        gameBoardPlayer.reset();</span>
+<span class="fc" id="L44">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

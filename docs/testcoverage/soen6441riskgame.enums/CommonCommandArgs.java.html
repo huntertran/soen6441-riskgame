@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommonCommandArgs.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.enums</a> &gt; <span class="el_source">CommonCommandArgs.java</span></div><h1>CommonCommandArgs.java</h1><pre class="source lang-java linenums">package soen6441riskgame.enums;
+
+/**
+ * Common command arguments for &lt;code&gt;-add&lt;/code&gt; or &lt;code&gt;-remove&lt;/code&gt;
+ */
+<span class="fc" id="L6">public enum CommonCommandArgs {</span>
+<span class="fc" id="L7">    ADD(&quot;-add&quot;), REMOVE(&quot;-remove&quot;), NONE(&quot;&quot;);</span>
+
+    private String argument;
+
+<span class="fc" id="L11">    CommonCommandArgs(final String argument) {</span>
+<span class="fc" id="L12">        this.argument = argument;</span>
+<span class="fc" id="L13">    }</span>
+
+    /**
+     * get the string arg
+     * @return
+     */
+    public String getArgument() {
+<span class="fc" id="L20">        return argument;</span>
+    }
+
+    /**
+     * convert the string arg to enum
+     * @param argumentString the arg string
+     * @return the arg converted to enum
+     */
+    public static CommonCommandArgs fromString(String argumentString) {
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        for (CommonCommandArgs argument : values()) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (argument.getArgument().replace(&quot;-&quot;, &quot;&quot;).equals(argumentString.toLowerCase().replace(&quot;-&quot;, &quot;&quot;))) {</span>
+<span class="fc" id="L31">                return argument;</span>
+            }
+        }
+
+<span class="nc" id="L35">        return NONE;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
