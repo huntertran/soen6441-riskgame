@@ -25,7 +25,12 @@ public final class GameCommands {
 
     // Current player
     public static final String CURRENTPLAYER = "currentplayer";
-
+    // Player Exchange Cards
+    public static final String EXCHANGECARDS = "exchangecards";
+    // None command
+    public static final String NONE = "none";
     // EXIT GAME
     public static final String EXIT = "exit";
+
+    public static final String ATTACKMOVE = "attackmove";
 }
