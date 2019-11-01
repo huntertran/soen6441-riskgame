@@ -52,32 +52,32 @@ public class ModelCommands {
                                     if(cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
                                         // check if number of army are in number format
                                         if(Parser.checkValidInputNumber(params[j+2])) {
-                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1], params[j+2].toLowerCase()));
                                             break;
                                         }
                                     }
                                     // check if the command is GAMEPLAYER
                                     else if(cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
-                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1]));
                                         break;
                                     }
                                     // command contains sub commands so add seperately to subroutine list.
                                     else {
-                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase(), params[j+2].toLowerCase()));
+                                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1], params[j+2]));
                                         break;
                                     }
                                 }
                                 // check if REMOVE command is provided
                                 else if(params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
-                                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1].toLowerCase()));
+                                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1]));
                                     break;
                                 }
                                 // check if REINFORCE command is provided
                                 else if(cmd.equalsIgnoreCase(GameCommands.REINFORCE)) {
                                     // check if number of armies are in number format
                                     if(Parser.checkValidInputNumber(params[1])) {
-                                        regularCommands.add(params[j].toLowerCase());
-                                        regularCommands.add(params[j+1].toLowerCase());
+                                        regularCommands.add(params[j]);
+                                        regularCommands.add(params[j+1]);
                                         break;
                                     }
                                 }
@@ -87,9 +87,9 @@ public class ModelCommands {
                                     if(params.length == 3) {
                                         // check if number of armies are in number format
                                         if(Parser.checkValidInputNumber(params[2])) {
-                                            regularCommands.add(params[j].toLowerCase());
-                                            regularCommands.add(params[j+1].toLowerCase());
-                                            regularCommands.add(params[j+2].toLowerCase());
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
+                                            regularCommands.add(params[j+2]);
                                             break;
                                         }
                                         // did not provide number
@@ -130,9 +130,9 @@ public class ModelCommands {
                                 else if(cmd.equalsIgnoreCase(GameCommands.ATTACK)) {
                                     if (params.length == 3) {
                                         if(Parser.checkValidInputNumber(params[2])) {
-                                            regularCommands.add(params[j].toLowerCase());
-                                            regularCommands.add(params[j+1].toLowerCase());
-                                            regularCommands.add(params[j+2].toLowerCase());
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
+                                            regularCommands.add(params[j+2]);
                                             break;
                                         }
                                         else {
@@ -149,7 +149,7 @@ public class ModelCommands {
                                 }
                                 else if(cmd.equalsIgnoreCase(GameCommands.DEFEND)) {
                                     if(Parser.checkValidInputNumber(params[j])) {
-                                        regularCommands.add(params[j].toLowerCase());
+                                        regularCommands.add(params[j]);
                                         break;
                                     }
                                     else {
