@@ -3,25 +3,24 @@ name: Java CI
 on:
   push:
     paths-ignore:
-    - 'docs/**'
-    - 'doc/**'
-    - 'grades/**'
+      - "docs/**"
+      - "doc/**"
+      - "grades/**"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
 
-    - name: Check out source code
-      uses: actions/checkout@v1
+      - name: Check out source code
+        uses: actions/checkout@v1
 
-    - name: Build with Maven
-      run: |
-        mvn clean test
-        mvn package --file pom.xml
+      - name: Build with Maven
+        run: |
+          mvn clean test
+          mvn package --file pom.xml
