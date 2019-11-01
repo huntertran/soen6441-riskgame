@@ -1,11 +1,21 @@
 <head>
     <title>RISK DOMINATION GAME</title>
+    <link rel="stylesheet"
+        href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
 </head>
 
 <body>
     <h1>SOEN 6441 - ADVANCED PROGRAMMING PRACTICES</h1>
     <h2>RISK DOMINATION GAME</h2>
 
-    <a href="./javadocs/">Javadocs</a>
-    <a href="./testcoverage/">Test coverage</a>
+    <a class="mdc-button mdc-button--raised" href="./javadocs/">Javadocs</a>
+    <a class="mdc-button mdc-button--raised" href="./testcoverage/">Test coverage</a>
+
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- Instantiate single textfield component rendered in the document -->
+    <script>
+        mdc.textField.MDCTextField.attachTo(
+            document.querySelector(".mdc-text-field")
+        );
+    </script>
 </body>
