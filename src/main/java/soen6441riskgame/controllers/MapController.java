@@ -17,7 +17,6 @@ import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
-import soen6441riskgame.views.PlayersWorldDominationView;
 
 /**
  * Control the map
@@ -333,7 +332,8 @@ public final class MapController {
         boolean isNotEnoughCountries = numberOfCountry < minimumNumberOfCountries;
 
         if (isNotEnoughCountries) {
-            ConsolePrinter.printFormat("Not enough countries. Created: %d - Minimum required: %s", numberOfCountry,
+            ConsolePrinter.printFormat("Not enough countries. Created: %d - Minimum required: %s",
+                                       numberOfCountry,
                                        minimumNumberOfCountries);
         }
 
@@ -646,8 +646,11 @@ public final class MapController {
         ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
         writer.write("[countries]\n");
         for (Country country : countries) {
-            writer.write(country.getOrder() + " " + country.getName() + " " + country.getContinent().getOrder() + " "
-                         + country.getArmyAmount() + " " + country.getCoordinate().getX() + " "
+            writer.write(country.getOrder() + " "
+                         + country.getName() + " "
+                         + country.getContinent().getOrder() + " "
+                         + country.getArmyAmount() + " "
+                         + country.getCoordinate().getX() + " "
                          + country.getCoordinate().getY() + "\n");
         }
         writer.write("\n");
@@ -662,9 +665,11 @@ public final class MapController {
     private void writeContinentsToFile(FileWriter writer) throws IOException {
         ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
         writer.write("[continents]\n");
+
         for (Continent continent : continents) {
             writer.write(continent.getName() + " " + continent.getArmy() + "\n");
         }
+
         writer.write("\n");
     }
 
@@ -750,7 +755,9 @@ public final class MapController {
             }
         }
 
-        return !isNotEnoughCountries && !isIsolatedCountryExisted && !isEmptyContinentExisted
+        return !isNotEnoughCountries
+               && !isIsolatedCountryExisted
+               && !isEmptyContinentExisted
                && !isCountryWithNoContinentExisted;
     }
 
