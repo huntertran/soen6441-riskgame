@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
-import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
 public class MapControllerTest {
@@ -386,6 +385,12 @@ public class MapControllerTest {
         Assertions.assertFalse(mapController.isMapValid());
     }
 
+    /**
+     * Test for un-connected graph. The explanation can be found at
+     * https://github.com/huntertran/soen6441-riskgame/wiki/Connected-Graph-Validation-Unit-Test
+     * 
+     * @throws IOException
+     */
     @Test
     public void validateMapNotConnectedContinentTest() throws IOException {
         // setup
