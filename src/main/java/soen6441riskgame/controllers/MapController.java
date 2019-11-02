@@ -652,7 +652,6 @@ public final class MapController {
             writer.write(country.getOrder() + " "
                          + country.getName() + " "
                          + country.getContinent().getOrder() + " "
-                         + country.getArmyAmount() + " "
                          + country.getCoordinate().getX() + " "
                          + country.getCoordinate().getY() + "\n");
         }
