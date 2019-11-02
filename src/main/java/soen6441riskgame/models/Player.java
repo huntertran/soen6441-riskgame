@@ -101,8 +101,10 @@ public class Player extends Observable {
         ArrayList<Continent> conquered = new ArrayList<>();
 
         for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
-            if (continent.getConquerer().equals(this)) {
-                conquered.add(continent);
+            if (continent != null) {
+                if (this.equals(continent.getConquerer())) {
+                    conquered.add(continent);
+                }
             }
         }
 
@@ -118,8 +120,10 @@ public class Player extends Observable {
         ArrayList<Country> conquered = new ArrayList<>();
 
         for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {
-            if (country.getConquerer().equals(this)) {
-                conquered.add(country);
+            if (country != null) {
+                if (this.equals(country.getConquerer())) {
+                    conquered.add(country);
+                }
             }
         }
 

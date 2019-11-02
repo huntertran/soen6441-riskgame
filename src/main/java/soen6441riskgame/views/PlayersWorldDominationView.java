@@ -20,7 +20,7 @@ public class PlayersWorldDominationView implements Observer {
         for (Player player : players) {
             double percentConquered = (player.getConqueredCountries().size() * 100) / totalNumberOfCountries;
 
-            ConsolePrinter.printFormat("Player %s conquered %d% of the world, having %d armies",
+            ConsolePrinter.printFormat("Player %s conquered %.2f percent of the world, having %d armies",
                                        player.getName(),
                                        percentConquered,
                                        player.getTotalArmies());

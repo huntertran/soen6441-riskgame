@@ -30,12 +30,10 @@ public class Country extends Observable implements Viewable {
         ConsolePrinter.printFormat("Player %s conquered %s", conquerer.getName(), this.getName());
 
         if (conquerer != this.conquerer) {
+            this.conquerer = conquerer;
             setChanged();
             notifyObservers();
         }
-
-        this.conquerer = conquerer;
-
     }
 
     public Continent getContinent() {
