@@ -23,6 +23,7 @@ public class GameController {
     public static int defender_numDice = 0;
     public static Country attackingCountry = null;
     public static Country defendingCountry = null;
+    public static boolean allout_flag = false;
     /**
      * handle <code>gameplayer</code> command
      *
@@ -334,14 +335,42 @@ public class GameController {
             endAttackPhase();
             return;
         }
+        
         //need to check whether these countries are existent or not
         attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
-
-        int numDice = Integer.parseInt(args[2]);
-        attacker_numDice = numDice; //saving the number of dice
         
-        //check if attack is valid
+        if(args[2] == "allout") {
+            attacker_numDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
+            if(!isAttackValid()) {
+                return;
+            }
+            else {
+                allout_flag = true;
+                simulateAttack();
+            }  
+        }
+        else {
+            int numDice = Integer.parseInt(args[2]);
+            attacker_numDice = numDice; //saving the number of dice
+            
+            //check if attack is valid
+            if(!isAttackValid()) {
+                return;
+            }  
+        }
+    }
+    
+    private void simulateAttack() {
+        while(isAttackValid() && allout_flag) {
+            attacker_numDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
+            int defender_dice = defendingCountry.getArmyAmount() < 2 ? attackingCountry.getArmyAmount() : 2;
+            handleDefendCommand(new String[] {Integer.toString(defender_dice)});
+        }
+        ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
+    }
+    
+    private void furtherAttackPossible() {
         if(!isAttackValid()) {
             return;
         }
@@ -433,13 +462,14 @@ public class GameController {
             }
         }
         else {
-          //reinitialize variables to null
-            defendingCountry = null;
-            attackingCountry = null;
-            attacker_numDice = 0;
-            defender_numDice = 0;
-        }
-        
+            if(!allout_flag) {
+                //reinitialize variables to null
+                defendingCountry = null;
+                attackingCountry = null;
+                attacker_numDice = 0;
+                defender_numDice = 0;
+            }
+        }   
     }
     
     public void handleAttackMoveCommand(String[] args) {
@@ -454,6 +484,7 @@ public class GameController {
             attackingCountry = null;
             attacker_numDice = 0;
             defender_numDice = 0;
+            allout_flag = false;
             ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
         }
       
