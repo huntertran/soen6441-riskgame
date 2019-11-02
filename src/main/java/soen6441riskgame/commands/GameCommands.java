@@ -31,4 +31,5 @@ public final class GameCommands {
     public static final String DEFEND = "defend";
 
     public static final String ATTACKMOVE = "attackmove";
+    public static final String ALLOUT = "allout";
 }

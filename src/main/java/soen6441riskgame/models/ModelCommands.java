@@ -139,6 +139,25 @@ public class ModelCommands {
                                             throw new NumberFormatException();
                                         }
                                     }
+                                    else if (params.length == 2) {
+                                        if (paramsArray[1].replace("-", "") .equalsIgnoreCase(GameCommands.ALLOUT)) {
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
+                                            //regularCommands.add(paramsArray[1]);
+                                            break;
+                                        }
+                                    }
+                                    else if (params.length == 4) {
+                                        if(Parser.checkValidInputNumber(params[2])) {
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
+                                            regularCommands.add(params[j+2]);
+                                            break;
+                                        }
+                                        else {
+                                            throw new NumberFormatException();
+                                        }
+                                    }
                                     else if (params.length == 1) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
