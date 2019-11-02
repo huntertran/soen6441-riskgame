@@ -328,11 +328,9 @@ public class GameController {
     
     public void handleAttackCommand(String[] args) {
         ConsolePrinter.printFormat("attack conditions testing");
-        //Player currentPlayer = getCurrentPlayer(false);
         
-        //System.out.println(args[0]+args[1]+args[2]);
         //check if its no attack
-        if(args[0].toLowerCase().equals("-noattack")) {
+        if(args[0].toLowerCase().equals("noattack")) {
             endAttackPhase();
             return;
         }
@@ -383,7 +381,7 @@ public class GameController {
         ConsolePrinter.printFormat("%s", printDiceValues);
         
         //now we will check who loses an army
-        if(defender_numDice == 1) {
+        if(defender_numDice == 1 || attacker_numDice == 1) {
             if(getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
                 //defending army is lost
                 ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.", defendingCountry.getConquerer().getName(), defendingCountry.getName(), defendingCountry.getArmyAmount());
@@ -431,13 +429,34 @@ public class GameController {
             }
             else {
                 //move armies
+                ConsolePrinter.printFormat("Player %s needs to move armies into your conquered country %s", attackingCountry.getConquerer().getName(), defendingCountry.getName());
             }
         }
-        //reinitialize variables to null
-        defendingCountry = null;
-        attackingCountry = null;
-        attacker_numDice = 0;
-        defender_numDice = 0;
+        else {
+          //reinitialize variables to null
+            defendingCountry = null;
+            attackingCountry = null;
+            attacker_numDice = 0;
+            defender_numDice = 0;
+        }
+        
+    }
+    
+    public void handleAttackMoveCommand(String[] args) {
+        int army_to_be_moved = Integer.parseInt(args[0]);
+        if(army_to_be_moved < attacker_numDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
+            ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.", attacker_numDice);
+        }
+        else{
+            attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
+            //reinitialize variables to null
+            defendingCountry = null;
+            attackingCountry = null;
+            attacker_numDice = 0;
+            defender_numDice = 0;
+            ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
+        }
+      
     }
     
     private boolean checkHasGameEnded(Player p) {
@@ -538,7 +557,10 @@ public class GameController {
     }
     
     public void endAttackPhase() {
+        defendingCountry = null;
+        attackingCountry = null;
         attacker_numDice = 0;
+        defender_numDice = 0;
         Player currentPlayer = getCurrentPlayer(true);
         ConsolePrinter.printFormat("End of attack Phase. Player %s has entered fortification phase", currentPlayer.getName());
         currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
