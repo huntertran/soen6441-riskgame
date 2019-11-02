@@ -17,6 +17,7 @@ import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.utils.GraphChecker;
 
 /**
  * Control the map
@@ -48,7 +49,9 @@ public final class MapController {
      */
     public void addContinent(String continentName, String continentValue, int... order) {
         if (!isContinentExisted(continentName)) {
-            GameBoard.getInstance().getGameBoardMap().getContinents()
+            GameBoard.getInstance()
+                     .getGameBoardMap()
+                     .getContinents()
                      .add(new Continent(continentName, Integer.parseInt(continentValue)));
 
             ConsolePrinter.printFormat("New continent added: %s with %s armies", continentName, continentValue);
@@ -755,10 +758,24 @@ public final class MapController {
             }
         }
 
+        // check if country in continents are connected
+        boolean isCountriesInContinentConnected = true;
+        ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
+        for(Continent continent : continents){
+            if(!continent.isContinentConnected()){
+                isCountriesInContinentConnected = false;
+                break;
+            }
+        }
+
+        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance().getGameBoardMap().getCountries());
+
         return !isNotEnoughCountries
                && !isIsolatedCountryExisted
                && !isEmptyContinentExisted
-               && !isCountryWithNoContinentExisted;
+               && !isCountryWithNoContinentExisted
+               && isCountriesInContinentConnected
+               && isMapConnected;
     }
 
     /**

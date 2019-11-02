@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
 public class MapControllerTest {
@@ -380,6 +381,25 @@ public class MapControllerTest {
 
         System.out.println("After remove countries:");
         GameBoard.getInstance().getGameBoardMap().printBorders();
+
+        // assert
+        Assertions.assertFalse(mapController.isMapValid());
+    }
+
+    @Test
+    public void validateMapNotConnectedContinentTest() throws IOException {
+        // setup
+        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        mapController.loadMap(filePath);
+
+        // making the map invalid
+        // remove border of Tunisia and Algeria
+        GameBoard.getInstance().getGameBoardMap().getBorders()[2][1] = 0;
+        GameBoard.getInstance().getGameBoardMap().getBorders()[1][2] = 0;
+
+        // add border for Malta and Spain
+        GameBoard.getInstance().getGameBoardMap().getBorders()[4][0] = 1;
+        GameBoard.getInstance().getGameBoardMap().getBorders()[0][4] = 1;
 
         // assert
         Assertions.assertFalse(mapController.isMapValid());
