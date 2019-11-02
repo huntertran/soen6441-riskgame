@@ -46,7 +46,7 @@ public class Parser {
         boolean flag = true;
         try {
             // check for double, float, string
-            int num = Integer.parseInt(value);
+            double num = Double.parseDouble(value);
 
             // check negative value 
             if (num < 0) {
