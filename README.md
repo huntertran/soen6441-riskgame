@@ -55,9 +55,7 @@ java -jar .\soen6441riskgame-1.0-SNAPSHOT.jar [your_command] [your_args]
 mvn javadoc:javadoc
 ```
 
-The javadoc files will be generated at `\target\site\apidocs`
-
-> Copy this folder to `\docs` to update Github pages for javadocs
+The javadoc files will be generated at `\docs\javadocs`. When you commit the newly created files to github, they will be deployed to the project home page
 
 # 1. Members
 <a id="markdown-members" name="members"></a>
