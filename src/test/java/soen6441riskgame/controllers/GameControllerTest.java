@@ -13,8 +13,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 
@@ -42,20 +44,48 @@ public class GameControllerTest {
     }
 
     @Test
-    public void handlePlayerAddCommandTest() {
+    public void addPlayerTest() {
         // Setup
-        String[] tjAddArgs = new String[] { "-add", "TJ" };
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
+        String hunter = "hunter";
+        String ben = "ben";
+        String tj = "tj";
 
         // Action
-        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        App.jumpToCommand(new ModelCommands("gameplayer -add " + hunter));
+        App.jumpToCommand(new ModelCommands("gameplayer -add " + ben));
+        App.jumpToCommand(new ModelCommands("gameplayer -add " + tj));
 
-        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tjAddArgs[1]);
-        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunterAddArgs[1]);
-        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(benAddArgs[1]);
+        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tj);
+        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
+        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(ben);
+
+        Player tjNextPlayer = tjPlayer.getNextPlayer();
+        Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
+        Player hunterNextPlayer = hunterPlayer.getNextPlayer();
+
+        // Assert
+        assertNotNull(tjPlayer);
+        assertNotNull(hunterPlayer);
+        assertNotNull(benPlayer);
+
+        assertSame(hunterPlayer, tjNextPlayer);
+        assertSame(benPlayer, hunterNextPlayer);
+        assertSame(benPlayer, tjPreviousPlayer);
+    }
+
+    @Test
+    public void addMultiplePlayersTest() {
+        // Setup
+        String hunter = "hunter";
+        String ben = "ben";
+        String tj = "tj";
+
+        // Action
+        App.jumpToCommand(new ModelCommands("gameplayer -add " + hunter + " -add " + ben + " -add " + tj));
+
+        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tj);
+        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
+        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(ben);
 
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
@@ -168,70 +198,70 @@ public class GameControllerTest {
         // Assert
         assertFalse(isUnplacedArmiesDifferentForOnePlayer);
     }
-    
+
     @Test
     public void enterAttackPhaseTest() {
-        //Setup
+        // Setup
         String[] tjAddArgs = new String[] { "-add", "TJ" };
         String[] hunterAddArgs = new String[] { "-add", "hunter" };
         String[] benAddArgs = new String[] { "-add", "ben" };
         gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);   
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.populateCountries();
         gameController.enterReinforcement();
-        gameController.handleReinforceCommand(new String[] {"Spain","2"});
-        
+        gameController.handleReinforceCommand(new String[] { "Spain", "2" });
+
         // Action
         gameController.enterAttackPhase();
-        
-        //Assertion
+
+        // Assertion
         Player p1 = gameController.getCurrentPlayer();
         assertTrue(p1.getCurrentPhase() == GamePhase.ATTACK);
     }
-    
+
     @Test
     public void handleAttackCommandTest() {
-        //Setup
+        // Setup
         String[] tjAddArgs = new String[] { "-add", "TJ" };
         String[] hunterAddArgs = new String[] { "-add", "hunter" };
         String[] benAddArgs = new String[] { "-add", "ben" };
         gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);   
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.populateCountries();
         gameController.enterReinforcement();
-        gameController.handleReinforceCommand(new String[] {"Spain","2"});
+        gameController.handleReinforceCommand(new String[] { "Spain", "2" });
         gameController.enterAttackPhase();
         int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount();
         int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount();
-        //Action
-        gameController.handleAttackCommand(new String[] {"Spain", "France", "1"});
-        if(gameController.isAttackValid()) {
-            gameController.handleDefendCommand(new String[]{"1"});
+        // Action
+        gameController.handleAttackCommand(new String[] { "Spain", "France", "1" });
+        if (gameController.isAttackValid()) {
+            gameController.handleDefendCommand(new String[] { "1" });
         }
-        
-        //Assert
-        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount() != a 
-                || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
-                || !gameController.isAttackValid());
+
+        // Assert
+        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount() != a
+                   || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
+                   || !gameController.isAttackValid());
     }
-    
+
     @Test
     public void endAttackPhaseTest() {
-        //Setup
+        // Setup
         String[] hunterAddArgs = new String[] { "-add", "hunter" };
         String[] benAddArgs = new String[] { "-add", "ben" };
         gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);   
+        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.enterAttackPhase();
-        
-        //Action
-        gameController.handleAttackCommand(new String[] {"-noattack"});
-        
-        //Assert
+
+        // Action
+        gameController.handleAttackCommand(new String[] { "-noattack" });
+
+        // Assert
         assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
     }
 }
