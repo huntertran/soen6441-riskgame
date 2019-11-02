@@ -331,7 +331,7 @@ public class GameController {
         ConsolePrinter.printFormat("attack conditions testing");
         
         //check if its no attack
-        if(args[0].toLowerCase().equals("noattack")) {
+        if(args[0].toLowerCase().equals("-noattack")) {
             endAttackPhase();
             return;
         }
