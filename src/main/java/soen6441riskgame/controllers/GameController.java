@@ -243,7 +243,7 @@ public class GameController {
         if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
             currentPlayer.calculateReinforcementArmies(this);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
-        } else {
+        } else if(currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
             ConsolePrinter.printFormat("Player %s cannot reinforce armies in %s phase",
                                        currentPlayer.getName(),
                                        currentPlayer.getCurrentPhase().toString());
@@ -334,7 +334,7 @@ public class GameController {
         ConsolePrinter.printFormat("attack conditions testing");
 
         // check if its no attack
-        if (args[0].toLowerCase().equals("-noattack")) {
+        if (args[0].toLowerCase().equals("-noattack") || args[0].toLowerCase().equals("noattack")) {
             endAttackPhase();
             return;
         }
@@ -343,7 +343,7 @@ public class GameController {
         attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
 
-        if (args[2] == "allout") {
+        if (args[2].equals("allout") || args[2].equals("-allout")) {
             attacker_numDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
             if (!isAttackValid()) {
                 return;
@@ -368,7 +368,7 @@ public class GameController {
     private void simulateAttack() {
         while (isAttackValid() && allout_flag) {
             attacker_numDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
-            int defender_dice = defendingCountry.getArmyAmount() < 2 ? attackingCountry.getArmyAmount() : 2;
+            int defender_dice = defendingCountry.getArmyAmount() < 2 ? defendingCountry.getArmyAmount() : 2;
             handleDefendCommand(new String[] { Integer.toString(defender_dice) });
         }
         ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
@@ -427,55 +427,61 @@ public class GameController {
         if (defender_numDice == 1 || attacker_numDice == 1) {
             if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
                 // defending army is lost
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
                 ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
 
-                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                
             } else {
                 // attacking army is lost
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
                 ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
 
-                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+               
             }
         } else {
             if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
                 // defending army is lost
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
                 ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
-
-                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                
+                
+                
             } else {
                 // attacking army is lost
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
                 ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
 
-                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                
             }
             if (getMax(attackerDiceValues, true) > getMax(defenderDiceValues, true)) {
                 // defending army is lost
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
                 ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
 
-                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                
             } else {
                 // attacking army is lost
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
                 ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
 
-                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
             }
         }
         // now check if defender's armies left is 0, set conquerer as attacker
@@ -492,7 +498,22 @@ public class GameController {
                 // remove player
                 GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
             }
-            ;
+            //check if player has conquered entire continent
+            ArrayList<Country> countries = defendingCountry.getContinent().getCountries();
+            boolean flag_continent_conquered = true;
+            Player currentplayer = getCurrentPlayer();
+            for(Country country : countries) {
+                if(country.getConquerer() != currentplayer) {
+                    flag_continent_conquered = false;
+                }
+            }
+            
+            if(flag_continent_conquered) {
+                ConsolePrinter.printFormat("You have conquered the continent %s , so you receive %s unplaced armies", defendingCountry.getContinent().getName(),defendingCountry.getContinent().getArmy());
+                currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies() + defendingCountry.getContinent().getArmy());
+            }
+            
+            
             if (checkHasGameEnded(attackingCountry.getConquerer())) {
                 setEndOfGamePhase();
             } else {
@@ -510,7 +531,7 @@ public class GameController {
                 defender_numDice = 0;
             }
         }
-        if (!furtherAttackPossible()) {
+        if (!furtherAttackPossible() && !checkHasGameEnded(attackingCountry.getConquerer())) {
             endAttackPhase();
         }
     }
@@ -619,7 +640,7 @@ public class GameController {
 
         // attack execution
         else {
-            if (defender_numDice == 0) {
+            if (defender_numDice == 0 && !allout_flag) {
                 ConsolePrinter.printFormat("Attack conditions met. Enter defend command");
             }
             return true;
