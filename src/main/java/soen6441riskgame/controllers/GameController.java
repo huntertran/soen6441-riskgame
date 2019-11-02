@@ -359,6 +359,9 @@ public class GameController {
                 return;
             }  
         }
+        if(!furtherAttackPossible()) {
+            endAttackPhase();
+        }
     }
     
     private void simulateAttack() {
@@ -370,10 +373,21 @@ public class GameController {
         ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
     }
     
-    private void furtherAttackPossible() {
-        if(!isAttackValid()) {
-            return;
+    private boolean furtherAttackPossible() {
+        Player player = getCurrentPlayer(false);
+        //attack not possible if not more than 1 army + if no neighbours belonging to other countries.
+        ArrayList<Country> countries = player.getConqueredCountries();
+        for(Country country : countries) {
+            if(country.getArmyAmount() > 1) {
+                ArrayList<Country> neighbours = country.getNeighbors();
+                for(Country neighbouringCountry : neighbours) {
+                    if(neighbouringCountry.getConquerer() != player) {
+                        return true;
+                    }
+                }
+            }
         }
+        return false;
     }
     
     public void handleDefendCommand(String[] args) {
@@ -469,7 +483,10 @@ public class GameController {
                 attacker_numDice = 0;
                 defender_numDice = 0;
             }
-        }   
+        } 
+        if(!furtherAttackPossible()) {
+            endAttackPhase();
+        }
     }
     
     public void handleAttackMoveCommand(String[] args) {

@@ -203,11 +203,18 @@ public class GameControllerTest {
         gameController.enterReinforcement();
         gameController.handleReinforceCommand(new String[] {"Spain","2"});
         gameController.enterAttackPhase();
-        
+        int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount();
+        int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount();
         //Action
         gameController.handleAttackCommand(new String[] {"Spain", "France", "1"});
+        if(gameController.isAttackValid()) {
+            gameController.handleDefendCommand(new String[]{"1"});
+        }
         
         //Assert
+        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount() != a 
+                || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
+                || !gameController.isAttackValid());
     }
     
     @Test
