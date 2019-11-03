@@ -46,7 +46,7 @@ public class GameControllerTest {
     }
 
     private ArrayList<Player> addPlayersToGame() {
-        App.jumpToCommand(new ModelCommands("gameplayer -add hunter -add ben -add tj"));
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add hunter -add ben -add tj"));
         return GameBoard.getInstance().getGameBoardPlayer().getPlayers();
     }
 
@@ -58,9 +58,9 @@ public class GameControllerTest {
         String tj = "tj";
 
         // Action
-        App.jumpToCommand(new ModelCommands("gameplayer -add " + hunter));
-        App.jumpToCommand(new ModelCommands("gameplayer -add " + ben));
-        App.jumpToCommand(new ModelCommands("gameplayer -add " + tj));
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add " + hunter));
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add " + ben));
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add " + tj));
 
         Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tj);
         Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
@@ -88,7 +88,7 @@ public class GameControllerTest {
         String tj = "tj";
 
         // Action
-        App.jumpToCommand(new ModelCommands("gameplayer -add " + hunter + " -add " + ben + " -add " + tj));
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add " + hunter + " -add " + ben + " -add " + tj));
 
         Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tj);
         Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
@@ -111,20 +111,14 @@ public class GameControllerTest {
     @Test
     public void handlePlayerRemoveCommandTest() {
         // Setup
-        String[] tjAddArgs = new String[] { "-add", "TJ" };
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
-        String[] hunterRemoveArgs = new String[] { "-remove", "hunter" };
+        addPlayersToGame();
 
         // Action
-        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterRemoveArgs);
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -remove hunter"));
 
-        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tjAddArgs[1]);
-        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunterAddArgs[1]);
-        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(benAddArgs[1]);
+        Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName("tj");
+        Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName("hunter");
+        Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName("ben");
 
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
