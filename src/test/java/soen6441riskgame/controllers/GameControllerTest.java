@@ -321,7 +321,7 @@ public class GameControllerTest {
         Country targetCountry = player.getConqueredCountries().get(0);
 
         int expectedNumberOfArmies = targetCountry.getArmyAmount();
-        if(armyAmount <= player.getUnplacedArmies()){
+        if (armyAmount <= player.getUnplacedArmies()) {
             expectedNumberOfArmies += armyAmount;
         }
 
@@ -333,5 +333,19 @@ public class GameControllerTest {
 
         // assert
         assertEquals(expectedNumberOfArmies, targetCountry.getArmyAmount());
+    }
+
+    @Test
+    public void startRoundRobinPlayersTest() {
+        // setup
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // action
+        Player player = gameController.startRoundRobinPlayers();
+
+        // assert
+        assertEquals("hunter", player.getName());
     }
 }
