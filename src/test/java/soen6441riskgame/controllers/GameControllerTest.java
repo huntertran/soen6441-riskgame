@@ -43,6 +43,11 @@ public class GameControllerTest {
         mapController.resetMap();
     }
 
+    private ArrayList<Player> addPlayersToGame() {
+        App.jumpToCommand(new ModelCommands("gameplayer -add hunter -add ben -add tj"));
+        return GameBoard.getInstance().getGameBoardPlayer().getPlayers();
+    }
+
     @Test
     public void addPlayerTest() {
         // Setup
@@ -202,12 +207,7 @@ public class GameControllerTest {
     @Test
     public void enterAttackPhaseTest() {
         // Setup
-        String[] tjAddArgs = new String[] { "-add", "TJ" };
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
-        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.handleReinforceCommand(new String[] { "Spain", "2" });
@@ -264,4 +264,6 @@ public class GameControllerTest {
         // Assert
         assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
     }
+
+    
 }
