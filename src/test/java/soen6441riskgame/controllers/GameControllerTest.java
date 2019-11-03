@@ -19,6 +19,7 @@ import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
+import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 
 public class GameControllerTest {
@@ -271,7 +272,7 @@ public class GameControllerTest {
         // Setup
 
         addPlayersToGame();
-        App.jumpToCommand(new ModelCommands("populatecountries"));
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         // get first player
         Player player = gameController.getCurrentPlayer();
         // get hunter's countries
@@ -279,7 +280,7 @@ public class GameControllerTest {
 
         // Action
         int expectedPlacedArmyNumber = targetCountry.getArmyAmount() + 1;
-        App.jumpToCommand(new ModelCommands("placearmy " + targetCountry.getName()));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEARMY + " " + targetCountry.getName()));
 
         // Assert
         assertEquals(expectedPlacedArmyNumber, targetCountry.getArmyAmount());
