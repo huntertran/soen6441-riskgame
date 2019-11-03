@@ -1,5 +1,6 @@
 package soen6441riskgame.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -265,5 +266,22 @@ public class GameControllerTest {
         assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
     }
 
-    
+    @Test
+    public void handlePlaceArmyTest() {
+        // Setup
+
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands("populatecountries"));
+        // get first player
+        Player player = gameController.getCurrentPlayer();
+        // get hunter's countries
+        Country targetCountry = player.getConqueredCountries().get(0);
+
+        // Action
+        int expectedPlacedArmyNumber = targetCountry.getArmyAmount() + 1;
+        App.jumpToCommand(new ModelCommands("placearmy " + targetCountry.getName()));
+
+        // Assert
+        assertEquals(expectedPlacedArmyNumber, targetCountry.getArmyAmount());
+    }
 }

@@ -76,7 +76,9 @@ public class GameController {
             // int playerIndexToAssign = random.nextInt(totalPlayer);
             int playerIndexToAssign = player_counter;
 
-            Country countryToAssign = GameBoard.getInstance().getGameBoardMap().getCountries()
+            Country countryToAssign = GameBoard.getInstance()
+                                               .getGameBoardMap()
+                                               .getCountries()
                                                .get(nextIndexCountryToAssign);
 
             if (!countryToAssign.isConquered()) {
@@ -243,7 +245,7 @@ public class GameController {
         if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
             currentPlayer.calculateReinforcementArmies(this);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
-        } else if(currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+        } else if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
             ConsolePrinter.printFormat("Player %s cannot reinforce armies in %s phase",
                                        currentPlayer.getName(),
                                        currentPlayer.getCurrentPhase().toString());
@@ -433,7 +435,6 @@ public class GameController {
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
 
-                
             } else {
                 // attacking army is lost
                 attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
@@ -442,7 +443,6 @@ public class GameController {
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
 
-               
             }
         } else {
             if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
@@ -452,9 +452,7 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
-                
-                
-                
+
             } else {
                 // attacking army is lost
                 attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
@@ -463,7 +461,6 @@ public class GameController {
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
 
-                
             }
             if (getMax(attackerDiceValues, true) > getMax(defenderDiceValues, true)) {
                 // defending army is lost
@@ -473,7 +470,6 @@ public class GameController {
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
 
-                
             } else {
                 // attacking army is lost
                 attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
@@ -498,22 +494,24 @@ public class GameController {
                 // remove player
                 GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
             }
-            //check if player has conquered entire continent
+            // check if player has conquered entire continent
             ArrayList<Country> countries = defendingCountry.getContinent().getCountries();
             boolean flag_continent_conquered = true;
             Player currentplayer = getCurrentPlayer();
-            for(Country country : countries) {
-                if(country.getConquerer() != currentplayer) {
+            for (Country country : countries) {
+                if (country.getConquerer() != currentplayer) {
                     flag_continent_conquered = false;
                 }
             }
-            
-            if(flag_continent_conquered) {
-                ConsolePrinter.printFormat("You have conquered the continent %s , so you receive %s unplaced armies", defendingCountry.getContinent().getName(),defendingCountry.getContinent().getArmy());
-                currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies() + defendingCountry.getContinent().getArmy());
+
+            if (flag_continent_conquered) {
+                ConsolePrinter.printFormat("You have conquered the continent %s , so you receive %s unplaced armies",
+                                           defendingCountry.getContinent().getName(),
+                                           defendingCountry.getContinent().getArmy());
+                currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies()
+                                                + defendingCountry.getContinent().getArmy());
             }
-            
-            
+
             if (checkHasGameEnded(attackingCountry.getConquerer())) {
                 setEndOfGamePhase();
             } else {
