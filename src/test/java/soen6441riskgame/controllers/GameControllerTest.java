@@ -348,4 +348,18 @@ public class GameControllerTest {
         // assert
         assertEquals("hunter", player.getName());
     }
+
+    @Test
+    public void turnToNextPlayerTest() {
+        // setup
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // action
+        gameController.turnToNextPlayer();
+
+        // assert
+        assertEquals("ben", gameController.getCurrentPlayer().getName());
+    }
 }
