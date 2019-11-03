@@ -19,22 +19,22 @@
         }
     }
 
-    public boolean checkValidInputNumber(String value) {
-<span class="nc" id="L23">        boolean flag = true;</span>
+    public static boolean checkValidInputNumber(String value) {
+<span class="fc" id="L23">        boolean flag = true;</span>
         try {
             // check for double, float, string
-<span class="nc" id="L26">            int num = Integer.parseInt(value);</span>
+<span class="fc" id="L26">            int num = Integer.parseInt(value);</span>
 
             // check negative value 
-<span class="nc bnc" id="L29" title="All 2 branches missed.">            if (num &lt; 0) {</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">            if (num &lt; 0) {</span>
 <span class="nc" id="L30">                flag = false;</span>
             }
 
             // check long value
-<span class="nc bnc" id="L34" title="All 4 branches missed.">            if (!((num == Math.floor(num)) &amp;&amp; !Double.isInfinite(num))) {</span>
+<span class="pc bpc" id="L34" title="2 of 4 branches missed.">            if (!((num == Math.floor(num)) &amp;&amp; !Double.isInfinite(num))) {</span>
 <span class="nc" id="L35">                flag = false;</span>
             }
-<span class="nc" id="L37">            return flag;</span>
+<span class="fc" id="L37">            return flag;</span>
         }
 <span class="nc" id="L39">        catch(NumberFormatException e) {</span>
 <span class="nc" id="L40">            System.out.println(&quot;Invalid Input. (Cannot be negative, decimal or string)&quot;);</span>
@@ -42,11 +42,11 @@
         }
     }
 
-    public boolean checkValidInputString(String value) {
+    public static boolean checkValidInputString(String value) {
 <span class="nc" id="L46">        boolean flag = true;</span>
         try {
             // check for double, float, string
-<span class="nc" id="L49">            int num = Integer.parseInt(value);</span>
+<span class="nc" id="L49">            double num = Double.parseDouble(value);</span>
 
             // check negative value 
 <span class="nc bnc" id="L52" title="All 2 branches missed.">            if (num &lt; 0) {</span>

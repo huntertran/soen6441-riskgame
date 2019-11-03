@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Country.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models</a> &gt; <span class="el_source">Country.java</span></div><h1>Country.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
@@ -8,68 +9,75 @@ import soen6441riskgame.utils.ConsolePrinter;
 /**
  * Hold country data
  */
-public class Country implements Viewable {
+public class Country extends Observable implements Viewable {
     private Coordinate coordinate;
     private int armyAmount;
     private String name;
     private Continent continent;
     private Player conquerer;
 
-<span class="fc" id="L18">    public Country(String name, Coordinate coordinate, Continent continent) {</span>
-<span class="fc" id="L19">        this.setName(name);</span>
-<span class="fc" id="L20">        this.setCoordinate(coordinate);</span>
-<span class="fc" id="L21">        this.setContinent(continent);</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L19">    public Country(String name, Coordinate coordinate, Continent continent) {</span>
+<span class="fc" id="L20">        this.setName(name);</span>
+<span class="fc" id="L21">        this.setCoordinate(coordinate);</span>
+<span class="fc" id="L22">        this.setContinent(continent);</span>
+<span class="fc" id="L23">    }</span>
 
     public Player getConquerer() {
-<span class="fc" id="L25">        return conquerer;</span>
+<span class="fc" id="L26">        return conquerer;</span>
     }
 
     public void setConquerer(Player conquerer) {
-<span class="fc" id="L29">        ConsolePrinter.printFormat(&quot;Player %s conquered %s&quot;, conquerer.getName(), this.getName());</span>
-<span class="fc" id="L30">        this.conquerer = conquerer;</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L30">        ConsolePrinter.printFormat(&quot;Player %s conquered %s&quot;, conquerer.getName(), this.getName());</span>
+
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (conquerer != this.conquerer) {</span>
+<span class="fc" id="L33">            this.conquerer = conquerer;</span>
+<span class="fc" id="L34">            setChanged();</span>
+<span class="fc" id="L35">            notifyObservers();</span>
+        }
+<span class="fc" id="L37">    }</span>
 
     public Continent getContinent() {
-<span class="fc" id="L34">        return continent;</span>
+<span class="fc" id="L40">        return continent;</span>
     }
 
     public void setContinent(Continent continent) {
-<span class="fc" id="L38">        this.continent = continent;</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L44">        this.continent = continent;</span>
+<span class="fc" id="L45">    }</span>
 
     public String getName() {
-<span class="fc" id="L42">        return name;</span>
+<span class="fc" id="L48">        return name;</span>
     }
 
     public void setName(String name) {
-<span class="fc" id="L46">        this.name = name;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L52">        this.name = name;</span>
+<span class="fc" id="L53">    }</span>
 
     public int getArmyAmount() {
-<span class="fc" id="L50">        return armyAmount;</span>
+<span class="fc" id="L56">        return armyAmount;</span>
     }
 
     public void setArmyAmount(int armyAmount) {
-<span class="fc" id="L54">        this.armyAmount = armyAmount;</span>
-<span class="fc" id="L55">        ConsolePrinter.printFormat(&quot;Country %s now have %d armies, belong to %s&quot;, getName(), getArmyAmount(),</span>
-<span class="fc" id="L56">                                   getConquerer().getName());</span>
-<span class="fc" id="L57">    }</span>
+<span class="fc" id="L60">        this.armyAmount = armyAmount;</span>
+<span class="fc" id="L61">        ConsolePrinter.printFormat(&quot;Country %s now have %d armies, belong to %s&quot;,</span>
+<span class="fc" id="L62">                                   getName(),</span>
+<span class="fc" id="L63">                                   getArmyAmount(),</span>
+<span class="fc" id="L64">                                   getConquerer().getName());</span>
+<span class="fc" id="L65">    }</span>
 
     /**
      * return the order of the country in the country list, starting with 1
      */
     public int getOrder() {
-<span class="fc" id="L63">        return GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;</span>
+<span class="fc" id="L71">        return GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;</span>
     }
 
     public Coordinate getCoordinate() {
-<span class="fc" id="L67">        return coordinate;</span>
+<span class="fc" id="L75">        return coordinate;</span>
     }
 
     public void setCoordinate(Coordinate coordinate) {
-<span class="fc" id="L71">        this.coordinate = coordinate;</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L79">        this.coordinate = coordinate;</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * get the neighbors of this country
@@ -77,22 +85,22 @@ public class Country implements Viewable {
      * @return if no neighbors, return an empty list
      */
     public ArrayList&lt;Country&gt; getNeighbors() {
-<span class="fc" id="L80">        ArrayList&lt;Country&gt; neighbors = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L88">        ArrayList&lt;Country&gt; neighbors = new ArrayList&lt;Country&gt;();</span>
 
-<span class="fc" id="L82">        int[][] borders = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
-<span class="fc" id="L83">        int countryOrder = this.getOrder();</span>
+<span class="fc" id="L90">        int[][] borders = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
+<span class="fc" id="L91">        int countryOrder = this.getOrder();</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int index = 0; index &lt; borders[countryOrder - 1].length; index++) {</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (borders[countryOrder - 1][index] == 1) {</span>
-<span class="fc" id="L87">                neighbors.add(GameBoard.getInstance().getGameBoardMap().getCountries().get(index));</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (int index = 0; index &lt; borders[countryOrder - 1].length; index++) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if (borders[countryOrder - 1][index] == 1) {</span>
+<span class="fc" id="L95">                neighbors.add(GameBoard.getInstance().getGameBoardMap().getCountries().get(index));</span>
             }
         }
 
-<span class="fc" id="L91">        return neighbors;</span>
+<span class="fc" id="L99">        return neighbors;</span>
     }
 
     public boolean isConquered() {
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        return this.getConquerer() != null;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        return this.getConquerer() != null;</span>
     }
 
     /**
@@ -101,19 +109,18 @@ public class Country implements Viewable {
      * @param amount of armies from unplaced armies of the conquerer
      */
     public void receiveArmiesFromUnPlacedArmies(int amount) {
-<span class="fc" id="L104">        Player conquerer = this.getConquerer();</span>
+<span class="fc" id="L112">        Player conquerer = this.getConquerer();</span>
 
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (amount &gt; conquerer.getUnplacedArmies()) {</span>
-<span class="nc" id="L107">            System.out.println(</span>
-                               &quot;The amount of armies you want to place in this country is bigger than the amount of armies you have&quot;);
-<span class="nc" id="L109">            return;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (amount &gt; conquerer.getUnplacedArmies()) {</span>
+<span class="fc" id="L115">            System.out.println(&quot;The amount of armies you want to place in this country is bigger than the amount of armies you have&quot;);</span>
+<span class="fc" id="L116">            return;</span>
         }
 
-<span class="fc" id="L112">        this.increaseArmies(amount);</span>
+<span class="fc" id="L119">        this.increaseArmies(amount);</span>
 
-<span class="fc" id="L114">        int newUnplacedArmiesOfConquerer = conquerer.getUnplacedArmies() - amount;</span>
-<span class="fc" id="L115">        conquerer.setUnplacedArmies(newUnplacedArmiesOfConquerer);</span>
-<span class="fc" id="L116">    }</span>
+<span class="fc" id="L121">        int newUnplacedArmiesOfConquerer = conquerer.getUnplacedArmies() - amount;</span>
+<span class="fc" id="L122">        conquerer.setUnplacedArmies(newUnplacedArmiesOfConquerer);</span>
+<span class="fc" id="L123">    }</span>
 
     /**
      * Increase armies inside this country from unplaced armies
@@ -121,9 +128,9 @@ public class Country implements Viewable {
      * @param amount of armies from unplaced armies of the conquerer
      */
     public void increaseArmies(int amount) {
-<span class="fc" id="L124">        int newArmiesAmount = this.getArmyAmount() + amount;</span>
-<span class="fc" id="L125">        this.setArmyAmount(newArmiesAmount);</span>
-<span class="fc" id="L126">    }</span>
+<span class="fc" id="L131">        int newArmiesAmount = this.getArmyAmount() + amount;</span>
+<span class="fc" id="L132">        this.setArmyAmount(newArmiesAmount);</span>
+<span class="fc" id="L133">    }</span>
 
     /**
      * decrease armies inside this country from unplaced armies
@@ -131,9 +138,9 @@ public class Country implements Viewable {
      * @param amount of armies from unplaced armies of the conquerer
      */
     public void decreaseArmies(int amount) {
-<span class="fc" id="L134">        int newArmiesAmount = this.getArmyAmount() - amount;</span>
-<span class="fc" id="L135">        this.setArmyAmount(newArmiesAmount);</span>
-<span class="fc" id="L136">    }</span>
+<span class="fc" id="L141">        int newArmiesAmount = this.getArmyAmount() - amount;</span>
+<span class="fc" id="L142">        this.setArmyAmount(newArmiesAmount);</span>
+<span class="fc" id="L143">    }</span>
 
     /**
      * move armies from this country to another neighbor country (have the same conquerer)
@@ -142,50 +149,54 @@ public class Country implements Viewable {
      * @param armiesToMove number of armies to move
      */
     public void moveArmies(Country toCountry, int armiesToMove) {
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        if (!this.isNeighboringCountries(toCountry)) {</span>
-<span class="nc" id="L146">            ConsolePrinter.printFormat(&quot;Country %s and %s is not neighbor&quot;, this.getName(), toCountry.getName());</span>
-<span class="nc" id="L147">            return;</span>
-        }
-
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (armiesToMove &gt; this.getArmyAmount() - 1) {</span>
-<span class="nc" id="L151">            System.out.println(&quot;The 'fromcountry' must have at least 1 army after fortification&quot;);</span>
-<span class="nc" id="L152">            ConsolePrinter.printFormat(&quot;You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left&quot;,</span>
-<span class="nc" id="L153">                                       armiesToMove, this.getName(), toCountry.getName(), this.getArmyAmount());</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        if (!this.isNeighboringCountries(toCountry)) {</span>
+<span class="nc" id="L153">            ConsolePrinter.printFormat(&quot;Country %s and %s is not neighbor&quot;, this.getName(), toCountry.getName());</span>
 <span class="nc" id="L154">            return;</span>
         }
 
-<span class="fc" id="L157">        this.decreaseArmies(armiesToMove);</span>
-<span class="fc" id="L158">        toCountry.increaseArmies(armiesToMove);</span>
-<span class="fc" id="L159">    }</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (armiesToMove &gt; this.getArmyAmount() - 1) {</span>
+<span class="fc" id="L158">            System.out.println(&quot;The 'fromcountry' must have at least 1 army after fortification&quot;);</span>
+<span class="fc" id="L159">            ConsolePrinter.printFormat(&quot;You are moving %1$d army from %2$s to %3$s, but %2$s only have %4$d armies left&quot;,</span>
+<span class="fc" id="L160">                                       armiesToMove,</span>
+<span class="fc" id="L161">                                       this.getName(),</span>
+<span class="fc" id="L162">                                       toCountry.getName(),</span>
+<span class="fc" id="L163">                                       this.getArmyAmount());</span>
 
-    public void view(int indent) {
-<span class="fc" id="L162">        this.viewWithoutNeighbors(indent);</span>
-
-<span class="fc" id="L164">        this.printIndent(indent + 1);</span>
-
-<span class="fc" id="L166">        System.out.println(&quot;Neighbors:&quot;);</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        for (Country country : this.getNeighbors()) {</span>
-<span class="nc" id="L168">            country.viewWithoutNeighbors(indent + 2);</span>
-<span class="nc" id="L169">        }</span>
-<span class="fc" id="L170">    }</span>
-
-    public void viewWithoutNeighbors(int indent) {
-<span class="fc" id="L173">        this.printIndent(indent);</span>
-<span class="fc" id="L174">        String printString = &quot;Country: %s\t| No.: %s\t| Army: %s &quot;;</span>
-
-<span class="fc" id="L176">        String conquererName = &quot;&quot;;</span>
-
-<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (this.getConquerer() != null) {</span>
-<span class="fc" id="L179">            printString += &quot;\t| Conquerer: %s&quot;;</span>
-<span class="fc" id="L180">            conquererName = this.getConquerer().getName();</span>
+<span class="fc" id="L165">            return;</span>
         }
 
-<span class="fc" id="L183">        ConsolePrinter.printFormat(printString,</span>
-<span class="fc" id="L184">                                   this.getName(),</span>
-<span class="fc" id="L185">                                   this.getOrder(),</span>
-<span class="fc" id="L186">                                   this.getArmyAmount(),</span>
+<span class="fc" id="L168">        this.decreaseArmies(armiesToMove);</span>
+<span class="fc" id="L169">        toCountry.increaseArmies(armiesToMove);</span>
+<span class="fc" id="L170">    }</span>
+
+    public void view(int indent) {
+<span class="fc" id="L173">        this.viewWithoutNeighbors(indent);</span>
+
+<span class="fc" id="L175">        this.printIndent(indent + 1);</span>
+
+<span class="fc" id="L177">        System.out.println(&quot;Neighbors:&quot;);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        for (Country country : this.getNeighbors()) {</span>
+<span class="fc" id="L179">            country.viewWithoutNeighbors(indent + 2);</span>
+<span class="fc" id="L180">        }</span>
+<span class="fc" id="L181">    }</span>
+
+    public void viewWithoutNeighbors(int indent) {
+<span class="fc" id="L184">        this.printIndent(indent);</span>
+<span class="fc" id="L185">        String printString = &quot;Country: %s\t| No.: %s\t| Army: %s &quot;;</span>
+
+<span class="fc" id="L187">        String conquererName = &quot;&quot;;</span>
+
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (this.getConquerer() != null) {</span>
+<span class="nc" id="L190">            printString += &quot;\t| Conquerer: %s&quot;;</span>
+<span class="nc" id="L191">            conquererName = this.getConquerer().getName();</span>
+        }
+
+<span class="fc" id="L194">        ConsolePrinter.printFormat(printString,</span>
+<span class="fc" id="L195">                                   this.getName(),</span>
+<span class="fc" id="L196">                                   this.getOrder(),</span>
+<span class="fc" id="L197">                                   this.getArmyAmount(),</span>
                                    conquererName);
-<span class="fc" id="L188">    }</span>
+<span class="fc" id="L199">    }</span>
 
     /**
      * Place army for player
@@ -193,11 +204,11 @@ public class Country implements Viewable {
      * @param player the player to place army
      */
     public void placeArmy(Player player) {
-<span class="fc" id="L196">        int originalArmy = getArmyAmount();</span>
-<span class="fc" id="L197">        setArmyAmount(originalArmy + 1);</span>
-<span class="fc" id="L198">        int newUnplacedArmies = player.getUnplacedArmies() - 1;</span>
-<span class="fc" id="L199">        player.setUnplacedArmies(newUnplacedArmies);</span>
-<span class="fc" id="L200">    }</span>
+<span class="fc" id="L207">        int originalArmy = getArmyAmount();</span>
+<span class="fc" id="L208">        setArmyAmount(originalArmy + 1);</span>
+<span class="fc" id="L209">        int newUnplacedArmies = player.getUnplacedArmies() - 1;</span>
+<span class="fc" id="L210">        player.setUnplacedArmies(newUnplacedArmies);</span>
+<span class="fc" id="L211">    }</span>
 
     /**
      * check if 2 country is neighbor in map
@@ -206,15 +217,22 @@ public class Country implements Viewable {
      * @return false if any of two countries is not existed
      */
     public boolean isNeighboringCountries(Country neighborCountry) {
-<span class="fc" id="L209">        int countryOrder = -1;</span>
-<span class="fc" id="L210">        int neighbouringCountryOrder = -1;</span>
-<span class="fc" id="L211">        countryOrder = getOrder();</span>
-<span class="fc" id="L212">        neighbouringCountryOrder = neighborCountry.getOrder();</span>
-<span class="pc bpc" id="L213" title="2 of 6 branches missed.">        if (GameBoard.getInstance().getGameBoardMap().getBorders()[countryOrder - 1][neighbouringCountryOrder - 1] == 1</span>
-            &amp;&amp; countryOrder != -1 &amp;&amp; neighbouringCountryOrder != -1) {
-<span class="fc" id="L215">            return true;</span>
+<span class="fc" id="L220">        int countryOrder = -1;</span>
+<span class="fc" id="L221">        int neighbouringCountryOrder = -1;</span>
+<span class="fc" id="L222">        countryOrder = getOrder();</span>
+<span class="fc" id="L223">        neighbouringCountryOrder = neighborCountry.getOrder();</span>
+
+<span class="fc" id="L225">        int relationshipWithNeighbor = GameBoard.getInstance()</span>
+<span class="fc" id="L226">                                                .getGameBoardMap()</span>
+<span class="fc" id="L227">                                                .getBorders()[countryOrder - 1][neighbouringCountryOrder - 1];</span>
+
+<span class="pc bpc" id="L229" title="2 of 6 branches missed.">        if (relationshipWithNeighbor == 1</span>
+            &amp;&amp; countryOrder != -1
+            &amp;&amp; neighbouringCountryOrder != -1) {
+<span class="fc" id="L232">            return true;</span>
         }
-<span class="fc" id="L217">        return false;</span>
+
+<span class="fc" id="L235">        return false;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

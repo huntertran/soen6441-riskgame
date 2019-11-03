@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Continent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models</a> &gt; <span class="el_source">Continent.java</span></div><h1>Continent.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models;
 
 import java.util.ArrayList;
-
+import java.util.Observable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.utils.GraphChecker;
 
 /**
  * Hold continent data
  */
-public class Continent implements Viewable {
+public class Continent extends Observable implements Viewable {
     private String name;
     private int army;
-<span class="fc" id="L14">    private ArrayList&lt;Country&gt; countries = new ArrayList&lt;Country&gt;();</span>
+    // private Player oldConquerer;
+<span class="fc" id="L16">    private ArrayList&lt;Country&gt; countries = new ArrayList&lt;Country&gt;();</span>
 
-<span class="fc" id="L16">    public Continent(String name, int army) {</span>
-<span class="fc" id="L17">        this.setName(name);</span>
-<span class="fc" id="L18">        this.setArmy(army);</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L18">    public Continent(String name, int army) {</span>
+<span class="fc" id="L19">        this.setName(name);</span>
+<span class="fc" id="L20">        this.setArmy(army);</span>
+<span class="fc" id="L21">    }</span>
 
     /**
      * get the continent order from list, start with 1
      */
     public int getOrder() {
-<span class="fc" id="L25">        return GameBoard.getInstance().getGameBoardMap().getContinents().indexOf(this) + 1;</span>
+<span class="fc" id="L27">        return GameBoard.getInstance().getGameBoardMap().getContinents().indexOf(this) + 1;</span>
     }
 
     public int getArmy() {
-<span class="fc" id="L29">        return army;</span>
+<span class="fc" id="L31">        return army;</span>
     }
 
     public void setArmy(int army) {
-<span class="fc" id="L33">        this.army = army;</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L35">        this.army = army;</span>
+<span class="fc" id="L36">    }</span>
 
     public ArrayList&lt;Country&gt; getCountries() {
-<span class="fc" id="L37">        return countries;</span>
+<span class="fc" id="L39">        return countries;</span>
     }
 
     public void setCountries(ArrayList&lt;Country&gt; countries) {
-<span class="nc" id="L41">        this.countries = countries;</span>
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L43">        this.countries = countries;</span>
+<span class="nc" id="L44">    }</span>
 
     public String getName() {
-<span class="fc" id="L45">        return name;</span>
+<span class="fc" id="L47">        return name;</span>
     }
 
     public void setName(String name) {
-<span class="fc" id="L49">        this.name = name;</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L51">        this.name = name;</span>
+<span class="fc" id="L52">    }</span>
 
     /**
      * get continent conquerer
@@ -55,39 +57,48 @@ public class Continent implements Viewable {
      * @return null if not conquered by any player
      */
     public Player getConquerer() {
-<span class="fc" id="L58">        ArrayList&lt;Country&gt; countries = getCountries();</span>
+<span class="fc" id="L60">        ArrayList&lt;Country&gt; countries = getCountries();</span>
 
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (countries.size() == 0) {</span>
-<span class="fc" id="L61">            return null;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (countries.size() == 0) {</span>
+<span class="fc" id="L63">            return null;</span>
         }
 
-<span class="fc" id="L64">        Player countryConquerer = countries.get(0).getConquerer();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (Country country : countries) {</span>
-<span class="fc" id="L66">            Player conquerer = country.getConquerer();</span>
-<span class="pc bpc" id="L67" title="1 of 4 branches missed.">            if (conquerer != null &amp;&amp; !conquerer.equals(countryConquerer)) {</span>
-<span class="fc" id="L68">                return null;</span>
+<span class="fc" id="L66">        Player countryConquerer = countries.get(0).getConquerer();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (Country country : countries) {</span>
+<span class="fc" id="L68">            Player conquerer = country.getConquerer();</span>
+<span class="fc bfc" id="L69" title="All 4 branches covered.">            if (conquerer != null &amp;&amp; !conquerer.equals(countryConquerer)) {</span>
+<span class="fc" id="L70">                return null;</span>
             }
-<span class="fc" id="L70">        }</span>
+<span class="fc" id="L72">        }</span>
 
-<span class="fc" id="L72">        return countryConquerer;</span>
+<span class="fc" id="L74">        return countryConquerer;</span>
+    }
+
+    public boolean isContinentConnected() {
+<span class="fc" id="L78">        ArrayList&lt;Country&gt; countries = getCountries();</span>
+<span class="fc" id="L79">        return GraphChecker.isCountriesConnected(countries);</span>
     }
 
     public void view(int indent) {
-<span class="fc" id="L76">        this.viewWithoutCountry();</span>
+<span class="fc" id="L83">        this.viewWithoutCountry();</span>
 
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        for (Country country : this.getCountries()) {</span>
-<span class="nc" id="L79">            country.view(indent + 1);</span>
-<span class="nc" id="L80">        }</span>
-<span class="fc" id="L81">    }</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (Country country : this.getCountries()) {</span>
+<span class="fc" id="L86">            country.view(indent + 1);</span>
+<span class="fc" id="L87">        }</span>
+<span class="fc" id="L88">    }</span>
 
     public void viewWithoutCountry() {
-<span class="fc" id="L84">        String printString = &quot;Continent: %s\t| No.: %s\t| Number of army: %s&quot;;</span>
+<span class="fc" id="L91">        String printString = &quot;Continent: %s\t| No.: %s\t| Number of army: %s&quot;;</span>
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (this.getConquerer() != null) {</span>
-<span class="nc" id="L87">            printString += &quot;\t| Conquerer: %s&quot;;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (this.getConquerer() != null) {</span>
+<span class="nc" id="L94">            printString += &quot;\t| Conquerer: %s&quot;;</span>
         }
 
-<span class="fc" id="L90">        ConsolePrinter.printFormat(printString, this.getName(), this.getOrder(), this.getArmy(), this.getConquerer());</span>
-<span class="fc" id="L91">    }</span>
+<span class="fc" id="L97">        ConsolePrinter.printFormat(printString,</span>
+<span class="fc" id="L98">                                   this.getName(),</span>
+<span class="fc" id="L99">                                   this.getOrder(),</span>
+<span class="fc" id="L100">                                   this.getArmy(),</span>
+<span class="fc" id="L101">                                   this.getConquerer());</span>
+<span class="fc" id="L102">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

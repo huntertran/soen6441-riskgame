@@ -4,36 +4,42 @@
  * enums for parts of the map
  */
 <span class="fc" id="L6">public enum MapPart {</span>
-<span class="fc" id="L7">    NAME(&quot;name&quot;), FILES(&quot;[files]&quot;), CONTINENTS(&quot;[continents]&quot;), COUNTRIES(&quot;[countries]&quot;), BORDERS(&quot;[borders]&quot;),</span>
-<span class="fc" id="L8">    NONE(&quot;&quot;);</span>
+<span class="fc" id="L7">                     NAME(&quot;name&quot;),</span>
+<span class="fc" id="L8">                     FILES(&quot;[files]&quot;),</span>
+<span class="fc" id="L9">                     CONTINENTS(&quot;[continents]&quot;),</span>
+<span class="fc" id="L10">                     COUNTRIES(&quot;[countries]&quot;),</span>
+<span class="fc" id="L11">                     BORDERS(&quot;[borders]&quot;),</span>
+<span class="fc" id="L12">                     NONE(&quot;&quot;);</span>
 
     private String part;
 
-<span class="fc" id="L12">    MapPart(final String part) {</span>
-<span class="fc" id="L13">        this.part = part;</span>
-<span class="fc" id="L14">    }</span>
+<span class="fc" id="L16">    MapPart(final String part) {</span>
+<span class="fc" id="L17">        this.part = part;</span>
+<span class="fc" id="L18">    }</span>
 
     /**
      * get the part in string
+     *
      * @return part in string
      */
     public String getPart() {
-<span class="fc" id="L21">        return part;</span>
+<span class="fc" id="L26">        return part;</span>
     }
 
     /**
      * convert the string part to enum
+     *
      * @param part part in string
      * @return part in enum
      */
     public static MapPart fromString(String part) {
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (MapPart mapPart : values()) {</span>
-<span class="fc bfc" id="L31" title="All 2 branches covered.">            if (mapPart.getPart().equals(part)) {</span>
-<span class="fc" id="L32">                return mapPart;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (MapPart mapPart : values()) {</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (mapPart.getPart().equals(part)) {</span>
+<span class="fc" id="L38">                return mapPart;</span>
             }
         }
 
-<span class="fc" id="L36">        return NONE;</span>
+<span class="fc" id="L42">        return NONE;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
