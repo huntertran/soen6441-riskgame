@@ -143,8 +143,9 @@ public class GameController {
         for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {
             ArrayList<Country> conqueredCountries = player.getConqueredCountries();
 
-            if (player.getUnplacedArmies() > 0) {
-                for (Country country : conqueredCountries) {
+            // if (player.getUnplacedArmies() > 0) {
+            for (Country country : conqueredCountries) {
+                if (player.getUnplacedArmies() > 0) {
                     int armiesToPlace = random.nextInt(player.getUnplacedArmies());
                     if (armiesToPlace == 0 && player.getUnplacedArmies() == 1) {
                         armiesToPlace = 1;
@@ -153,6 +154,7 @@ public class GameController {
                     country.receiveArmiesFromUnPlacedArmies(armiesToPlace);
                 }
             }
+            // }
         }
     }
 

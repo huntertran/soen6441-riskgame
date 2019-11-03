@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
@@ -302,5 +304,34 @@ public class GameControllerTest {
 
         // assert
         assertTrue(expected);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { 100, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
+    public void handleReinforceCommandTest(int armyAmount) {
+        // setup
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // action
+        // enter reinforcement
+        gameController.enterReinforcement();
+        Player player = gameController.getCurrentPlayer();
+        Country targetCountry = player.getConqueredCountries().get(0);
+
+        int expectedNumberOfArmies = targetCountry.getArmyAmount();
+        if(armyAmount <= player.getUnplacedArmies()){
+            expectedNumberOfArmies += armyAmount;
+        }
+
+        App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
+                                            + " "
+                                            + targetCountry.getName()
+                                            + " "
+                                            + String.valueOf(armyAmount)));
+
+        // assert
+        assertEquals(expectedNumberOfArmies, targetCountry.getArmyAmount());
     }
 }
