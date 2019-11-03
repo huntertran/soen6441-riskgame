@@ -88,7 +88,8 @@ public class GameControllerTest {
         String tj = "tj";
 
         // Action
-        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add " + hunter + " -add " + ben + " -add " + tj));
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add " + hunter + " -add " + ben + " -add "
+                                            + tj));
 
         Player tjPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(tj);
         Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
@@ -267,7 +268,7 @@ public class GameControllerTest {
         Player player = gameController.getCurrentPlayer();
 
         int totalArmy = player.getTotalArmies();
-        
+
         // Action
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 
@@ -277,15 +278,29 @@ public class GameControllerTest {
     }
 
     @Test
-    public void getCurrentPlayerTest(){
+    public void getCurrentPlayerTest() {
         // setup
         addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
-        
+
         // action: get first player, should be hunter
         Player player = gameController.getCurrentPlayer();
 
         // assert
         assertEquals("hunter", player.getName());
+    }
+
+    @Test
+    public void enterReinforcementTest() {
+        // setup
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // action: current player should be hunter
+        boolean expected = gameController.enterReinforcement();
+
+        // assert
+        assertTrue(expected);
     }
 }
