@@ -143,18 +143,11 @@ public class GameControllerTest {
     @Test
     public void populateCountriesTest() {
         // Setup
-        String[] tjAddArgs = new String[] { "-add", "TJ" };
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
-        String[] rogerAddArgs = new String[] { "-add", "roger" };
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add roger"));
 
         // Action
-        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(rogerAddArgs);
-
-        gameController.populateCountries();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
 
         boolean isOneCountryNotAssigned = false;
 
@@ -174,16 +167,8 @@ public class GameControllerTest {
     @Test
     public void initPlayersUnplacedArmiesTest() {
         // Setup
-        String[] tjAddArgs = new String[] { "-add", "TJ" };
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
-        String[] rogerAddArgs = new String[] { "-add", "roger" };
-
-        // Action
-        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(rogerAddArgs);
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add roger"));
 
         gameController.initPlayersUnplacedArmies();
 
@@ -225,12 +210,7 @@ public class GameControllerTest {
     @Test
     public void handleAttackCommandTest() {
         // Setup
-        String[] tjAddArgs = new String[] { "-add", "TJ" };
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
-        gameController.handlePlayerAddAndRemoveCommand(tjAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.handleReinforceCommand(new String[] { "Spain", "2" });
@@ -252,10 +232,7 @@ public class GameControllerTest {
     @Test
     public void endAttackPhaseTest() {
         // Setup
-        String[] hunterAddArgs = new String[] { "-add", "hunter" };
-        String[] benAddArgs = new String[] { "-add", "ben" };
-        gameController.handlePlayerAddAndRemoveCommand(hunterAddArgs);
-        gameController.handlePlayerAddAndRemoveCommand(benAddArgs);
+        addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.enterAttackPhase();
