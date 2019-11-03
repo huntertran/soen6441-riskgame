@@ -186,7 +186,7 @@ public class ModelCommands {
                                 }
                                 // No specialized command therefore add to regular commands
                                 else {
-                                    regularCommands.add(params[j].toLowerCase());
+                                    regularCommands.add(params[j]);
                                 }
                             }
                         }
