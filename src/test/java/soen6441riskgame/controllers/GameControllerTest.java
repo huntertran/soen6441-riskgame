@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
+import soen6441riskgame.helpers.GamePlayActionsTestHelper;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
@@ -361,5 +362,25 @@ public class GameControllerTest {
 
         // assert
         assertEquals("ben", gameController.getCurrentPlayer().getName());
+    }
+
+    @Test
+    public void handleFortifyCommandTest() {
+        // setup
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // reinforce
+        Player player = gameController.getCurrentPlayer();
+
+        while (player.getUnplacedArmies() > 0) {
+            App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
+                                                + " " + player.getConqueredCountries().get(0).getName()
+                                                + " 1"));
+        }
+
+        // action
+        GamePlayActionsTestHelper.fortify(gameController, 3);
     }
 }

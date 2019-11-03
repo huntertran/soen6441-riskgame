@@ -260,6 +260,17 @@ public class GameController {
         return currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT;
     }
 
+    private boolean isCountryBelongToPlayer(Country country, Player player) {
+        if (!country.getConquerer().equals(player)) {
+            ConsolePrinter.printFormat("The country %s is not belong to %s",
+                                       country.getName(),
+                                       player.getName());
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * REINFORCEMENT PHASE handle <code>reinforce</code> command
      *
@@ -278,10 +289,7 @@ public class GameController {
 
         Player currentPlayer = getCurrentPlayer(false);
 
-        if (!country.getConquerer().equals(currentPlayer)) {
-            ConsolePrinter.printFormat("The country %s is not belong to %s",
-                                       country.getName(),
-                                       currentPlayer.getName());
+        if (!isCountryBelongToPlayer(country, currentPlayer)) {
             return;
         }
 
