@@ -275,4 +275,17 @@ public class GameControllerTest {
         assertEquals(0, player.getUnplacedArmies());
         assertEquals(totalArmy, player.getTotalArmies());
     }
+
+    @Test
+    public void getCurrentPlayerTest(){
+        // setup
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        
+        // action: get first player, should be hunter
+        Player player = gameController.getCurrentPlayer();
+
+        // assert
+        assertEquals("hunter", player.getName());
+    }
 }
