@@ -256,4 +256,23 @@ public class GameControllerTest {
         // Assert
         assertEquals(expectedPlacedArmyNumber, targetCountry.getArmyAmount());
     }
+
+    @Test
+    public void handlePlaceAllTest() {
+        // Setup
+
+        addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        // get first player
+        Player player = gameController.getCurrentPlayer();
+
+        int totalArmy = player.getTotalArmies();
+        
+        // Action
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // Assert
+        assertEquals(0, player.getUnplacedArmies());
+        assertEquals(totalArmy, player.getTotalArmies());
+    }
 }

@@ -146,6 +146,10 @@ public class GameController {
             if (player.getUnplacedArmies() > 0) {
                 for (Country country : conqueredCountries) {
                     int armiesToPlace = random.nextInt(player.getUnplacedArmies());
+                    if (armiesToPlace == 0 && player.getUnplacedArmies() == 1) {
+                        armiesToPlace = 1;
+                    }
+
                     country.receiveArmiesFromUnPlacedArmies(armiesToPlace);
                 }
             }
