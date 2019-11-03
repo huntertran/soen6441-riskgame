@@ -337,6 +337,13 @@ public class GameController {
         }
 
         fromCountry.moveArmies(toCountry, numberOfArmies);
+        currentPlayer.addCurrentPhaseAction("Fortify: from "
+                                            + fromCountry.getName()
+                                            + " to "
+                                            + toCountry.getName()
+                                            + " with "
+                                            + String.valueOf(numberOfArmies)
+                                            + " armies");
     }
 
     public boolean enterAttackPhase() {

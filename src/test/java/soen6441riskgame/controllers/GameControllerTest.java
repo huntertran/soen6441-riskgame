@@ -366,7 +366,7 @@ public class GameControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100 })
+    @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 100 })
     public void handleFortifyCommandTest(int armiesToMove) {
         // setup
         addPlayersToGame();
@@ -394,7 +394,7 @@ public class GameControllerTest {
         int fromCountryArmiesAfterFortify = fromCountry.getArmyAmount();
         int toCountryArmiesAfterFortify = toCountry.getArmyAmount();
 
-        if (fromCountry.getArmyAmount() > armiesToMove - 1) {
+        if (fromCountry.getArmyAmount() - 1 >= armiesToMove) {
             fromCountryArmiesAfterFortify -= armiesToMove;
             toCountryArmiesAfterFortify += armiesToMove;
         }

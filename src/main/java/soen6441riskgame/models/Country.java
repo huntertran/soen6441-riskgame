@@ -156,7 +156,7 @@ public class Country extends Observable implements Viewable {
 
         if (armiesToMove > this.getArmyAmount() - 1) {
             System.out.println("The 'fromcountry' must have at least 1 army after fortification");
-            ConsolePrinter.printFormat("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4d armies left",
+            ConsolePrinter.printFormat("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4$d armies left",
                                        armiesToMove,
                                        this.getName(),
                                        toCountry.getName(),
