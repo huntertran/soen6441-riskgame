@@ -24,6 +24,7 @@ import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 
 public class GameControllerTest {
     MapController mapController;
@@ -364,8 +365,9 @@ public class GameControllerTest {
         assertEquals("ben", gameController.getCurrentPlayer().getName());
     }
 
-    @Test
-    public void handleFortifyCommandTest() {
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100 })
+    public void handleFortifyCommandTest(int armiesToMove) {
         // setup
         addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
@@ -381,6 +383,28 @@ public class GameControllerTest {
         }
 
         // action
-        GamePlayActionsTestHelper.fortify(gameController, 3);
+        Country fromCountry = GamePlayActionsTestHelper.getPlayerCountryForFromCountryArg(player);
+        Country toCountry = GamePlayActionsTestHelper.getPlayerCountryForToCountryArg(player, fromCountry);
+
+        if (fromCountry == null || toCountry == null) {
+            ConsolePrinter.printFormat("Cannot perform FORTIFY unit test as user's conquered country is not connected");
+            return;
+        }
+
+        int fromCountryArmiesAfterFortify = fromCountry.getArmyAmount();
+        int toCountryArmiesAfterFortify = toCountry.getArmyAmount();
+
+        if (fromCountry.getArmyAmount() > armiesToMove - 1) {
+            fromCountryArmiesAfterFortify -= armiesToMove;
+            toCountryArmiesAfterFortify += armiesToMove;
+        }
+
+        GamePlayActionsTestHelper.fortify(gameController,
+                                          armiesToMove,
+                                          fromCountry,
+                                          toCountry);
+
+        assertEquals(fromCountryArmiesAfterFortify, fromCountry.getArmyAmount());
+        assertEquals(toCountryArmiesAfterFortify, toCountry.getArmyAmount());
     }
 }

@@ -329,6 +329,13 @@ public class GameController {
             return;
         }
 
+        Player currentPlayer = getCurrentPlayer(false);
+
+        if (!isCountryBelongToPlayer(fromCountry, currentPlayer)
+            || !isCountryBelongToPlayer(toCountry, currentPlayer)) {
+            return;
+        }
+
         fromCountry.moveArmies(toCountry, numberOfArmies);
     }
 

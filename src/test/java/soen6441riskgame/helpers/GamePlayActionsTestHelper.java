@@ -10,43 +10,67 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 
 public class GamePlayActionsTestHelper {
-    public static void fortify(GameController gameController, int fortifyTimes) {
+    public static void multipleFortify(GameController gameController, int fortifyTimes) {
         for (int index = 0; index < fortifyTimes; index++) {
             Player player = gameController.getCurrentPlayer();
 
-            ArrayList<Country> countries = player.getConqueredCountries();
+            Country fromCountry = getPlayerCountryForFromCountryArg(player);
 
-            Country fromCountry = null;
-            for (Country country : countries) {
-                if (country.getArmyAmount() > 1) {
-                    fromCountry = country;
-                    break;
-                }
-            }
+            Country toCountry = getPlayerCountryForToCountryArg(player, fromCountry);
 
-            Country toCountry = null;
-            if (fromCountry != null) {
-                ArrayList<Country> toCountries = fromCountry.getNeighbors();
-                for (Country country : toCountries) {
-                    if (country.getConquerer().equals(player) && !country.equals(fromCountry)) {
-                        toCountry = country;
-                        break;
-                    }
-                }
-            }
-
-            if (fromCountry != null && toCountry != null) {
-                System.out.println("From country: " + fromCountry.getName());
-                System.out.println("To country: " + toCountry.getName());
-
-                String[] fortifyArgs = new String[] { GameCommands.FORTIFY,
-                                                      fromCountry.getName(),
-                                                      toCountry.getName(),
-                                                      "1" };
-                App.jumpToCommand(new ModelCommands(String.join(" ", fortifyArgs)));
-            }
+            fortify(gameController,
+                    1,
+                    fromCountry,
+                    toCountry);
         }
 
         App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY + " none"));
+    }
+
+    public static Country getPlayerCountryForFromCountryArg(Player player) {
+        ArrayList<Country> countries = player.getConqueredCountries();
+
+        Country fromCountry = null;
+        for (Country country : countries) {
+            if (country.getArmyAmount() > 1) {
+                fromCountry = country;
+                break;
+            }
+        }
+
+        return fromCountry;
+    }
+
+    public static Country getPlayerCountryForToCountryArg(Player player, Country fromCountry) {
+        Country toCountry = null;
+
+        if (fromCountry != null) {
+            ArrayList<Country> toCountries = fromCountry.getNeighbors();
+            for (Country country : toCountries) {
+                if (country.getConquerer().equals(player) && !country.equals(fromCountry)) {
+                    toCountry = country;
+                    break;
+                }
+            }
+        }
+
+        return toCountry;
+    }
+
+    public static void fortify(GameController gameController,
+                               int armies,
+                               Country fromCountry,
+                               Country toCountry) {
+
+        if (fromCountry != null && toCountry != null) {
+            System.out.println("From country: " + fromCountry.getName());
+            System.out.println("To country: " + toCountry.getName());
+
+            String[] fortifyArgs = new String[] { GameCommands.FORTIFY,
+                                                  fromCountry.getName(),
+                                                  toCountry.getName(),
+                                                  String.valueOf(armies) };
+            App.jumpToCommand(new ModelCommands(String.join(" ", fortifyArgs)));
+        }
     }
 }

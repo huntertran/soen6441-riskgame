@@ -70,7 +70,7 @@ public class GamePlayTest {
 
         // fortify
         for (int index = 0; index < 3; index++) {
-            GamePlayActionsTestHelper.fortify(gameController, 3);
+            GamePlayActionsTestHelper.multipleFortify(gameController, 3);
         }
     }
 }
