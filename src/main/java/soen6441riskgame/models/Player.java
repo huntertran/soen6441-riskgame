@@ -6,6 +6,7 @@ import java.util.Observable;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Hold player data Each player is a node in a linked list
@@ -28,12 +29,31 @@ public class Player extends Observable {
         return currentPhase;
     }
 
-    public void setCurrentPhase(GamePhase currentPhase) {
-        if (this.currentPhase != currentPhase) {
-            this.currentPhase = currentPhase;
-            currentPhaseActions.clear();
-            setChanged();
-            notifyObservers();
+    public void setCurrentPhase(GamePhase newPhase) {
+        if (currentPhase != newPhase) {
+
+            boolean isChangePhaseAllowed = true;
+
+            if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {
+                isChangePhaseAllowed = false;
+
+                if (newPhase != GamePhase.WAITING_TO_TURN
+                    || currentPhase != GamePhase.FORTIFICATION) {
+                    isChangePhaseAllowed = false;
+                }
+            }
+
+            if (isChangePhaseAllowed) {
+                currentPhase = newPhase;
+                currentPhaseActions.clear();
+                setChanged();
+                notifyObservers();
+            } else {
+                ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
+                                           getName(),
+                                           currentPhase.toString(),
+                                           newPhase.toString());
+            }
         }
     }
 
