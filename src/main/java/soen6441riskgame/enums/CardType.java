@@ -5,8 +5,9 @@ package soen6441riskgame.enums;
  */
 public enum CardType {
                       Infantry(1),
-                      Cavalry(5),
-                      Artillery(10);
+                      Cavalry(100),
+                      Artillery(1000),
+                      Wild(10000);
 
     private final int armies;
 

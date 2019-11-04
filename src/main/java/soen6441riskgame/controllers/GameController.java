@@ -6,6 +6,7 @@ import java.util.Random;
 import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.models.Card;
+import soen6441riskgame.models.CardSet;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
@@ -688,28 +689,56 @@ public class GameController {
         currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);
     }
 
-    public void exchangeCard(String[] args) {
+    private CardSet buildCardSet(String[] args) {
         Player currentPlayer = getCurrentPlayer();
 
         if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
             ConsolePrinter.printFormat("Cannot exchange cards in %s phase",
                                        currentPlayer.getCurrentPhase().toString());
-            return;
+            return null;
         }
 
-        // TODO: exchange a set of 3 cards as RISK rule
-        for (String num : args) {
-            if (Parser.checkValidInputNumber(num)) {
-                int cardPosition = Parser.parseWithDefault(num, 0);
-                Card card = currentPlayer.getHoldingCard(cardPosition);
-                if (!card.isExchanged()) {
-                    int newUnplacedArmies = currentPlayer.getUnplacedArmies();
-                    newUnplacedArmies += card.getCardType().getCardTypeAsInt();
-                    currentPlayer.setUnplacedArmies(newUnplacedArmies);
-                    card.setExchanged(true);
+        if (args.length > 3) {
+            ConsolePrinter.printFormat("A set of card only have 3 card");
+            return null;
+        }
+
+        Card[] cards = new Card[3];
+
+        for (int index = 0; index < 3; index++) {
+            if (Parser.checkValidInputNumber(args[index])) {
+                int cardPosition = Parser.parseWithDefault(args[index], 0);
+                cards[index] = currentPlayer.getHoldingCard(cardPosition);
+
+                if (cards[index].isExchanged()) {
+                    ConsolePrinter.printFormat("Card(s) you want to trade is already exchanged for armies");
+                    return null;
                 }
             }
         }
+
+        return new CardSet(cards[0], cards[1], cards[2]);
+    }
+
+    public void exchangeCard(String[] args) {
+        Player currentPlayer = getCurrentPlayer();
+        int numberOfTradedArmies = 0;
+        int tradeTime = 0;
+        for (int index = 0; index < args.length; index++) {
+
+            CardSet cardSet = buildCardSet(new String[] {
+                                                          args[index],
+                                                          args[index + 1],
+                                                          args[index + 2]
+            });
+            numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);
+            cardSet.setCardsExchanged();
+            tradeTime++;
+            index = index + 3;
+        }
+
+        int newUnplacedArmies = currentPlayer.getUnplacedArmies() + numberOfTradedArmies;
+        currentPlayer.setUnplacedArmies(newUnplacedArmies);
 
         currentPlayer.removeExchangedCards();
     }

@@ -52,7 +52,7 @@ public class Player extends Observable {
                 currentPhase = newPhase;
                 currentPhaseActions.clear();
                 setChanged();
-                notifyObservers(ChangedProperty.CARD);
+                notifyObservers(ChangedProperty.GAME_PHASE);
             } else {
                 ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
                                            getName(),
