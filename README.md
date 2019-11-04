@@ -85,9 +85,7 @@ It is important to realize that the project description is purposely incomplete,
 # 3. Game Rule
 <a id="markdown-game-rule" name="game-rule"></a>
 
-We using the game rule from [hasbro](https://www.hasbro.com/common/instruct/risk.pdf)
-
-> An offline version of the file is in `grades/GameRule.pdf`
+We using the game rule from [yura](http://domination.sourceforge.net/applet/help/rules.htm)
 
 # 4. Problem statement
 <a id="markdown-problem-statement" name="problem-statement"></a>
