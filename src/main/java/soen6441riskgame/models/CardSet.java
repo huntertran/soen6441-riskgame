@@ -5,6 +5,23 @@ import java.util.ArrayList;
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.utils.ConsolePrinter;
 
+
+
+/**
+* The Card Class.
+* This class initializes the card type according to the Excahange Card requirement
+* 
+* 
+*
+*/
+
+/**
+* This function performs the exchange operations for the risk cards by assigning armies to the player.
+* @param selectedRiskCards arraylist which contains selected risk cards
+* @return true if cards exchanges otherwise false
+* 
+*
+*/
 public class CardSet {
     private ArrayList<Card> cards = new ArrayList<>();
 
