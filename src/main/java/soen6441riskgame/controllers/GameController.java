@@ -299,8 +299,8 @@ public class GameController {
         }
 
         if (currentPlayer.getUnplacedArmies() == 0) {
-            ConsolePrinter.printFormat("Player %s enter FORTIFICATION phase", currentPlayer.getName());
-            currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
+            ConsolePrinter.printFormat("Player %s enter ATTACK phase", currentPlayer.getName());
+            currentPlayer.setCurrentPhase(GamePhase.ATTACK);
         }
     }
 
