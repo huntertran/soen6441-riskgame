@@ -15,20 +15,50 @@ import soen6441riskgame.utils.Parser;
 
 /**
  * Control the game
+ *
+ * This Class Game Controller initializes the game by calling the GameCommands.
  */
 public class GameController {
 
     // TODO: issue #20: https://github.com/huntertran/soen6441-riskgame/issues/20
+    
+     /**
+     * The maximum initial army amount
+     */
     public static int MAX_INITIAL_ARMY_AMOUNT = 50;
+    
+    /**
+     * The minimum number army amount on a country
+     */
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
+    
+    /**
+     * The number of dice for attaker
+     */
     public static int attacker_numDice = 0;
+    
+    /**
+     * The number of dice for defender
+     */
     public static int defender_numDice = 0;
+    
+    /**
+     * The country attacking country
+     */
     public static Country attackingCountry = null;
+    
+    /**
+     * The country defending country
+     */
     public static Country defendingCountry = null;
+    
+    /**
+     * The all out
+     */
     public static boolean allout_flag = false;
 
     /**
-     * handle <code>gameplayer</code> command
+     * This funtion handle <code>gameplayer</code> command
      *
      * @param args [0] -add/-remove
      * @param args [1] player name
@@ -59,7 +89,7 @@ public class GameController {
     }
 
     /**
-     * random assign countries to players
+     * This method randomly assign countries to players
      */
     public void populateCountries() {
         int totalCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
@@ -76,7 +106,9 @@ public class GameController {
             }
 
             int nextIndexCountryToAssign = random.nextInt(totalCountry);
-            // int playerIndexToAssign = random.nextInt(totalPlayer);
+            
+            
+            // the int playerIndexToAssign = random.nextInt(totalPlayer);
             int playerIndexToAssign = player_counter;
 
             Country countryToAssign = GameBoard.getInstance()
@@ -99,7 +131,7 @@ public class GameController {
     }
 
     /**
-     * allocate a number of initial armies to each players, depending on number of players
+     * This method allocate a number of initial armies to each players, depending on number of players
      */
     public void initPlayersUnplacedArmies() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
@@ -111,7 +143,7 @@ public class GameController {
     }
 
     /**
-     * Handle place army command for current player. The player is selected in a round-robin rule
+     * This method Handle place army command for current player. The player is selected in a round-robin rule
      *
      * @param countryName name of the country to place army. The country must belong to current player
      */
@@ -138,7 +170,7 @@ public class GameController {
     }
 
     /**
-     * automatically randomly place all remaining unplaced armies for all players
+     * This method automatically randomly place all remaining unplaced armies for all players
      */
     public void handlePlaceAllCommand() {
         Random random = new Random();
@@ -162,7 +194,7 @@ public class GameController {
     }
 
     /**
-     * get current player without print the message
+     * This get the current player without print the message
      *
      * @return current player
      */
@@ -171,7 +203,7 @@ public class GameController {
     }
 
     /**
-     * start round-robin for list of players, exclude lost players
+     * This method start round-robin for list of players, exclude lost players
      */
     public Player startRoundRobinPlayers() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
@@ -188,7 +220,7 @@ public class GameController {
     }
 
     /**
-     * give turn to the next player in list
+     * This method gives turn to the next player in list
      */
     public void turnToNextPlayer() {
         Player currentPlayer = getCurrentPlayer();
@@ -509,10 +541,6 @@ public class GameController {
 
             defendingCountry.setConquerer(attackingCountry.getConquerer());
 
-            // TODO: add new card from a set of 56 cards available
-            // Player newConquerer = attackingCountry.getConquerer();
-            // newConquerer.addCard();
-
             // check if defender has any countries that he has conquered. if not remove him from the game.
             if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {
                 // remove player
@@ -590,12 +618,7 @@ public class GameController {
         return gameEnded;
     }
 
-    /**
-     * Method for getting the maximum value and second max value
-     * @param inputArray
-     * @param second_max
-     * @return
-     */
+    // Method for getting the maximum value and second max value
     private int getMax(int[] inputArray, boolean second_max) {
         int maxValue = inputArray[0];
         int maxIndex = 0;
