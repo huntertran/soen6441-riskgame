@@ -552,6 +552,8 @@ public class GameController {
     }
 
     public void handleAttackMoveCommand(String[] args) {
+        // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
+        // Issue #40 on github
         int army_to_be_moved = Integer.parseInt(args[0]);
         if (army_to_be_moved < attacker_numDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
             ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.", attacker_numDice);
