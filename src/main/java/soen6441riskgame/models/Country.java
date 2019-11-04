@@ -8,6 +8,7 @@ import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Hold country data
+ * This is a main class to read and store different elements of the country.
  */
 public class Country extends Observable implements Viewable {
     private Coordinate coordinate;
