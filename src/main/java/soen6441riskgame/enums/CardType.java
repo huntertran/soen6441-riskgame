@@ -1,7 +1,15 @@
 package soen6441riskgame.enums;
 
 /**
- * Type of card that a player can hold
+ *    Type of card that a player can hold
+ *    
+ *    This class has cards a player can possibly own.
+ */
+
+
+/**
+ * Initializes the Card Type (Infantry, Cavalry, Artillery, Wild)
+ * 
  */
 public enum CardType {
                       Infantry(1),
