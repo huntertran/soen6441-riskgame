@@ -26,6 +26,10 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 
 [![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/badge.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame)
 
+Coverage Tree
+
+[![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/tree.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame)
+
 **Pack and run from console**
 
 To pack the project, simply run:
