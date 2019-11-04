@@ -509,6 +509,10 @@ public class GameController {
 
             defendingCountry.setConquerer(attackingCountry.getConquerer());
 
+            // TODO: add new card from a set of 56 cards available
+            // Player newConquerer = attackingCountry.getConquerer();
+            // newConquerer.addCard();
+
             // check if defender has any countries that he has conquered. if not remove him from the game.
             if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {
                 // remove player
@@ -586,7 +590,12 @@ public class GameController {
         return gameEnded;
     }
 
-    // Method for getting the maximum value and second max value
+    /**
+     * Method for getting the maximum value and second max value
+     * @param inputArray
+     * @param second_max
+     * @return
+     */
     private int getMax(int[] inputArray, boolean second_max) {
         int maxValue = inputArray[0];
         int maxIndex = 0;

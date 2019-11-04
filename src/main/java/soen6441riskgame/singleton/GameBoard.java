@@ -1,5 +1,7 @@
 package soen6441riskgame.singleton;
 
+import soen6441riskgame.enums.CardType;
+import soen6441riskgame.models.Card;
 import soen6441riskgame.views.ExchangeCardView;
 
 /**
@@ -7,16 +9,44 @@ import soen6441riskgame.views.ExchangeCardView;
  */
 public class GameBoard implements Resettable {
 
+    private static final int NUMBER_OF_CARDS = 56;
+
     private static GameBoard instance = new GameBoard();
 
     private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();
     private GameBoardMap gameBoardMap = new GameBoardMap();
     private ExchangeCardView exchangeCardView = new ExchangeCardView();
+    private Card[] cards = new Card[NUMBER_OF_CARDS];
 
     public GameBoard() {
+        initCards();
     };
 
-    public ExchangeCardView getExchangeCardView(){
+    public void initCards() {
+        // 2 wild card
+        for (int index = 0; index < 2; index++) {
+            Card card = new Card(CardType.Wild);
+            cards[index] = card;
+        }
+
+        // 18 card for each type
+        for (int index = 3; index < 20; index++) {
+            Card card = new Card(CardType.Infantry);
+            cards[index] = card;
+        }
+
+        for (int index = 21; index < 38; index++) {
+            Card card = new Card(CardType.Cavalry);
+            cards[index] = card;
+        }
+
+        for (int index = 49; index < 56; index++) {
+            Card card = new Card(CardType.Artillery);
+            cards[index] = card;
+        }
+    }
+
+    public ExchangeCardView getExchangeCardView() {
         return exchangeCardView;
     }
 

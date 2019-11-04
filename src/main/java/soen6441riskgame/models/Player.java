@@ -8,7 +8,6 @@ import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
-import soen6441riskgame.views.ExchangeCardView;
 
 /**
  * Hold player data Each player is a node in a linked list

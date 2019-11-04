@@ -7,6 +7,10 @@ public class Card implements Viewable {
     private CardType cardType;
     private boolean isExchanged = false;
 
+    public Card(CardType type){
+        cardType = type;
+    }
+
     public CardType getCardType() {
         return cardType;
     }
