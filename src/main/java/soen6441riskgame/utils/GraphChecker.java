@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import soen6441riskgame.models.Country;
 
+/** The Graph Checker. */
 public class GraphChecker {
     public static boolean isCountriesConnected(ArrayList<Country> countries) {
         if (countries.size() < 1) {
