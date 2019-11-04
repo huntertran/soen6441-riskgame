@@ -3,33 +3,26 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 
 <!-- TOC -->
 
-- [Members](#members)
-- [General description](#general-description)
-- [Game Rule](#game-rule)
-- [Problem statement](#problem-statement)
-    - [Map](#map)
-    - [Game](#game)
-        - [Reinforcements Phase](#reinforcements-phase)
-        - [Attack Phase](#attack-phase)
-        - [Fortification Phase](#fortification-phase)
-    - [Cards](#cards)
-- [Implementations](#implementations)
-    - [Design Pattern](#design-pattern)
-    - [JDK version and tools](#jdk-version-and-tools)
+- [1. Members](#1-members)
+- [2. General description](#2-general-description)
+- [3. Game Rule](#3-game-rule)
+- [4. Problem statement](#4-problem-statement)
+    - [4.1. Map](#41-map)
+    - [4.2. Game](#42-game)
+        - [4.2.1. Reinforcements Phase](#421-reinforcements-phase)
+        - [4.2.2. Attack Phase](#422-attack-phase)
+        - [4.2.3. Fortification Phase](#423-fortification-phase)
+    - [4.3. Cards](#43-cards)
+- [5. Implementations](#5-implementations)
+    - [5.1. Design Pattern](#51-design-pattern)
+    - [5.2. JDK version and tools](#52-jdk-version-and-tools)
 
 <!-- /TOC -->
 
-**Build Status**
+| Build Status | Test Coverage | Coverage Tree |
+|--------------|---------------|---------------|
+| ![](https://github.com/huntertran/soen6441-riskgame/workflows/Java%20CI/badge.svg) | [![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/badge.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame) | [![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/tree.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame) |
 
-![](https://github.com/huntertran/soen6441-riskgame/workflows/Java%20CI/badge.svg)
-
-**Test Coverage**
-
-[![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/badge.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame)
-
-Coverage Tree
-
-[![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/tree.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame)
 
 **Pack and run from console**
 
