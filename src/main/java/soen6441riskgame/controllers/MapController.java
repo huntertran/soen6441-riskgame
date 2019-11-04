@@ -20,13 +20,13 @@ import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
 
 /**
- * Control the map
+ * This class is used to handle the operations to generate, edit the map. Control the map
  */
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
 
     /**
-     * add border from country to others country
+     * This method add border from country to others country
      *
      * @param countryOrder        the location of first country in the border graph
      * @param borderWithCountries the location of other countries in the border graph
@@ -40,7 +40,7 @@ public final class MapController {
     }
 
     /**
-     * add new continent
+     * This method adds new continent
      *
      * @param continentName
      * @param continentValue the amount of army for the new continent
@@ -61,7 +61,7 @@ public final class MapController {
     }
 
     /**
-     * add new country to an existed continent OR add existing country to an existed continent
+     * This method add new country to an existed continent OR add existing country to an existed continent
      *
      * @param countryName   the new country name
      * @param continentName the existed continent name
@@ -85,7 +85,7 @@ public final class MapController {
     }
 
     /**
-     * add new country from map file
+     * This method add new country from map file
      *
      * @param order          the order of country in the list, start with 1
      * @param name           the country name (no space allowed)
@@ -102,7 +102,7 @@ public final class MapController {
     }
 
     /**
-     * connect 2 countries with each other on the borderGraph
+     * This method connect 2 countries with each other on the borderGraph
      *
      * @param countryName
      * @param neighborCountryName
@@ -120,7 +120,7 @@ public final class MapController {
     }
 
     /**
-     * create new country, add it to the borderGraph
+     * This method create new country, add it to the borderGraph
      *
      * @param countryName
      * @param continent   the name of continent that country belong to
@@ -142,7 +142,7 @@ public final class MapController {
     }
 
     /**
-     * Increase border
+     * This method intialiazes and Increase border
      *
      * @param newBorderSize location of the border to insert
      */
@@ -163,7 +163,7 @@ public final class MapController {
     }
 
     /**
-     * handle 'editcontient' command from console
+     * This method handle 'editcontient' command from console
      *
      * @param args -add continentName continentValue -remove continentName
      */
@@ -188,7 +188,7 @@ public final class MapController {
     }
 
     /**
-     * handle 'editcountry' command
+     * This method handle 'editcountry' command
      *
      * @param args -add countryName continentName -remove countryName
      */
