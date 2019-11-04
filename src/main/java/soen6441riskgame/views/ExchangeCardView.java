@@ -22,6 +22,7 @@ public class ExchangeCardView implements Observer {
         ArrayList<Card> cards = player.getHoldingCards();
 
         for (Card card : cards) {
+            System.out.format("Position: %d | ", cards.indexOf(card) + 1);
             card.view(1);
         }
 

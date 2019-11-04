@@ -27,7 +27,7 @@ public class Card implements Viewable {
     public void view(int indent) {
         this.printIndent(indent);
 
-        ConsolePrinter.printFormat("Card type: $s, worth %d armies",
+        ConsolePrinter.printFormat("Card type: $s | Worth %d armies",
                                    cardType.toString(),
                                    cardType.getCardTypeAsInt());
     }
