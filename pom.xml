@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>soen6441riskgame</groupId>
     <artifactId>soen6441riskgame</artifactId>
@@ -38,23 +39,23 @@
                             <version>1.1.0</version>
                         </dependency>
 
-                      <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-runner</artifactId>
-                        <version>1.5.1</version>
-                      </dependency>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-runner</artifactId>
+                            <version>1.5.1</version>
+                        </dependency>
 
-                      <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                        <version>4.12</version>
-                      </dependency>
+                        <dependency>
+                            <groupId>junit</groupId>
+                            <artifactId>junit</artifactId>
+                            <version>4.12</version>
+                        </dependency>
 
-                      <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-suite-api</artifactId>
-                        <version>1.5.1</version>
-                      </dependency>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-suite-api</artifactId>
+                            <version>1.5.1</version>
+                        </dependency>
                     </dependencies>
                     <configuration>
                         <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
@@ -84,8 +85,8 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <reportOutputDirectory>${basedir}</reportOutputDirectory>
-                    <destDir>/docs</destDir>
+                    <reportOutputDirectory>./docs/</reportOutputDirectory>
+                    <destDir>javadocs</destDir>
                 </configuration>
             </plugin>
 
@@ -97,6 +98,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.1</version>
+                <configuration>
+                    <outputDirectory>./docs/testcoverage</outputDirectory>
+                </configuration>
+                <!-- <configuration>
+                    <reportOutputDirectory>./docs/</reportOutputDirectory>
+                    <destDir>testcoverage</destDir>
+                </configuration> -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

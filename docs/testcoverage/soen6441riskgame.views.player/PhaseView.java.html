@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhaseView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.views.player</a> &gt; <span class="el_source">PhaseView.java</span></div><h1>PhaseView.java</h1><pre class="source lang-java linenums">package soen6441riskgame.views.player;
+
+import java.util.Observable;
+import java.util.Observer;
+
+import soen6441riskgame.models.Player;
+import soen6441riskgame.utils.ConsolePrinter;
+
+<span class="fc" id="L9">public class PhaseView implements Observer {</span>
+
+    /**
+     * update the PhaseView with new data
+     *
+     * @param o   player that updated
+     * @param arg extra arg for update
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+<span class="fc" id="L19">        Player player = (Player) o;</span>
+
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (player != null) {</span>
+<span class="fc" id="L22">            ConsolePrinter.printFormat(&quot;Current phase: %s&quot;, player.getCurrentPhase());</span>
+<span class="fc" id="L23">            ConsolePrinter.printFormat(&quot;Current player: %s&quot;, player.getName());</span>
+
+<span class="fc bfc" id="L25" title="All 2 branches covered.">            if (player.getCurrentPhaseActions().size() &gt; 0) {</span>
+<span class="fc" id="L26">                ConsolePrinter.printFormat(&quot;Actions:&quot;);</span>
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">                for (String action : player.getCurrentPhaseActions()) {</span>
+<span class="fc" id="L29">                    ConsolePrinter.printFormat(&quot;    %s&quot;, action);</span>
+<span class="fc" id="L30">                }</span>
+            }
+        }
+<span class="fc" id="L33">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

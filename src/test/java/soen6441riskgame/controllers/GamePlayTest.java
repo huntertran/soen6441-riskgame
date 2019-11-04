@@ -1,18 +1,21 @@
 package soen6441riskgame.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import soen6441riskgame.App;
+import soen6441riskgame.helpers.GamePlayActionsTestHelper;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
+import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.singleton.GameBoard;
 
 public class GamePlayTest {
-    MapController mapController;
+    // MapController mapController;
     GameController gameController;
 
     @BeforeEach
@@ -22,98 +25,52 @@ public class GamePlayTest {
         GameBoard.setTestingInstance(testingInstanceGameMap);
 
         String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
-        mapController = new MapController();
-        mapController.resetMap();
-        mapController.loadMap(filePath);
+        App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + filePath));
 
         gameController = new GameController();
-    }
-
-    @AfterEach
-    public void after() {
-        mapController.resetMap();
-    }
-
-    private void fortify() {
-        for (int index = 0; index < 3; index++) {
-            Player player = gameController.getCurrentPlayer();
-
-            ArrayList<Country> countries = player.getConqueredCountries();
-
-            Country fromCountry = null;
-            for (Country country : countries) {
-                if (country.getArmyAmount() > 1) {
-                    fromCountry = country;
-                    break;
-                }
-            }
-
-            Country toCountry = null;
-            if (fromCountry != null) {
-                ArrayList<Country> toCountries = fromCountry.getNeighbors();
-                for (Country country : toCountries) {
-                    if (country.getConquerer().equals(player) && !country.equals(fromCountry)) {
-                        toCountry = country;
-                        break;
-                    }
-                }
-            }
-
-            if (fromCountry != null && toCountry != null) {
-                System.out.println("From country: " + fromCountry.getName());
-                System.out.println("To country: " + toCountry.getName());
-
-                String[] fortifyArgs = new String[] { fromCountry.getName(), toCountry.getName(), "1" };
-
-                gameController.handleFortifyCommand(fortifyArgs);
-            }
-        }
-
-        gameController.handleFortifyCommand(new String[] { "none" });
     }
 
     @Test
     public void playTest() {
         // validate map
-        mapController.validateMap();
+        App.jumpToCommand(new ModelCommands(MapEditorCommands.VALIDATEMAP));
 
         // add players
-        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "TJ" });
-        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "hunter" });
-        gameController.handlePlayerAddAndRemoveCommand(new String[] { "-add", "ben" });
+        App.jumpToCommand(new ModelCommands("gameplayer -add hunter -add ben -add tj"));
 
         // populate countries
-        gameController.populateCountries();
-        gameController.initPlayersUnplacedArmies();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
 
         // get current player
-        gameController.showCurrentPlayer();
+        // gameController.showCurrentPlayer();
         Player player = gameController.getCurrentPlayer();
 
         // place army
         System.out.println("Country to place: " + player.getConqueredCountries().get(0).getName());
-        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
-        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
-        gameController.handlePlaceArmyCommand(player.getConqueredCountries().get(0).getName());
+
+        Country targetCountry = player.getConqueredCountries().get(0);
+
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEARMY + " " + targetCountry.getName()));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEARMY + " " + targetCountry.getName()));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEARMY + " " + targetCountry.getName()));
 
         // place all
-        gameController.handlePlaceAllCommand();
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 
         // reinforce
-        gameController.enterReinforcement();
-
         for (int index = 0; index < 3; index++) {
             player = gameController.getCurrentPlayer();
 
             while (player.getUnplacedArmies() > 0) {
-                String[] reinforceArgs = new String[] { player.getConqueredCountries().get(0).getName(), "1" };
-                gameController.handleReinforceCommand(reinforceArgs);
+                App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
+                                                    + " " + player.getConqueredCountries().get(0).getName()
+                                                    + " 1"));
             }
         }
 
         // fortify
         for (int index = 0; index < 3; index++) {
-            fortify();
+            GamePlayActionsTestHelper.multipleFortify(gameController, 3);
         }
     }
 }

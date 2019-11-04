@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameBoardMap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.singleton</a> &gt; <span class="el_source">GameBoardMap.java</span></div><h1>GameBoardMap.java</h1><pre class="source lang-java linenums">package soen6441riskgame.singleton;
+
+import java.util.ArrayList;
+
+import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.views.PlayersWorldDominationView;
+
+<span class="fc" id="L10">public class GameBoardMap implements Resettable {</span>
+<span class="fc" id="L11">    private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();</span>
+    private String mapName;
+<span class="fc" id="L13">    private ArrayList&lt;Continent&gt; continents = new ArrayList&lt;Continent&gt;();</span>
+<span class="fc" id="L14">    private ArrayList&lt;Country&gt; countries = new ArrayList&lt;Country&gt;();</span>
+    private int[][] borders;
+
+    public PlayersWorldDominationView getPlayersWorldDominationView(){
+<span class="fc" id="L18">        return playersWorldDominationView;</span>
+    }
+
+    public int[][] getBorders() {
+<span class="fc" id="L22">        return borders;</span>
+    }
+
+    public void setBorders(int[][] graph) {
+<span class="fc" id="L26">        this.borders = graph;</span>
+<span class="fc" id="L27">    }</span>
+
+    public ArrayList&lt;Continent&gt; getContinents() {
+<span class="fc" id="L30">        return continents;</span>
+    }
+
+    public void setContinents(ArrayList&lt;Continent&gt; continents) {
+<span class="nc" id="L34">        this.continents = continents;</span>
+<span class="nc" id="L35">    }</span>
+
+    public String getMapName() {
+<span class="nc" id="L38">        return mapName;</span>
+    }
+
+    public void setMapName(String mapName) {
+<span class="fc" id="L42">        this.mapName = mapName;</span>
+<span class="fc" id="L43">    }</span>
+
+    public ArrayList&lt;Country&gt; getCountries() {
+<span class="fc" id="L46">        return countries;</span>
+    }
+
+    public void setCountries(ArrayList&lt;Country&gt; countries) {
+<span class="nc" id="L50">        this.countries = countries;</span>
+<span class="nc" id="L51">    }</span>
+
+    @Override
+    public void reset() {
+<span class="fc" id="L55">        mapName = &quot;&quot;;</span>
+<span class="fc" id="L56">        continents = new ArrayList&lt;Continent&gt;();</span>
+<span class="fc" id="L57">        countries = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L58">        borders = new int[1][1];</span>
+
+<span class="fc" id="L60">    }</span>
+
+    public void showContinents() {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (Continent continent : continents) {</span>
+<span class="fc" id="L64">            continent.view();</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc" id="L66">    }</span>
+
+    public void showCountries() {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (Country country : countries) {</span>
+<span class="nc" id="L70">            country.view();</span>
+<span class="nc" id="L71">        }</span>
+<span class="nc" id="L72">    }</span>
+
+    /**
+     * get country object from name
+     *
+     * @param countryName
+     * @return null if country name is not existed in map
+     */
+    public Country getCountryFromName(String countryName) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (Country country : getCountries()) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (country.getName().equals(countryName)) {</span>
+<span class="fc" id="L83">                return country;</span>
+            }
+<span class="fc" id="L85">        }</span>
+
+<span class="fc" id="L87">        return null;</span>
+    }
+
+    /**
+     * Print the current border in matrix style
+     */
+    public void printBorders() {
+<span class="fc" id="L94">        int[][] borders = getBorders();</span>
+<span class="fc" id="L95">        ArrayList&lt;Country&gt; countries = getCountries();</span>
+
+<span class="fc" id="L97">        String[] countryNames = new String[countries.size()];</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (int index = 0; index &lt; countries.size(); index++) {</span>
+<span class="fc" id="L100">            countryNames[index] = countries.get(index).getName();</span>
+        }
+
+<span class="fc" id="L103">        ConsolePrinter.print2dArray(borders, countryNames);</span>
+<span class="fc" id="L104">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

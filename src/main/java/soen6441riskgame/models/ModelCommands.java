@@ -3,8 +3,8 @@ package soen6441riskgame.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import soen6441riskgame.commands.MapEditorCommands;
-import soen6441riskgame.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
+import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.utils.Parser;
 
 /**

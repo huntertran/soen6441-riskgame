@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package soen6441riskgame;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
+import soen6441riskgame.controllers.GameController;
+import soen6441riskgame.controllers.MapController;
+import soen6441riskgame.models.ModelCommands;
+import soen6441riskgame.models.ModelCommandsPair;
+
+public final class App {
+    private App() {
+    }
+
+    public static void main(String[] args) {
+<span class="nc" id="L18">        System.out.println(&quot;SOEN 6441 - Risk Domination game&quot;);</span>
+
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (args.length == 0) {</span>
+<span class="nc" id="L21">            runFromBeginning();</span>
+        } else {
+<span class="nc" id="L23">            String commands = String.join(&quot; &quot;, args);</span>
+<span class="nc" id="L24">            ModelCommands cmds = new ModelCommands(commands);</span>
+<span class="nc" id="L25">            jumpToCommand(cmds);</span>
+        }
+<span class="nc" id="L27">    }</span>
+
+    public static void jumpToCommand(ModelCommands args) {
+<span class="fc" id="L30">        String command = args.cmd;</span>
+
+<span class="fc" id="L32">        MapController mapController = new MapController();</span>
+<span class="fc" id="L33">        GameController gameController = new GameController();</span>
+        try {
+<span class="pc bpc" id="L35" title="11 of 19 branches missed.">            switch (command) {</span>
+                case MapEditorCommands.EDITCONTINENT: {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
+<span class="nc" id="L38">                        mapController.editContinent(sub.toStringArray());</span>
+<span class="nc" id="L39">                    }</span>
+<span class="nc" id="L40">                    break;</span>
+                }
+                case MapEditorCommands.EDITCOUNTRY: {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
+<span class="nc" id="L44">                        mapController.editCountry(sub.toStringArray());</span>
+<span class="nc" id="L45">                    }</span>
+<span class="nc" id="L46">                    break;</span>
+                }
+                case MapEditorCommands.EDITNEIGHBOR: {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
+<span class="nc" id="L50">                        mapController.editNeighbor(sub.toStringArray());</span>
+<span class="nc" id="L51">                    }</span>
+<span class="nc" id="L52">                    break;</span>
+                }
+                case MapEditorCommands.SHOWMAP: {
+<span class="nc" id="L55">                    mapController.showMap();</span>
+<span class="nc" id="L56">                    break;</span>
+                }
+                case MapEditorCommands.SAVEMAP: {
+                    try {
+<span class="nc" id="L60">                        mapController.saveMap(args.regularCommands.get(0));</span>
+<span class="nc" id="L61">                    } catch (IOException e) {</span>
+<span class="nc" id="L62">                        System.out.println(&quot;Error: &quot; + e.getClass().getName());</span>
+<span class="nc" id="L63">                    }</span>
+<span class="nc" id="L64">                    break;</span>
+                }
+                case MapEditorCommands.EDITMAP: {
+                    try {
+<span class="nc" id="L68">                        mapController.editMap(args.regularCommands.get(0));</span>
+<span class="nc" id="L69">                    } catch (IOException e) {</span>
+<span class="nc" id="L70">                        System.out.println(&quot;Error: &quot; + e.getClass().getName());</span>
+<span class="nc" id="L71">                    }</span>
+<span class="nc" id="L72">                    break;</span>
+                }
+                case MapEditorCommands.VALIDATEMAP: {
+<span class="fc" id="L75">                    mapController.validateMap();</span>
+<span class="fc" id="L76">                    break;</span>
+                }
+                case MapEditorCommands.LOADMAP: {
+                    try {
+<span class="fc" id="L80">                        mapController.loadMap(args.regularCommands.get(0));</span>
+
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">                        if (mapController.isMapValid()) {</span>
+<span class="fc" id="L83">                            mapController.showMap();</span>
+                        }
+<span class="nc" id="L85">                    } catch (IOException e) {</span>
+<span class="nc" id="L86">                        System.out.println(&quot;Error: &quot; + e.getClass().getName());</span>
+<span class="fc" id="L87">                    }</span>
+
+<span class="nc" id="L89">                    break;</span>
+                }
+                case GameCommands.GAMEPLAYER: {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
+<span class="fc" id="L93">                        gameController.handlePlayerAddAndRemoveCommand(sub.toStringArray());</span>
+<span class="fc" id="L94">                    }</span>
+<span class="fc" id="L95">                    break;</span>
+                }
+                case GameCommands.POPULATECOUNTRIES: {
+<span class="fc" id="L98">                    gameController.populateCountries();</span>
+<span class="fc" id="L99">                    gameController.initPlayersUnplacedArmies();</span>
+<span class="fc" id="L100">                    break;</span>
+                }
+                case GameCommands.PLACEARMY: {
+                    // gameController.startRoundRobinPlayers();
+<span class="fc" id="L104">                    gameController.handlePlaceArmyCommand(args.regularCommands.get(0));</span>
+<span class="fc" id="L105">                    break;</span>
+                }
+                case GameCommands.PLACEALL: {
+<span class="fc" id="L108">                    gameController.handlePlaceAllCommand();</span>
+<span class="fc" id="L109">                    break;</span>
+                }
+                case GameCommands.REINFORCE: {
+<span class="fc" id="L112">                    boolean isReinforcementEntered = gameController.enterReinforcement();</span>
+
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">                    if (isReinforcementEntered) {</span>
+<span class="fc" id="L115">                        gameController.handleReinforceCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
+                    }
+
+                    break;
+                }
+                case GameCommands.ATTACK: {
+<span class="nc" id="L121">                    boolean isAttackEntered = gameController.enterAttackPhase();</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">                    if (isAttackEntered) {</span>
+<span class="nc" id="L124">                        gameController.handleAttackCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
+                    }
+
+                    break;
+                }
+                case GameCommands.DEFEND: {
+<span class="nc" id="L130">                    boolean isAttackEntered = gameController.enterAttackPhase();</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                    if (isAttackEntered) {</span>
+<span class="nc" id="L133">                        gameController.handleDefendCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
+                    }
+
+                    break;
+                }
+                case GameCommands.ATTACKMOVE: {
+<span class="nc" id="L139">                    boolean isAttackEntered = gameController.enterAttackPhase();</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                    if (isAttackEntered) {</span>
+<span class="nc" id="L142">                        gameController.handleAttackMoveCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
+                    }
+
+                    break;
+                } 
+                case GameCommands.FORTIFY: {
+<span class="fc" id="L148">                    gameController.handleFortifyCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
+<span class="fc" id="L149">                    break;</span>
+                }
+                case GameCommands.CURRENTPLAYER: {
+<span class="nc" id="L152">                    gameController.showCurrentPlayer();</span>
+<span class="nc" id="L153">                    break;</span>
+                }
+                default: {
+<span class="nc" id="L156">                    System.out.println(&quot;Command not exist!&quot;);</span>
+                    break;
+                }
+            }
+        }
+<span class="nc" id="L161">        catch(Exception e) {</span>
+<span class="nc" id="L162">            System.out.println(e);</span>
+<span class="fc" id="L163">        }</span>
+<span class="fc" id="L164">    }</span>
+
+
+    public static void runFromBeginning() {
+<span class="nc" id="L168">        Scanner scanner = new Scanner(System.in);</span>
+
+<span class="nc" id="L170">        System.out.println(&quot;GAME START&quot;);</span>
+<span class="nc" id="L171">        System.out.print(&quot;Enter your action: &quot;);</span>
+<span class="nc" id="L172">        String command = scanner.nextLine();</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        while (!command.equals(GameCommands.EXIT)) {</span>
+<span class="nc" id="L175">            ModelCommands cmds = new ModelCommands(command);</span>
+<span class="nc" id="L176">            jumpToCommand(cmds);</span>
+<span class="nc" id="L177">            System.out.print(&quot;Enter your action: &quot;);</span>
+<span class="nc" id="L178">            command = scanner.nextLine();</span>
+<span class="nc" id="L179">        }</span>
+<span class="nc" id="L180">        scanner.close();</span>
+<span class="nc" id="L181">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

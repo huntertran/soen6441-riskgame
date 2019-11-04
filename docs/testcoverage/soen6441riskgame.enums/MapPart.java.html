@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapPart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.enums</a> &gt; <span class="el_source">MapPart.java</span></div><h1>MapPart.java</h1><pre class="source lang-java linenums">package soen6441riskgame.enums;
+
+/**
+ * enums for parts of the map
+ */
+<span class="fc" id="L6">public enum MapPart {</span>
+<span class="fc" id="L7">                     NAME(&quot;name&quot;),</span>
+<span class="fc" id="L8">                     FILES(&quot;[files]&quot;),</span>
+<span class="fc" id="L9">                     CONTINENTS(&quot;[continents]&quot;),</span>
+<span class="fc" id="L10">                     COUNTRIES(&quot;[countries]&quot;),</span>
+<span class="fc" id="L11">                     BORDERS(&quot;[borders]&quot;),</span>
+<span class="fc" id="L12">                     NONE(&quot;&quot;);</span>
+
+    private String part;
+
+<span class="fc" id="L16">    MapPart(final String part) {</span>
+<span class="fc" id="L17">        this.part = part;</span>
+<span class="fc" id="L18">    }</span>
+
+    /**
+     * get the part in string
+     *
+     * @return part in string
+     */
+    public String getPart() {
+<span class="fc" id="L26">        return part;</span>
+    }
+
+    /**
+     * convert the string part to enum
+     *
+     * @param part part in string
+     * @return part in enum
+     */
+    public static MapPart fromString(String part) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (MapPart mapPart : values()) {</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (mapPart.getPart().equals(part)) {</span>
+<span class="fc" id="L38">                return mapPart;</span>
+            }
+        }
+
+<span class="fc" id="L42">        return NONE;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

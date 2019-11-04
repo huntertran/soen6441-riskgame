@@ -1,23 +1,29 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Observable;
 
-import soen6441riskgame.controllers.GameController;
+import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Hold player data Each player is a node in a linked list
  */
-public class Player {
+public class Player extends Observable {
     private String name;
-    private int armies;
     private int unplacedArmies;
     private boolean isPlaying = false;
-    private boolean isLost = false;
     private Player nextPlayer;
     private Player previousPlayer;
     private GamePhase currentPhase;
+    private ArrayList<Card> holdingCards = new ArrayList<Card>();
+    private ArrayList<String> currentPhaseActions = new ArrayList<String>();
+    private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
+    private static final int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN = 3;
+    private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
 
     public Player(String name) {
         this.name = name;
@@ -28,8 +34,81 @@ public class Player {
         return currentPhase;
     }
 
-    public void setCurrentPhase(GamePhase currentPhase) {
-        this.currentPhase = currentPhase;
+    public void setCurrentPhase(GamePhase newPhase) {
+        if (currentPhase != newPhase) {
+
+            boolean isChangePhaseAllowed = true;
+
+            if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {
+                isChangePhaseAllowed = false;
+
+                if (newPhase != GamePhase.WAITING_TO_TURN
+                    || currentPhase != GamePhase.FORTIFICATION) {
+                    isChangePhaseAllowed = false;
+                }
+            }
+
+            if (isChangePhaseAllowed) {
+                currentPhase = newPhase;
+                currentPhaseActions.clear();
+                setChanged();
+                notifyObservers(ChangedProperty.GAME_PHASE);
+            } else {
+                ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
+                                           getName(),
+                                           currentPhase.toString(),
+                                           newPhase.toString());
+            }
+        }
+    }
+
+    public void addCard(Card card) {
+        if (holdingCards.size() >= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {
+            ConsolePrinter.printFormat("You have more than %d cards. Must exchange before attacking.",
+                                       MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);
+        }
+
+        holdingCards.add(card);
+        setChanged();
+        notifyObservers(ChangedProperty.CARD);
+    }
+
+    public ArrayList<Card> getHoldingCards() {
+        return holdingCards;
+    }
+
+    /**
+     * get the player's card in specific position
+     *
+     * @param position start with 1
+     * @return null if position not exist
+     */
+    public Card getHoldingCard(int position) {
+        if (position > holdingCards.size() || position <= 0) {
+            ConsolePrinter.printFormat("You only have %d card", holdingCards.size());
+            return null;
+        } else {
+            return holdingCards.get(position - 1);
+        }
+    }
+
+    public void removeExchangedCards() {
+        for (Iterator<Card> cardList = holdingCards.listIterator(); cardList.hasNext();) {
+            Card card = cardList.next();
+            if (card.isExchanged()) {
+                cardList.remove();
+            }
+        }
+    }
+
+    public ArrayList<String> getCurrentPhaseActions() {
+        return currentPhaseActions;
+    }
+
+    public void addCurrentPhaseAction(String action) {
+        currentPhaseActions.add(action);
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -69,12 +148,31 @@ public class Player {
         return name;
     }
 
-    public boolean isLost() {
-        return isLost;
+    public int getTotalArmies() {
+        int totalArmies = 0;
+
+        ArrayList<Country> conqueredCountries = getConqueredCountries();
+        for (Country country : conqueredCountries) {
+            totalArmies += country.getArmyAmount();
+        }
+
+        totalArmies += getUnplacedArmies();
+
+        return totalArmies;
     }
 
-    public void setLost(boolean isLost) {
-        this.isLost = isLost;
+    public ArrayList<Continent> getConqueredContinents() {
+        ArrayList<Continent> conquered = new ArrayList<>();
+
+        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
+            if (continent != null) {
+                if (this.equals(continent.getConquerer())) {
+                    conquered.add(continent);
+                }
+            }
+        }
+
+        return conquered;
     }
 
     /**
@@ -86,8 +184,10 @@ public class Player {
         ArrayList<Country> conquered = new ArrayList<>();
 
         for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {
-            if (country.getConquerer().equals(this)) {
-                conquered.add(country);
+            if (country != null) {
+                if (this.equals(country.getConquerer())) {
+                    conquered.add(country);
+                }
             }
         }
 
@@ -110,37 +210,23 @@ public class Player {
         this.unplacedArmies = unplacedArmies;
     }
 
-    public int getArmies() {
-        return armies;
-    }
-
-    public void setArmies(int armies) {
-        this.armies = armies;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     /**
-     * REINFORCEMENT PHASE get the number of armies player will get for
-     * reinforcement phase for all the country player have.
+     * REINFORCEMENT PHASE get the number of armies player will get for reinforcement phase for all the
+     * country player have.
      *
-     * @return the number of armies. Minimum number of armies are 3
+     * @return the number of armies. Minimum number of armies are #{@value #INIT_ARMY_DIVIDE_FRACTION}
      */
-    public int getArmiesFromAllConqueredCountries() {
+    private int getArmiesFromAllConqueredCountries() {
         ArrayList<Country> conqueredCountries = getConqueredCountries();
-        return Math.round(conqueredCountries.size() / 3);
+        return Math.round(conqueredCountries.size() / INIT_ARMY_DIVIDE_FRACTION);
     }
 
     /**
-     * REINFORCEMENT PHASE get the number of armies player will have for the
-     * conquered continent
+     * REINFORCEMENT PHASE get the number of armies player will have for the conquered continent
      *
-     * @param currentPlayer current player
      * @return the number of armies. 0 if user don't own any continent.
      */
-    public int getArmiesFromConqueredContinents() {
+    private int getArmiesFromConqueredContinents() {
         int armiesFromConqueredContinents = 0;
 
         for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
@@ -153,17 +239,23 @@ public class Player {
     }
 
     /**
-     * REINFORCEMENT PHASE calculate the number of armies a player will have for his
-     * reinforcement phase
-     *
-     * @param gameController
+     * REINFORCEMENT PHASE calculate the number of armies a player will have for his reinforcement phase
      */
-    public void calculateReinforcementArmies(GameController gameController) {
+    public void calculateReinforcementArmies() {
+        if (this.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+            ConsolePrinter.printFormat("Cannot get new army for player %s on $%s phase",
+                                       this.getName(),
+                                       this.getCurrentPhase().toString());
+            return;
+        }
+
         int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries();
         int armiesFromConqueredContinents = getArmiesFromConqueredContinents();
-        if (armiesFromAllConqueredCountries < 3) {
-            armiesFromAllConqueredCountries = 3;
+
+        if (armiesFromAllConqueredCountries < LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN) {
+            armiesFromAllConqueredCountries = LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN;
         }
+
         int newUnplacedArmies = getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;
         setUnplacedArmies(newUnplacedArmies);
     }

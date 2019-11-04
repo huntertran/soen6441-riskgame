@@ -3,9 +3,11 @@ package soen6441riskgame.singleton;
 import java.util.ArrayList;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.views.PhaseView;
 
 public class GameBoardPlayer implements Resettable {
     private ArrayList<Player> players = new ArrayList<Player>();
+    private PhaseView phaseView = new PhaseView();
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -48,6 +50,7 @@ public class GameBoardPlayer implements Resettable {
             Player nextPlayer = players.get(0);
             player.setPreviousPlayer(previousPlayer);
             player.setNextPlayer(nextPlayer);
+            player.addObserver(phaseView);
             ConsolePrinter.printFormat("Player %s added", name);
         }
     }

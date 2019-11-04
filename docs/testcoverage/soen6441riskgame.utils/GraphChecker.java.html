@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphChecker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils</a> &gt; <span class="el_source">GraphChecker.java</span></div><h1>GraphChecker.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+import soen6441riskgame.models.Country;
+
+<span class="nc" id="L9">public class GraphChecker {</span>
+    public static boolean isCountriesConnected(ArrayList&lt;Country&gt; countries) {
+<span class="fc bfc" id="L11" title="All 2 branches covered.">        if (countries.size() &lt; 1) {</span>
+<span class="fc" id="L12">            return false;</span>
+        }
+
+        // using depth first search algorithm
+        // start node = first node in list
+<span class="fc" id="L17">        Stack&lt;Country&gt; stack = new Stack&lt;&gt;();</span>
+<span class="fc" id="L18">        ArrayList&lt;Country&gt; visited = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L20">        stack.add(countries.get(0));</span>
+<span class="fc" id="L21">        visited.add(countries.get(0));</span>
+
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        while (!stack.isEmpty()) {</span>
+<span class="fc" id="L24">            Country element = stack.pop();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">            if (!visited.contains(element)) {</span>
+<span class="fc" id="L26">                visited.add(element);</span>
+            }
+
+<span class="fc" id="L29">            List&lt;Country&gt; neighbors = element.getNeighbors();</span>
+<span class="fc" id="L30">            List&lt;Country&gt; scopedNeighbors = new ArrayList&lt;Country&gt;();</span>
+
+            // remove any countries that not in the list of countries in param
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            for (Country neighbor : neighbors) {</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">                if (countries.contains(neighbor)) {</span>
+<span class="fc" id="L35">                    scopedNeighbors.add(neighbor);</span>
+                }
+<span class="fc" id="L37">            }</span>
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (int i = 0; i &lt; scopedNeighbors.size(); i++) {</span>
+<span class="fc" id="L40">                Country neighbor = scopedNeighbors.get(i);</span>
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">                if (neighbor != null &amp;&amp; !visited.contains(neighbor)) {</span>
+<span class="fc" id="L42">                    stack.add(neighbor);</span>
+                }
+            }
+<span class="fc" id="L45">        }</span>
+
+        // compare visited and countries list
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (Country country : countries) {</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (!visited.contains(country)) {</span>
+<span class="fc" id="L50">                return false;</span>
+            }
+<span class="fc" id="L52">        }</span>
+
+<span class="fc" id="L54">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

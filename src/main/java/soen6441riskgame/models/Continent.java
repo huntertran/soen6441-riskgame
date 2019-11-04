@@ -1,16 +1,18 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
-
+import java.util.Observable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.utils.GraphChecker;
 
 /**
  * Hold continent data
  */
-public class Continent implements Viewable {
+public class Continent extends Observable implements Viewable {
     private String name;
     private int army;
+    // private Player oldConquerer;
     private ArrayList<Country> countries = new ArrayList<Country>();
 
     public Continent(String name, int army) {
@@ -72,6 +74,11 @@ public class Continent implements Viewable {
         return countryConquerer;
     }
 
+    public boolean isContinentConnected() {
+        ArrayList<Country> countries = getCountries();
+        return GraphChecker.isCountriesConnected(countries);
+    }
+
     public void view(int indent) {
         this.viewWithoutCountry();
 
@@ -87,6 +94,10 @@ public class Continent implements Viewable {
             printString += "\t| Conquerer: %s";
         }
 
-        ConsolePrinter.printFormat(printString, this.getName(), this.getOrder(), this.getArmy(), this.getConquerer());
+        ConsolePrinter.printFormat(printString,
+                                   this.getName(),
+                                   this.getOrder(),
+                                   this.getArmy(),
+                                   this.getConquerer());
     }
 }

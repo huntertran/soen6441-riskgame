@@ -4,8 +4,12 @@ package soen6441riskgame.enums;
  * enums for parts of the map
  */
 public enum MapPart {
-    NAME("name"), FILES("[files]"), CONTINENTS("[continents]"), COUNTRIES("[countries]"), BORDERS("[borders]"),
-    NONE("");
+                     NAME("name"),
+                     FILES("[files]"),
+                     CONTINENTS("[continents]"),
+                     COUNTRIES("[countries]"),
+                     BORDERS("[borders]"),
+                     NONE("");
 
     private String part;
 
@@ -15,6 +19,7 @@ public enum MapPart {
 
     /**
      * get the part in string
+     *
      * @return part in string
      */
     public String getPart() {
@@ -23,6 +28,7 @@ public enum MapPart {
 
     /**
      * convert the string part to enum
+     *
      * @param part part in string
      * @return part in enum
      */

@@ -1,0 +1,27 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+soen6441riskgame,soen6441riskgame.models.commands,GameCommands,3,0,0,0,1,0,1,0,1,0
+soen6441riskgame,soen6441riskgame.models.commands,MapEditorCommands,3,0,0,0,1,0,1,0,1,0
+soen6441riskgame,soen6441riskgame.views,PlayersWorldDominationView,0,86,0,4,0,16,0,4,0,2
+soen6441riskgame,soen6441riskgame.views,PhaseView,0,55,1,5,0,11,1,4,0,2
+soen6441riskgame,soen6441riskgame.singleton,GameBoard,0,36,0,0,0,13,0,7,0,7
+soen6441riskgame,soen6441riskgame.singleton,GameBoardMap,26,123,2,8,9,33,5,15,4,11
+soen6441riskgame,soen6441riskgame.singleton,GameBoardPlayer,12,136,2,8,3,35,3,9,1,6
+soen6441riskgame,soen6441riskgame.controllers,GameController,700,865,93,95,156,219,73,50,5,23
+soen6441riskgame,soen6441riskgame.controllers,GameController.new Object() {...},3,23,0,0,0,1,0,1,0,1
+soen6441riskgame,soen6441riskgame.controllers,MapController.new Object() {...},9,63,0,0,0,2,0,1,0,1
+soen6441riskgame,soen6441riskgame.controllers,MapController,118,1292,30,122,31,273,29,89,1,36
+soen6441riskgame,soen6441riskgame.models,ModelCommandsPair,29,49,2,2,6,13,3,2,1,2
+soen6441riskgame,soen6441riskgame.models,ModelCommands,302,237,42,30,56,42,27,10,0,1
+soen6441riskgame,soen6441riskgame.models,Player,2,238,3,23,1,70,3,30,0,20
+soen6441riskgame,soen6441riskgame.models,Continent,13,135,1,11,3,38,2,16,1,11
+soen6441riskgame,soen6441riskgame.models,Coordinate,0,23,0,0,0,10,0,5,0,5
+soen6441riskgame,soen6441riskgame.models,Country,28,351,5,19,4,94,5,29,0,22
+soen6441riskgame,soen6441riskgame.models,Viewable,0,15,0,2,0,5,0,3,0,2
+soen6441riskgame,soen6441riskgame.enums,CommonCommandArgs,2,78,1,3,1,9,1,5,0,4
+soen6441riskgame,soen6441riskgame.enums,MapPart,0,106,0,4,0,15,0,6,0,4
+soen6441riskgame,soen6441riskgame.enums,Card,34,0,0,0,4,0,1,0,1,0
+soen6441riskgame,soen6441riskgame.enums,GamePhase,0,64,0,0,0,7,0,1,0,1
+soen6441riskgame,soen6441riskgame.utils,ConsolePrinter,33,91,6,8,5,14,5,5,1,2
+soen6441riskgame,soen6441riskgame.utils,Parser,45,23,9,3,18,6,8,2,2,2
+soen6441riskgame,soen6441riskgame.utils,GraphChecker,3,110,1,19,1,26,2,10,1,1
+soen6441riskgame,soen6441riskgame,App,225,97,29,12,60,28,23,9,2,1

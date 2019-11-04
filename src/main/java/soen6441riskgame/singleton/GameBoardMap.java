@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.views.PlayersWorldDominationView;
 
 public class GameBoardMap implements Resettable {
+    private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();
     private String mapName;
     private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
     private int[][] borders;
+
+    public PlayersWorldDominationView getPlayersWorldDominationView(){
+        return playersWorldDominationView;
+    }
 
     public int[][] getBorders() {
         return borders;
