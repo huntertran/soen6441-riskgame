@@ -3,6 +3,15 @@ package soen6441riskgame.models;
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.utils.ConsolePrinter;
 
+
+/**
+* The Card Class.
+* This class initializes the card type according to the Excahange Card requirement
+* 
+* 
+*
+*/
+
 public class Card implements Viewable {
     private CardType cardType;
     private boolean isExchanged = false;
