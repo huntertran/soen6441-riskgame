@@ -2,7 +2,6 @@ package soen6441riskgame.models;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.*;
 import org.junit.jupiter.api.Test;
 
 
