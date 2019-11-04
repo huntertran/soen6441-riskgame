@@ -529,7 +529,7 @@ public class GameController {
                                                 + defendingCountry.getContinent().getArmy());
             }
 
-            if (checkHasGameEnded(attackingCountry.getConquerer())) {
+            if (isGameEnded(attackingCountry.getConquerer())) {
                 setEndOfGamePhase();
             } else {
                 // move armies
@@ -546,7 +546,7 @@ public class GameController {
                 defender_numDice = 0;
             }
         }
-        if (!furtherAttackPossible() && !checkHasGameEnded(attackingCountry.getConquerer())) {
+        if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer())) {
             endAttackPhase();
         }
     }
@@ -569,18 +569,18 @@ public class GameController {
         }
     }
 
-    private boolean checkHasGameEnded(Player p) {
+    private boolean isGameEnded(Player player) {
         // check whether this player has won the game
         Player currentPlayer = getCurrentPlayer(false);
-        boolean flag = true;
+        boolean gameEnded = true;
         ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
         for (Country country : countries) {
             if (country.getConquerer() != currentPlayer) {
-                flag = false;
+                gameEnded = false;
             }
         }
 
-        return flag;
+        return gameEnded;
     }
 
     // Method for getting the maximum value and second max value
