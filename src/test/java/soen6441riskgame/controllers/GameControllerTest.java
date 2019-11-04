@@ -49,10 +49,7 @@ public class GameControllerTest {
         mapController.resetMap();
     }
 
-    private ArrayList<Player> addPlayersToGame() {
-        App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add hunter -add ben -add tj"));
-        return GameBoard.getInstance().getGameBoardPlayer().getPlayers();
-    }
+
 
     @Test
     public void addPlayerTest() {
@@ -116,7 +113,7 @@ public class GameControllerTest {
     @Test
     public void handlePlayerRemoveCommandTest() {
         // Setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
 
         // Action
         App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -remove hunter"));
@@ -142,7 +139,7 @@ public class GameControllerTest {
     @Test
     public void populateCountriesTest() {
         // Setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add roger"));
 
         // Action
@@ -166,7 +163,7 @@ public class GameControllerTest {
     @Test
     public void initPlayersUnplacedArmiesTest() {
         // Setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add roger"));
 
         gameController.initPlayersUnplacedArmies();
@@ -193,7 +190,7 @@ public class GameControllerTest {
     @Test
     public void enterAttackPhaseTest() {
         // Setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.handleReinforceCommand(new String[] { "Spain", "2" });
@@ -209,7 +206,7 @@ public class GameControllerTest {
     @Test
     public void handleAttackCommandTest() {
         // Setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.handleReinforceCommand(new String[] { "Spain", "2" });
@@ -231,7 +228,7 @@ public class GameControllerTest {
     @Test
     public void endAttackPhaseTest() {
         // Setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
         gameController.enterAttackPhase();
@@ -247,7 +244,7 @@ public class GameControllerTest {
     public void handlePlaceArmyTest() {
         // Setup
 
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         // get first player
         Player player = gameController.getCurrentPlayer();
@@ -266,7 +263,7 @@ public class GameControllerTest {
     public void handlePlaceAllTest() {
         // Setup
 
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         // get first player
         Player player = gameController.getCurrentPlayer();
@@ -284,7 +281,7 @@ public class GameControllerTest {
     @Test
     public void getCurrentPlayerTest() {
         // setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
 
         // action: get first player, should be hunter
@@ -297,7 +294,7 @@ public class GameControllerTest {
     @Test
     public void enterReinforcementTest() {
         // setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 
@@ -312,7 +309,7 @@ public class GameControllerTest {
     @ValueSource(ints = { 100, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
     public void handleReinforceCommandTest(int armyAmount) {
         // setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 
@@ -340,7 +337,7 @@ public class GameControllerTest {
     @Test
     public void startRoundRobinPlayersTest() {
         // setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 
@@ -354,7 +351,7 @@ public class GameControllerTest {
     @Test
     public void turnToNextPlayerTest() {
         // setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 
@@ -369,7 +366,7 @@ public class GameControllerTest {
     @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 100 })
     public void handleFortifyCommandTest(int armiesToMove) {
         // setup
-        addPlayersToGame();
+        GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
 

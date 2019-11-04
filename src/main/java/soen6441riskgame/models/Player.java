@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 
-import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
@@ -23,6 +22,8 @@ public class Player extends Observable {
     private ArrayList<Card> holdingCards = new ArrayList<Card>();
     private ArrayList<String> currentPhaseActions = new ArrayList<String>();
     private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
+    private static final int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN = 3;
+    private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
 
     public Player(String name) {
         this.name = name;
@@ -213,11 +214,11 @@ public class Player extends Observable {
      * REINFORCEMENT PHASE get the number of armies player will get for reinforcement phase for all the
      * country player have.
      *
-     * @return the number of armies. Minimum number of armies are 3
+     * @return the number of armies. Minimum number of armies are #{@value #INIT_ARMY_DIVIDE_FRACTION}
      */
-    public int getArmiesFromAllConqueredCountries() {
+    private int getArmiesFromAllConqueredCountries() {
         ArrayList<Country> conqueredCountries = getConqueredCountries();
-        return Math.round(conqueredCountries.size() / 3);
+        return Math.round(conqueredCountries.size() / INIT_ARMY_DIVIDE_FRACTION);
     }
 
     /**
@@ -225,7 +226,7 @@ public class Player extends Observable {
      *
      * @return the number of armies. 0 if user don't own any continent.
      */
-    public int getArmiesFromConqueredContinents() {
+    private int getArmiesFromConqueredContinents() {
         int armiesFromConqueredContinents = 0;
 
         for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
@@ -239,15 +240,22 @@ public class Player extends Observable {
 
     /**
      * REINFORCEMENT PHASE calculate the number of armies a player will have for his reinforcement phase
-     *
-     * @param gameController
      */
-    public void calculateReinforcementArmies(GameController gameController) {
+    public void calculateReinforcementArmies() {
+        if (this.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+            ConsolePrinter.printFormat("Cannot get new army for player %s on $%s phase",
+                                       this.getName(),
+                                       this.getCurrentPhase().toString());
+            return;
+        }
+
         int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries();
         int armiesFromConqueredContinents = getArmiesFromConqueredContinents();
-        if (armiesFromAllConqueredCountries < 3) {
-            armiesFromAllConqueredCountries = 3;
+
+        if (armiesFromAllConqueredCountries < LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN) {
+            armiesFromAllConqueredCountries = LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN;
         }
+
         int newUnplacedArmies = getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;
         setUnplacedArmies(newUnplacedArmies);
     }

@@ -251,8 +251,8 @@ public class GameController {
         Player currentPlayer = getCurrentPlayer(true);
 
         if (currentPlayer.getCurrentPhase() == GamePhase.WAITING_TO_TURN) {
-            currentPlayer.calculateReinforcementArmies(this);
             currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
+            currentPlayer.calculateReinforcementArmies();
         } else if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
             ConsolePrinter.printFormat("Player %s cannot reinforce armies in %s phase",
                                        currentPlayer.getName(),
@@ -697,6 +697,7 @@ public class GameController {
             return;
         }
 
+        // TODO: exchange a set of 3 cards as RISK rule
         for (String num : args) {
             if (Parser.checkValidInputNumber(num)) {
                 int cardPosition = Parser.parseWithDefault(num, 0);
