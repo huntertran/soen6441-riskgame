@@ -8,6 +8,7 @@ import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.views.ExchangeCardView;
 
 /**
  * Hold player data Each player is a node in a linked list
@@ -53,6 +54,12 @@ public class Player extends Observable {
                 currentPhaseActions.clear();
                 setChanged();
                 notifyObservers(ChangedProperty.GAME_PHASE);
+
+                if (newPhase == GamePhase.REINFORCEMENT) {
+                    this.addObserver(GameBoard.getInstance().getExchangeCardView());
+                } else {
+                    this.deleteObserver(GameBoard.getInstance().getExchangeCardView());
+                }
             } else {
                 ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
                                            getName(),

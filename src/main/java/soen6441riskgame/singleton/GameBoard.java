@@ -1,5 +1,7 @@
 package soen6441riskgame.singleton;
 
+import soen6441riskgame.views.ExchangeCardView;
+
 /**
  * Hold the game and map data
  */
@@ -9,9 +11,14 @@ public class GameBoard implements Resettable {
 
     private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();
     private GameBoardMap gameBoardMap = new GameBoardMap();
+    private ExchangeCardView exchangeCardView = new ExchangeCardView();
 
     public GameBoard() {
     };
+
+    public ExchangeCardView getExchangeCardView(){
+        return exchangeCardView;
+    }
 
     public GameBoardPlayer getGameBoardPlayer() {
         return gameBoardPlayer;
