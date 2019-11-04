@@ -10,10 +10,35 @@ import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.ModelCommandsPair;
 
+
+/**
+ * This is a main class to run the game.
+ *
+ *
+ *
+ */
+
+
+/**
+	 * This is a main method to run the game.
+	 * This function is used to enter the user input and call the functions to create or edit the map, start, load the game
+	 * and user can exit if he wants to exit the game.
+	 * This function also displays the error message to select valid user input.
+	 *
+	 * @param args the arguments
+	 */
+
 public final class App {
     private App() {
     }
 
+    
+    /**
+	 * This is the method for entering or initializing the main commands for game. 
+	 * This function is used to show the action entered and the user input to create or edit the map, start, load the game
+	 * 
+	 * @return userIntInput
+	 */
     public static void main(String[] args) {
         System.out.println("SOEN 6441 - Risk Domination game");
 
@@ -166,7 +191,9 @@ public final class App {
         }
     }
 
-
+    /**
+	 * This method is used to Enter an action to Start the game.
+	 */
     public static void runFromBeginning() {
         Scanner scanner = new Scanner(System.in);
 
