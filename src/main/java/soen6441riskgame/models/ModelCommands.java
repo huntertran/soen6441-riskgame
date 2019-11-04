@@ -52,8 +52,11 @@ public class ModelCommands {
                                     if(cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
                                         // check if number of army are in number format
                                         if(Parser.checkValidInputNumber(params[j+2])) {
-                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1], params[j+2].toLowerCase()));
+                                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j+1], params[j+2]));
                                             break;
+                                        }
+                                        else {
+                                            throw new NumberFormatException();
                                         }
                                     }
                                     // check if the command is GAMEPLAYER
@@ -89,7 +92,21 @@ public class ModelCommands {
                                         if(Parser.checkValidInputNumber(params[2])) {
                                             regularCommands.add(params[j]);
                                             regularCommands.add(params[j+1]);
+                                            regularCommands.add(params[j+2].replace("-", ""));
+                                            break;
+                                        }
+                                        // did not provide number
+                                        else {
+                                            throw new NumberFormatException();
+                                        }
+                                    }
+                                    else if(params.length == 4) {
+                                        // check if number of armies are in number format
+                                        if(Parser.checkValidInputNumber(params[2])) {
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
                                             regularCommands.add(params[j+2]);
+                                            regularCommands.add(params[j+3]);
                                             break;
                                         }
                                         // did not provide number
@@ -98,7 +115,7 @@ public class ModelCommands {
                                         }
                                     }
                                     // Player does not wish to fortify
-                                    else if (params[0].equalsIgnoreCase(GameCommands.NONE)) {
+                                    else if (params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
                                     }
@@ -113,16 +130,30 @@ public class ModelCommands {
                                         if((Parser.checkValidInputNumber(params[j])) 
                                         && (Parser.checkValidInputNumber(params[j+1]))
                                         && (Parser.checkValidInputNumber(params[j+2]))) {
-                                            regularCommands.add(params[j].toLowerCase());
-                                            regularCommands.add(params[j+1].toLowerCase());
-                                            regularCommands.add(params[j+2].toLowerCase());
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
+                                            regularCommands.add(params[j+2]);
                                             break;
                                         }
                                         else {
                                             throw new NumberFormatException();
                                         }
                                     }
-                                    else if(params[j].equalsIgnoreCase(GameCommands.NONE)) {
+                                    else if (params.length == 4) {
+                                        if((Parser.checkValidInputNumber(params[j])) 
+                                        && (Parser.checkValidInputNumber(params[j+1]))
+                                        && (Parser.checkValidInputNumber(params[j+2]))) {
+                                            regularCommands.add(params[j]);
+                                            regularCommands.add(params[j+1]);
+                                            regularCommands.add(params[j+2]);
+                                            regularCommands.add(params[j+3].toLowerCase());
+                                            break;
+                                        }
+                                        else {
+                                            throw new NumberFormatException();
+                                        }
+                                    }
+                                    else if(params[j].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;
                                     }
@@ -186,7 +217,7 @@ public class ModelCommands {
                                 }
                                 // No specialized command therefore add to regular commands
                                 else {
-                                    regularCommands.add(params[j].toLowerCase());
+                                    regularCommands.add(params[j]);
                                 }
                             }
                         }
