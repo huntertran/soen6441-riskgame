@@ -234,4 +234,15 @@ public class Country extends Observable implements Viewable {
 
         return false;
     }
+
+    public boolean isCountryBelongToPlayer(Player player) {
+        if (!getConquerer().equals(player)) {
+            ConsolePrinter.printFormat("The country %s is not belong to %s",
+                                       getName(),
+                                       player.getName());
+            return false;
+        }
+
+        return true;
+    }
 }
