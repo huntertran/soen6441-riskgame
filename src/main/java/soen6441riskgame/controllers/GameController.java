@@ -723,7 +723,7 @@ public class GameController {
     public void exchangeCard(String[] args) {
         Player currentPlayer = getCurrentPlayer();
         int numberOfTradedArmies = 0;
-        int tradeTime = 0;
+        int tradeTime = 1;
         for (int index = 0; index < args.length; index++) {
 
             CardSet cardSet = buildCardSet(new String[] {
