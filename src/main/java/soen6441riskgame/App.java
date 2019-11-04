@@ -117,6 +117,9 @@ public final class App {
 
                     break;
                 }
+                case GameCommands.EXCHANGECARDS:{
+                    gameController.exchangeCard(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                }
                 case GameCommands.ATTACK: {
                     boolean isAttackEntered = gameController.enterAttackPhase();
 
@@ -143,7 +146,7 @@ public final class App {
                     }
 
                     break;
-                } 
+                }
                 case GameCommands.FORTIFY: {
                     gameController.handleFortifyCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
                     break;

@@ -179,6 +179,7 @@ public final class MapController {
                 removeContinent(args[1]);
                 break;
             }
+            case INVALID:
             case NONE: {
                 System.out.println("Incorrect command");
                 break;
@@ -203,6 +204,7 @@ public final class MapController {
                 removeCountry(args[1]);
                 break;
             }
+            case INVALID:
             case NONE: {
                 System.out.println("Incorrect command");
                 break;
@@ -236,6 +238,7 @@ public final class MapController {
                 removeNeighbor(args[1], args[2]);
                 break;
             }
+            case INVALID:
             case NONE: {
                 System.out.println("Incorrect command");
                 break;

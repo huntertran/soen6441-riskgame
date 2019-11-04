@@ -1,9 +1,11 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 
 import soen6441riskgame.controllers.GameController;
+import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
@@ -18,7 +20,9 @@ public class Player extends Observable {
     private Player nextPlayer;
     private Player previousPlayer;
     private GamePhase currentPhase;
+    private ArrayList<Card> holdingCards = new ArrayList<Card>();
     private ArrayList<String> currentPhaseActions = new ArrayList<String>();
+    private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
 
     public Player(String name) {
         this.name = name;
@@ -47,12 +51,51 @@ public class Player extends Observable {
                 currentPhase = newPhase;
                 currentPhaseActions.clear();
                 setChanged();
-                notifyObservers();
+                notifyObservers(ChangedProperty.CARD);
             } else {
                 ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
                                            getName(),
                                            currentPhase.toString(),
                                            newPhase.toString());
+            }
+        }
+    }
+
+    public void addCard(Card card) {
+        if (holdingCards.size() >= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {
+            ConsolePrinter.printFormat("You have more than %d cards. Must exchange before attacking.",
+                                       MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);
+        }
+
+        holdingCards.add(card);
+        setChanged();
+        notifyObservers(ChangedProperty.CARD);
+    }
+
+    public ArrayList<Card> getHoldingCards() {
+        return holdingCards;
+    }
+
+    /**
+     * get the player's card in specific position
+     *
+     * @param position start with 1
+     * @return null if position not exist
+     */
+    public Card getHoldingCard(int position) {
+        if (position > holdingCards.size() || position <= 0) {
+            ConsolePrinter.printFormat("You only have %d card", holdingCards.size());
+            return null;
+        } else {
+            return holdingCards.get(position - 1);
+        }
+    }
+
+    public void removeExchangedCards() {
+        for (Iterator<Card> cardList = holdingCards.listIterator(); cardList.hasNext();) {
+            Card card = cardList.next();
+            if (card.isExchanged()) {
+                cardList.remove();
             }
         }
     }

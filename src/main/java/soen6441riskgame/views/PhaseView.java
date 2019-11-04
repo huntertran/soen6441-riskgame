@@ -3,6 +3,7 @@ package soen6441riskgame.views;
 import java.util.Observable;
 import java.util.Observer;
 
+import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -16,6 +17,11 @@ public class PhaseView implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        ChangedProperty property = (ChangedProperty) arg;
+        if (property != ChangedProperty.GAME_PHASE) {
+            return;
+        }
+
         Player player = (Player) o;
 
         if (player != null) {

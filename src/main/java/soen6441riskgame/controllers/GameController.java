@@ -5,6 +5,7 @@ import java.util.Random;
 
 import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.enums.GamePhase;
+import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
@@ -48,6 +49,7 @@ public class GameController {
                 GameBoard.getInstance().getGameBoardPlayer().removePlayer(args[1]);
                 break;
             }
+            case INVALID:
             case NONE: {
                 System.out.println("Incorrect command");
                 break;
@@ -684,5 +686,30 @@ public class GameController {
         Player currentPlayer = getCurrentPlayer(true);
         ConsolePrinter.printFormat("Congratulations, The player %s has won the game.", currentPlayer.getName());
         currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);
+    }
+
+    public void exchangeCard(String[] args) {
+        Player currentPlayer = getCurrentPlayer();
+
+        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+            ConsolePrinter.printFormat("Cannot exchange cards in %s phase",
+                                       currentPlayer.getCurrentPhase().toString());
+            return;
+        }
+
+        for (String num : args) {
+            if (Parser.checkValidInputNumber(num)) {
+                int cardPosition = Parser.parseWithDefault(num, 0);
+                Card card = currentPlayer.getHoldingCard(cardPosition);
+                if (!card.isExchanged()) {
+                    int newUnplacedArmies = currentPlayer.getUnplacedArmies();
+                    newUnplacedArmies += card.getCardType().getCardTypeAsInt();
+                    currentPlayer.setUnplacedArmies(newUnplacedArmies);
+                    card.setExchanged(true);
+                }
+            }
+        }
+
+        currentPlayer.removeExchangedCards();
     }
 }
