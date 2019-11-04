@@ -1,7 +1,9 @@
 package soen6441riskgame.models.commands;
 
 /**
- * All commands for playing game
+ * 
+ * GameCommands contains the class to create a model for the game.
+ * The class is bounded with the Game Controller
  */
 public final class GameCommands {
 
