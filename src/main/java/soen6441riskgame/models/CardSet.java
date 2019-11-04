@@ -8,7 +8,7 @@ import soen6441riskgame.utils.ConsolePrinter;
 
 
 /**
-* The Card Class.
+* The Cardset Class.
 * This class initializes the card type according to the Excahange Card requirement
 * 
 * 
