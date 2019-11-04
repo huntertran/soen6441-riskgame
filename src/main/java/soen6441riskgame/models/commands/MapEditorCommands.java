@@ -2,6 +2,7 @@ package soen6441riskgame.models.commands;
 
 /**
  * All command for map editing
+ * This Class is to read and Validate the created or existing Map file according to the requirement.
  */
 public final class MapEditorCommands {
     public static final String EDITCONTINENT = "editcontinent";
