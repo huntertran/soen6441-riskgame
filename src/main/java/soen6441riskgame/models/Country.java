@@ -7,8 +7,7 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
- * Hold country data
- * This is a main class to read and store different elements of the country.
+ * Hold country data This is a main class to read and store different elements of the country.
  */
 public class Country extends Observable implements Viewable {
     private Coordinate coordinate;
@@ -28,7 +27,11 @@ public class Country extends Observable implements Viewable {
     }
 
     public void setConquerer(Player conquerer) {
-        ConsolePrinter.printFormat("Player %s conquered %s", conquerer.getName(), this.getName());
+        if (conquerer != null) {
+            ConsolePrinter.printFormat("Player %s conquered %s", conquerer.getName(), this.getName());
+        } else {
+            ConsolePrinter.printFormat("Country %s has no conquerer", this.getName());
+        }
 
         if (conquerer != this.conquerer) {
             this.conquerer = conquerer;

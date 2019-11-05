@@ -53,7 +53,7 @@ public class Continent extends Observable implements Viewable {
 
     /**
      * get continent conquerer
-     * 
+     *
      * @return null if not conquered by any player
      */
     public Player getConquerer() {
@@ -90,14 +90,17 @@ public class Continent extends Observable implements Viewable {
     public void viewWithoutCountry() {
         String printString = "Continent: %s\t| No.: %s\t| Number of army: %s";
 
+        String conquererName = "";
+
         if (this.getConquerer() != null) {
             printString += "\t| Conquerer: %s";
+            conquererName = this.getConquerer().getName();
         }
 
         ConsolePrinter.printFormat(printString,
                                    this.getName(),
                                    this.getOrder(),
                                    this.getArmy(),
-                                   this.getConquerer());
+                                   conquererName);
     }
 }

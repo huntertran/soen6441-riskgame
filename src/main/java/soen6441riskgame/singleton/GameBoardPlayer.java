@@ -1,6 +1,8 @@
 package soen6441riskgame.singleton;
 
 import java.util.ArrayList;
+
+import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.views.PhaseView;
@@ -63,6 +65,12 @@ public class GameBoardPlayer implements Resettable {
     public void removePlayer(String name) {
         Player player = getPlayerFromName(name);
         if (player != null) {
+            // remove player countries
+            ArrayList<Country> countries = player.getConqueredCountries();
+            for(Country country : countries){
+                country.setConquerer(null);
+            }
+
             players.remove(player);
             Player previousPlayer = player.getPreviousPlayer();
             Player nextPlayer = player.getNextPlayer();

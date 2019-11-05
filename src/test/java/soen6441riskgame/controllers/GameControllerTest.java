@@ -56,7 +56,7 @@ public class GameControllerTest {
     @AfterEach
     public void after() {
         mapController.resetMap();
-        gameController.attack_move_cmd_required = false;
+        GameController.attack_move_cmd_required = false;
     }
 
     /**
@@ -252,7 +252,7 @@ public class GameControllerTest {
                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
                    || !gameController.isAttackValid());
     }
-    
+
     /**
      * it tests the defend command and calls the handleDefendCommand method.
      */
@@ -269,7 +269,7 @@ public class GameControllerTest {
         for(Country tempCountry : neighboring_countries) {
             if(tempCountry.getConquerer() != currentplayer) {
                 enemyCountry = tempCountry.getName();
-            }    
+            }
         }
         gameController.handleReinforceCommand(new String[] { countryfrom, "4" });
         gameController.enterAttackPhase();
@@ -285,7 +285,7 @@ public class GameControllerTest {
         assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryfrom).getArmyAmount() != a
                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
     }
-    
+
     /**
      * it tests the endAttackPhase method and checks if the attack phase is ended or not.
      */
@@ -473,11 +473,11 @@ public class GameControllerTest {
                                                 + " " + player.getConqueredCountries().get(0).getName()
                                                 + " 1"));
         //}
-        
+
         //attack phase
         App.jumpToCommand(new ModelCommands(GameCommands.ATTACK
                                             +" " + "-noattack"));
-        
+
         // action
         Country fromCountry = GamePlayActionsTestHelper.getPlayerCountryForFromCountryArg(player);
         Country toCountry = GamePlayActionsTestHelper.getPlayerCountryForToCountryArg(player, fromCountry);

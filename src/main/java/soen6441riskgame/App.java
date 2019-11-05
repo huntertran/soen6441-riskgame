@@ -32,11 +32,11 @@ public final class App {
     private App() {
     }
 
-    
+
     /**
-	 * This is the method for entering or initializing the main commands for game. 
+	 * This is the method for entering or initializing the main commands for game.
 	 * This function is used to show the action entered and the user input to create or edit the map, start, load the game
-	 * 
+	 *
 	 * @return userIntInput
 	 */
     public static void main(String[] args) {
@@ -115,7 +115,7 @@ public final class App {
                 }
                 case GameCommands.GAMEPLAYER: {
                     for (ModelCommandsPair sub : args.subRoutine) {
-                        gameController.handlePlayerAddAndRemoveCommand(sub.toStringArray());
+                        gameController.handleGamePlayerCommand(sub.toStringArray());
                     }
                     break;
                 }
@@ -174,11 +174,11 @@ public final class App {
                 }
                 case GameCommands.FORTIFY: {
                     boolean isFortifyPhase = gameController.enterFortifyPhase();
-                    
+
                     if(isFortifyPhase) {
                         gameController.handleMultipleFortificationCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
                     }
-                    
+
                     break;
                 }
                 case GameCommands.CURRENTPLAYER: {

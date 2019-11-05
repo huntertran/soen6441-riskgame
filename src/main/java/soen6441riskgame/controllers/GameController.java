@@ -68,7 +68,7 @@ public class GameController {
      * @param args [0] -add/-remove
      * @param args [1] player name
      */
-    public void handlePlayerAddAndRemoveCommand(String[] args) {
+    public void handleGamePlayerCommand(String[] args) {
         if (args.length == 0) {
             System.out.println("Missing parameter(s)");
             return;
@@ -94,42 +94,66 @@ public class GameController {
     }
 
     /**
-     * This method randomly assign countries to players
+     * random assign countries to players equally
      */
     public void populateCountries() {
-        int totalCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
+        // int totalCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
         int totalPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayers().size();
-        int numberOfAssignedCountry = 0;
-        int player_counter = 0;
+        // int numberOfAssignedCountry = 0;
+        int playerIndexToAssign = 0;
 
         Random random = new Random();
 
-        while (numberOfAssignedCountry < totalCountry) {
+        ArrayList<Country> allCountries = GameBoard.getInstance().getGameBoardMap().getCountries();
+        ArrayList<Country> unAssignedCountries = new ArrayList<Country>();
 
-            if (player_counter == totalPlayer) {
-                player_counter = 0;
-            }
-
-            int nextIndexCountryToAssign = random.nextInt(totalCountry);
-
-            // the int playerIndexToAssign = random.nextInt(totalPlayer);
-            int playerIndexToAssign = player_counter;
-
-            Country countryToAssign = GameBoard.getInstance()
-                                               .getGameBoardMap()
-                                               .getCountries()
-                                               .get(nextIndexCountryToAssign);
-
-            if (!countryToAssign.isConquered()) {
-                Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
-                countryToAssign.setConquerer(player);
-
-                // user need to place at least 1 army to the country he owned
-                countryToAssign.setArmyAmount(MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY);
-                numberOfAssignedCountry++;
-                player_counter++;
+        for (Country country : allCountries) {
+            if (country.getConquerer() == null) {
+                unAssignedCountries.add(country);
             }
         }
+
+        while (unAssignedCountries.size() > 0) {
+            if (playerIndexToAssign == totalPlayer) {
+                playerIndexToAssign = 0;
+            }
+
+            int nextIndexCountryToAssign = random.nextInt(unAssignedCountries.size());
+            Country countryToAssign = unAssignedCountries.get(nextIndexCountryToAssign);
+
+            Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
+            countryToAssign.setConquerer(player);
+
+            // user need to place at least 1 army to the country he owned
+            countryToAssign.setArmyAmount(MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY);
+
+            playerIndexToAssign++;
+            unAssignedCountries.remove(countryToAssign);
+        }
+
+        // while (numberOfAssignedCountry < totalCountry) {
+
+        //     if (playerIndexToAssign == totalPlayer) {
+        //         playerIndexToAssign = 0;
+        //     }
+
+        //     int nextIndexCountryToAssign = random.nextInt(totalCountry);
+
+        //     Country countryToAssign = GameBoard.getInstance()
+        //                                        .getGameBoardMap()
+        //                                        .getCountries()
+        //                                        .get(nextIndexCountryToAssign);
+
+        //     if (!countryToAssign.isConquered()) {
+        //         Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
+        //         countryToAssign.setConquerer(player);
+
+        //         // user need to place at least 1 army to the country he owned
+        //         countryToAssign.setArmyAmount(MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY);
+        //         numberOfAssignedCountry++;
+        //         playerIndexToAssign++;
+        //     }
+        // }
 
         System.out.println("All countries are randomly assigned to players");
     }
@@ -357,7 +381,7 @@ public class GameController {
      * move any number of armies from one country to another if they are connected
      *
      * If last argument is "none" or "-none" then user choose not to do a move.
-     * 
+     *
      * The arguments can be divided by a set of 3 as below. User can enter multiple set of arguments.
      *
      * @param args[0] from country
@@ -460,7 +484,7 @@ public class GameController {
      * @param args[0] from country
      * @param args[1] to country
      * @param args[2] number of dice rolls or -allout option
-     * 
+     *
      */
     public void handleAttackCommand(String[] args) {
         // ConsolePrinter.printFormat("attack conditions testing");
@@ -524,7 +548,7 @@ public class GameController {
      * than 1 and it has enemy countries as neighbor) If not, it returns false.
      *
      * @return boolean if further attack is possible or not
-     * 
+     *
      */
     private boolean furtherAttackPossible() {
         Player player = getCurrentPlayer(false);
@@ -545,9 +569,9 @@ public class GameController {
 
     /**
      * it handles the defend command and executes the entire attack and calls the dice roll method.
-     * 
+     *
      * @param args[0] number of dice that defender rolls
-     * 
+     *
      */
     public void handleDefendCommand(String[] args) {
 
@@ -706,7 +730,7 @@ public class GameController {
      * after the attacker has won the defending country.
      *
      * @param args[0] number of armies to move from attacking country to defending country
-     * 
+     *
      */
     public void handleAttackMoveCommand(String[] args) {
         // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
@@ -734,9 +758,9 @@ public class GameController {
      * it checks whether the game has ended or not.
      *
      * @param args[0] player the current player
-     * 
+     *
      * @return boolean if game has ended, then true , else false
-     * 
+     *
      */
     private boolean isGameEnded(Player player) {
         // check whether this player has won the game
@@ -758,10 +782,10 @@ public class GameController {
      * @param args[0] dice-values the array of the dice values rolled
      * @param args[0] second_max if second max is true, then second max value is returned. else only the
      *                max value is returned.
-     * 
+     *
      * @return int it returns the maximum value or second max value based on the value of second_max
      *         flag
-     * 
+     *
      */
     private int getMax(int[] inputArray, boolean second_max) {
         int maxValue = inputArray[0];
@@ -791,7 +815,7 @@ public class GameController {
      *
      *
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
-     * 
+     *
      */
     public boolean isAttackValid() {
         Player currentPlayer = getCurrentPlayer(false);
@@ -852,9 +876,9 @@ public class GameController {
 
     /**
      * it executes the dice roll.
-     * 
+     *
      * @return int it returns the random number from 1 to 6 on the dice.
-     * 
+     *
      */
     private int rollDice() {
         Random random = new Random();
@@ -863,7 +887,7 @@ public class GameController {
 
     /**
      * it ends the attack phase and sets the current game phase to fortification
-     * 
+     *
      */
     public void endAttackPhase() {
         defendingCountry = null;
