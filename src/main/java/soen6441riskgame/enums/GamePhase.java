@@ -1,7 +1,7 @@
 package soen6441riskgame.enums;
 
 /**
- * This Enum initiliazes the Phase of the game
+ * Phase of the game
  */
 public enum GamePhase {
                        LOST(0),
