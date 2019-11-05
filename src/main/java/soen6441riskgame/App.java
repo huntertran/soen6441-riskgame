@@ -176,7 +176,7 @@ public final class App {
                     boolean isFortifyPhase = gameController.enterFortifyPhase();
                     
                     if(isFortifyPhase) {
-                        gameController.handleFortifyCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                        gameController.handleMultipleFortificationCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
                     }
                     
                     break;

@@ -56,7 +56,7 @@ public class GameController {
      * The all out
      */
     public static boolean allout_flag = false;
-    
+
     /**
      * The attack move cmd required
      */
@@ -332,7 +332,7 @@ public class GameController {
             currentPlayer.setCurrentPhase(GamePhase.ATTACK);
         }
     }
-    
+
     /**
      * FORTIFICATION PHASE enter fortification phase
      *
@@ -356,18 +356,55 @@ public class GameController {
     /**
      * move any number of armies from one country to another if they are connected
      *
+     * If last argument is "none" or "-none" then user choose not to do a move.
+     * 
+     * The arguments can be divided by a set of 3 as below. User can enter multiple set of arguments.
+     *
+     * @param args[0] from country
+     * @param args[1] to country
+     * @param args[2] number of armies
+     */
+    public void handleMultipleFortificationCommand(String[] args) {
+        int numberOfCommandSet = args.length / 3;
+        int numberOfLeftOverArgs = args.length % 3;
+
+        for (int index = 0; index < numberOfCommandSet; index++) {
+            String[] commandSet = new String[] { args[(3 * index) + 0],
+                                                 args[(3 * index) + 1],
+                                                 args[(3 * index) + 2] };
+            handleFortifyCommand(commandSet);
+        }
+
+        if (numberOfLeftOverArgs > 0) {
+            if (numberOfLeftOverArgs > 1) {
+                ConsolePrinter.printFormat("You have some invalid command arguments");
+            }
+
+            String lastArg = args[args.length - 1].toLowerCase();
+
+            if (lastArg.equals("-none") || lastArg.equals("none")) {
+                turnToNextPlayer();
+                getCurrentPlayer(true);
+                return;
+            }
+        }
+    }
+
+    /**
+     * move any number of armies from one country to another if they are connected
+     *
      * If args[0] is "none" then user choose not to do a move
      *
      * @param args[0] from country
      * @param args[1] to country
      * @param args[2] number of armies
      */
-    public void handleFortifyCommand(String[] args) {
-        if (args[0].toLowerCase().equals("none")) {
-            turnToNextPlayer();
-            getCurrentPlayer(true);
-            return;
-        }
+    private void handleFortifyCommand(String[] args) {
+        // if (args[0].toLowerCase().equals("none")) {
+        // turnToNextPlayer();
+        // getCurrentPlayer(true);
+        // return;
+        // }
 
         Country fromCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         Country toCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
@@ -426,13 +463,14 @@ public class GameController {
      * 
      */
     public void handleAttackCommand(String[] args) {
-        //ConsolePrinter.printFormat("attack conditions testing");
-        
-        if(attack_move_cmd_required) {
-            ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s", getCurrentPlayer(false).getName(), defendingCountry.getName());
+        // ConsolePrinter.printFormat("attack conditions testing");
+
+        if (attack_move_cmd_required) {
+            ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s",
+                                       getCurrentPlayer(false).getName(), defendingCountry.getName());
             return;
         }
-        
+
         // check if its no attack
         if (args[0].toLowerCase().equals("-noattack") || args[0].toLowerCase().equals("noattack")) {
             endAttackPhase();
@@ -512,12 +550,13 @@ public class GameController {
      * 
      */
     public void handleDefendCommand(String[] args) {
-        
-        if(attack_move_cmd_required) {
-            ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s", getCurrentPlayer(false).getName(), defendingCountry.getName());
+
+        if (attack_move_cmd_required) {
+            ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s",
+                                       getCurrentPlayer(false).getName(), defendingCountry.getName());
             return;
         }
-        
+
         defender_numDice = Integer.parseInt(args[0]);
         System.out.println(args[0]);
         if (!isAttackValid()) {
@@ -672,10 +711,11 @@ public class GameController {
     public void handleAttackMoveCommand(String[] args) {
         // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
         // Issue #40 on github
-        if(attack_move_cmd_required) {
+        if (attack_move_cmd_required) {
             int army_to_be_moved = Integer.parseInt(args[0]);
             if (army_to_be_moved < attacker_numDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
-                ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.", attacker_numDice);
+                ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
+                                           attacker_numDice);
             } else {
                 attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
                 // reinitialize variables to null

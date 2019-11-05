@@ -25,7 +25,7 @@ public class GamePlayActionsTestHelper {
                     toCountry);
         }
 
-        App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY + " none"));
+        App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY + " -none"));
     }
 
     public static Country getPlayerCountryForFromCountryArg(Player player) {
