@@ -369,12 +369,11 @@ public class GameController {
                                             + String.valueOf(numberOfArmies)
                                             + " armies");
     }
-    
+
     /**
      * ATTACK PHASE enter attack phase
      *
-     * @return true if enter attack phase successfully or the current player is already in
-     *         attack phase
+     * @return true if enter attack phase successfully or the current player is already in attack phase
      */
     public boolean enterAttackPhase() {
         Player currentPlayer = getCurrentPlayer(true);
@@ -393,7 +392,8 @@ public class GameController {
     /**
      * it handles the attack command
      *
-     * If args[0] is "-noattack" then user choose not to attack and the player moves on to next phase fortification
+     * If args[0] is "-noattack" then user choose not to attack and the player moves on to next phase
+     * fortification
      *
      * @param args[0] from country
      * @param args[1] to country
@@ -434,7 +434,7 @@ public class GameController {
             endAttackPhase();
         }
     }
-    
+
     /**
      * it simulates the attack command for -allout option
      */
@@ -450,9 +450,10 @@ public class GameController {
         }
         ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
     }
-    
+
     /**
-     * it checks whether further attack is possible.(i.e. if the number of army in a country is greater than 1 and it has enemy countries as neighbor) If not, it returns false.
+     * it checks whether further attack is possible.(i.e. if the number of army in a country is greater
+     * than 1 and it has enemy countries as neighbor) If not, it returns false.
      *
      * @return boolean if further attack is possible or not
      * 
@@ -620,9 +621,10 @@ public class GameController {
             endAttackPhase();
         }
     }
-    
+
     /**
-     * it handles the attack move command and moves the army from attacking country to defending country after the attacker has won the defending country.
+     * it handles the attack move command and moves the army from attacking country to defending country
+     * after the attacker has won the defending country.
      *
      * @param args[0] number of armies to move from attacking country to defending country
      * 
@@ -644,6 +646,7 @@ public class GameController {
             ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
         }
     }
+
     /**
      * it checks whether the game has ended or not.
      *
@@ -670,9 +673,11 @@ public class GameController {
      * it returns the maximum value and second max value from the array of dice values
      *
      * @param args[0] dice-values the array of the dice values rolled
-     * @param args[0] second_max if second max is true, then second max value is returned. else only the max value is returned.
+     * @param args[0] second_max if second max is true, then second max value is returned. else only the
+     *                max value is returned.
      * 
-     * @return int it returns the maximum value or second max value based on the value of second_max flag
+     * @return int it returns the maximum value or second max value based on the value of second_max
+     *         flag
      * 
      */
     private int getMax(int[] inputArray, boolean second_max) {
@@ -761,7 +766,7 @@ public class GameController {
             return true;
         }
     }
-    
+
     /**
      * it executes the dice roll.
      * 
@@ -789,7 +794,7 @@ public class GameController {
     }
 
     /**
-     * it sets the game phase to end of game when a player has won the game 
+     * it sets the game phase to end of game when a player has won the game
      */
     public void setEndOfGamePhase() {
         Player currentPlayer = getCurrentPlayer(true);
