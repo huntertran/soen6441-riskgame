@@ -302,6 +302,10 @@ public class GameControllerTest {
         // Assert
         assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
     }
+
+    /**
+     * it tests the setEndOfGamePhase method and checks whether the Game has ended or not.
+     */
     @Test
     public void setEndOfGamePhaseTest() {
         // Setup
