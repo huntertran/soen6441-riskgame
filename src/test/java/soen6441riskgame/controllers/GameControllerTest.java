@@ -451,6 +451,19 @@ public class GameControllerTest {
         // assert
         assertEquals("ben", gameController.getCurrentPlayer().getName());
     }
+@Test
+    public void showCurrentPlayerTest() {
+        // setup
+        GamePlayActionsTestHelper.addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        // action
+        gameController.showCurrentPlayer();
+
+        // assert
+        assertEquals("hunter", gameController.getCurrentPlayer().getName());
+    }
 
     /**
      * it tests the handleFortifyCommand method to check whether the player is able to fortify his
