@@ -767,8 +767,6 @@ public class GameController {
      *
      */
     public void handleAttackMoveCommand(String[] args) {
-        // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
-        // Issue #40 on github
         if (attackMoveCmdRequired) {
             if (Parser.checkValidInputNumber(args[0])) {
                 int army_to_be_moved = Integer.parseInt(args[0]);
