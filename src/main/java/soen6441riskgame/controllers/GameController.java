@@ -763,21 +763,25 @@ public class GameController {
         // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
         // Issue #40 on github
         if (attackMoveCmdRequired) {
-            int army_to_be_moved = Integer.parseInt(args[0]);
-            if (army_to_be_moved < attackerNumDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
-                ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
-                                           attackerNumDice);
+            if (Parser.checkValidInputNumber(args[0])) {
+                int army_to_be_moved = Integer.parseInt(args[0]);
+                if (army_to_be_moved < attackerNumDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
+                    ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
+                                               attackerNumDice);
+                } else {
+                    attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
+                    // reinitialize variables to null
+                    defendingCountry = null;
+                    attackingCountry = null;
+                    attackerNumDice = 0;
+                    defenderNumDice = 0;
+                    alloutFlag = false;
+                    ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
+                }
+                attackMoveCmdRequired = false;
             } else {
-                attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
-                // reinitialize variables to null
-                defendingCountry = null;
-                attackingCountry = null;
-                attackerNumDice = 0;
-                defenderNumDice = 0;
-                alloutFlag = false;
-                ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
+                ConsolePrinter.printFormat("Invalid Input");
             }
-            attackMoveCmdRequired = false;
         }
     }
 
@@ -936,9 +940,9 @@ public class GameController {
         currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);
     }
 
-
     /**
      * build set a card
+     * 
      * @param args 3 number as position of card in a set, -none at the end to not exchange
      * @return a set of card
      */
