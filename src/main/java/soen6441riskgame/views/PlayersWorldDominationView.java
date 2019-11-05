@@ -9,8 +9,22 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * Implementation of a “players world domination view” using the Observer pattern. The players world
+ * domination view should display
+ *
+ * 1. the percentage of the map controlled by every player
+ *
+ * 2. the continents controlled by every player
+ *
+ * 3. the total number of armies owned by every player
+ *
+ */
 public class PlayersWorldDominationView implements Observer {
 
+    /**
+     * update the view when property changed
+     */
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
