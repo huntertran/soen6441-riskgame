@@ -968,6 +968,7 @@ public class GameController {
                                                           args[index + 1],
                                                           args[index + 2]
             });
+
             numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);
             cardSet.setCardsExchanged();
             tradeTime++;
