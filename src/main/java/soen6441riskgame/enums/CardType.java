@@ -2,6 +2,9 @@ package soen6441riskgame.enums;
 
 /**
  * Type of card that a player can hold
+ *
+ * The number of each type is used for calculate the validity of a set of 3 cards to trade for
+ * armies during reinforcement phase
  */
 public enum CardType {
                       Infantry(1),
@@ -9,23 +12,23 @@ public enum CardType {
                       Artillery(1000),
                       Wild(10000);
 
-    private final int armies;
+    private final int cardValue;
 
-    private CardType(int armies) {
-        this.armies = armies;
+    /**
+     * private constructor
+     *
+     * @param cardValue value of the type
+     */
+    private CardType(int cardValue) {
+        this.cardValue = cardValue;
     }
 
+    /**
+     * get card type value
+     *
+     * @return card value
+     */
     public int getCardTypeAsInt() {
-        return armies;
-    }
-
-    public static CardType convertIntToCardType(int armies) {
-        for (CardType cardType : CardType.values()) {
-            if (cardType.getCardTypeAsInt() == armies) {
-                return cardType;
-            }
-        }
-
-        return null;
+        return cardValue;
     }
 }
