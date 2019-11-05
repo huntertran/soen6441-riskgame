@@ -16,6 +16,12 @@ public class Country extends Observable implements Viewable {
     private Continent continent;
     private Player conquerer;
 
+    /**
+     * Constructor for Country class.
+     * @param name
+     * @param coordinate
+     * @param continent
+     */
     public Country(String name, Coordinate coordinate, Continent continent) {
         this.setName(name);
         this.setCoordinate(coordinate);
