@@ -56,6 +56,7 @@ public class GameControllerTest {
     @AfterEach
     public void after() {
         mapController.resetMap();
+        gameController.attack_move_cmd_required = false;
     }
 
     /**
@@ -467,12 +468,16 @@ public class GameControllerTest {
         // reinforce
         Player player = gameController.getCurrentPlayer();
 
-        while (player.getUnplacedArmies() > 0) {
+        //while (player.getUnplacedArmies() > 0) {
             App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
                                                 + " " + player.getConqueredCountries().get(0).getName()
                                                 + " 1"));
-        }
-
+        //}
+        
+        //attack phase
+        App.jumpToCommand(new ModelCommands(GameCommands.ATTACK
+                                            +" " + "-noattack"));
+        
         // action
         Country fromCountry = GamePlayActionsTestHelper.getPlayerCountryForFromCountryArg(player);
         Country toCountry = GamePlayActionsTestHelper.getPlayerCountryForToCountryArg(player, fromCountry);

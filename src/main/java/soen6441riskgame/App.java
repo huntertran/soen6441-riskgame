@@ -173,7 +173,12 @@ public final class App {
                     break;
                 }
                 case GameCommands.FORTIFY: {
-                    gameController.handleFortifyCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    boolean isFortifyPhase = gameController.enterFortifyPhase();
+                    
+                    if(isFortifyPhase) {
+                        gameController.handleFortifyCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    }
+                    
                     break;
                 }
                 case GameCommands.CURRENTPLAYER: {

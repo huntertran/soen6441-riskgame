@@ -56,9 +56,14 @@ public class GameController {
      * The all out
      */
     public static boolean allout_flag = false;
+    
+    /**
+     * The attack move cmd required
+     */
+    public static boolean attack_move_cmd_required = false;
 
     /**
-     * This funtion handle <code>gameplayer</code> command
+     * This function handle <code>gameplayer</code> command
      *
      * @param args [0] -add/-remove
      * @param args [1] player name
@@ -327,6 +332,26 @@ public class GameController {
             currentPlayer.setCurrentPhase(GamePhase.ATTACK);
         }
     }
+    
+    /**
+     * FORTIFICATION PHASE enter fortification phase
+     *
+     * @return true if enter fortification phase successfully or the current player is already in
+     *         fortification phase
+     */
+    public boolean enterFortifyPhase() {
+        Player currentPlayer = getCurrentPlayer(true);
+
+        if (currentPlayer.getCurrentPhase() == GamePhase.ATTACK && !attack_move_cmd_required) {
+            currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
+        } else if (currentPlayer.getCurrentPhase() != GamePhase.FORTIFICATION) {
+            ConsolePrinter.printFormat("Player %s cannot fortify armies in %s phase",
+                                       currentPlayer.getName(),
+                                       currentPlayer.getCurrentPhase().toString());
+        }
+
+        return currentPlayer.getCurrentPhase() == GamePhase.FORTIFICATION;
+    }
 
     /**
      * move any number of armies from one country to another if they are connected
@@ -402,7 +427,12 @@ public class GameController {
      */
     public void handleAttackCommand(String[] args) {
         //ConsolePrinter.printFormat("attack conditions testing");
-
+        
+        if(attack_move_cmd_required) {
+            ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s", getCurrentPlayer(false).getName(), defendingCountry.getName());
+            return;
+        }
+        
         // check if its no attack
         if (args[0].toLowerCase().equals("-noattack") || args[0].toLowerCase().equals("noattack")) {
             endAttackPhase();
@@ -482,6 +512,12 @@ public class GameController {
      * 
      */
     public void handleDefendCommand(String[] args) {
+        
+        if(attack_move_cmd_required) {
+            ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s", getCurrentPlayer(false).getName(), defendingCountry.getName());
+            return;
+        }
+        
         defender_numDice = Integer.parseInt(args[0]);
         System.out.println(args[0]);
         if (!isAttackValid()) {
@@ -607,6 +643,7 @@ public class GameController {
                 ConsolePrinter.printFormat("Player %s needs to move armies into your conquered country %s",
                                            attackingCountry.getConquerer().getName(),
                                            defendingCountry.getName());
+                attack_move_cmd_required = true;
             }
         } else {
             if (!allout_flag) {
@@ -617,7 +654,7 @@ public class GameController {
                 defender_numDice = 0;
             }
         }
-        if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer())) {
+        if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer()) && !attack_move_cmd_required) {
             endAttackPhase();
         }
     }
@@ -632,18 +669,21 @@ public class GameController {
     public void handleAttackMoveCommand(String[] args) {
         // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
         // Issue #40 on github
-        int army_to_be_moved = Integer.parseInt(args[0]);
-        if (army_to_be_moved < attacker_numDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
-            ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.", attacker_numDice);
-        } else {
-            attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
-            // reinitialize variables to null
-            defendingCountry = null;
-            attackingCountry = null;
-            attacker_numDice = 0;
-            defender_numDice = 0;
-            allout_flag = false;
-            ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
+        if(attack_move_cmd_required) {
+            int army_to_be_moved = Integer.parseInt(args[0]);
+            if (army_to_be_moved < attacker_numDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
+                ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.", attacker_numDice);
+            } else {
+                attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
+                // reinitialize variables to null
+                defendingCountry = null;
+                attackingCountry = null;
+                attacker_numDice = 0;
+                defender_numDice = 0;
+                allout_flag = false;
+                ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
+            }
+            attack_move_cmd_required = false;
         }
     }
 
