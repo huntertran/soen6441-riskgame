@@ -645,7 +645,9 @@ public class GameController {
             printDiceValues += defenderDiceValues[i] + "    ";
         }
         ConsolePrinter.printFormat("%s", printDiceValues);
-
+        
+        Player player1 = getCurrentPlayer();
+        
         // now we will check who loses an army
         if (defenderNumDice == 1 || attackerNumDice == 1) {
             if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
@@ -655,6 +657,8 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
+                
+                player1.addCurrentPhaseAction("Attack: The defender " + defendingCountry.getConquerer().getName() + " has lost 1 army from " + defendingCountry.getName() + "."+ defendingCountry.getArmyAmount()+"  armies left.");
 
             } else {
                 // attacking army is lost
@@ -663,6 +667,8 @@ public class GameController {
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
+                
+                player1.addCurrentPhaseAction("Attack: The attacker " + attackingCountry.getConquerer().getName() + " has lost 1 army from " + attackingCountry.getName() + "."+ attackingCountry.getArmyAmount()+"  armies left.");
 
             }
         } else {
@@ -673,6 +679,9 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
+                
+                player1.addCurrentPhaseAction("Attack: The defender " + defendingCountry.getConquerer().getName() + " has lost 1 army from " + defendingCountry.getName() + "."+ defendingCountry.getArmyAmount()+"  armies left.");
+
 
             } else {
                 // attacking army is lost
@@ -681,6 +690,7 @@ public class GameController {
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
+                player1.addCurrentPhaseAction("Attack: The attacker " + attackingCountry.getConquerer().getName() + " has lost 1 army from " + attackingCountry.getName() + "."+ attackingCountry.getArmyAmount()+"  armies left.");
 
             }
             if (getMax(attackerDiceValues, true) > getMax(defenderDiceValues, true)) {
@@ -690,7 +700,9 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
+                player1.addCurrentPhaseAction("Attack: The defender " + defendingCountry.getConquerer().getName() + " has lost 1 army from " + defendingCountry.getName() + "."+ defendingCountry.getArmyAmount()+"  armies left.");
 
+                
             } else {
                 // attacking army is lost
                 attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
@@ -698,6 +710,7 @@ public class GameController {
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
+                player1.addCurrentPhaseAction("Attack: The attacker " + attackingCountry.getConquerer().getName() + " has lost 1 army from " + attackingCountry.getName() + "."+ attackingCountry.getArmyAmount()+"  armies left.");
 
             }
         }
