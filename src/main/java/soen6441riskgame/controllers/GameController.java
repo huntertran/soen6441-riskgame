@@ -369,7 +369,13 @@ public class GameController {
                                             + String.valueOf(numberOfArmies)
                                             + " armies");
     }
-
+    
+    /**
+     * ATTACK PHASE enter attack phase
+     *
+     * @return true if enter attack phase successfully or the current player is already in
+     *         attack phase
+     */
     public boolean enterAttackPhase() {
         Player currentPlayer = getCurrentPlayer(true);
 
@@ -384,6 +390,16 @@ public class GameController {
         return currentPlayer.getCurrentPhase() == GamePhase.ATTACK;
     }
 
+    /**
+     * it handles the attack command
+     *
+     * If args[0] is "-noattack" then user choose not to attack and the player moves on to next phase fortification
+     *
+     * @param args[0] from country
+     * @param args[1] to country
+     * @param args[2] number of dice rolls or -allout option
+     * 
+     */
     public void handleAttackCommand(String[] args) {
         ConsolePrinter.printFormat("attack conditions testing");
 
@@ -418,7 +434,10 @@ public class GameController {
             endAttackPhase();
         }
     }
-
+    
+    /**
+     * it simulates the attack command for -allout option
+     */
     private void simulateAttack() {
         while (allout_flag) {
             attacker_numDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
@@ -431,7 +450,13 @@ public class GameController {
         }
         ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
     }
-
+    
+    /**
+     * it checks whether further attack is possible.(i.e. if the number of army in a country is greater than 1 and it has enemy countries as neighbor) If not, it returns false.
+     *
+     * @return boolean if further attack is possible or not
+     * 
+     */
     private boolean furtherAttackPossible() {
         Player player = getCurrentPlayer(false);
         // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
@@ -449,6 +474,12 @@ public class GameController {
         return false;
     }
 
+    /**
+     * it handles the defend command and executes the entire attack and calls the dice roll method.
+     * 
+     * @param args[0] number of dice that defender rolls
+     * 
+     */
     public void handleDefendCommand(String[] args) {
         defender_numDice = Integer.parseInt(args[0]);
         System.out.println(args[0]);
@@ -589,7 +620,13 @@ public class GameController {
             endAttackPhase();
         }
     }
-
+    
+    /**
+     * it handles the attack move command and moves the army from attacking country to defending country after the attacker has won the defending country.
+     *
+     * @param args[0] number of armies to move from attacking country to defending country
+     * 
+     */
     public void handleAttackMoveCommand(String[] args) {
         // TODO: the parseInt will throw exception if the string is not int. Use method in Parser class
         // Issue #40 on github
@@ -607,7 +644,14 @@ public class GameController {
             ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
         }
     }
-
+    /**
+     * it checks whether the game has ended or not.
+     *
+     * @param args[0] player the current player
+     * 
+     * @return boolean if game has ended, then true , else false
+     * 
+     */
     private boolean isGameEnded(Player player) {
         // check whether this player has won the game
         Player currentPlayer = getCurrentPlayer(false);
@@ -622,7 +666,15 @@ public class GameController {
         return gameEnded;
     }
 
-    // Method for getting the maximum value and second max value
+    /**
+     * it returns the maximum value and second max value from the array of dice values
+     *
+     * @param args[0] dice-values the array of the dice values rolled
+     * @param args[0] second_max if second max is true, then second max value is returned. else only the max value is returned.
+     * 
+     * @return int it returns the maximum value or second max value based on the value of second_max flag
+     * 
+     */
     private int getMax(int[] inputArray, boolean second_max) {
         int maxValue = inputArray[0];
         int maxIndex = 0;
@@ -646,6 +698,13 @@ public class GameController {
         return maxValue;
     }
 
+    /**
+     * it returns whether the attack is valid (true) or not (false)
+     *
+     *
+     * @return boolean it checks whether attack is valid or not and returns true or false based on that.
+     * 
+     */
     public boolean isAttackValid() {
         Player currentPlayer = getCurrentPlayer(false);
         if (attackingCountry == null) {
@@ -702,12 +761,22 @@ public class GameController {
             return true;
         }
     }
-
+    
+    /**
+     * it executes the dice roll.
+     * 
+     * @return int it returns the random number from 1 to 6 on the dice.
+     * 
+     */
     private int rollDice() {
         Random random = new Random();
         return random.nextInt(6) + 1;
     }
 
+    /**
+     * it ends the attack phase and sets the current game phase to fortification
+     * 
+     */
     public void endAttackPhase() {
         defendingCountry = null;
         attackingCountry = null;
@@ -719,6 +788,9 @@ public class GameController {
         currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
     }
 
+    /**
+     * it sets the game phase to end of game when a player has won the game 
+     */
     public void setEndOfGamePhase() {
         Player currentPlayer = getCurrentPlayer(true);
         ConsolePrinter.printFormat("Congratulations, The player %s has won the game.", currentPlayer.getName());
