@@ -83,7 +83,7 @@ public class Player extends Observable {
 
     /**
      * add new card if player conquer at least 1 country during attack phase
-     * 
+     *
      * @param newPhase
      */
     private void getACardFromDeck(GamePhase newPhase) {
@@ -131,6 +131,7 @@ public class Player extends Observable {
         for (Iterator<Card> cardList = holdingCards.listIterator(); cardList.hasNext();) {
             Card card = cardList.next();
             if (card.isExchanged()) {
+                card.setExchanged(false);
                 cardList.remove();
             }
         }
