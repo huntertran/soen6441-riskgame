@@ -38,7 +38,7 @@ public class PhaseView implements Observer {
             ConsolePrinter.printFormat("Current phase: %s", player.getCurrentPhase());
             ConsolePrinter.printFormat("Current player: %s", player.getName());
 
-            if (player.getCurrentPhaseActions().size() > 0) {
+            if (!player.getCurrentPhaseActions().isEmpty()) {
                 ConsolePrinter.printFormat("Actions:");
 
                 for (String action : player.getCurrentPhaseActions()) {
