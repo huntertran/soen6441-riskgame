@@ -541,9 +541,12 @@ public class GameController {
                 simulateAttack();
             }
         } else {
-            int numDice = Integer.parseInt(args[2]);
-            attackerNumDice = numDice; // saving the number of dice
-
+            if (Parser.checkValidInputNumber(args[2])) {
+                int numDice = Integer.parseInt(args[2]);
+                attackerNumDice = numDice; // saving the number of dice
+            } else {
+                ConsolePrinter.printFormat("Invalid Input");
+            }
             // check if attack is valid
             if (!isAttackValid()) {
                 return;
