@@ -304,6 +304,26 @@ public class GameControllerTest {
     }
 
     /**
+     * it tests the setEndOfGamePhase method and checks whether the Game has ended or not.
+     */
+    @Test
+    public void setEndOfGamePhaseTest() {
+        // Setup
+        GamePlayActionsTestHelper.addPlayersToGame();
+        gameController.populateCountries();
+        gameController.enterReinforcement();
+        gameController.enterAttackPhase();
+        gameController.enterFortifyPhase();
+
+        // Action
+        gameController.setEndOfGamePhase();
+
+        // Assert
+        assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.END_OF_GAME);
+    }
+
+
+    /**
      * it tests the handlePlaceArmy method and checks whether it correctly places an army or not.
      */
     @Test
