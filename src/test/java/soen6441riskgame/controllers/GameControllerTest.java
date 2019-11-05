@@ -451,6 +451,9 @@ public class GameControllerTest {
         // assert
         assertEquals("ben", gameController.getCurrentPlayer().getName());
     }
+    /**
+     * it tests the showCurrentPlayer method to check if it returns the current player correctly.
+     */
 @Test
     public void showCurrentPlayerTest() {
         // setup
