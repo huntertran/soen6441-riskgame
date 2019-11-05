@@ -1,20 +1,29 @@
 package soen6441riskgame.enums;
 
 /**
- * This enum has Common command arguments for <code>-add</code> or <code>-remove</code>
+ * This enum has Common command arguments for <code>-add</code> or <code>-remove</code> or
+ * <code>-none</code>
  */
 public enum CommonCommandArgs {
-    ADD("-add"), REMOVE("-remove"), NONE("-none"), INVALID("");
+                               ADD("-add"),
+                               REMOVE("-remove"),
+                               NONE("-none"),
+                               INVALID("");
 
     private String argument;
 
+    /**
+     * private constructor
+     * @param argument the string to parse
+     */
     CommonCommandArgs(final String argument) {
         this.argument = argument;
     }
 
     /**
      * get the string arg
-     * @return
+     *
+     * @return return the string arg
      */
     public String getArgument() {
         return argument;
@@ -22,6 +31,7 @@ public enum CommonCommandArgs {
 
     /**
      * convert the string arg to enum
+     *
      * @param argumentString the arg string
      * @return the arg converted to enum
      */
