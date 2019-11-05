@@ -54,6 +54,8 @@ public class Player extends Observable {
                 if (newPhase != GamePhase.WAITING_TO_TURN
                     || currentPhase != GamePhase.FORTIFICATION) {
                     isChangePhaseAllowed = false;
+                } else {
+                    isChangePhaseAllowed = true;
                 }
             }
 
