@@ -7,7 +7,7 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
- * Hold country data This is a main class to read and store different elements of the country.
+ * Hold country data
  */
 public class Country extends Observable implements Viewable {
     private Coordinate coordinate;
@@ -17,21 +17,34 @@ public class Country extends Observable implements Viewable {
     private Player conquerer;
 
     /**
-     * Constructor for Country class.
-     * @param name
-     * @param coordinate
-     * @param continent
+     * constructor
+     *
+     * @param name       country name
+     * @param coordinate country coordinate on bitmap file of the map
+     * @param continent  the continent this country belong to
      */
     public Country(String name, Coordinate coordinate, Continent continent) {
-        this.setName(name);
-        this.setCoordinate(coordinate);
-        this.setContinent(continent);
+        this.name = name;
+        this.coordinate = coordinate;
+        this.continent = continent;
     }
 
+    /**
+     * get this country conquerer
+     *
+     * @return conquerer
+     */
     public Player getConquerer() {
         return conquerer;
     }
 
+    /**
+     * set conquerer of this country.
+     *
+     * if set to null, this country have no conquerer
+     *
+     * @param conquerer player object to set
+     */
     public void setConquerer(Player conquerer) {
         if (conquerer != null) {
             ConsolePrinter.printFormat("Player %s conquered %s", conquerer.getName(), this.getName());
@@ -46,26 +59,38 @@ public class Country extends Observable implements Viewable {
         }
     }
 
+    /**
+     * get the continent this country belong to
+     *
+     * @return continent object
+     */
     public Continent getContinent() {
         return continent;
     }
 
-    public void setContinent(Continent continent) {
-        this.continent = continent;
-    }
-
+    /**
+     * get country name
+     *
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * get army amount this country have
+     *
+     * @return army amount
+     */
     public int getArmyAmount() {
         return armyAmount;
     }
 
+    /**
+     * set army amount this country have
+     *
+     * @param armyAmount army amount
+     */
     public void setArmyAmount(int armyAmount) {
         this.armyAmount = armyAmount;
         ConsolePrinter.printFormat("Country %s now have %d armies, belong to %s",
@@ -81,12 +106,13 @@ public class Country extends Observable implements Viewable {
         return GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;
     }
 
+    /**
+     * get the coordinate of this country on the map
+     *
+     * @return coordinate
+     */
     public Coordinate getCoordinate() {
         return coordinate;
-    }
-
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
     }
 
     /**
@@ -109,6 +135,11 @@ public class Country extends Observable implements Viewable {
         return neighbors;
     }
 
+    /**
+     * is this country conquered by any player?
+     *
+     * @return conquered or not
+     */
     public boolean isConquered() {
         return this.getConquerer() != null;
     }
@@ -179,6 +210,11 @@ public class Country extends Observable implements Viewable {
         toCountry.increaseArmies(armiesToMove);
     }
 
+    /**
+     * print this country content
+     *
+     * @param indent number of indentation before print
+     */
     public void view(int indent) {
         this.viewWithoutNeighbors(indent);
 
@@ -190,6 +226,11 @@ public class Country extends Observable implements Viewable {
         }
     }
 
+    /**
+     * print this country content without printing it's neighbors
+     *
+     * @param indent number of indentation before print
+     */
     public void viewWithoutNeighbors(int indent) {
         this.printIndent(indent);
         String printString = "Country: %s\t| No.: %s\t| Army: %s ";
@@ -245,6 +286,12 @@ public class Country extends Observable implements Viewable {
         return false;
     }
 
+    /**
+     * check if this country belong to a specific player
+     *
+     * @param player player to check
+     * @return true if the country belong to that player
+     */
     public boolean isCountryBelongToPlayer(Player player) {
         if (!getConquerer().equals(player)) {
             ConsolePrinter.printFormat("The country %s is not belong to %s",
