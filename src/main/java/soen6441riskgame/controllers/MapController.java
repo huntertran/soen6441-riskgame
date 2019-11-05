@@ -18,6 +18,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
+import soen6441riskgame.utils.Parser;
 
 /**
  * handle the operations to generate, edit and control the map.
@@ -48,13 +49,20 @@ public final class MapController {
      *                       indicate)
      */
     public void addContinent(String continentName, String continentValue, int... order) {
+        if (!Parser.checkValidInputNumber(continentValue)) {
+            ConsolePrinter.printFormat("Invalid Input");
+        }
+
         if (!isContinentExisted(continentName)) {
             GameBoard.getInstance()
                      .getGameBoardMap()
                      .getContinents()
-                     .add(new Continent(continentName, Integer.parseInt(continentValue)));
+                     .add(new Continent(continentName,
+                                        Integer.parseInt(continentValue)));
 
-            ConsolePrinter.printFormat("New continent added: %s with %s armies", continentName, continentValue);
+            ConsolePrinter.printFormat("New continent added: %s with %s armies",
+                                       continentName,
+                                       continentValue);
         } else {
             ConsolePrinter.printFormat("Continent with name %s existed", continentName);
         }
