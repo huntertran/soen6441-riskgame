@@ -24,10 +24,19 @@ public class Player extends Observable {
     private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
     private static final int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN = 3;
     private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
+    private boolean isPlayerBeAwardCard = false;
 
     public Player(String name) {
         this.name = name;
         this.currentPhase = GamePhase.WAITING_TO_TURN;
+    }
+
+    public boolean isPlayerBeAwardCard() {
+        return isPlayerBeAwardCard;
+    }
+
+    public void setPlayerBeAwardCard(boolean isPlayerAwardCard) {
+        this.isPlayerBeAwardCard = isPlayerAwardCard;
     }
 
     public GamePhase getCurrentPhase() {
@@ -59,11 +68,29 @@ public class Player extends Observable {
                 } else {
                     this.deleteObserver(GameBoard.getInstance().getExchangeCardView());
                 }
+
+                getACardFromDeck(newPhase);
             } else {
                 ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
                                            getName(),
                                            currentPhase.toString(),
                                            newPhase.toString());
+            }
+        }
+    }
+
+    /**
+     * add new card if player conquer at least 1 country during attack phase
+     * 
+     * @param newPhase
+     */
+    private void getACardFromDeck(GamePhase newPhase) {
+        if (newPhase == GamePhase.ATTACK) {
+            if (isPlayerBeAwardCard()) {
+                Card newCard = GameBoard.getInstance().getRandomAvailableCard();
+                newCard.setHoldingPlayer(this);
+                holdingCards.add(newCard);
+                setPlayerBeAwardCard(false);
             }
         }
     }

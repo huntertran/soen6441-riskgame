@@ -613,6 +613,9 @@ public class GameController {
 
             defendingCountry.setConquerer(attackingCountry.getConquerer());
 
+            // set attacker can be reward a card when attack phase end
+            attackingCountry.getConquerer().setPlayerBeAwardCard(true);
+
             // check if defender has any countries that he has conquered. if not remove him from the game.
             if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {
                 // remove player

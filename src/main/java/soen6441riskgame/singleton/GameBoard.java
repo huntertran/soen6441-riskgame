@@ -1,5 +1,8 @@
 package soen6441riskgame.singleton;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.models.Card;
 import soen6441riskgame.views.ExchangeCardView;
@@ -44,6 +47,21 @@ public class GameBoard implements Resettable {
             Card card = new Card(CardType.Artillery);
             cards[index] = card;
         }
+    }
+
+    public Card getRandomAvailableCard() {
+        ArrayList<Card> availableCard = new ArrayList<>();
+
+        for (Card card : cards) {
+            if (card.getHoldingPlayer() == null) {
+                availableCard.add(card);
+            }
+        }
+
+        Random random = new Random();
+        int cardIndex = random.nextInt(availableCard.size() - 1) + 1;
+
+        return availableCard.get(cardIndex);
     }
 
     public ExchangeCardView getExchangeCardView() {
