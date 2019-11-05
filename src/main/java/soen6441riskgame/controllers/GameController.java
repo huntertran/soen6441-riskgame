@@ -121,7 +121,7 @@ public class GameController {
         ArrayList<Country> unAssignedCountries = new ArrayList<Country>();
 
         for (Country country : allCountries) {
-            if (country.getConquerer() == null) {
+            if (!country.isConquered()) {
                 unAssignedCountries.add(country);
             }
         }

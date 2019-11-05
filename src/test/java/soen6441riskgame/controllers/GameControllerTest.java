@@ -171,8 +171,8 @@ public class GameControllerTest {
 
         ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
         for (Country country : countries) {
-            Player conquerer = country.getConquerer();
-            if (conquerer == null) {
+            // Player conquerer = country.getConquerer();
+            if (!country.isConquered()) {
                 isOneCountryNotAssigned = true;
                 break;
             }
