@@ -6,8 +6,18 @@ import java.util.Stack;
 
 import soen6441riskgame.models.Country;
 
-/** The Graph Checker. */
+/**
+ * Static class to implement Connected graph algorithms
+ */
 public class GraphChecker {
+
+    /**
+     * Check if the input countries is connected. This function can be use to check the whole map or
+     * just a continent
+     *
+     * @param countries the list of countries to check
+     * @return false if the countries is not connected
+     */
     public static boolean isCountriesConnected(ArrayList<Country> countries) {
         if (countries.size() < 1) {
             return false;
