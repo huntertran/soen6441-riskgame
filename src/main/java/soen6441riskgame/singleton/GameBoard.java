@@ -11,20 +11,25 @@ import soen6441riskgame.views.ExchangeCardView;
  * Hold the game and map data
  */
 public class GameBoard implements Resettable {
-
     private static final int NUMBER_OF_CARDS = 56;
 
     private static GameBoard instance = new GameBoard();
-
     private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();
     private GameBoardMap gameBoardMap = new GameBoardMap();
     private ExchangeCardView exchangeCardView = new ExchangeCardView();
     private Card[] cards = new Card[NUMBER_OF_CARDS];
 
+    /**
+     * init GameBoard
+     */
     public GameBoard() {
         initCards();
     };
 
+    /**
+     * create a deck of {@value #NUMBER_OF_CARDS} cards, including 2 wild cards and equal cards for
+     * other type
+     */
     public void initCards() {
         // 2 wild card
         for (int index = 0; index < 2; index++) {
@@ -49,6 +54,11 @@ public class GameBoard implements Resettable {
         }
     }
 
+    /**
+     * randomly get an available card from deck
+     *
+     * @return a card that not hold by any player
+     */
     public Card getRandomAvailableCard() {
         ArrayList<Card> availableCard = new ArrayList<>();
 
@@ -64,14 +74,29 @@ public class GameBoard implements Resettable {
         return availableCard.get(cardIndex);
     }
 
+    /**
+     * get Exchange card view
+     *
+     * @return the exchange card view observing the cards holding by player in turn
+     */
     public ExchangeCardView getExchangeCardView() {
         return exchangeCardView;
     }
 
+    /**
+     * get GameBoardPlayer instance
+     *
+     * @return GameBoardPlayer instance that hold players
+     */
     public GameBoardPlayer getGameBoardPlayer() {
         return gameBoardPlayer;
     }
 
+    /**
+     * get GameBoardMap instance
+     *
+     * @return GameBoardMap instance that Countries and Continents
+     */
     public GameBoardMap getGameBoardMap() {
         return gameBoardMap;
     }
@@ -79,12 +104,17 @@ public class GameBoard implements Resettable {
     /**
      * set a new instance for unit testing
      *
-     * @param newTestingInstance
+     * @param newTestingInstance new instance of GameBoard
      */
     public static void setTestingInstance(GameBoard newTestingInstance) {
         instance = newTestingInstance;
     }
 
+    /**
+     * get singleton instance of GameBoard
+     *
+     * @return GameBoard instance
+     */
     public static GameBoard getInstance() {
         return instance;
     }

@@ -7,16 +7,20 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.views.PhaseView;
 
+/**
+ * hold player data
+ */
 public class GameBoardPlayer implements Resettable {
     private ArrayList<Player> players = new ArrayList<Player>();
     private PhaseView phaseView = new PhaseView();
 
+    /**
+     * get the list of players
+     *
+     * @return list of players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
-    }
-
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
     }
 
     /**
@@ -67,7 +71,7 @@ public class GameBoardPlayer implements Resettable {
         if (player != null) {
             // remove player countries
             ArrayList<Country> countries = player.getConqueredCountries();
-            for(Country country : countries){
+            for (Country country : countries) {
                 country.setConquerer(null);
             }
 
@@ -82,6 +86,9 @@ public class GameBoardPlayer implements Resettable {
         }
     }
 
+    /**
+     * reset player list
+     */
     @Override
     public void reset() {
         players = new ArrayList<>();

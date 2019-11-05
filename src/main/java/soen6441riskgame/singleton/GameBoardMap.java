@@ -7,6 +7,9 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.views.PlayersWorldDominationView;
 
+/**
+ * hold countries, continents and player world domination view
+ */
 public class GameBoardMap implements Resettable {
     private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();
     private String mapName;
@@ -14,42 +17,67 @@ public class GameBoardMap implements Resettable {
     private ArrayList<Country> countries = new ArrayList<Country>();
     private int[][] borders;
 
-    public PlayersWorldDominationView getPlayersWorldDominationView(){
+    /**
+     * get PlayersWorldDominationView instance
+     *
+     * @return PlayersWorldDominationView instance
+     */
+    public PlayersWorldDominationView getPlayersWorldDominationView() {
         return playersWorldDominationView;
     }
 
+    /**
+     * get borders of countries, in the form of matrix
+     *
+     * @return 2-d array
+     */
     public int[][] getBorders() {
         return borders;
     }
 
+    /**
+     * replace the borders matrix with new borders matrix
+     *
+     * @param graph
+     */
     public void setBorders(int[][] graph) {
         this.borders = graph;
     }
 
+    /**
+     * get the list of continent objects
+     *
+     * @return list of continent objects
+     */
     public ArrayList<Continent> getContinents() {
         return continents;
-    }
-
-    public void setContinents(ArrayList<Continent> continents) {
-        this.continents = continents;
     }
 
     public String getMapName() {
         return mapName;
     }
 
+    /**
+     * set the name of the map (for saving)
+     *
+     * @param mapName name of map
+     */
     public void setMapName(String mapName) {
         this.mapName = mapName;
     }
 
+    /**
+     * get the list of Country objects
+     *
+     * @return list of Country objects
+     */
     public ArrayList<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries(ArrayList<Country> countries) {
-        this.countries = countries;
-    }
-
+    /**
+     * reset continents and countries
+     */
     @Override
     public void reset() {
         mapName = "";
@@ -59,12 +87,18 @@ public class GameBoardMap implements Resettable {
 
     }
 
+    /**
+     * print all continents
+     */
     public void showContinents() {
         for (Continent continent : continents) {
             continent.view();
         }
     }
 
+    /**
+     * print all countries
+     */
     public void showCountries() {
         for (Country country : countries) {
             country.view();
