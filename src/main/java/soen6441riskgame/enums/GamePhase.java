@@ -13,21 +13,19 @@ public enum GamePhase {
 
     private final int phase;
 
+    /**
+     * private constructor
+     * @param phase the phase
+     */
     private GamePhase(int phase) {
         this.phase = phase;
     }
 
+    /**
+     * get the number re-present the game phase
+     * @return number re-present the game phase
+     */
     public int getGamePhaseAsInt() {
         return phase;
-    }
-
-    public static GamePhase convertIntToGamePhase(int phase) {
-        for (GamePhase gamePhase : GamePhase.values()) {
-            if (gamePhase.getGamePhaseAsInt() == phase) {
-                return gamePhase;
-            }
-        }
-
-        return null;
     }
 }

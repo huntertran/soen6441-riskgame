@@ -13,6 +13,10 @@ public enum MapPart {
 
     private String part;
 
+    /**
+     * private constructor
+     * @param part part of the map
+     */
     MapPart(final String part) {
         this.part = part;
     }
