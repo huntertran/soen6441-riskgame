@@ -610,6 +610,10 @@ public class GameController {
                                        getCurrentPlayer(false).getName(), defendingCountry.getName());
             return;
         }
+        if (!Parser.checkValidInputNumber(args[0])) {
+            ConsolePrinter.printFormat("Invalid Input");
+            return;
+        }
 
         defenderNumDice = Integer.parseInt(args[0]);
         System.out.println(args[0]);
