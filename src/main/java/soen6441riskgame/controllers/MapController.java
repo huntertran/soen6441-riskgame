@@ -20,13 +20,13 @@ import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
 
 /**
- * This class is used to handle the operations to generate, edit the map. Control the map
+ * handle the operations to generate, edit and control the map.
  */
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
 
     /**
-     * This method add border from country to others country
+     * add border from country to others country
      *
      * @param countryOrder        the location of first country in the border graph
      * @param borderWithCountries the location of other countries in the border graph
@@ -40,7 +40,7 @@ public final class MapController {
     }
 
     /**
-     * This method adds new continent
+     * adds new continent
      *
      * @param continentName
      * @param continentValue the amount of army for the new continent
@@ -61,7 +61,7 @@ public final class MapController {
     }
 
     /**
-     * This method add new country to an existed continent OR add existing country to an existed continent
+     * add new country to an existed continent OR add existing country to an existed continent
      *
      * @param countryName   the new country name
      * @param continentName the existed continent name
@@ -85,7 +85,7 @@ public final class MapController {
     }
 
     /**
-     * This method add new country from map file
+     * add new country from map file
      *
      * @param order          the order of country in the list, start with 1
      * @param name           the country name (no space allowed)
@@ -102,10 +102,10 @@ public final class MapController {
     }
 
     /**
-     * This method connect 2 countries with each other on the borderGraph
+     * connect 2 countries with each other on the borderGraph
      *
-     * @param countryName
-     * @param neighborCountryName
+     * @param countryName         name of the country
+     * @param neighborCountryName name of the neighbor country
      */
     public void addNeighbor(String countryName, String neighborCountryName) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
@@ -120,9 +120,9 @@ public final class MapController {
     }
 
     /**
-     * This method create new country, add it to the borderGraph
+     * create new country, add it to the borderGraph
      *
-     * @param countryName
+     * @param countryName name of the country
      * @param continent   the name of continent that country belong to
      */
     public void createNewCountry(String countryName, Continent continent) {
@@ -142,7 +142,7 @@ public final class MapController {
     }
 
     /**
-     * This method intialiazes and Increase border
+     * increase border
      *
      * @param newBorderSize location of the border to insert
      */
@@ -163,7 +163,7 @@ public final class MapController {
     }
 
     /**
-     * This method handle 'editcontient' command from console
+     * handle 'editcontient' command from console
      *
      * @param args -add continentName continentValue -remove continentName
      */
@@ -188,7 +188,7 @@ public final class MapController {
     }
 
     /**
-     * This method handle 'editcountry' command
+     * handle 'editcountry' command
      *
      * @param args -add countryName continentName -remove countryName
      */
@@ -212,6 +212,12 @@ public final class MapController {
         }
     }
 
+    /**
+     * edit an existing map from file
+     *
+     * @param fileName the map file
+     * @throws IOException
+     */
     public void editMap(String fileName) throws IOException {
         try {
             loadMap(fileName);
@@ -249,7 +255,7 @@ public final class MapController {
     /**
      * get continent object from name
      *
-     * @param continentName
+     * @param continentName name of the continent
      * @return null if continent name is not existed in map
      */
     public Continent getContinentFromName(String continentName) {
@@ -306,7 +312,7 @@ public final class MapController {
     /**
      * check if continent with the specified name existed in map
      *
-     * @param continentName
+     * @param continentName name of the continent
      */
     public boolean isContinentExisted(String continentName) {
         Continent continent = getContinentFromName(continentName);
@@ -317,8 +323,8 @@ public final class MapController {
     /**
      * check if country with the specified name existed in map
      *
-     * @param countryName
-     * @return
+     * @param countryName name of the country
+     * @return true if country existed
      */
     public boolean isCountryExisted(String countryName) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
@@ -330,8 +336,8 @@ public final class MapController {
      * check if the number of country is lower than the minimum amount of country required currently the
      * minimum required is {@MINIMUM_AMOUNT_OF_COUNTRIES}
      *
-     * @param minimumNumberOfCountries
-     * @return
+     * @param minimumNumberOfCountries check for the minimum number of country
+     * @return false if the number of country is lower than the minimum amount of country required
      */
     private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
         int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
@@ -471,7 +477,9 @@ public final class MapController {
 
             switch (part) {
                 case NAME: {
-                    GameBoard.getInstance().getGameBoardMap().setMapName(currentLine.split("name")[1].trim());
+                    GameBoard.getInstance()
+                             .getGameBoardMap()
+                             .setMapName(currentLine.split("name")[1].trim());
                     break;
                 }
                 case FILES: {
@@ -520,7 +528,10 @@ public final class MapController {
                 removeCountry(country);
             }
 
-            GameBoard.getInstance().getGameBoardMap().getContinents().remove(continentToRemove);
+            GameBoard.getInstance()
+                     .getGameBoardMap()
+                     .getContinents()
+                     .remove(continentToRemove);
 
             ConsolePrinter.printFormat("Continent %s is removed", continentToRemove.getName());
         } else {
@@ -580,8 +591,8 @@ public final class MapController {
     /**
      * remove connection between 2 countries in the borderGraph
      *
-     * @param countryName
-     * @param neighborCountryName
+     * @param countryName         name of the country
+     * @param neighborCountryName name of the neighbor country
      */
     public void removeNeighbor(String countryName, String neighborCountryName) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
@@ -603,6 +614,12 @@ public final class MapController {
         GameBoard.getInstance().reset();
     }
 
+    /**
+     * save the map to a file
+     *
+     * @param fileName path to file
+     * @throws IOException
+     */
     public void saveMap(String fileName) throws IOException {
         if (!isMapValid()) {
             System.out.println("Invalid map. Map not saved");
@@ -689,8 +706,8 @@ public final class MapController {
      * add the country to country list in GameMap, and add to continent's country list in GameMap this
      * function should be remove when Dependency Injection implemented
      *
-     * @param country
-     * @param continent
+     * @param country   the country object
+     * @param continent the continent object
      */
     private void updateCountryContinent(Country country, Continent continent) {
         country.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());
@@ -721,7 +738,7 @@ public final class MapController {
      * the rest 3. empty continents 4. one country is linked to another but no link back There is no
      * need to check for the last one, because not happened in our implementation
      *
-     * @return
+     * @return is map valid or not
      */
     public boolean isMapValid() {
         boolean isNotEnoughCountries = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES);
@@ -763,14 +780,15 @@ public final class MapController {
         // check if country in continents are connected
         boolean isCountriesInContinentConnected = true;
         ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
-        for(Continent continent : continents){
-            if(!continent.isContinentConnected()){
+        for (Continent continent : continents) {
+            if (!continent.isContinentConnected()) {
                 isCountriesInContinentConnected = false;
                 break;
             }
         }
 
-        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance().getGameBoardMap().getCountries());
+        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance().getGameBoardMap()
+                                                                            .getCountries());
 
         return !isNotEnoughCountries
                && !isIsolatedCountryExisted
