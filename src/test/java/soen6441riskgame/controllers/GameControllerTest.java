@@ -251,7 +251,40 @@ public class GameControllerTest {
                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
                    || !gameController.isAttackValid());
     }
+    
+    /**
+     * it tests the defend command and calls the handleDefendCommand method.
+     */
+    @Test
+    public void handleDefendCommandTest() {
+        // Setup
+        GamePlayActionsTestHelper.addPlayersToGame();
+        gameController.populateCountries();
+        gameController.enterReinforcement();
+        Player currentplayer = gameController.getCurrentPlayer();
+        String countryfrom = currentplayer.getConqueredCountries().get(0).getName();
+        ArrayList<Country> neighboring_countries = currentplayer.getConqueredCountries().get(0).getNeighbors();
+        String enemyCountry = "";
+        for(Country tempCountry : neighboring_countries) {
+            if(tempCountry.getConquerer() != currentplayer) {
+                enemyCountry = tempCountry.getName();
+            }    
+        }
+        gameController.handleReinforceCommand(new String[] { countryfrom, "4" });
+        gameController.enterAttackPhase();
+        int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryfrom).getArmyAmount();
+        int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount();
+        // Action
+        gameController.handleAttackCommand(new String[] { countryfrom, enemyCountry, "3" });
+        if (gameController.isAttackValid()) {
+            gameController.handleDefendCommand(new String[] { "1" });
+        }
 
+        // Assert
+        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryfrom).getArmyAmount() != a
+                   || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
+    }
+    
     /**
      * it tests the endAttackPhase method and checks if the attack phase is ended or not.
      */
