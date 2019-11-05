@@ -26,10 +26,16 @@ import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * Tests the Game Controller methods.
+ */
 public class GameControllerTest {
     MapController mapController;
     GameController gameController;
 
+    /**
+     * the before method is executed before each test case to setup the context.
+     */
     @BeforeEach
     public void before() throws IOException {
 
@@ -44,13 +50,18 @@ public class GameControllerTest {
         gameController = new GameController();
     }
 
+    /**
+     * the after method is executed after each test case to reset the map.
+     */
     @AfterEach
     public void after() {
         mapController.resetMap();
     }
 
-
-
+    /**
+     * it tests the addPlayer method to check whether the added player are actually added to the game or
+     * not.
+     */
     @Test
     public void addPlayerTest() {
         // Setup
@@ -81,6 +92,9 @@ public class GameControllerTest {
         assertSame(benPlayer, tjPreviousPlayer);
     }
 
+    /**
+     * it tests the addPlayer method to check whether multiple players can be inserted.
+     */
     @Test
     public void addMultiplePlayersTest() {
         // Setup
@@ -110,6 +124,9 @@ public class GameControllerTest {
         assertSame(benPlayer, tjPreviousPlayer);
     }
 
+    /**
+     * it tests the remove player command to check whether it removes the player or not.
+     */
     @Test
     public void handlePlayerRemoveCommandTest() {
         // Setup
@@ -136,6 +153,10 @@ public class GameControllerTest {
         assertSame(tjPlayer, benNextPlayer);
     }
 
+    /**
+     * it tests the populatecountries command and tests whether all countries are distributed among
+     * players.
+     */
     @Test
     public void populateCountriesTest() {
         // Setup
@@ -187,6 +208,9 @@ public class GameControllerTest {
         assertFalse(isUnplacedArmiesDifferentForOnePlayer);
     }
 
+    /**
+     * it tests the enterAttackPhase method and checks whether the current phase is attack phase or not.
+     */
     @Test
     public void enterAttackPhaseTest() {
         // Setup
@@ -203,6 +227,9 @@ public class GameControllerTest {
         assertTrue(p1.getCurrentPhase() == GamePhase.ATTACK);
     }
 
+    /**
+     * it tests the attack command and calls the handleAttackCommand method.
+     */
     @Test
     public void handleAttackCommandTest() {
         // Setup
@@ -225,6 +252,9 @@ public class GameControllerTest {
                    || !gameController.isAttackValid());
     }
 
+    /**
+     * it tests the endAttackPhase method and checks if the attack phase is ended or not.
+     */
     @Test
     public void endAttackPhaseTest() {
         // Setup
@@ -240,6 +270,9 @@ public class GameControllerTest {
         assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
     }
 
+    /**
+     * it tests the handlePlaceArmy method and checks whether it correctly places an army or not.
+     */
     @Test
     public void handlePlaceArmyTest() {
         // Setup
@@ -259,6 +292,10 @@ public class GameControllerTest {
         assertEquals(expectedPlacedArmyNumber, targetCountry.getArmyAmount());
     }
 
+    /**
+     * it tests the handlePlaceAll method to check whether all the unplaced armies are getting placed or
+     * not.
+     */
     @Test
     public void handlePlaceAllTest() {
         // Setup
@@ -278,6 +315,10 @@ public class GameControllerTest {
         assertEquals(totalArmy, player.getTotalArmies());
     }
 
+    /**
+     * it tests the getCurrentPlayer method to check whether the player returned is the current player
+     * or not.
+     */
     @Test
     public void getCurrentPlayerTest() {
         // setup
@@ -291,6 +332,10 @@ public class GameControllerTest {
         assertEquals("hunter", player.getName());
     }
 
+    /**
+     * it tests the enterReinforcement method to check whether the phase entered is reinforcement or
+     * not.
+     */
     @Test
     public void enterReinforcementTest() {
         // setup
@@ -305,6 +350,10 @@ public class GameControllerTest {
         assertTrue(expected);
     }
 
+    /**
+     * it tests the handleReinforceCommnad method to check whether the reinforcement command is placing
+     * the reinforcement armies to country as expected.
+     */
     @ParameterizedTest
     @ValueSource(ints = { 100, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
     public void handleReinforceCommandTest(int armyAmount) {
@@ -334,6 +383,10 @@ public class GameControllerTest {
         assertEquals(expectedNumberOfArmies, targetCountry.getArmyAmount());
     }
 
+    /**
+     * it tests the startRoundRobinPlayers method to check whether the round robin is properly working
+     * or not.
+     */
     @Test
     public void startRoundRobinPlayersTest() {
         // setup
@@ -348,6 +401,10 @@ public class GameControllerTest {
         assertEquals("hunter", player.getName());
     }
 
+    /**
+     * it tests the turnToNextPlayer method to check whether the method changes the current player to
+     * the next player.
+     */
     @Test
     public void turnToNextPlayerTest() {
         // setup
@@ -362,6 +419,10 @@ public class GameControllerTest {
         assertEquals("ben", gameController.getCurrentPlayer().getName());
     }
 
+    /**
+     * it tests the handleFortifyCommand method to check whether the player is able to fortify his
+     * countries.
+     */
     @ParameterizedTest
     @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 100 })
     public void handleFortifyCommandTest(int armiesToMove) {
