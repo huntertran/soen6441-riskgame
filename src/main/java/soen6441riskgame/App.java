@@ -10,35 +10,19 @@ import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.ModelCommandsPair;
 
-
 /**
- * This is a main class to run the game.
- *
- *
- *
+ * The main class of the game
  */
-
-
-/**
-	 * This is a main method to run the game.
-	 * This function is used to enter the user input and call the functions to create or edit the map, start, load the game
-	 * and user can exit if he wants to exit the game.
-	 * This function also displays the error message to select valid user input.
-	 *
-	 * @param args the arguments
-	 */
-
 public final class App {
     private App() {
     }
 
-
     /**
-	 * This is the method for entering or initializing the main commands for game.
-	 * This function is used to show the action entered and the user input to create or edit the map, start, load the game
-	 *
-	 * @return userIntInput
-	 */
+     * main method of the game. User can run a command directly from console or start the game and enter
+     * commands
+     *
+     * @param args the command ang it's arguments
+     */
     public static void main(String[] args) {
         System.out.println("SOEN 6441 - Risk Domination game");
 
@@ -51,6 +35,11 @@ public final class App {
         }
     }
 
+    /**
+     * Jump to a specific function to handle the command
+     *
+     * @param args the command and it's arguments parsed in set
+     */
     public static void jumpToCommand(ModelCommands args) {
         String command = args.cmd;
 
@@ -105,7 +94,7 @@ public final class App {
                         mapController.loadMap(args.regularCommands.get(0));
 
                         // if (mapController.isMapValid()) {
-                        //     mapController.showMap();
+                        // mapController.showMap();
                         // }
                     } catch (IOException e) {
                         System.out.println("Error: " + e.getClass().getName());
@@ -120,8 +109,10 @@ public final class App {
                     break;
                 }
                 case GameCommands.POPULATECOUNTRIES: {
-                    gameController.populateCountries();
-                    gameController.initPlayersUnplacedArmies();
+                    if (gameController.isNumberOfPlayerValid()) {
+                        gameController.populateCountries();
+                        gameController.initPlayersUnplacedArmies();
+                    }
                     break;
                 }
                 case GameCommands.PLACEARMY: {
@@ -142,7 +133,7 @@ public final class App {
 
                     break;
                 }
-                case GameCommands.EXCHANGECARDS:{
+                case GameCommands.EXCHANGECARDS: {
                     gameController.exchangeCard(args.regularCommands.toArray(new String[args.regularCommands.size()]));
                 }
                 case GameCommands.ATTACK: {
@@ -175,7 +166,7 @@ public final class App {
                 case GameCommands.FORTIFY: {
                     boolean isFortifyPhase = gameController.enterFortifyPhase();
 
-                    if(isFortifyPhase) {
+                    if (isFortifyPhase) {
                         gameController.handleMultipleFortificationCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
                     }
 
@@ -190,28 +181,28 @@ public final class App {
                     break;
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     /**
-	 * This method is used to Enter an action to Start the game.
-	 */
+     * start the game from beginning, allow user to enter commands and arguments
+     */
     public static void runFromBeginning() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("GAME START");
-        System.out.print("Enter your action: ");
+        System.out.print("ENTER YOUR ACTION: ");
         String command = scanner.nextLine();
 
         while (!command.equals(GameCommands.EXIT)) {
             ModelCommands cmds = new ModelCommands(command);
             jumpToCommand(cmds);
-            System.out.print("Enter your action: ");
+            System.out.print("ENTER YOUR ACTION: ");
             command = scanner.nextLine();
         }
+
         scanner.close();
     }
 }

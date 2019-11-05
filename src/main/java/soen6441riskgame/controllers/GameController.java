@@ -87,6 +87,24 @@ public class GameController {
         }
     }
 
+    public boolean isNumberOfPlayerValid(){
+        ArrayList<Player> players = GameBoard.getInstance()
+                                             .getGameBoardPlayer()
+                                             .getPlayers();
+
+        int numberOfPlayers = players.size();
+
+        if (numberOfPlayers < MINIMUM_NUMBER_OF_PLAYER || numberOfPlayers > MAXIMUM_NUMBER_OF_PLAYER) {
+            ConsolePrinter.printFormat("Number of player must between %d and %d, currently the game have %d players",
+                                       MINIMUM_NUMBER_OF_PLAYER,
+                                       MAXIMUM_NUMBER_OF_PLAYER,
+                                       players.size());
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * random assign countries to players equally
      */
@@ -140,19 +158,9 @@ public class GameController {
                                              .getGameBoardPlayer()
                                              .getPlayers();
 
-        int numberOfPlayers = players.size();
-
-        if (numberOfPlayers < MINIMUM_NUMBER_OF_PLAYER || numberOfPlayers > MAXIMUM_NUMBER_OF_PLAYER) {
-            ConsolePrinter.printFormat("Number of player must between %d and %d, currently the game have %d players",
-                                       MINIMUM_NUMBER_OF_PLAYER,
-                                       MAXIMUM_NUMBER_OF_PLAYER,
-                                       players.size());
-            return;
-        }
-
         int unplacedArmiesEachPlayer = 0;
 
-        switch (numberOfPlayers) {
+        switch (players.size()) {
             case 2: {
                 unplacedArmiesEachPlayer = 40;
                 break;
