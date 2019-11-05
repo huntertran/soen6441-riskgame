@@ -16,16 +16,10 @@ import soen6441riskgame.utils.Parser;
 /**
  * Control the game
  *
- * This Class Game Controller initializes the game by calling the GameCommands.
  */
 public class GameController {
-
-    // TODO: issue #20: https://github.com/huntertran/soen6441-riskgame/issues/20
-
-    /**
-     * The maximum initial army amount
-     */
-    public static int MAX_INITIAL_ARMY_AMOUNT = 50;
+    public static final int MINIMUM_NUMBER_OF_PLAYER = 2;
+    public static final int MAXIMUM_NUMBER_OF_PLAYER = 6;
 
     /**
      * The minimum number army amount on a country
@@ -33,7 +27,7 @@ public class GameController {
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
 
     /**
-     * The number of dice for attaker
+     * The number of dice for attacker
      */
     public static int attacker_numDice = 0;
 
@@ -63,7 +57,7 @@ public class GameController {
     public static boolean attack_move_cmd_required = false;
 
     /**
-     * This function handle <code>gameplayer</code> command
+     * handle <code>gameplayer</code> command
      *
      * @param args [0] -add/-remove
      * @param args [1] player name
@@ -97,9 +91,10 @@ public class GameController {
      * random assign countries to players equally
      */
     public void populateCountries() {
-        // int totalCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
-        int totalPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayers().size();
-        // int numberOfAssignedCountry = 0;
+        int totalPlayer = GameBoard.getInstance()
+                                   .getGameBoardPlayer()
+                                   .getPlayers()
+                                   .size();
         int playerIndexToAssign = 0;
 
         Random random = new Random();
@@ -121,7 +116,10 @@ public class GameController {
             int nextIndexCountryToAssign = random.nextInt(unAssignedCountries.size());
             Country countryToAssign = unAssignedCountries.get(nextIndexCountryToAssign);
 
-            Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
+            Player player = GameBoard.getInstance()
+                                     .getGameBoardPlayer()
+                                     .getPlayers()
+                                     .get(playerIndexToAssign);
             countryToAssign.setConquerer(player);
 
             // user need to place at least 1 army to the country he owned
@@ -131,39 +129,51 @@ public class GameController {
             unAssignedCountries.remove(countryToAssign);
         }
 
-        // while (numberOfAssignedCountry < totalCountry) {
-
-        //     if (playerIndexToAssign == totalPlayer) {
-        //         playerIndexToAssign = 0;
-        //     }
-
-        //     int nextIndexCountryToAssign = random.nextInt(totalCountry);
-
-        //     Country countryToAssign = GameBoard.getInstance()
-        //                                        .getGameBoardMap()
-        //                                        .getCountries()
-        //                                        .get(nextIndexCountryToAssign);
-
-        //     if (!countryToAssign.isConquered()) {
-        //         Player player = GameBoard.getInstance().getGameBoardPlayer().getPlayers().get(playerIndexToAssign);
-        //         countryToAssign.setConquerer(player);
-
-        //         // user need to place at least 1 army to the country he owned
-        //         countryToAssign.setArmyAmount(MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY);
-        //         numberOfAssignedCountry++;
-        //         playerIndexToAssign++;
-        //     }
-        // }
-
         System.out.println("All countries are randomly assigned to players");
     }
 
     /**
-     * This method allocate a number of initial armies to each players, depending on number of players
+     * allocate a number of initial armies to each players, depending on number of players
      */
     public void initPlayersUnplacedArmies() {
-        ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
-        int unplacedArmiesEachPlayer = MAX_INITIAL_ARMY_AMOUNT / players.size();
+        ArrayList<Player> players = GameBoard.getInstance()
+                                             .getGameBoardPlayer()
+                                             .getPlayers();
+
+        int numberOfPlayers = players.size();
+
+        if (numberOfPlayers < MINIMUM_NUMBER_OF_PLAYER || numberOfPlayers > MAXIMUM_NUMBER_OF_PLAYER) {
+            ConsolePrinter.printFormat("Number of player must between %d and %d, currently the game have %d players",
+                                       MINIMUM_NUMBER_OF_PLAYER,
+                                       MAXIMUM_NUMBER_OF_PLAYER,
+                                       players.size());
+            return;
+        }
+
+        int unplacedArmiesEachPlayer = 0;
+
+        switch (numberOfPlayers) {
+            case 2: {
+                unplacedArmiesEachPlayer = 40;
+                break;
+            }
+            case 3: {
+                unplacedArmiesEachPlayer = 35;
+                break;
+            }
+            case 4: {
+                unplacedArmiesEachPlayer = 30;
+                break;
+            }
+            case 5: {
+                unplacedArmiesEachPlayer = 25;
+                break;
+            }
+            case 6: {
+                unplacedArmiesEachPlayer = 20;
+                break;
+            }
+        }
 
         for (Player player : players) {
             player.setUnplacedArmies(unplacedArmiesEachPlayer);
@@ -171,8 +181,7 @@ public class GameController {
     }
 
     /**
-     * This method Handle place army command for current player. The player is selected in a round-robin
-     * rule
+     * Handle place army command for current player. The player is selected in a round-robin rule
      *
      * @param countryName name of the country to place army. The country must belong to current player
      */
@@ -199,7 +208,7 @@ public class GameController {
     }
 
     /**
-     * This method automatically randomly place all remaining unplaced armies for all players
+     * automatically randomly place all remaining unplaced armies for all players
      */
     public void handlePlaceAllCommand() {
         Random random = new Random();
@@ -232,7 +241,7 @@ public class GameController {
     }
 
     /**
-     * This method start round-robin for list of players, exclude lost players
+     * start round-robin for list of players, exclude lost players
      */
     public Player startRoundRobinPlayers() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
@@ -249,7 +258,7 @@ public class GameController {
     }
 
     /**
-     * This method gives turn to the next player in list
+     * gives turn to the next player in list
      */
     public void turnToNextPlayer() {
         Player currentPlayer = getCurrentPlayer();

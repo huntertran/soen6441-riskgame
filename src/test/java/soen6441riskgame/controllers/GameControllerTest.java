@@ -202,7 +202,6 @@ public class GameControllerTest {
                     isUnplacedArmiesDifferentForOnePlayer = true;
                 }
             }
-
         }
 
         // Assert
@@ -262,27 +261,27 @@ public class GameControllerTest {
         GamePlayActionsTestHelper.addPlayersToGame();
         gameController.populateCountries();
         gameController.enterReinforcement();
-        Player currentplayer = gameController.getCurrentPlayer();
-        String countryfrom = currentplayer.getConqueredCountries().get(0).getName();
-        ArrayList<Country> neighboring_countries = currentplayer.getConqueredCountries().get(0).getNeighbors();
+        Player currentPlayer = gameController.getCurrentPlayer();
+        String fromCountry = currentPlayer.getConqueredCountries().get(0).getName();
+        ArrayList<Country> neighboring_countries = currentPlayer.getConqueredCountries().get(0).getNeighbors();
         String enemyCountry = "";
         for(Country tempCountry : neighboring_countries) {
-            if(tempCountry.getConquerer() != currentplayer) {
+            if(tempCountry.getConquerer() != currentPlayer) {
                 enemyCountry = tempCountry.getName();
             }
         }
-        gameController.handleReinforceCommand(new String[] { countryfrom, "4" });
+        gameController.handleReinforceCommand(new String[] { fromCountry, "4" });
         gameController.enterAttackPhase();
-        int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryfrom).getArmyAmount();
+        int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount();
         int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount();
         // Action
-        gameController.handleAttackCommand(new String[] { countryfrom, enemyCountry, "3" });
+        gameController.handleAttackCommand(new String[] { fromCountry, enemyCountry, "3" });
         if (gameController.isAttackValid()) {
             gameController.handleDefendCommand(new String[] { "1" });
         }
 
         // Assert
-        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryfrom).getArmyAmount() != a
+        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount() != a
                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
     }
 
@@ -385,7 +384,7 @@ public class GameControllerTest {
     }
 
     /**
-     * it tests the handleReinforceCommnad method to check whether the reinforcement command is placing
+     * it tests the handleReinforceCommand method to check whether the reinforcement command is placing
      * the reinforcement armies to country as expected.
      */
     @ParameterizedTest
