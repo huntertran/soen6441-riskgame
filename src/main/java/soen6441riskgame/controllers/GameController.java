@@ -21,37 +21,37 @@ import soen6441riskgame.utils.Parser;
 public class GameController {
 
     // TODO: issue #20: https://github.com/huntertran/soen6441-riskgame/issues/20
-    
-     /**
+
+    /**
      * The maximum initial army amount
      */
     public static int MAX_INITIAL_ARMY_AMOUNT = 50;
-    
+
     /**
      * The minimum number army amount on a country
      */
     public static final int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY = 1;
-    
+
     /**
      * The number of dice for attaker
      */
     public static int attacker_numDice = 0;
-    
+
     /**
      * The number of dice for defender
      */
     public static int defender_numDice = 0;
-    
+
     /**
      * The country attacking country
      */
     public static Country attackingCountry = null;
-    
+
     /**
      * The country defending country
      */
     public static Country defendingCountry = null;
-    
+
     /**
      * The all out
      */
@@ -106,8 +106,7 @@ public class GameController {
             }
 
             int nextIndexCountryToAssign = random.nextInt(totalCountry);
-            
-            
+
             // the int playerIndexToAssign = random.nextInt(totalPlayer);
             int playerIndexToAssign = player_counter;
 
@@ -143,7 +142,8 @@ public class GameController {
     }
 
     /**
-     * This method Handle place army command for current player. The player is selected in a round-robin rule
+     * This method Handle place army command for current player. The player is selected in a round-robin
+     * rule
      *
      * @param countryName name of the country to place army. The country must belong to current player
      */
@@ -420,10 +420,14 @@ public class GameController {
     }
 
     private void simulateAttack() {
-        while (isAttackValid() && allout_flag) {
+        while (allout_flag) {
             attacker_numDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
             int defender_dice = defendingCountry.getArmyAmount() < 2 ? defendingCountry.getArmyAmount() : 2;
-            handleDefendCommand(new String[] { Integer.toString(defender_dice) });
+            if (isAttackValid()) {
+                handleDefendCommand(new String[] { Integer.toString(defender_dice) });
+            } else {
+                allout_flag = false;
+            }
         }
         ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
     }
