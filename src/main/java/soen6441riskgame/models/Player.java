@@ -10,7 +10,9 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
- * Hold player data Each player is a node in a linked list
+ * Hold player data
+ *
+ * Each player is a node in a linked list
  */
 public class Player extends Observable {
     private String name;
@@ -26,23 +28,50 @@ public class Player extends Observable {
     private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
     private boolean isPlayerBeAwardCard = false;
 
+    /**
+     * constructor
+     *
+     * @param name player's name
+     */
     public Player(String name) {
         this.name = name;
         this.currentPhase = GamePhase.WAITING_TO_TURN;
     }
 
+    /**
+     * check if this player have conquered at least 1 country in the attack phase, therefore, be award a
+     * card from deck
+     *
+     * @return is player be award card
+     */
     public boolean isPlayerBeAwardCard() {
         return isPlayerBeAwardCard;
     }
 
+    /**
+     * mark this player have conquered at least 1 country in the attack phase, therefore, be award a
+     * card from deck
+     *
+     * @param isPlayerAwardCard set the mark
+     */
     public void setPlayerBeAwardCard(boolean isPlayerAwardCard) {
         this.isPlayerBeAwardCard = isPlayerAwardCard;
     }
 
+    /**
+     * get player's current phase
+     *
+     * @return game phase of the player
+     */
     public GamePhase getCurrentPhase() {
         return currentPhase;
     }
 
+    /**
+     * set player's current phase
+     *
+     * @param newPhase the phase to set
+     */
     public void setCurrentPhase(GamePhase newPhase) {
         if (currentPhase != newPhase) {
 
@@ -59,6 +88,15 @@ public class Player extends Observable {
                 }
             }
 
+            if (newPhase == GamePhase.ATTACK) {
+                if (holdingCards.size() >= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {
+                    ConsolePrinter.printFormat("You have more than %d cards. Must exchange before attacking.",
+                                               MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);
+
+                    isChangePhaseAllowed = false;
+                }
+            }
+
             if (isChangePhaseAllowed) {
                 currentPhase = newPhase;
                 currentPhaseActions.clear();
@@ -71,7 +109,9 @@ public class Player extends Observable {
                     this.deleteObserver(GameBoard.getInstance().getExchangeCardView());
                 }
 
-                getACardFromDeck(newPhase);
+                if (newPhase == GamePhase.FORTIFICATION) {
+                    getACardFromDeck();
+                }
             } else {
                 ConsolePrinter.printFormat("Player %s cannot change from phase %s to phase %s",
                                            getName(),
@@ -83,31 +123,23 @@ public class Player extends Observable {
 
     /**
      * add new card if player conquer at least 1 country during attack phase
-     *
-     * @param newPhase
      */
-    private void getACardFromDeck(GamePhase newPhase) {
-        if (newPhase == GamePhase.ATTACK) {
-            if (isPlayerBeAwardCard()) {
-                Card newCard = GameBoard.getInstance().getRandomAvailableCard();
-                newCard.setHoldingPlayer(this);
-                holdingCards.add(newCard);
-                setPlayerBeAwardCard(false);
-            }
+    private void getACardFromDeck() {
+        if (isPlayerBeAwardCard()) {
+            Card newCard = GameBoard.getInstance().getRandomAvailableCard();
+            newCard.setHoldingPlayer(this);
+            holdingCards.add(newCard);
+            setPlayerBeAwardCard(false);
+            setChanged();
+            notifyObservers(ChangedProperty.CARD);
         }
     }
 
-    public void addCard(Card card) {
-        if (holdingCards.size() >= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {
-            ConsolePrinter.printFormat("You have more than %d cards. Must exchange before attacking.",
-                                       MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);
-        }
-
-        holdingCards.add(card);
-        setChanged();
-        notifyObservers(ChangedProperty.CARD);
-    }
-
+    /**
+     * get player's list of cards
+     *
+     * @return
+     */
     public ArrayList<Card> getHoldingCards() {
         return holdingCards;
     }
@@ -127,6 +159,9 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * return all the exchanged cards that player is holding
+     */
     public void removeExchangedCards() {
         for (Iterator<Card> cardList = holdingCards.listIterator(); cardList.hasNext();) {
             Card card = cardList.next();
@@ -137,10 +172,18 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * get the list of action for current phase
+     * @return
+     */
     public ArrayList<String> getCurrentPhaseActions() {
         return currentPhaseActions;
     }
 
+    /**
+     * add new action for current phase
+     * @param action the action string
+     */
     public void addCurrentPhaseAction(String action) {
         currentPhaseActions.add(action);
         setChanged();
@@ -150,12 +193,16 @@ public class Player extends Observable {
     /**
      * get previous player on the linked list
      *
-     * @return
+     * @return previous player
      */
     public Player getPreviousPlayer() {
         return previousPlayer;
     }
 
+    /**
+     * set previous player
+     * @param previousPlayer the player object
+     */
     public void setPreviousPlayer(Player previousPlayer) {
         this.previousPlayer = previousPlayer;
 
@@ -173,6 +220,10 @@ public class Player extends Observable {
         return nextPlayer;
     }
 
+    /**
+     * set next player
+     * @param nextPlayer the player object
+     */
     public void setNextPlayer(Player nextPlayer) {
         this.nextPlayer = nextPlayer;
         if (nextPlayer.getPreviousPlayer() != this) {
@@ -180,10 +231,18 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * get player name
+     * @return player name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * get total armies a player have
+     * @return total armies
+     */
     public int getTotalArmies() {
         int totalArmies = 0;
 
@@ -197,6 +256,10 @@ public class Player extends Observable {
         return totalArmies;
     }
 
+    /**
+     * get a list of conquered continents of this player
+     * @return list of conquered continents
+     */
     public ArrayList<Continent> getConqueredContinents() {
         ArrayList<Continent> conquered = new ArrayList<>();
 
@@ -230,18 +293,33 @@ public class Player extends Observable {
         return conquered;
     }
 
+    /**
+     * check if this player is still in the game
+     * @return is this player is still in the game
+     */
     public boolean isPlaying() {
         return isPlaying;
     }
 
+    /**
+     * set is this player is till in the game
+     * @param isPlaying is this player is till in the game
+     */
     public void setPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
 
+    /**
+     * get player unplaced armies
+     */
     public int getUnplacedArmies() {
         return unplacedArmies;
     }
 
+    /**
+     * set player unplaced armies
+     * @param unplacedArmies the number of armies
+     */
     public void setUnplacedArmies(int unplacedArmies) {
         this.unplacedArmies = unplacedArmies;
     }
