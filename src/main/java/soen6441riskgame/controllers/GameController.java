@@ -301,6 +301,14 @@ public class GameController {
         for (Country country : player.getConqueredCountries()) {
             country.viewWithoutNeighbors(2);
         }
+
+        ArrayList<Card> cards = player.getHoldingCards();
+        if (!cards.isEmpty()) {
+            ConsolePrinter.printFormat("Player cards:");
+            for (Card card : player.getHoldingCards()) {
+                card.view(1);
+            }
+        }
     }
 
     /**
