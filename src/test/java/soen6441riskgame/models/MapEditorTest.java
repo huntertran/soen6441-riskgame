@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 
-
+/**
+ * Tests Map Editor Commands.
+ */
 public class MapEditorTest {
 
     private String valid1 = "editcontinent -add continentName 5 -remove continentName2";

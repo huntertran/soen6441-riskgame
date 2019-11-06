@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for the Fortication Phase.
+ * Tests the Fortication Phase Commands.
  */
 public class FortificationPhaseTest {
     

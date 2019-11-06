@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 
 /**
- * Tests the Attack Phase.
+ * Tests the Attack Phase Commands.
  */
 public class AttackPhaseTest {
     
