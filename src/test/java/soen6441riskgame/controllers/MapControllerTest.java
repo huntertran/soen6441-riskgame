@@ -330,7 +330,7 @@ public class MapControllerTest {
         Assertions.assertTrue(true);
     }
 /**
-     * it tests the validateMap method and checks if the map is valid or not by checking if sufficient
+     * it tests if the map is valid or not by checking if sufficient
      * number of countries are added.
      * @throws IOException
      */
@@ -356,6 +356,10 @@ public class MapControllerTest {
         Assertions.assertFalse(mapController.isMapValid());
     }
 
+    /**
+     * it tests if there is an isolated country on the map, which if true, will make map invalid.
+     * @throws IOException
+     */
     @Test
     public void validateMapIsolatedCountryTest() throws IOException {
         // setup
@@ -373,6 +377,10 @@ public class MapControllerTest {
         Assertions.assertFalse(mapController.isMapValid());
     }
 
+    /**
+     * it tests for the validity of the map by after removal of countries from a continent.
+     * @throws IOException
+     */
     @Test
     public void validateMapEmptyContinentTest() throws IOException {
         // setup
