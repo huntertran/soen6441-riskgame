@@ -329,7 +329,11 @@ public class MapControllerTest {
         // assert
         Assertions.assertTrue(true);
     }
-
+/**
+     * it tests the validateMap method and checks if the map is valid or not by checking if sufficient
+     * number of countries are added.
+     * @throws IOException
+     */
     @Test
     public void validateMapNotEnoughCountryTest() throws IOException {
         // setup
