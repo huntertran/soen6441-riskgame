@@ -101,6 +101,8 @@ public class Country extends Observable implements Viewable {
 
     /**
      * return the order of the country in the country list, starting with 1
+     * 
+     * @return the order of the country
      */
     public int getOrder() {
         return GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;

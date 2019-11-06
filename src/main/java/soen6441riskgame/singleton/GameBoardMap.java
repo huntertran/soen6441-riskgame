@@ -38,7 +38,7 @@ public class GameBoardMap implements Resettable {
     /**
      * replace the borders matrix with new borders matrix
      *
-     * @param graph
+     * @param graph the new border to set
      */
     public void setBorders(int[][] graph) {
         this.borders = graph;
@@ -108,7 +108,7 @@ public class GameBoardMap implements Resettable {
     /**
      * get country object from name
      *
-     * @param countryName
+     * @param countryName name of the country
      * @return null if country name is not existed in map
      */
     public Country getCountryFromName(String countryName) {

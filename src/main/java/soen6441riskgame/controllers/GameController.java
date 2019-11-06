@@ -260,6 +260,8 @@ public class GameController {
 
     /**
      * start round-robin for list of players, exclude lost players
+     * 
+     * @return the player in turn
      */
     public Player startRoundRobinPlayers() {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>soen6441riskgame</groupId>
     <artifactId>soen6441riskgame</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

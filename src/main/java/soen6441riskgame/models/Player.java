@@ -138,7 +138,7 @@ public class Player extends Observable {
     /**
      * get player's list of cards
      *
-     * @return
+     * @return player's list of cards
      */
     public ArrayList<Card> getHoldingCards() {
         return holdingCards;
@@ -174,7 +174,8 @@ public class Player extends Observable {
 
     /**
      * get the list of action for current phase
-     * @return
+     * 
+     * @return list of action for current phase
      */
     public ArrayList<String> getCurrentPhaseActions() {
         return currentPhaseActions;
@@ -182,6 +183,7 @@ public class Player extends Observable {
 
     /**
      * add new action for current phase
+     * 
      * @param action the action string
      */
     public void addCurrentPhaseAction(String action) {
@@ -201,6 +203,7 @@ public class Player extends Observable {
 
     /**
      * set previous player
+     * 
      * @param previousPlayer the player object
      */
     public void setPreviousPlayer(Player previousPlayer) {
@@ -214,7 +217,7 @@ public class Player extends Observable {
     /**
      * get next player on the linked list
      *
-     * @return
+     * @return next player on the linked list
      */
     public Player getNextPlayer() {
         return nextPlayer;
@@ -222,6 +225,7 @@ public class Player extends Observable {
 
     /**
      * set next player
+     * 
      * @param nextPlayer the player object
      */
     public void setNextPlayer(Player nextPlayer) {
@@ -233,6 +237,7 @@ public class Player extends Observable {
 
     /**
      * get player name
+     * 
      * @return player name
      */
     public String getName() {
@@ -241,6 +246,7 @@ public class Player extends Observable {
 
     /**
      * get total armies a player have
+     * 
      * @return total armies
      */
     public int getTotalArmies() {
@@ -258,6 +264,7 @@ public class Player extends Observable {
 
     /**
      * get a list of conquered continents of this player
+     * 
      * @return list of conquered continents
      */
     public ArrayList<Continent> getConqueredContinents() {
@@ -295,6 +302,7 @@ public class Player extends Observable {
 
     /**
      * check if this player is still in the game
+     * 
      * @return is this player is still in the game
      */
     public boolean isPlaying() {
@@ -303,6 +311,7 @@ public class Player extends Observable {
 
     /**
      * set is this player is till in the game
+     * 
      * @param isPlaying is this player is till in the game
      */
     public void setPlaying(boolean isPlaying) {
@@ -311,6 +320,8 @@ public class Player extends Observable {
 
     /**
      * get player unplaced armies
+     * 
+     * @return player unplaced armies
      */
     public int getUnplacedArmies() {
         return unplacedArmies;
@@ -318,6 +329,7 @@ public class Player extends Observable {
 
     /**
      * set player unplaced armies
+     * 
      * @param unplacedArmies the number of armies
      */
     public void setUnplacedArmies(int unplacedArmies) {

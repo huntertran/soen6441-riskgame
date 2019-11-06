@@ -10,7 +10,7 @@ public class Parser {
      *
      * @param number       string to parse
      * @param defaultValue default return value if parse error
-     * @return
+     * @return return default value if parse error
      */
     public static int parseWithDefault(String number, int defaultValue) {
         try {

@@ -43,7 +43,7 @@ public final class MapController {
     /**
      * adds new continent
      *
-     * @param continentName
+     * @param continentName  name of the continent
      * @param continentValue the amount of army for the new continent
      * @param order          the continent other in the list (start with 1 as the map file structure
      *                       indicate)
@@ -224,7 +224,7 @@ public final class MapController {
      * edit an existing map from file
      *
      * @param fileName the map file
-     * @throws IOException
+     * @throws IOException exception
      */
     public void editMap(String fileName) throws IOException {
         try {
@@ -321,6 +321,7 @@ public final class MapController {
      * check if continent with the specified name existed in map
      *
      * @param continentName name of the continent
+     * @return is continent existed
      */
     public boolean isContinentExisted(String continentName) {
         Continent continent = getContinentFromName(continentName);
@@ -467,7 +468,7 @@ public final class MapController {
      *
      * @param fileName the exact path to map file, end with .map extension for example:
      *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
-     * @throws IOException
+     * @throws IOException exception
      */
     public void loadMap(String fileName) throws IOException {
         Path path = Paths.get(fileName);
@@ -626,7 +627,7 @@ public final class MapController {
      * save the map to a file
      *
      * @param fileName path to file
-     * @throws IOException
+     * @throws IOException exception
      */
     public void saveMap(String fileName) throws IOException {
         if (!isMapValid()) {

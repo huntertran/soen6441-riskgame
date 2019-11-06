@@ -26,7 +26,7 @@ public class GameBoardPlayer implements Resettable {
     /**
      * get player object from name
      *
-     * @param name
+     * @param name player name
      * @return null if player name is not in the list
      */
     public Player getPlayerFromName(String name) {
@@ -41,7 +41,7 @@ public class GameBoardPlayer implements Resettable {
     /**
      * add a new player and link to next/previous player
      *
-     * @param name
+     * @param name player name
      */
     public void addPlayer(String name) {
         Player player = getPlayerFromName(name);
@@ -64,7 +64,7 @@ public class GameBoardPlayer implements Resettable {
     /**
      * remove a player and destroy link to next/previous player
      *
-     * @param name
+     * @param name player name
      */
     public void removePlayer(String name) {
         Player player = getPlayerFromName(name);

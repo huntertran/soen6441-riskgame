@@ -17,7 +17,8 @@ public class ConsolePrinter {
 
     /**
      * print the array in matrix style, with header
-     * @param array
+     * 
+     * @param array   array to print
      * @param headers if header is empty or null, the index will be printed
      */
     public static void print2dArray(int[][] array, String[] headers) {

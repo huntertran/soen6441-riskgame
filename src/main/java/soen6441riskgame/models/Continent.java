@@ -27,6 +27,8 @@ public class Continent extends Observable implements Viewable {
 
     /**
      * get the continent order from list, start with 1
+     * 
+     * @return continent order
      */
     public int getOrder() {
         return GameBoard.getInstance().getGameBoardMap().getContinents().indexOf(this) + 1;
@@ -52,6 +54,8 @@ public class Continent extends Observable implements Viewable {
 
     /**
      * get continent name
+     * 
+     * @return continent name
      */
     public String getName() {
         return name;
@@ -83,7 +87,8 @@ public class Continent extends Observable implements Viewable {
     /**
      * check if the continent is a mini-connected graph
      *
-     * @see https://github.com/huntertran/soen6441-riskgame/wiki/Connected-Graph-Validation-Unit-Test
+     * https://github.com/huntertran/soen6441-riskgame/wiki/Connected-Graph-Validation-Unit-Test
+     * 
      * @return false if it's not a mini-connected graph
      */
     public boolean isContinentConnected() {

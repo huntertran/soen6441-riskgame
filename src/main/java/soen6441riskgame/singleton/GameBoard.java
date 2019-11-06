@@ -57,6 +57,7 @@ public class GameBoard implements Resettable {
     /**
      * get an specific card from deck for test
      *
+     * @param cardType type of card to get
      * @return a card that not hold by any player
      */
     public Card getSpecificCardForTest(CardType cardType) {
