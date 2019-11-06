@@ -1,7 +1,8 @@
 soen6441riskgame
-soen6441riskgame.commands
 soen6441riskgame.controllers
 soen6441riskgame.enums
 soen6441riskgame.models
+soen6441riskgame.models.commands
 soen6441riskgame.singleton
 soen6441riskgame.utils
+soen6441riskgame.views
