@@ -645,9 +645,9 @@ public class GameController {
             printDiceValues += defenderDiceValues[i] + "    ";
         }
         ConsolePrinter.printFormat("%s", printDiceValues);
-        
-        Player player1 = getCurrentPlayer();
-        
+
+        Player currentPlayer = getCurrentPlayer();
+
         // now we will check who loses an army
         if (defenderNumDice == 1 || attackerNumDice == 1) {
             if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
@@ -657,8 +657,14 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
-                
-                player1.addCurrentPhaseAction("Attack: The defender " + defendingCountry.getConquerer().getName() + " has lost 1 army from " + defendingCountry.getName() + "."+ defendingCountry.getArmyAmount()+"  armies left.");
+
+                currentPlayer.addCurrentPhaseAction("Attack: The defender "
+                                                    + defendingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + defendingCountry.getName()
+                                                    + "."
+                                                    + defendingCountry.getArmyAmount()
+                                                    + "  armies left.");
 
             } else {
                 // attacking army is lost
@@ -667,8 +673,14 @@ public class GameController {
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
-                
-                player1.addCurrentPhaseAction("Attack: The attacker " + attackingCountry.getConquerer().getName() + " has lost 1 army from " + attackingCountry.getName() + "."+ attackingCountry.getArmyAmount()+"  armies left.");
+
+                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
+                                                    + attackingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + attackingCountry.getName()
+                                                    + "."
+                                                    + attackingCountry.getArmyAmount()
+                                                    + "  armies left.");
 
             }
         } else {
@@ -679,9 +691,14 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
-                
-                player1.addCurrentPhaseAction("Attack: The defender " + defendingCountry.getConquerer().getName() + " has lost 1 army from " + defendingCountry.getName() + "."+ defendingCountry.getArmyAmount()+"  armies left.");
 
+                currentPlayer.addCurrentPhaseAction("Attack: The defender "
+                                                    + defendingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + defendingCountry.getName()
+                                                    + "."
+                                                    + defendingCountry.getArmyAmount()
+                                                    + "  armies left.");
 
             } else {
                 // attacking army is lost
@@ -690,7 +707,13 @@ public class GameController {
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
-                player1.addCurrentPhaseAction("Attack: The attacker " + attackingCountry.getConquerer().getName() + " has lost 1 army from " + attackingCountry.getName() + "."+ attackingCountry.getArmyAmount()+"  armies left.");
+                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
+                                                    + attackingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + attackingCountry.getName()
+                                                    + "."
+                                                    + attackingCountry.getArmyAmount()
+                                                    + "  armies left.");
 
             }
             if (getMax(attackerDiceValues, true) > getMax(defenderDiceValues, true)) {
@@ -700,9 +723,14 @@ public class GameController {
                                            defendingCountry.getConquerer().getName(),
                                            defendingCountry.getName(),
                                            defendingCountry.getArmyAmount());
-                player1.addCurrentPhaseAction("Attack: The defender " + defendingCountry.getConquerer().getName() + " has lost 1 army from " + defendingCountry.getName() + "."+ defendingCountry.getArmyAmount()+"  armies left.");
+                currentPlayer.addCurrentPhaseAction("Attack: The defender "
+                                                    + defendingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + defendingCountry.getName()
+                                                    + "."
+                                                    + defendingCountry.getArmyAmount()
+                                                    + "  armies left.");
 
-                
             } else {
                 // attacking army is lost
                 attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
@@ -710,7 +738,13 @@ public class GameController {
                                            attackingCountry.getConquerer().getName(),
                                            attackingCountry.getName(),
                                            attackingCountry.getArmyAmount());
-                player1.addCurrentPhaseAction("Attack: The attacker " + attackingCountry.getConquerer().getName() + " has lost 1 army from " + attackingCountry.getName() + "."+ attackingCountry.getArmyAmount()+"  armies left.");
+                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
+                                                    + attackingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + attackingCountry.getName()
+                                                    + "."
+                                                    + attackingCountry.getArmyAmount()
+                                                    + "  armies left.");
 
             }
         }
@@ -862,9 +896,7 @@ public class GameController {
     /**
      * it returns whether the attack is valid (true) or not (false)
      *
-     *
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
-     *
      */
     public boolean isAttackValid() {
         Player currentPlayer = getCurrentPlayer(false);
@@ -927,7 +959,6 @@ public class GameController {
      * it executes the dice roll.
      *
      * @return int it returns the random number from 1 to 6 on the dice.
-     *
      */
     private int rollDice() {
         Random random = new Random();
@@ -936,7 +967,6 @@ public class GameController {
 
     /**
      * it ends the attack phase and sets the current game phase to fortification
-     *
      */
     public void endAttackPhase() {
         defendingCountry = null;
