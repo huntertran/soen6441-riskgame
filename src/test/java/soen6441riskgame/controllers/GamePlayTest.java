@@ -14,10 +14,17 @@ import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.singleton.GameBoard;
 
+/**
+ * Tests for Game Play.
+ */
 public class GamePlayTest {
     // MapController mapController;
     GameController gameController;
 
+    /**
+     * the before method is executed before each test case to setup the context.
+     * @throws IOException
+     */
     @BeforeEach
     public void before() throws IOException {
 
