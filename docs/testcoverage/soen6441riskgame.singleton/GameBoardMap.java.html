@@ -7,101 +7,135 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.views.PlayersWorldDominationView;
 
-<span class="fc" id="L10">public class GameBoardMap implements Resettable {</span>
-<span class="fc" id="L11">    private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();</span>
+/**
+ * hold countries, continents and player world domination view
+ */
+<span class="fc" id="L13">public class GameBoardMap implements Resettable {</span>
+<span class="fc" id="L14">    private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();</span>
     private String mapName;
-<span class="fc" id="L13">    private ArrayList&lt;Continent&gt; continents = new ArrayList&lt;Continent&gt;();</span>
-<span class="fc" id="L14">    private ArrayList&lt;Country&gt; countries = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L16">    private ArrayList&lt;Continent&gt; continents = new ArrayList&lt;Continent&gt;();</span>
+<span class="fc" id="L17">    private ArrayList&lt;Country&gt; countries = new ArrayList&lt;Country&gt;();</span>
     private int[][] borders;
 
-    public PlayersWorldDominationView getPlayersWorldDominationView(){
-<span class="fc" id="L18">        return playersWorldDominationView;</span>
+    /**
+     * get PlayersWorldDominationView instance
+     *
+     * @return PlayersWorldDominationView instance
+     */
+    public PlayersWorldDominationView getPlayersWorldDominationView() {
+<span class="fc" id="L26">        return playersWorldDominationView;</span>
     }
 
+    /**
+     * get borders of countries, in the form of matrix
+     *
+     * @return 2-d array
+     */
     public int[][] getBorders() {
-<span class="fc" id="L22">        return borders;</span>
+<span class="fc" id="L35">        return borders;</span>
     }
 
+    /**
+     * replace the borders matrix with new borders matrix
+     *
+     * @param graph the new border to set
+     */
     public void setBorders(int[][] graph) {
-<span class="fc" id="L26">        this.borders = graph;</span>
-<span class="fc" id="L27">    }</span>
+<span class="fc" id="L44">        this.borders = graph;</span>
+<span class="fc" id="L45">    }</span>
 
+    /**
+     * get the list of continent objects
+     *
+     * @return list of continent objects
+     */
     public ArrayList&lt;Continent&gt; getContinents() {
-<span class="fc" id="L30">        return continents;</span>
+<span class="fc" id="L53">        return continents;</span>
     }
-
-    public void setContinents(ArrayList&lt;Continent&gt; continents) {
-<span class="nc" id="L34">        this.continents = continents;</span>
-<span class="nc" id="L35">    }</span>
 
     public String getMapName() {
-<span class="nc" id="L38">        return mapName;</span>
+<span class="nc" id="L57">        return mapName;</span>
     }
 
+    /**
+     * set the name of the map (for saving)
+     *
+     * @param mapName name of map
+     */
     public void setMapName(String mapName) {
-<span class="fc" id="L42">        this.mapName = mapName;</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L66">        this.mapName = mapName;</span>
+<span class="fc" id="L67">    }</span>
 
+    /**
+     * get the list of Country objects
+     *
+     * @return list of Country objects
+     */
     public ArrayList&lt;Country&gt; getCountries() {
-<span class="fc" id="L46">        return countries;</span>
+<span class="fc" id="L75">        return countries;</span>
     }
 
-    public void setCountries(ArrayList&lt;Country&gt; countries) {
-<span class="nc" id="L50">        this.countries = countries;</span>
-<span class="nc" id="L51">    }</span>
-
+    /**
+     * reset continents and countries
+     */
     @Override
     public void reset() {
-<span class="fc" id="L55">        mapName = &quot;&quot;;</span>
-<span class="fc" id="L56">        continents = new ArrayList&lt;Continent&gt;();</span>
-<span class="fc" id="L57">        countries = new ArrayList&lt;Country&gt;();</span>
-<span class="fc" id="L58">        borders = new int[1][1];</span>
+<span class="fc" id="L83">        mapName = &quot;&quot;;</span>
+<span class="fc" id="L84">        continents = new ArrayList&lt;Continent&gt;();</span>
+<span class="fc" id="L85">        countries = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L86">        borders = new int[1][1];</span>
 
-<span class="fc" id="L60">    }</span>
+<span class="fc" id="L88">    }</span>
 
+    /**
+     * print all continents
+     */
     public void showContinents() {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (Continent continent : continents) {</span>
-<span class="fc" id="L64">            continent.view();</span>
-<span class="fc" id="L65">        }</span>
-<span class="fc" id="L66">    }</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        for (Continent continent : continents) {</span>
+<span class="nc" id="L95">            continent.view();</span>
+        }
+<span class="nc" id="L97">    }</span>
 
+    /**
+     * print all countries
+     */
     public void showCountries() {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (Country country : countries) {</span>
-<span class="nc" id="L70">            country.view();</span>
-<span class="nc" id="L71">        }</span>
-<span class="nc" id="L72">    }</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (Country country : countries) {</span>
+<span class="nc" id="L104">            country.view();</span>
+        }
+<span class="nc" id="L106">    }</span>
 
     /**
      * get country object from name
      *
-     * @param countryName
+     * @param countryName name of the country
      * @return null if country name is not existed in map
      */
     public Country getCountryFromName(String countryName) {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (Country country : getCountries()) {</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (country.getName().equals(countryName)) {</span>
-<span class="fc" id="L83">                return country;</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (Country country : getCountries()) {</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if (country.getName().equals(countryName)) {</span>
+<span class="fc" id="L117">                return country;</span>
             }
-<span class="fc" id="L85">        }</span>
+        }
 
-<span class="fc" id="L87">        return null;</span>
+<span class="fc" id="L121">        return null;</span>
     }
 
     /**
      * Print the current border in matrix style
      */
     public void printBorders() {
-<span class="fc" id="L94">        int[][] borders = getBorders();</span>
-<span class="fc" id="L95">        ArrayList&lt;Country&gt; countries = getCountries();</span>
+<span class="fc" id="L128">        int[][] borders = getBorders();</span>
+<span class="fc" id="L129">        ArrayList&lt;Country&gt; countries = getCountries();</span>
 
-<span class="fc" id="L97">        String[] countryNames = new String[countries.size()];</span>
+<span class="fc" id="L131">        String[] countryNames = new String[countries.size()];</span>
 
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (int index = 0; index &lt; countries.size(); index++) {</span>
-<span class="fc" id="L100">            countryNames[index] = countries.get(index).getName();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (int index = 0; index &lt; countries.size(); index++) {</span>
+<span class="fc" id="L134">            countryNames[index] = countries.get(index).getName();</span>
         }
 
-<span class="fc" id="L103">        ConsolePrinter.print2dArray(borders, countryNames);</span>
-<span class="fc" id="L104">    }</span>
+<span class="fc" id="L137">        ConsolePrinter.print2dArray(borders, countryNames);</span>
+<span class="fc" id="L138">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

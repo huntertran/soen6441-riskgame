@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models</a> &gt; <span class="el_source">CardSet.java</span></div><h1>CardSet.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models;
+
+import java.util.ArrayList;
+
+import soen6441riskgame.enums.CardType;
+import soen6441riskgame.utils.ConsolePrinter;
+
+/**
+ * a set of card that can be trade, according to game rule
+ */
+public class CardSet {
+<span class="fc" id="L12">    private ArrayList&lt;Card&gt; cards = new ArrayList&lt;&gt;();</span>
+    private static final int NUMBER_OF_CARD_IN_SET = 3;
+
+    /**
+     * init the set with {@value #NUMBER_OF_CARD_IN_SET} cards
+     *
+     * @param first  1st card
+     * @param second 2nd card
+     * @param third  3rd card
+     */
+<span class="fc" id="L22">    public CardSet(Card first, Card second, Card third) {</span>
+<span class="fc" id="L23">        cards.add(first);</span>
+<span class="fc" id="L24">        cards.add(second);</span>
+<span class="fc" id="L25">        cards.add(third);</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * the value of {@value #NUMBER_OF_CARD_IN_SET} Infantry cards
+     *
+     * @return the value
+     */
+    private int allInfantry() {
+<span class="fc" id="L34">        return CardType.Infantry.getCardTypeAsInt() * NUMBER_OF_CARD_IN_SET;</span>
+    }
+
+    /**
+     * the value of {@value #NUMBER_OF_CARD_IN_SET} Cavalry cards
+     *
+     * @return the value
+     */
+    private int allCavalry() {
+<span class="nc" id="L43">        return CardType.Cavalry.getCardTypeAsInt() * NUMBER_OF_CARD_IN_SET;</span>
+    }
+
+    /**
+     * the value of {@value #NUMBER_OF_CARD_IN_SET} Artillery cards
+     *
+     * @return the value
+     */
+    private int allArtillery() {
+<span class="nc" id="L52">        return CardType.Artillery.getCardTypeAsInt() * NUMBER_OF_CARD_IN_SET;</span>
+    }
+
+    /**
+     * the value of {@value #NUMBER_OF_CARD_IN_SET} Wild cards
+     *
+     * @return the value
+     */
+    private int allWild() {
+<span class="nc" id="L61">        return CardType.Wild.getCardTypeAsInt() * NUMBER_OF_CARD_IN_SET;</span>
+    }
+
+    /**
+     * the value of {@value #NUMBER_OF_CARD_IN_SET} cards in 3 types (except Wild)
+     *
+     * @return the value
+     */
+    private int oneOfEach() {
+<span class="nc" id="L70">        return CardType.Infantry.getCardTypeAsInt()</span>
+<span class="nc" id="L71">               + CardType.Cavalry.getCardTypeAsInt()</span>
+<span class="nc" id="L72">               + CardType.Artillery.getCardTypeAsInt();</span>
+    }
+
+    /**
+     * check if the set is a valid set
+     *
+     * @return is set valid
+     */
+    private boolean isSetValid() {
+<span class="fc" id="L81">        int cardValue = 0;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if (card == null) {</span>
+<span class="nc" id="L84">                ConsolePrinter.printFormat(&quot;Some cards in set are invalid (null): %d&quot;, cards.indexOf(card));</span>
+            }
+<span class="fc" id="L86">            cardValue += card.getCardType().getCardTypeAsInt();</span>
+        }
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (cardValue == allInfantry()</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            || cardValue == allCavalry()</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            || cardValue == allArtillery()</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            || cardValue == allWild()</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            || cardValue == oneOfEach()</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            || cardValue &gt; CardType.Wild.getCardTypeAsInt()) {</span>
+<span class="fc" id="L95">            return true;</span>
+        } else {
+<span class="nc" id="L97">            return false;</span>
+        }
+    }
+
+    /**
+     * get the armies that can be trade by the set
+     * 
+     * The first set traded in - 4 armies
+     *
+     * The second set traded in - 6 armies
+     *
+     * The third set traded in - 8 armies
+     *
+     * The fourth set traded in - 10 armies
+     *
+     * The fifth set traded in - 12 armies
+     *
+     * The sixth set traded in - 15 armies
+     *
+     * After the sixth set has been traded in, each additional set is worth 5 more armies. Example: If
+     * you trade in the seventh set, you get 20 armies; if you trade in the eighth, you get 25 armies,
+     * and so on. “First” and “second” set, etc., refer to sets traded in by anyone during the game.
+     * Thus, if you trade in the third set in the game, you receive 8 armies, even if it’s the first set
+     * you have traded in.
+     *
+     * @param tradeTime the time player trading this set
+     * @return the number of armies
+     */
+    public int getTradeInArmies(int tradeTime) {
+<span class="fc" id="L126">        int armies = 0;</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (isSetValid()) {</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            if (tradeTime &gt; 6) {</span>
+<span class="nc" id="L129">                armies = 15 + (tradeTime - 6) * 5;</span>
+<span class="nc" id="L130">            } else {</span>
+<span class="pc bpc" id="L131" title="5 of 7 branches missed.">                switch (tradeTime) {</span>
+                    case 1: {
+<span class="fc" id="L133">                        return 4;</span>
+                    }
+                    case 2: {
+<span class="fc" id="L136">                        return 6;</span>
+                    }
+                    case 3: {
+<span class="nc" id="L139">                        return 8;</span>
+                    }
+                    case 4: {
+<span class="nc" id="L142">                        return 10;</span>
+                    }
+                    case 5: {
+<span class="nc" id="L145">                        return 12;</span>
+                    }
+                    case 6: {
+<span class="nc" id="L148">                        return 15;</span>
+                    }
+                    default: {
+<span class="nc" id="L151">                        return 0;</span>
+                    }
+                }
+            }
+        }
+
+<span class="nc" id="L157">        return armies;</span>
+    }
+
+    /**
+     * mark all the cards in set were exchanged
+     */
+    public void setCardsExchanged() {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc" id="L165">            card.setExchanged(true);</span>
+        }
+<span class="fc" id="L167">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -7,25 +7,33 @@ public class Coordinate {
     private int x;
     private int y;
 
-<span class="fc" id="L10">    public Coordinate(int x, int y) {</span>
-<span class="fc" id="L11">        this.setX(x);</span>
-<span class="fc" id="L12">        this.setY(y);</span>
-<span class="fc" id="L13">    }</span>
+    /**
+     * constructor
+     *
+     * @param x horizontal value
+     * @param y vertical value
+     */
+<span class="fc" id="L16">    public Coordinate(int x, int y) {</span>
+<span class="fc" id="L17">        this.x = x;</span>
+<span class="fc" id="L18">        this.y = y;</span>
+<span class="fc" id="L19">    }</span>
 
+    /**
+     * get horizontal value
+     *
+     * @return horizontal value
+     */
     public int getY() {
-<span class="fc" id="L16">        return y;</span>
+<span class="fc" id="L27">        return y;</span>
     }
 
-    public void setY(int y) {
-<span class="fc" id="L20">        this.y = y;</span>
-<span class="fc" id="L21">    }</span>
-
+    /**
+     * get vertical value
+     *
+     * @return vertical value
+     */
     public int getX() {
-<span class="fc" id="L24">        return x;</span>
+<span class="fc" id="L36">        return x;</span>
     }
-
-    public void setX(int x) {
-<span class="fc" id="L28">        this.x = x;</span>
-<span class="fc" id="L29">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

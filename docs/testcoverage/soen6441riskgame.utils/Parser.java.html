@@ -7,61 +7,45 @@
 
     /**
      * Parse int with default value
-     * @param number string to parse
+     *
+     * @param number       string to parse
      * @param defaultValue default return value if parse error
-     * @return
+     * @return return default value if parse error
      */
     public static int parseWithDefault(String number, int defaultValue) {
         try {
-<span class="fc" id="L16">            return Integer.parseInt(number);</span>
-<span class="nc" id="L17">        } catch (NumberFormatException e) {</span>
-<span class="nc" id="L18">            return defaultValue;</span>
+<span class="fc" id="L17">            return Integer.parseInt(number);</span>
+<span class="nc" id="L18">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L19">            return defaultValue;</span>
         }
     }
 
+    /**
+     * check if input is a valid number
+     *
+     * @param value the string to check
+     * @return false if the string is double, float, string, negative or very large (long and
+     *         Double.isInfinite())
+     */
     public static boolean checkValidInputNumber(String value) {
-<span class="fc" id="L23">        boolean flag = true;</span>
+<span class="fc" id="L31">        boolean flag = true;</span>
         try {
             // check for double, float, string
-<span class="fc" id="L26">            int num = Integer.parseInt(value);</span>
+<span class="fc" id="L34">            int num = Integer.parseInt(value);</span>
 
-            // check negative value 
-<span class="pc bpc" id="L29" title="1 of 2 branches missed.">            if (num &lt; 0) {</span>
-<span class="nc" id="L30">                flag = false;</span>
+            // check negative value
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">            if (num &lt; 0) {</span>
+<span class="nc" id="L38">                flag = false;</span>
             }
 
             // check long value
-<span class="pc bpc" id="L34" title="2 of 4 branches missed.">            if (!((num == Math.floor(num)) &amp;&amp; !Double.isInfinite(num))) {</span>
-<span class="nc" id="L35">                flag = false;</span>
+<span class="pc bpc" id="L42" title="2 of 4 branches missed.">            if (!((num == Math.floor(num)) &amp;&amp; !Double.isInfinite(num))) {</span>
+<span class="nc" id="L43">                flag = false;</span>
             }
-<span class="fc" id="L37">            return flag;</span>
-        }
-<span class="nc" id="L39">        catch(NumberFormatException e) {</span>
-<span class="nc" id="L40">            System.out.println(&quot;Invalid Input. (Cannot be negative, decimal or string)&quot;);</span>
-<span class="nc" id="L41">            return false;</span>
-        }
-    }
-
-    public static boolean checkValidInputString(String value) {
-<span class="nc" id="L46">        boolean flag = true;</span>
-        try {
-            // check for double, float, string
-<span class="nc" id="L49">            double num = Double.parseDouble(value);</span>
-
-            // check negative value 
-<span class="nc bnc" id="L52" title="All 2 branches missed.">            if (num &lt; 0) {</span>
-<span class="nc" id="L53">                flag = false;</span>
-            }
-
-            // check long value
-<span class="nc bnc" id="L57" title="All 4 branches missed.">            if (!((num == Math.floor(num)) &amp;&amp; !Double.isInfinite(num))) {</span>
-<span class="nc" id="L58">                flag = false;</span>
-            }
-<span class="nc" id="L60">            return flag;</span>
-        }
-<span class="nc" id="L62">        catch(NumberFormatException e) {</span>
-<span class="nc" id="L63">            System.out.println(&quot;Invalid Input. (Cannot be negative, decimal or string)&quot;);</span>
-<span class="nc" id="L64">            return false;</span>
+<span class="fc" id="L45">            return flag;</span>
+<span class="fc" id="L46">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L47">            System.out.println(&quot;Invalid Input. (Cannot be negative, decimal or string)&quot;);</span>
+<span class="fc" id="L48">            return false;</span>
         }
     }
 }

@@ -1,37 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameBoard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.singleton</a> &gt; <span class="el_source">GameBoard.java</span></div><h1>GameBoard.java</h1><pre class="source lang-java linenums">package soen6441riskgame.singleton;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import soen6441riskgame.enums.CardType;
+import soen6441riskgame.models.Card;
+import soen6441riskgame.views.ExchangeCardView;
+
 /**
  * Hold the game and map data
  */
 public class GameBoard implements Resettable {
+    private static final int NUMBER_OF_CARDS = 56;
 
-<span class="fc" id="L8">    private static GameBoard instance = new GameBoard();</span>
+<span class="fc" id="L16">    private static GameBoard instance = new GameBoard();</span>
+<span class="fc" id="L17">    private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();</span>
+<span class="fc" id="L18">    private GameBoardMap gameBoardMap = new GameBoardMap();</span>
+<span class="fc" id="L19">    private ExchangeCardView exchangeCardView = new ExchangeCardView();</span>
+<span class="fc" id="L20">    private Card[] cards = new Card[NUMBER_OF_CARDS];</span>
 
-<span class="fc" id="L10">    private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();</span>
-<span class="fc" id="L11">    private GameBoardMap gameBoardMap = new GameBoardMap();</span>
+    /**
+     * init GameBoard
+     */
+<span class="fc" id="L25">    public GameBoard() {</span>
+<span class="fc" id="L26">        initCards();</span>
+<span class="fc" id="L27">    };</span>
 
-<span class="fc" id="L13">    public GameBoard() {</span>
-<span class="fc" id="L14">    };</span>
+    /**
+     * create a deck of {@value #NUMBER_OF_CARDS} cards, including 2 wild cards and equal cards for
+     * other type
+     */
+    public void initCards() {
+        // 2 wild card
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (int index = 0; index &lt; 2; index++) {</span>
+<span class="fc" id="L36">            Card card = new Card(CardType.Wild);</span>
+<span class="fc" id="L37">            cards[index] = card;</span>
+        }
 
-    public GameBoardPlayer getGameBoardPlayer() {
-<span class="fc" id="L17">        return gameBoardPlayer;</span>
+        // 18 card for each type
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (int index = 2; index &lt; 20; index++) {</span>
+<span class="fc" id="L42">            Card card = new Card(CardType.Infantry);</span>
+<span class="fc" id="L43">            cards[index] = card;</span>
+        }
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (int index = 20; index &lt; 38; index++) {</span>
+<span class="fc" id="L47">            Card card = new Card(CardType.Cavalry);</span>
+<span class="fc" id="L48">            cards[index] = card;</span>
+        }
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        for (int index = 38; index &lt; 56; index++) {</span>
+<span class="fc" id="L52">            Card card = new Card(CardType.Artillery);</span>
+<span class="fc" id="L53">            cards[index] = card;</span>
+        }
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * get an specific card from deck for test
+     *
+     * @param cardType type of card to get
+     * @return a card that not hold by any player
+     */
+    public Card getSpecificCardForTest(CardType cardType) {
+<span class="fc" id="L64">        ArrayList&lt;Card&gt; availableCard = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (card.getHoldingPlayer() == null) {</span>
+<span class="fc" id="L68">                availableCard.add(card);</span>
+            }
+        }
+
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        for (Card card : availableCard) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (card.getCardType() == cardType) {</span>
+<span class="fc" id="L74">                return card;</span>
+            }
+        }
+
+<span class="nc" id="L78">        return null;</span>
     }
 
+    /**
+     * randomly get an available card from deck
+     *
+     * @return a card that not hold by any player
+     */
+    public Card getRandomAvailableCard() {
+<span class="nc" id="L87">        ArrayList&lt;Card&gt; availableCard = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for (Card card : cards) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (card.getHoldingPlayer() == null) {</span>
+<span class="nc" id="L91">                availableCard.add(card);</span>
+            }
+        }
+
+<span class="nc" id="L95">        Random random = new Random();</span>
+<span class="nc" id="L96">        int cardIndex = random.nextInt(availableCard.size() - 1) + 1;</span>
+
+<span class="nc" id="L98">        return availableCard.get(cardIndex);</span>
+    }
+
+    /**
+     * get Exchange card view
+     *
+     * @return the exchange card view observing the cards holding by player in turn
+     */
+    public ExchangeCardView getExchangeCardView() {
+<span class="fc" id="L107">        return exchangeCardView;</span>
+    }
+
+    /**
+     * get GameBoardPlayer instance
+     *
+     * @return GameBoardPlayer instance that hold players
+     */
+    public GameBoardPlayer getGameBoardPlayer() {
+<span class="fc" id="L116">        return gameBoardPlayer;</span>
+    }
+
+    /**
+     * get GameBoardMap instance
+     *
+     * @return GameBoardMap instance that Countries and Continents
+     */
     public GameBoardMap getGameBoardMap() {
-<span class="fc" id="L21">        return gameBoardMap;</span>
+<span class="fc" id="L125">        return gameBoardMap;</span>
     }
 
     /**
      * set a new instance for unit testing
      *
-     * @param newTestingInstance
+     * @param newTestingInstance new instance of GameBoard
      */
     public static void setTestingInstance(GameBoard newTestingInstance) {
-<span class="fc" id="L30">        instance = newTestingInstance;</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L134">        instance = newTestingInstance;</span>
+<span class="fc" id="L135">    }</span>
 
+    /**
+     * get singleton instance of GameBoard
+     *
+     * @return GameBoard instance
+     */
     public static GameBoard getInstance() {
-<span class="fc" id="L34">        return instance;</span>
+<span class="fc" id="L143">        return instance;</span>
     }
 
     /**
@@ -39,8 +148,8 @@ public class GameBoard implements Resettable {
      */
     @Override
     public void reset() {
-<span class="fc" id="L42">        gameBoardMap.reset();</span>
-<span class="fc" id="L43">        gameBoardPlayer.reset();</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L151">        gameBoardMap.reset();</span>
+<span class="fc" id="L152">        gameBoardPlayer.reset();</span>
+<span class="fc" id="L153">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

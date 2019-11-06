@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.enums</a> &gt; <span class="el_source">CardType.java</span></div><h1>CardType.java</h1><pre class="source lang-java linenums">package soen6441riskgame.enums;
+
+/**
+ * Type of card that a player can hold
+ *
+ * The number of each type is used for calculate the validity of a set of 3 cards to trade for
+ * armies during reinforcement phase
+ */
+<span class="fc" id="L9">public enum CardType {</span>
+<span class="fc" id="L10">                      Infantry(1),</span>
+<span class="fc" id="L11">                      Cavalry(100),</span>
+<span class="fc" id="L12">                      Artillery(1000),</span>
+<span class="fc" id="L13">                      Wild(10000);</span>
+
+    private final int cardValue;
+
+    /**
+     * private constructor
+     *
+     * @param cardValue value of the type
+     */
+<span class="fc" id="L22">    private CardType(int cardValue) {</span>
+<span class="fc" id="L23">        this.cardValue = cardValue;</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * get card type value
+     *
+     * @return card value
+     */
+    public int getCardTypeAsInt() {
+<span class="fc" id="L32">        return cardValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

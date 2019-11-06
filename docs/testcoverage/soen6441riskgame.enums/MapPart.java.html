@@ -13,9 +13,13 @@
 
     private String part;
 
-<span class="fc" id="L16">    MapPart(final String part) {</span>
-<span class="fc" id="L17">        this.part = part;</span>
-<span class="fc" id="L18">    }</span>
+    /**
+     * private constructor
+     * @param part part of the map
+     */
+<span class="fc" id="L20">    MapPart(final String part) {</span>
+<span class="fc" id="L21">        this.part = part;</span>
+<span class="fc" id="L22">    }</span>
 
     /**
      * get the part in string
@@ -23,7 +27,7 @@
      * @return part in string
      */
     public String getPart() {
-<span class="fc" id="L26">        return part;</span>
+<span class="fc" id="L30">        return part;</span>
     }
 
     /**
@@ -33,13 +37,13 @@
      * @return part in enum
      */
     public static MapPart fromString(String part) {
-<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (MapPart mapPart : values()) {</span>
-<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (mapPart.getPart().equals(part)) {</span>
-<span class="fc" id="L38">                return mapPart;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (MapPart mapPart : values()) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (mapPart.getPart().equals(part)) {</span>
+<span class="fc" id="L42">                return mapPart;</span>
             }
         }
 
-<span class="fc" id="L42">        return NONE;</span>
+<span class="fc" id="L46">        return NONE;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

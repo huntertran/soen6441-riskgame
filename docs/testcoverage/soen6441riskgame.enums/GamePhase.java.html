@@ -4,11 +4,29 @@
  * Phase of the game
  */
 <span class="fc" id="L6">public enum GamePhase {</span>
-<span class="fc" id="L7">                       LOST,</span>
-<span class="fc" id="L8">                       WAITING_TO_TURN,</span>
-<span class="fc" id="L9">                       REINFORCEMENT,</span>
-<span class="fc" id="L10">                       ATTACK,</span>
-<span class="fc" id="L11">                       FORTIFICATION,</span>
-<span class="fc" id="L12">                       END_OF_GAME</span>
+<span class="fc" id="L7">                       LOST(0),</span>
+<span class="fc" id="L8">                       WAITING_TO_TURN(1),</span>
+<span class="fc" id="L9">                       REINFORCEMENT(2),</span>
+<span class="fc" id="L10">                       ATTACK(3),</span>
+<span class="fc" id="L11">                       FORTIFICATION(4),</span>
+<span class="fc" id="L12">                       END_OF_GAME(5);</span>
+
+    private final int phase;
+
+    /**
+     * private constructor
+     * @param phase the phase
+     */
+<span class="fc" id="L20">    private GamePhase(int phase) {</span>
+<span class="fc" id="L21">        this.phase = phase;</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * get the number re-present the game phase
+     * @return number re-present the game phase
+     */
+    public int getGamePhaseAsInt() {
+<span class="fc" id="L29">        return phase;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

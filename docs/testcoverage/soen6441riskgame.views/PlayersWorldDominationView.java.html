@@ -9,28 +9,42 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
-<span class="fc" id="L12">public class PlayersWorldDominationView implements Observer {</span>
+/**
+ * Implementation of a “players world domination view” using the Observer pattern. The players world
+ * domination view should display
+ *
+ * 1. the percentage of the map controlled by every player
+ *
+ * 2. the continents controlled by every player
+ *
+ * 3. the total number of armies owned by every player
+ *
+ */
+<span class="fc" id="L23">public class PlayersWorldDominationView implements Observer {</span>
 
+    /**
+     * update the view when property changed
+     */
     @Override
     public void update(Observable o, Object arg) {
-<span class="fc" id="L16">        ArrayList&lt;Player&gt; players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();</span>
+<span class="fc" id="L30">        ArrayList&lt;Player&gt; players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();</span>
 
-<span class="fc" id="L18">        int totalNumberOfCountries = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
+<span class="fc" id="L32">        int totalNumberOfCountries = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
 
-<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (Player player : players) {</span>
-<span class="fc" id="L21">            double percentConquered = (player.getConqueredCountries().size() * 100) / totalNumberOfCountries;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (Player player : players) {</span>
+<span class="fc" id="L35">            double percentConquered = (player.getConqueredCountries().size() * 100) / totalNumberOfCountries;</span>
 
-<span class="fc" id="L23">            ConsolePrinter.printFormat(&quot;Player %s conquered %.2f percent of the world, having %d armies&quot;,</span>
-<span class="fc" id="L24">                                       player.getName(),</span>
-<span class="fc" id="L25">                                       percentConquered,</span>
-<span class="fc" id="L26">                                       player.getTotalArmies());</span>
+<span class="fc" id="L37">            ConsolePrinter.printFormat(&quot;Player %s conquered %.2f percent of the world, having %d armies&quot;,</span>
+<span class="fc" id="L38">                                       player.getName(),</span>
+<span class="fc" id="L39">                                       percentConquered,</span>
+<span class="fc" id="L40">                                       player.getTotalArmies());</span>
 
-<span class="fc" id="L28">            ArrayList&lt;Continent&gt; conqueredContinents = player.getConqueredContinents();</span>
-<span class="fc" id="L29">            ConsolePrinter.printFormat(&quot;Conquered continents: %d&quot;, conqueredContinents.size());</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">            for (Continent continent : conqueredContinents) {</span>
-<span class="fc" id="L31">                ConsolePrinter.printFormat(&quot;    %s&quot;, continent.getName());</span>
-<span class="fc" id="L32">            }</span>
-<span class="fc" id="L33">        }</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L42">            ArrayList&lt;Continent&gt; conqueredContinents = player.getConqueredContinents();</span>
+<span class="fc" id="L43">            ConsolePrinter.printFormat(&quot;Conquered continents: %d&quot;, conqueredContinents.size());</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            for (Continent continent : conqueredContinents) {</span>
+<span class="fc" id="L45">                ConsolePrinter.printFormat(&quot;    %s&quot;, continent.getName());</span>
+            }
+        }
+<span class="fc" id="L48">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
