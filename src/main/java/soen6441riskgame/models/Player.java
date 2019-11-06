@@ -187,7 +187,7 @@ public class Player extends Observable {
     public void addCurrentPhaseAction(String action) {
         currentPhaseActions.add(action);
         setChanged();
-        notifyObservers();
+        notifyObservers(ChangedProperty.GAME_PHASE);
     }
 
     /**
