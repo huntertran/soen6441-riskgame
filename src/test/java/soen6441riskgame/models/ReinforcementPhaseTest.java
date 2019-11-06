@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
-
+/**
+ * Tests the Reinforcement Phase Commands.
+ */
 
 public class ReinforcementPhaseTest {
     
@@ -17,6 +19,9 @@ public class ReinforcementPhaseTest {
     private String invalid1 = "reinforce countryname num";
     private String invalid2 = "exchangecards num num num -none";
 
+    /**
+     * it tests validity of the reinforcement command.
+     */
     @Test
     public void Reinforcement1Test() {
         ModelCommands cmds = new ModelCommands(valid1);
@@ -30,6 +35,9 @@ public class ReinforcementPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests validity of the reinforcement command.
+     */
     @Test
     public void Reinforcement2CapTest() {
         ModelCommands cmds = new ModelCommands(valid2);
@@ -45,6 +53,9 @@ public class ReinforcementPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests validity of the reinforcement command.
+     */
     @Test
     public void Reinforcement3Test() {
         ModelCommands cmds = new ModelCommands(valid3);
@@ -58,6 +69,9 @@ public class ReinforcementPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests validity of the reinforcement command.
+     */
     @Test
     public void Reinforcement4Test() {
         ModelCommands cmds = new ModelCommands(valid4);
@@ -71,6 +85,9 @@ public class ReinforcementPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests validity of the reinforcement command.
+     */
     @Test
     public void Reinforcement5Test() {
         ModelCommands cmds = new ModelCommands(invalid1);
@@ -84,6 +101,9 @@ public class ReinforcementPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests validity of the reinforcement command.
+     */
     @Test
     public void Reinforcement6Test() {
         ModelCommands cmds = new ModelCommands(invalid2);
