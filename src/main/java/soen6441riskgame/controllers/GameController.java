@@ -828,7 +828,12 @@ public class GameController {
                 if (army_to_be_moved < attackerNumDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
                     ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
                                                attackerNumDice);
-                } else {
+                }
+                else if(attackingCountry.getArmyAmount() - 1 < army_to_be_moved) {
+                    ConsolePrinter.printFormat("You only have %s army available to move. You cannot move more armies than what you have.",
+                                               attackerNumDice);
+                }
+                else {
                     attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
                     // reinitialize variables to null
                     defendingCountry = null;
