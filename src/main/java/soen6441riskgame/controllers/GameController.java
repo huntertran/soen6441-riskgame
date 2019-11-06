@@ -832,12 +832,10 @@ public class GameController {
                 if (army_to_be_moved < attackerNumDice && attackingCountry.getArmyAmount() - 1 > army_to_be_moved) {
                     ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
                                                attackerNumDice);
-                }
-                else if(attackingCountry.getArmyAmount() - 1 < army_to_be_moved) {
+                } else if (attackingCountry.getArmyAmount() - 1 < army_to_be_moved) {
                     ConsolePrinter.printFormat("You only have %s army available to move. You cannot move more armies than what you have.",
                                                attackerNumDice);
-                }
-                else {
+                } else {
                     attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
                     // reinitialize variables to null
                     defendingCountry = null;
@@ -848,7 +846,7 @@ public class GameController {
                     attackMoveCmdRequired = false;
                     ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
                 }
-                
+
             } else {
                 ConsolePrinter.printFormat("Invalid Input");
             }
@@ -1053,7 +1051,10 @@ public class GameController {
         int numberOfTradedArmies = 0;
         int tradeTime = 1;
 
-        for (int index = 0; index < args.length; index++) {
+        int paramLeftOver = args.length % 3;
+        int size = args.length - paramLeftOver;
+
+        for (int index = 0; index < size; index = index + 3) {
 
             CardSet cardSet = buildCardSet(new String[] {
                                                           args[index],
@@ -1064,7 +1065,6 @@ public class GameController {
             numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);
             cardSet.setCardsExchanged();
             tradeTime++;
-            index = index + 3;
         }
 
         int newUnplacedArmies = currentPlayer.getUnplacedArmies() + numberOfTradedArmies;

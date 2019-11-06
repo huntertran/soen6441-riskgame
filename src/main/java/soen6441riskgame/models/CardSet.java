@@ -99,7 +99,9 @@ public class CardSet {
     }
 
     /**
-     * get the armies that can be trade by the set The first set traded in - 4 armies
+     * get the armies that can be trade by the set
+     * 
+     * The first set traded in - 4 armies
      *
      * The second set traded in - 6 armies
      *

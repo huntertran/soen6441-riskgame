@@ -17,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import soen6441riskgame.App;
+import soen6441riskgame.enums.CardType;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.helpers.GamePlayActionsTestHelper;
 import soen6441riskgame.models.Country;
@@ -554,14 +555,19 @@ public class GameControllerTest {
 
         // add cards to player
         for (int index = 0; index < 6; index++) {
-            currentPlayer.setPlayerBeAwardCard(true);
-            currentPlayer.getACardFromDeck();
+            Card newCard = GameBoard.getInstance()
+                                    .getSpecificCardForTest(CardType.Infantry);
+            newCard.setHoldingPlayer(currentPlayer);
+            currentPlayer.getHoldingCards().add(newCard);
         }
 
         // action
+        int expectedTradeInArmy = 10 + currentPlayer.getUnplacedArmies();
         App.jumpToCommand(new ModelCommands(GameCommands.CURRENTPLAYER));
         currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
         App.jumpToCommand(new ModelCommands(GameCommands.EXCHANGECARDS
                                             + " 1 2 3 4 5 6 -none"));
+
+        assertEquals(expectedTradeInArmy, currentPlayer.getUnplacedArmies());
     }
 }

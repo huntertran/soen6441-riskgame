@@ -55,6 +55,29 @@ public class GameBoard implements Resettable {
     }
 
     /**
+     * get an specific card from deck for test
+     *
+     * @return a card that not hold by any player
+     */
+    public Card getSpecificCardForTest(CardType cardType) {
+        ArrayList<Card> availableCard = new ArrayList<>();
+
+        for (Card card : cards) {
+            if (card.getHoldingPlayer() == null) {
+                availableCard.add(card);
+            }
+        }
+
+        for (Card card : availableCard) {
+            if (card.getCardType() == cardType) {
+                return card;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * randomly get an available card from deck
      *
      * @return a card that not hold by any player
