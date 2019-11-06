@@ -38,17 +38,17 @@ public class GameBoard implements Resettable {
         }
 
         // 18 card for each type
-        for (int index = 3; index < 20; index++) {
+        for (int index = 2; index < 20; index++) {
             Card card = new Card(CardType.Infantry);
             cards[index] = card;
         }
 
-        for (int index = 21; index < 38; index++) {
+        for (int index = 20; index < 38; index++) {
             Card card = new Card(CardType.Cavalry);
             cards[index] = card;
         }
 
-        for (int index = 49; index < 56; index++) {
+        for (int index = 38; index < 56; index++) {
             Card card = new Card(CardType.Artillery);
             cards[index] = card;
         }
