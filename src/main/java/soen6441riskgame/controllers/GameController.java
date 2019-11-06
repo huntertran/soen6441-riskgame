@@ -499,14 +499,14 @@ public class GameController {
      * @param args[0] from country
      * @param args[1] to country
      * @param args[2] number of dice rolls or -allout option
-     *
      */
     public void handleAttackCommand(String[] args) {
         // ConsolePrinter.printFormat("attack conditions testing");
 
         if (attackMoveCmdRequired) {
             ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s",
-                                       getCurrentPlayer(false).getName(), defendingCountry.getName());
+                                       getCurrentPlayer(false).getName(),
+                                       defendingCountry.getName());
             return;
         }
 
