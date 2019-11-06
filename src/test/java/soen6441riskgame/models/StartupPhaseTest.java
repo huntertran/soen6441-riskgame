@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
-
-
+/**
+ * Tests the Startup Phase Commands.
+ */
 public class StartupPhaseTest {
     private String validStart1 = "loadmap fileName";
     private String validStart2 = "gameplayer -add playerName";
@@ -16,6 +17,9 @@ public class StartupPhaseTest {
     private String validStart6 = "gameplayer -add playername1 -add playername2 -add playername3 -add playername4 -remove playername1 -remove playername2 -remove playername3";
     private String validStart7 = "populatecountries";
 
+    /**
+     * it tests the validity of loadmap command.
+     */
     @Test
     public void StartupPhase1Test() {
         ModelCommands cmds = new ModelCommands(validStart1);
@@ -29,6 +33,9 @@ public class StartupPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests the validity of addplayer command.
+     */
     @Test
     public void StartupPhase2Test() {
         ModelCommands cmds = new ModelCommands(validStart2);
@@ -43,6 +50,9 @@ public class StartupPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests the validity of removeplayer command.
+     */
     @Test
     public void StartupPhase3Test() {
         ModelCommands cmds = new ModelCommands(validStart3);
@@ -56,7 +66,9 @@ public class StartupPhaseTest {
         }
         assertFalse(flag);
     }
-
+/**
+     * it tests the validity of command adding multiple players.
+     */
     @Test
     public void StartupPhase4Test() {
         ModelCommands cmds = new ModelCommands(validStart4);
@@ -71,6 +83,9 @@ public class StartupPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it tests the validity of command removing multiple players.
+     */
     @Test
     public void StartupPhase5Test() {
         ModelCommands cmds = new ModelCommands(validStart5);
@@ -84,7 +99,9 @@ public class StartupPhaseTest {
         }
         assertFalse(flag);
     }
-
+/**
+     * it tests the validity of command adding and removing multiple players in same simultaneously.
+     */
     @Test
     public void StartupPhase6Test() {
         ModelCommands cmds = new ModelCommands(validStart6);
@@ -98,7 +115,9 @@ public class StartupPhaseTest {
         }
         assertFalse(flag);
     }
-
+/**
+     * it tests the validity of populatecountries command.
+     */
     @Test
     public void StartupPhase7Test() {
         ModelCommands cmds = new ModelCommands(validStart7);
