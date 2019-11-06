@@ -182,6 +182,10 @@ public class GameControllerTest {
         assertFalse(isOneCountryNotAssigned);
     }
 
+    /**
+     * it tests the initPlayersUnplacedArmies method and checks whether initial armies are allocated
+     * according to the number of players.
+     */
     @Test
     public void initPlayersUnplacedArmiesTest() {
         // Setup
@@ -265,8 +269,8 @@ public class GameControllerTest {
         String fromCountry = currentPlayer.getConqueredCountries().get(0).getName();
         ArrayList<Country> neighboring_countries = currentPlayer.getConqueredCountries().get(0).getNeighbors();
         String enemyCountry = "";
-        for(Country tempCountry : neighboring_countries) {
-            if(tempCountry.getConquerer() != currentPlayer) {
+        for (Country tempCountry : neighboring_countries) {
+            if (tempCountry.getConquerer() != currentPlayer) {
                 enemyCountry = tempCountry.getName();
             }
         }
@@ -321,7 +325,6 @@ public class GameControllerTest {
         // Assert
         assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.END_OF_GAME);
     }
-
 
     /**
      * it tests the handlePlaceArmy method and checks whether it correctly places an army or not.
@@ -471,10 +474,11 @@ public class GameControllerTest {
         // assert
         assertEquals("ben", gameController.getCurrentPlayer().getName());
     }
+
     /**
      * it tests the showCurrentPlayer method to check if it returns the current player correctly.
      */
-@Test
+    @Test
     public void showCurrentPlayerTest() {
         // setup
         GamePlayActionsTestHelper.addPlayersToGame();
@@ -503,15 +507,15 @@ public class GameControllerTest {
         // reinforce
         Player player = gameController.getCurrentPlayer();
 
-        //while (player.getUnplacedArmies() > 0) {
-            App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
-                                                + " " + player.getConqueredCountries().get(0).getName()
-                                                + " 1"));
-        //}
+        // while (player.getUnplacedArmies() > 0) {
+        App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
+                                            + " " + player.getConqueredCountries().get(0).getName()
+                                            + " 1"));
+        // }
 
-        //attack phase
+        // attack phase
         App.jumpToCommand(new ModelCommands(GameCommands.ATTACK
-                                            +" " + "-noattack"));
+                                            + " " + "-noattack"));
 
         // action
         Country fromCountry = GamePlayActionsTestHelper.getPlayerCountryForFromCountryArg(player);
