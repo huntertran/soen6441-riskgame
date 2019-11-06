@@ -301,6 +301,14 @@ public class GameController {
         for (Country country : player.getConqueredCountries()) {
             country.viewWithoutNeighbors(2);
         }
+
+        ArrayList<Card> cards = player.getHoldingCards();
+        if (!cards.isEmpty()) {
+            ConsolePrinter.printFormat("Player cards:");
+            for (Card card : player.getHoldingCards()) {
+                card.view(1);
+            }
+        }
     }
 
     /**
@@ -753,7 +761,7 @@ public class GameController {
             ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
                                        attackingCountry.getConquerer().getName(),
                                        defendingCountry.getName(),
-                                       attackingCountry.getArmyAmount());
+                                       attackingCountry.getArmyAmount() - 1);
 
             defendingCountry.setConquerer(attackingCountry.getConquerer());
 
