@@ -836,9 +836,10 @@ public class GameController {
                     attackerNumDice = 0;
                     defenderNumDice = 0;
                     alloutFlag = false;
+                    attackMoveCmdRequired = false;
                     ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
                 }
-                attackMoveCmdRequired = false;
+                
             } else {
                 ConsolePrinter.printFormat("Invalid Input");
             }
