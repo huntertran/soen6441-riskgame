@@ -17,10 +17,16 @@ import soen6441riskgame.helpers.GamePlayActionsTestHelper;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 
+/**
+ * Tests the Player Model methods.
+ */
 public class PlayerTest {
     MapController mapController;
     GameController gameController;
 
+    /**
+     * the before method is executed before each test case to setup the context.
+     */
     @BeforeEach
     public void before() throws IOException {
 
@@ -35,11 +41,18 @@ public class PlayerTest {
         gameController = new GameController();
     }
 
+    /**
+     * the after method is executed after each test case to reset the map.
+     */
     @AfterEach
     public void after() {
         mapController.resetMap();
     }
 
+    /**
+     * it tests calculateReinforcementArmies method and checks whether number of reinforcement 
+     * armies for a player in his reinforcement phase are correct or not.
+     */
     @Test
     public void calculateReinforcementArmiesTest(){
         // setup

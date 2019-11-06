@@ -19,7 +19,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.helpers.GamePlayActionsTestHelper;
-import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
