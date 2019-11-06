@@ -753,7 +753,7 @@ public class GameController {
             ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
                                        attackingCountry.getConquerer().getName(),
                                        defendingCountry.getName(),
-                                       attackingCountry.getArmyAmount());
+                                       attackingCountry.getArmyAmount() - 1);
 
             defendingCountry.setConquerer(attackingCountry.getConquerer());
 
