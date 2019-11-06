@@ -382,20 +382,7 @@ public class GameController {
         }
 
         Player currentPlayer = getCurrentPlayer(false);
-
-        if (!country.isCountryBelongToPlayer(currentPlayer)) {
-            return;
-        }
-
-        if (currentPlayer.getUnplacedArmies() != 0) {
-            country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
-            currentPlayer.addCurrentPhaseAction("Reinforce: " + country.getName() + " with " + numberOfArmies);
-        }
-
-        if (currentPlayer.getUnplacedArmies() == 0) {
-            ConsolePrinter.printFormat("Player %s enter ATTACK phase", currentPlayer.getName());
-            currentPlayer.setCurrentPhase(GamePhase.ATTACK);
-        }
+        currentPlayer.reinforce(country, numberOfArmies);
     }
 
     /**
@@ -465,12 +452,6 @@ public class GameController {
      * @param args[2] number of armies
      */
     private void handleFortifyCommand(String[] args) {
-        // if (args[0].toLowerCase().equals("none")) {
-        // turnToNextPlayer();
-        // getCurrentPlayer(true);
-        // return;
-        // }
-
         Country fromCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);
         Country toCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);
         int numberOfArmies = Parser.parseWithDefault(args[2], 0);
@@ -487,14 +468,7 @@ public class GameController {
             return;
         }
 
-        fromCountry.moveArmies(toCountry, numberOfArmies);
-        currentPlayer.addCurrentPhaseAction("Fortify: from "
-                                            + fromCountry.getName()
-                                            + " to "
-                                            + toCountry.getName()
-                                            + " with "
-                                            + String.valueOf(numberOfArmies)
-                                            + " armies");
+        currentPlayer.fortify(fromCountry, toCountry, numberOfArmies);
     }
 
     /**

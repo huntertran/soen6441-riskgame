@@ -385,4 +385,44 @@ public class Player extends Observable {
         int newUnplacedArmies = getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;
         setUnplacedArmies(newUnplacedArmies);
     }
+
+    /**
+     * do the reinforcement
+     * 
+     * @param country        country to reinforce
+     * @param numberOfArmies armies to reinforce
+     */
+    public void reinforce(Country country, int numberOfArmies) {
+        if (!country.isCountryBelongToPlayer(this)) {
+            return;
+        }
+
+        if (this.getUnplacedArmies() != 0) {
+            country.receiveArmiesFromUnPlacedArmies(numberOfArmies);
+            this.addCurrentPhaseAction("Reinforce: " + country.getName() + " with " + numberOfArmies);
+        }
+
+        if (this.getUnplacedArmies() == 0) {
+            ConsolePrinter.printFormat("Player %s enter ATTACK phase", this.getName());
+            this.setCurrentPhase(GamePhase.ATTACK);
+        }
+    }
+
+    /**
+     * do the fortify
+     * 
+     * @param fromCountry    from country
+     * @param toCountry      to country
+     * @param numberOfArmies armies to fortify
+     */
+    public void fortify(Country fromCountry, Country toCountry, int numberOfArmies) {
+        fromCountry.moveArmies(toCountry, numberOfArmies);
+        this.addCurrentPhaseAction("Fortify: from "
+                                   + fromCountry.getName()
+                                   + " to "
+                                   + toCountry.getName()
+                                   + " with "
+                                   + String.valueOf(numberOfArmies)
+                                   + " armies");
+    }
 }
