@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
-
-
+/**
+ * Tests the Fortication Phase Commands.
+ */
 public class FortificationPhaseTest {
     
     private String valid1 = "fortify fromcountry tocountry 2 –none";
@@ -17,6 +18,9 @@ public class FortificationPhaseTest {
     private String invalid1 = "fortify fromcountry tocountry num";
     private String invalid2 = "fortify fromcountry tocountry num -none";
 
+    /**
+     * it test the validity of fortify command
+     */
     @Test
     public void Fortification1Test() {
         ModelCommands cmds = new ModelCommands(valid1);
@@ -30,6 +34,9 @@ public class FortificationPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it test the validity of fortify command
+     */
     @Test
     public void Fortification2CapTest() {
         ModelCommands cmds = new ModelCommands(valid4);
@@ -47,6 +54,10 @@ public class FortificationPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it test the validity of fortify command when player choses not to fortify during
+     *  fortification phase.
+     */
     @Test
     public void Fortification3Test() {
         ModelCommands cmds = new ModelCommands(valid2);
@@ -60,6 +71,9 @@ public class FortificationPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it test the validity of fortify command
+     */
     @Test
     public void Fortification4Test() {
         ModelCommands cmds = new ModelCommands(valid3);
@@ -73,6 +87,9 @@ public class FortificationPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it test the validity of fortify command
+     */
     @Test
     public void Fortification5Test() {
         ModelCommands cmds = new ModelCommands(invalid1);
@@ -86,6 +103,9 @@ public class FortificationPhaseTest {
         assertFalse(flag);
     }
 
+    /**
+     * it test the validity of fortify command
+     */
     @Test
     public void Fortification6Test() {
         ModelCommands cmds = new ModelCommands(invalid2);

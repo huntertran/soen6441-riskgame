@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 
-
+/**
+ * Test Game Play.
+ */
 public class GamePlayTest {
 
     private String valid1 = "showmap";
