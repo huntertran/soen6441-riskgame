@@ -14,6 +14,9 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.Parser;
 
+/**
+ * Tests the Map Controller methods.
+ */
 public class MapControllerTest {
     MapController mapController = new MapController();
 
@@ -304,6 +307,10 @@ public class MapControllerTest {
         Assertions.assertEquals(isNeighbor, countryObject1.isNeighboringCountries(countryObject2));
     }
 
+    /**
+     * it tests the saveMap method and checks whether the map is saved correctly or not.
+     * @throws IOException
+     */
     @Test
     public void saveMapTest() throws IOException {
         // setup
