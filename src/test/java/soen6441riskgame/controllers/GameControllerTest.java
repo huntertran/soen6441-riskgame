@@ -19,6 +19,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.helpers.GamePlayActionsTestHelper;
+import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
@@ -541,5 +542,27 @@ public class GameControllerTest {
 
         assertEquals(fromCountryArmiesAfterFortify, fromCountry.getArmyAmount());
         assertEquals(toCountryArmiesAfterFortify, toCountry.getArmyAmount());
+    }
+
+    @Test
+    public void exchangeCardTest() {
+        // setup
+        GamePlayActionsTestHelper.addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        Player currentPlayer = gameController.getCurrentPlayer();
+
+        // add cards to player
+        for (int index = 0; index < 6; index++) {
+            currentPlayer.setPlayerBeAwardCard(true);
+            currentPlayer.getACardFromDeck();
+        }
+
+        // action
+        App.jumpToCommand(new ModelCommands(GameCommands.CURRENTPLAYER));
+        currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
+        App.jumpToCommand(new ModelCommands(GameCommands.EXCHANGECARDS
+                                            + " 1 2 3 4 5 6 -none"));
     }
 }

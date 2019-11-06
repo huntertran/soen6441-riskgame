@@ -124,7 +124,7 @@ public class Player extends Observable {
     /**
      * add new card if player conquer at least 1 country during attack phase
      */
-    private void getACardFromDeck() {
+    public void getACardFromDeck() {
         if (isPlayerBeAwardCard()) {
             Card newCard = GameBoard.getInstance().getRandomAvailableCard();
             newCard.setHoldingPlayer(this);

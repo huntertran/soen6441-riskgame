@@ -127,29 +127,47 @@ public class ModelCommands {
                                 }
                                 // Special command EXCHANGECARDS
                                 else if (cmd.equalsIgnoreCase(GameCommands.EXCHANGECARDS)) {
-                                    if (params.length == 3) {
-                                        if ((Parser.checkValidInputNumber(params[j]))
-                                            && (Parser.checkValidInputNumber(params[j + 1]))
-                                            && (Parser.checkValidInputNumber(params[j + 2]))) {
-                                            regularCommands.add(params[j]);
-                                            regularCommands.add(params[j + 1]);
-                                            regularCommands.add(params[j + 2]);
-                                            break;
-                                        } else {
-                                            throw new NumberFormatException();
+                                    if ((params.length % 3) == 0) {
+                                        for (String param : params) {
+                                            if (Parser.checkValidInputNumber(param)) {
+                                                regularCommands.add(param);
+                                            } else {
+                                                throw new NumberFormatException();
+                                            }
                                         }
-                                    } else if (params.length == 4) {
-                                        if ((Parser.checkValidInputNumber(params[j]))
-                                            && (Parser.checkValidInputNumber(params[j + 1]))
-                                            && (Parser.checkValidInputNumber(params[j + 2]))) {
-                                            regularCommands.add(params[j]);
-                                            regularCommands.add(params[j + 1]);
-                                            regularCommands.add(params[j + 2]);
-                                            regularCommands.add(params[j + 3].toLowerCase());
-                                            break;
-                                        } else {
-                                            throw new NumberFormatException();
+                                        break;
+                                        // if ((Parser.checkValidInputNumber(params[j]))
+                                        // && (Parser.checkValidInputNumber(params[j + 1]))
+                                        // && (Parser.checkValidInputNumber(params[j + 2]))) {
+                                        // regularCommands.add(params[j]);
+                                        // regularCommands.add(params[j + 1]);
+                                        // regularCommands.add(params[j + 2]);
+                                        // break;
+                                        // } else {
+                                        // throw new NumberFormatException();
+                                        // }
+                                    } else if ((params.length % 3) == 1) {
+                                        int size = params.length - 1;
+                                        for (int index = 0; index < size; index++) {
+                                            if (Parser.checkValidInputNumber(params[index])) {
+                                                regularCommands.add(params[index]);
+                                            } else {
+                                                throw new NumberFormatException();
+                                            }
                                         }
+                                        regularCommands.add(params[size]);
+                                        break;
+                                        // if ((Parser.checkValidInputNumber(params[j]))
+                                        // && (Parser.checkValidInputNumber(params[j + 1]))
+                                        // && (Parser.checkValidInputNumber(params[j + 2]))) {
+                                        // regularCommands.add(params[j]);
+                                        // regularCommands.add(params[j + 1]);
+                                        // regularCommands.add(params[j + 2]);
+                                        // regularCommands.add(params[j + 3].toLowerCase());
+                                        // break;
+                                        // } else {
+                                        // throw new NumberFormatException();
+                                        // }
                                     } else if (params[j].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                                         regularCommands.add(params[j].toLowerCase());
                                         break;

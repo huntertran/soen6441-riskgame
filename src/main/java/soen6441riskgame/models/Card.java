@@ -51,6 +51,7 @@ public class Card implements Viewable {
 
     /**
      * get the player that holding this card
+     * 
      * @return player object
      */
     public Player getHoldingPlayer() {
@@ -59,6 +60,7 @@ public class Card implements Viewable {
 
     /**
      * hand over this card to the player
+     * 
      * @param player player who took this card
      */
     public void setHoldingPlayer(Player player) {
@@ -71,9 +73,6 @@ public class Card implements Viewable {
     @Override
     public void view(int indent) {
         this.printIndent(indent);
-
-        ConsolePrinter.printFormat("Card type: $s | Worth %d armies",
-                                   cardType.toString(),
-                                   cardType.getCardTypeAsInt());
+        ConsolePrinter.printFormat("Card type: %s", cardType.toString());
     }
 }

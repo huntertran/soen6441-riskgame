@@ -305,8 +305,12 @@ public class GameController {
         ArrayList<Card> cards = player.getHoldingCards();
         if (!cards.isEmpty()) {
             ConsolePrinter.printFormat("Player cards:");
+
+            int cardPosition = 1;
             for (Card card : player.getHoldingCards()) {
+                System.out.print(cardPosition);
                 card.view(1);
+                cardPosition++;
             }
         }
     }
