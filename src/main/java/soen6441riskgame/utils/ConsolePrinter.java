@@ -16,7 +16,7 @@ public class ConsolePrinter {
 
     private static boolean isJUnitTest = true;
 
-    public ConsolePrinter() {
+    static {
         setJUnitTest();
     }
 
@@ -24,7 +24,7 @@ public class ConsolePrinter {
         return isJUnitTest;
     }
 
-    private void setJUnitTest() {
+    private static void setJUnitTest() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         List<StackTraceElement> list = Arrays.asList(stackTrace);
         for (StackTraceElement element : list) {

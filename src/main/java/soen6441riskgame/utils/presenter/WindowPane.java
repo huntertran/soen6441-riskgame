@@ -29,7 +29,7 @@ public class WindowPane extends JPanel {
         Font font = null;
         try {
             Font localFont = Font.createFont(Font.TRUETYPE_FONT,
-                                             App.class.getResourceAsStream("resources/RobotoMono-Regular.ttf"));
+                                             App.class.getResourceAsStream("/resources/RobotoMono-Regular.ttf"));
 
             font = localFont.deriveFont(Font.PLAIN, 14);
         } catch (Exception ex) {
