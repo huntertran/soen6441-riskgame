@@ -1,5 +1,12 @@
 package soen6441riskgame.utils;
 
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.io.PrintStream;
+
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.presenter.WindowPane;
+
 /**
  * Helper to print out to console with proper format
  */
@@ -11,8 +18,14 @@ public class ConsolePrinter {
      * @param args   args in string
      */
     public static void printFormat(String format, Object... args) {
-        System.out.format(format, args);
-        System.out.println();
+        // System.out.format(format, args);
+        // System.out.println();
+        printFormat(GameBoard.getInstance().standardPrintStream, format, args);
+    }
+
+    public static void printFormat(PrintStream customPrintStream, String format, Object... args) {
+        customPrintStream.format(format, args);
+        customPrintStream.println();
     }
 
     /**
@@ -47,5 +60,23 @@ public class ConsolePrinter {
             }
             System.out.println();
         }
+    }
+
+    public static WindowPane createWindowPane(String title, int width, int height) {
+        WindowPane windowPane = new WindowPane();
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.add(windowPane);
+        frame.setSize(width, height);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setTitle(title);
+        return windowPane;
+    }
+
+    public static void printToNewWindow(PrintStream printStream, String content) {
+        System.setOut(printStream);
+        System.out.println(content);
     }
 }

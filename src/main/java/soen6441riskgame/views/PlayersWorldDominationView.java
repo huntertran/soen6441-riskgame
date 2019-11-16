@@ -1,5 +1,6 @@
 package soen6441riskgame.views;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -8,6 +9,8 @@ import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.utils.presenter.WindowOutputStream;
+import soen6441riskgame.utils.presenter.WindowPane;
 
 /**
  * Implementation of a “players world domination view” using the Observer pattern. The players world
@@ -21,6 +24,17 @@ import soen6441riskgame.utils.ConsolePrinter;
  *
  */
 public class PlayersWorldDominationView implements Observer {
+    private WindowPane presenter;
+    private PrintStream printStream;
+
+    public PlayersWorldDominationView() {
+        init();
+    }
+
+    private void init() {
+        presenter = ConsolePrinter.createWindowPane("Players World Domination", 600, 600);
+        printStream = new PrintStream(new WindowOutputStream(presenter));
+    }
 
     /**
      * update the view when property changed
@@ -34,15 +48,21 @@ public class PlayersWorldDominationView implements Observer {
         for (Player player : players) {
             double percentConquered = (player.getConqueredCountries().size() * 100) / totalNumberOfCountries;
 
-            ConsolePrinter.printFormat("Player %s conquered %.2f percent of the world, having %d armies",
+            ConsolePrinter.printFormat(printStream,
+                                       "Player %s conquered %.2f percent of the world, having %d armies",
                                        player.getName(),
                                        percentConquered,
                                        player.getTotalArmies());
 
             ArrayList<Continent> conqueredContinents = player.getConqueredContinents();
-            ConsolePrinter.printFormat("Conquered continents: %d", conqueredContinents.size());
+            ConsolePrinter.printFormat(printStream,
+                                       "Conquered continents: %d",
+                                       conqueredContinents.size());
+
             for (Continent continent : conqueredContinents) {
-                ConsolePrinter.printFormat("    %s", continent.getName());
+                ConsolePrinter.printFormat(printStream,
+                                           "    %s",
+                                           continent.getName());
             }
         }
     }

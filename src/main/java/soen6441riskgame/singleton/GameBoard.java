@@ -1,5 +1,6 @@
 package soen6441riskgame.singleton;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,6 +19,8 @@ public class GameBoard implements Resettable {
     private GameBoardMap gameBoardMap = new GameBoardMap();
     private ExchangeCardView exchangeCardView = new ExchangeCardView();
     private Card[] cards = new Card[NUMBER_OF_CARDS];
+
+    public PrintStream standardPrintStream = System.out;
 
     /**
      * init GameBoard
