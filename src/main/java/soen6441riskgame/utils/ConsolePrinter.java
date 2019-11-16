@@ -3,6 +3,8 @@ package soen6441riskgame.utils;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.presenter.WindowPane;
@@ -11,6 +13,30 @@ import soen6441riskgame.utils.presenter.WindowPane;
  * Helper to print out to console with proper format
  */
 public class ConsolePrinter {
+
+    private static boolean isJUnitTest = true;
+
+    public ConsolePrinter() {
+        setJUnitTest();
+    }
+
+    public static boolean isJUnitTest() {
+        return isJUnitTest;
+    }
+
+    private void setJUnitTest() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        List<StackTraceElement> list = Arrays.asList(stackTrace);
+        for (StackTraceElement element : list) {
+            if (element.getClassName().startsWith("org.junit.")) {
+                isJUnitTest = true;
+                return;
+            }
+        }
+
+        isJUnitTest = false;
+    }
+
     /**
      * print the string with format and args replaced, end with a line break
      *

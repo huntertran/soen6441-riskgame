@@ -32,8 +32,12 @@ public class PlayersWorldDominationView implements Observer {
     }
 
     private void init() {
-        presenter = ConsolePrinter.createWindowPane("Players World Domination", 600, 600);
-        printStream = new PrintStream(new WindowOutputStream(presenter));
+        if (ConsolePrinter.isJUnitTest()) {
+            printStream = System.out;
+        } else {
+            presenter = ConsolePrinter.createWindowPane("Players World Domination", 600, 600);
+            printStream = new PrintStream(new WindowOutputStream(presenter));
+        }
     }
 
     /**
