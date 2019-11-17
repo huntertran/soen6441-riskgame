@@ -16,14 +16,25 @@ public class ConsolePrinter {
 
     private static boolean isJUnitTest = true;
 
+    /**
+     * determine if current program is run from a test runner
+     */
     static {
         setJUnitTest();
     }
 
+    /**
+     * is current program run from a test runner
+     * 
+     * @return is current program run from a test runner
+     */
     public static boolean isJUnitTest() {
         return isJUnitTest;
     }
 
+    /**
+     * check if current program run from a test runner
+     */
     private static void setJUnitTest() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         List<StackTraceElement> list = Arrays.asList(stackTrace);
@@ -47,6 +58,13 @@ public class ConsolePrinter {
         printFormat(GameBoard.getInstance().standardPrintStream, format, args);
     }
 
+    /**
+     * print to custom print stream
+     * 
+     * @param customPrintStream the PrintStream to print
+     * @param format            string with format
+     * @param args              args in string
+     */
     public static void printFormat(PrintStream customPrintStream, String format, Object... args) {
         customPrintStream.format(format, args);
         customPrintStream.println();
@@ -86,6 +104,14 @@ public class ConsolePrinter {
         }
     }
 
+    /**
+     * create a new window for separated output
+     * 
+     * @param title  title of new window
+     * @param width  width of new window
+     * @param height height of new window
+     * @return the new window
+     */
     public static WindowPane createWindowPane(String title, int width, int height) {
         WindowPane windowPane = new WindowPane();
         JFrame frame = new JFrame();
@@ -97,10 +123,5 @@ public class ConsolePrinter {
         frame.setVisible(true);
         frame.setTitle(title);
         return windowPane;
-    }
-
-    public static void printToNewWindow(PrintStream printStream, String content) {
-        System.setOut(printStream);
-        System.out.println(content);
     }
 }

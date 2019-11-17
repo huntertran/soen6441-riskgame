@@ -3,15 +3,26 @@ package soen6441riskgame.utils.presenter;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * custom OutputStream for separated view
+ */
 public class WindowOutputStream extends OutputStream {
     private StringBuilder buffer;
     private WindowPane windowPane;
 
+    /**
+     * constructor
+     */
     public WindowOutputStream(WindowPane windowPane) {
         buffer = new StringBuilder(128);
         this.windowPane = windowPane;
     }
 
+    /**
+     * write character b to output stream
+     * 
+     * @param b character to write
+     */
     @Override
     public void write(int b) throws IOException {
         char c = (char) b;

@@ -12,10 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * re-present a separated view
+ */
 public class WindowPane extends JPanel {
     private static final long serialVersionUID = 3555490927568246300L;
     private JTextArea textArea;
 
+    /**
+     * Presenter constructor
+     */
     public WindowPane() {
         setLayout(new BorderLayout());
         textArea = new JTextArea();
@@ -26,6 +32,11 @@ public class WindowPane extends JPanel {
         add(new JScrollPane(textArea));
     }
 
+    /**
+     * Load RobotoMono font
+     * 
+     * @return the loaded font, or null is cannot load the font
+     */
     public Font loadFont() {
         Font font = null;
         try {
@@ -40,10 +51,20 @@ public class WindowPane extends JPanel {
         return font;
     }
 
-    public void clearView(){
-        textArea.setText(null);
+    /**
+     * Clear the view
+     */
+    public void clearView() {
+        if (EventQueue.isDispatchThread()) {
+            textArea.setText(null);
+        }
     }
 
+    /**
+     * append new text to view
+     * 
+     * @param text the text to append
+     */
     public void appendText(final String text) {
         if (EventQueue.isDispatchThread()) {
             textArea.append(text);
