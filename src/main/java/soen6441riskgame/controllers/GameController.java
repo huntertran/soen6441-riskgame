@@ -540,9 +540,11 @@ public class GameController {
                 return;
             }
         }
+        /*
         if (!furtherAttackPossible() && !attackMoveCmdRequired) {
             endAttackPhase();
         }
+        */
     }
 
     /**
@@ -554,10 +556,6 @@ public class GameController {
             int defender_dice = defendingCountry.getArmyAmount() < 2 ? defendingCountry.getArmyAmount() : 2;
             if (attackMoveCmdRequired) {
                 alloutFlag = false;
-                defendingCountry = null;
-                attackingCountry = null;
-                attackerNumDice = 0;
-                defenderNumDice = 0;
             } else if (isAttackValid()) {
                 handleDefendCommand(new String[] { Integer.toString(defender_dice) });
             } else {
@@ -569,7 +567,7 @@ public class GameController {
                 ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
             }
         }
-
+        //if(attackMoveCmdRequired)
     }
 
     /**
@@ -802,6 +800,15 @@ public class GameController {
             }
         }
         if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer()) && !attackMoveCmdRequired) {
+            if(alloutFlag) {
+                isAttackValid();
+            }
+            ConsolePrinter.printFormat("No other attack is possible from any country.");
+            defendingCountry = null;
+            attackingCountry = null;
+            attackerNumDice = 0;
+            defenderNumDice = 0;
+            alloutFlag = false;
             endAttackPhase();
         }
     }
@@ -977,7 +984,7 @@ public class GameController {
         attackingCountry = null;
         attackerNumDice = 0;
         defenderNumDice = 0;
-        Player currentPlayer = getCurrentPlayer(true);
+        Player currentPlayer = getCurrentPlayer(false);
         ConsolePrinter.printFormat("End of attack Phase. Player %s has entered fortification phase",
                                    currentPlayer.getName());
         currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);
@@ -987,7 +994,7 @@ public class GameController {
      * it sets the game phase to end of game when a player has won the game
      */
     public void setEndOfGamePhase() {
-        Player currentPlayer = getCurrentPlayer(true);
+        Player currentPlayer = getCurrentPlayer(false);
         ConsolePrinter.printFormat("Congratulations, The player %s has won the game.", currentPlayer.getName());
         currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);
     }
