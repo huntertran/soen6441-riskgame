@@ -55,7 +55,7 @@ public class WindowPane extends JPanel {
      * Clear the view
      */
     public void clearView() {
-        if (EventQueue.isDispatchThread()) {
+        if (textArea != null) {
             textArea.setText(null);
         }
     }

@@ -1,5 +1,7 @@
 package soen6441riskgame.models;
 
+import java.io.PrintStream;
+
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -71,8 +73,10 @@ public class Card implements Viewable {
      * print the card content
      */
     @Override
-    public void view(int indent) {
-        this.printIndent(indent);
-        ConsolePrinter.printFormat("Card type: %s", cardType.toString());
+    public void view(PrintStream printStream, int indent) {
+        this.printIndent(printStream, indent);
+        ConsolePrinter.printFormat(printStream,
+                                   "Card type: %s",
+                                   cardType.toString());
     }
 }

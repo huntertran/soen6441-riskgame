@@ -17,11 +17,11 @@ public abstract class SeparatedView {
      * Init the class. Use standard output when running in JUnit test Use custom PrintStream when
      * running normally
      */
-    public SeparatedView() {
+    public SeparatedView(String viewName) {
         if (ConsolePrinter.isJUnitTest()) {
             printStream = System.out;
         } else {
-            presenter = ConsolePrinter.createWindowPane("Players World Domination", 600, 600);
+            presenter = ConsolePrinter.createWindowPane(viewName, 600, 600);
             printStream = new PrintStream(new WindowOutputStream(presenter));
         }
     }

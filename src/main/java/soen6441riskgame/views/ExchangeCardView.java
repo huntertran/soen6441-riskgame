@@ -19,6 +19,10 @@ import soen6441riskgame.utils.ConsolePrinter;
  */
 public class ExchangeCardView extends SeparatedView implements Observer {
 
+    public ExchangeCardView() {
+        super("Exchange Card");
+    }
+
     /**
      * update the view when player's card changed (add/remove)
      */
@@ -40,9 +44,7 @@ public class ExchangeCardView extends SeparatedView implements Observer {
                                        false,
                                        "Position: %d | ",
                                        cards.indexOf(card) + 1);
-
-            // TODO: print the card in custom print stream
-            card.view(1);
+            card.view(printStream, 1);
         }
     }
 }

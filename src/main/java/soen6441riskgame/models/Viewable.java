@@ -1,30 +1,70 @@
 package soen6441riskgame.models;
 
+import java.io.PrintStream;
+
+import soen6441riskgame.singleton.GameBoard;
+
 /**
  * indicate an object is printable to console with/without indentation
  */
 public interface Viewable {
 
+    // /**
+    // * view with a number of indent
+    // *
+    // * @param indent number of indent
+    // */
+    // public void view(int indent);
+
     /**
-     * view with a number of indent
-     * @param indent number of indent
+     * view with a number of indent on custom printStream
+     * 
+     * @param printStream the stream to print
+     * @param indent      number of indent
      */
-    public void view(int indent);
+    public void view(PrintStream printStream, int indent);
 
     /**
      * view without indent
      */
     public default void view() {
-        view(0);
+        view(GameBoard.getInstance().standardPrintStream, 0);
+    }
+
+    public default void view(int indent) {
+        view(GameBoard.getInstance().standardPrintStream, indent);
+    }
+
+    /**
+     * view without indent on custom printStream
+     * 
+     * @param printStream the stream to print
+     */
+    public default void view(PrintStream printStream) {
+        view(printStream, 0);
     }
 
     /**
      * print the indent with 4 spaces
+     * 
      * @param indent number of indent
      */
     public default void printIndent(int indent) {
+        // for (int index = 0; index < indent; index++) {
+        // System.out.print(" ");
+        // }
+        printIndent(GameBoard.getInstance().standardPrintStream, indent);
+    }
+
+    /**
+     * print the indent with 4 spaces
+     * 
+     * @param printStream the stream to print.
+     * @param indent      number of indent
+     */
+    public default void printIndent(PrintStream printStream, int indent) {
         for (int index = 0; index < indent; index++) {
-            System.out.print("    ");
+            printStream.print("    ");
         }
     }
 }

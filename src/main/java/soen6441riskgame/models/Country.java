@@ -1,5 +1,6 @@
 package soen6441riskgame.models;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -213,45 +214,6 @@ public class Country extends Observable implements Viewable {
     }
 
     /**
-     * print this country content
-     *
-     * @param indent number of indentation before print
-     */
-    public void view(int indent) {
-        this.viewWithoutNeighbors(indent);
-
-        this.printIndent(indent + 1);
-
-        System.out.println("Neighbors:");
-        for (Country country : this.getNeighbors()) {
-            country.viewWithoutNeighbors(indent + 2);
-        }
-    }
-
-    /**
-     * print this country content without printing it's neighbors
-     *
-     * @param indent number of indentation before print
-     */
-    public void viewWithoutNeighbors(int indent) {
-        this.printIndent(indent);
-        String printString = "Country: %s\t| No.: %s\t| Army: %s ";
-
-        String conquererName = "";
-
-        if (this.getConquerer() != null) {
-            printString += "\t| Conquerer: %s";
-            conquererName = this.getConquerer().getName();
-        }
-
-        ConsolePrinter.printFormat(printString,
-                                   this.getName(),
-                                   this.getOrder(),
-                                   this.getArmyAmount(),
-                                   conquererName);
-    }
-
-    /**
      * Place army for player
      *
      * @param player the player to place army
@@ -303,5 +265,59 @@ public class Country extends Observable implements Viewable {
         }
 
         return true;
+    }
+
+    /**
+     * print this country content without printing it's neighbors
+     *
+     * @param indent number of indentation before print
+     */
+    public void viewWithoutNeighbors(int indent) {
+        viewWithoutNeighbors(GameBoard.getInstance().standardPrintStream, indent);
+    }
+
+    /**
+     * print this country content without printing it's neighbors
+     *
+     * @param printStream the stream to print
+     * @param indent number of indentation before print
+     */
+    public void viewWithoutNeighbors(PrintStream printStream, int indent) {
+        this.printIndent(printStream, indent);
+        String printString = "Country: %s\t| No.: %s\t| Army: %s ";
+
+        String conquererName = "";
+
+        if (this.getConquerer() != null) {
+            printString += "\t| Conquerer: %s";
+            conquererName = this.getConquerer().getName();
+        }
+
+        ConsolePrinter.printFormat(printStream,
+                                   printString,
+                                   this.getName(),
+                                   this.getOrder(),
+                                   this.getArmyAmount(),
+                                   conquererName);
+    }
+
+    // /**
+    // * print this country content
+    // *
+    // * @param indent number of indentation before print
+    // */
+    // public void view(int indent) {
+    // view(GameBoard.getInstance().standardPrintStream, indent);
+    // }
+
+    public void view(PrintStream printStream, int indent) {
+        this.viewWithoutNeighbors(indent);
+
+        this.printIndent(printStream, indent + 1);
+
+        printStream.println("Neighbors:");
+        for (Country country : this.getNeighbors()) {
+            country.viewWithoutNeighbors(indent + 2);
+        }
     }
 }

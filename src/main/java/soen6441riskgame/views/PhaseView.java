@@ -19,6 +19,10 @@ import soen6441riskgame.utils.ConsolePrinter;
  */
 public class PhaseView extends SeparatedView implements Observer {
 
+    public PhaseView() {
+        super("Phase");
+    }
+
     /**
      * update the PhaseView with new data
      *

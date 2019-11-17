@@ -1,5 +1,6 @@
 package soen6441riskgame.models;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
 import soen6441riskgame.singleton.GameBoard;
@@ -99,11 +100,11 @@ public class Continent extends Observable implements Viewable {
     /**
      * print the continent content
      */
-    public void view(int indent) {
+    public void view(PrintStream printStream, int indent) {
         this.viewWithoutCountry();
 
         for (Country country : this.getCountries()) {
-            country.view(indent + 1);
+            country.view(printStream, indent + 1);
         }
     }
 
@@ -111,6 +112,15 @@ public class Continent extends Observable implements Viewable {
      * print the continent content without printing it's countries
      */
     public void viewWithoutCountry() {
+        viewWithoutCountry(GameBoard.getInstance().standardPrintStream);
+    }
+
+    /**
+     * print the continent content without printing it's countries
+     * 
+     * @param printStream the stream to print
+     */
+    public void viewWithoutCountry(PrintStream printStream) {
         String printString = "Continent: %s\t| No.: %s\t| Number of army: %s";
 
         String conquererName = "";
@@ -120,7 +130,8 @@ public class Continent extends Observable implements Viewable {
             conquererName = this.getConquerer().getName();
         }
 
-        ConsolePrinter.printFormat(printString,
+        ConsolePrinter.printFormat(printStream,
+                                   printString,
                                    this.getName(),
                                    this.getOrder(),
                                    this.getArmy(),
