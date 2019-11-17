@@ -1,6 +1,5 @@
 package soen6441riskgame.views;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -9,8 +8,6 @@ import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
-import soen6441riskgame.utils.presenter.WindowOutputStream;
-import soen6441riskgame.utils.presenter.WindowPane;
 
 /**
  * Implementation of a “players world domination view” using the Observer pattern. The players world
@@ -23,23 +20,7 @@ import soen6441riskgame.utils.presenter.WindowPane;
  * 3. the total number of armies owned by every player
  *
  */
-public class PlayersWorldDominationView implements Observer {
-    private WindowPane presenter;
-    private PrintStream printStream;
-
-    public PlayersWorldDominationView() {
-        init();
-    }
-
-    private void init() {
-        if (ConsolePrinter.isJUnitTest()) {
-            printStream = System.out;
-        } else {
-            presenter = ConsolePrinter.createWindowPane("Players World Domination", 600, 600);
-            printStream = new PrintStream(new WindowOutputStream(presenter));
-        }
-    }
-
+public class PlayersWorldDominationView extends SeparatedView implements Observer {
     /**
      * update the view when property changed
      */

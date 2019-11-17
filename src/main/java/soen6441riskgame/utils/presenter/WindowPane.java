@@ -12,20 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import soen6441riskgame.App;
-
 public class WindowPane extends JPanel {
     private static final long serialVersionUID = 3555490927568246300L;
-    private JTextArea output;
+    private JTextArea textArea;
 
     public WindowPane() {
         setLayout(new BorderLayout());
-        output = new JTextArea();
-        output.setBackground(Color.BLACK);
-        output.setForeground(Color.WHITE);
+        textArea = new JTextArea();
+        textArea.setBackground(Color.BLACK);
+        textArea.setForeground(Color.WHITE);
         Font font = loadFont();
-        output.setFont(font);
-        add(new JScrollPane(output));
+        textArea.setFont(font);
+        add(new JScrollPane(textArea));
     }
 
     public Font loadFont() {
@@ -44,8 +42,8 @@ public class WindowPane extends JPanel {
 
     public void appendText(final String text) {
         if (EventQueue.isDispatchThread()) {
-            output.append(text);
-            output.setCaretPosition(output.getText().length());
+            textArea.append(text);
+            textArea.setCaretPosition(textArea.getText().length());
         } else {
             EventQueue.invokeLater(new Runnable() {
                 @Override

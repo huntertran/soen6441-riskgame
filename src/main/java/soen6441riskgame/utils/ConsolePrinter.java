@@ -44,8 +44,6 @@ public class ConsolePrinter {
      * @param args   args in string
      */
     public static void printFormat(String format, Object... args) {
-        // System.out.format(format, args);
-        // System.out.println();
         printFormat(GameBoard.getInstance().standardPrintStream, format, args);
     }
 
