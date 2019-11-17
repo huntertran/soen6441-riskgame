@@ -552,13 +552,24 @@ public class GameController {
         while (alloutFlag) {
             attackerNumDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
             int defender_dice = defendingCountry.getArmyAmount() < 2 ? defendingCountry.getArmyAmount() : 2;
-            if (isAttackValid()) {
+            if (attackMoveCmdRequired) {
+                alloutFlag = false;
+                defendingCountry = null;
+                attackingCountry = null;
+                attackerNumDice = 0;
+                defenderNumDice = 0;
+            } else if (isAttackValid()) {
                 handleDefendCommand(new String[] { Integer.toString(defender_dice) });
             } else {
                 alloutFlag = false;
+                defendingCountry = null;
+                attackingCountry = null;
+                attackerNumDice = 0;
+                defenderNumDice = 0;
+                ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
             }
         }
-        ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
+
     }
 
     /**
