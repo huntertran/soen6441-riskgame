@@ -7,6 +7,7 @@ import java.util.Observer;
 import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Player;
+import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Implementation of a “card exchange view” using the Observer pattern. The card exchange view
@@ -16,13 +17,15 @@ import soen6441riskgame.models.Player;
  * not to exchange cards and exit the card exchange view. If the player own 5 cards or more, they
  * must exchange cards. The cards exchange view should cease to exist after the cards exchange.
  */
-public class ExchangeCardView implements Observer {
+public class ExchangeCardView extends SeparatedView implements Observer {
 
     /**
      * update the view when player's card changed (add/remove)
      */
     @Override
     public void update(Observable o, Object arg) {
+        clearView();
+
         ChangedProperty property = (ChangedProperty) arg;
 
         if (property != ChangedProperty.CARD) {
@@ -33,9 +36,13 @@ public class ExchangeCardView implements Observer {
         ArrayList<Card> cards = player.getHoldingCards();
 
         for (Card card : cards) {
-            System.out.format("Position: %d | ", cards.indexOf(card) + 1);
+            ConsolePrinter.printFormat(printStream,
+                                       false,
+                                       "Position: %d | ",
+                                       cards.indexOf(card) + 1);
+
+            // TODO: print the card in custom print stream
             card.view(1);
         }
-
     }
 }

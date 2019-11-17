@@ -66,8 +66,26 @@ public class ConsolePrinter {
      * @param args              args in string
      */
     public static void printFormat(PrintStream customPrintStream, String format, Object... args) {
+        printFormat(customPrintStream, true, format, args);
+    }
+
+    /**
+     * print to custom print stream
+     * 
+     * @param customPrintStream the PrintStream to print
+     * @param isPrintNewLine    is print new line at then end
+     * @param format            string with format
+     * @param args              args in string
+     */
+    public static void printFormat(PrintStream customPrintStream,
+                                   boolean isPrintNewLine,
+                                   String format,
+                                   Object... args) {
         customPrintStream.format(format, args);
-        customPrintStream.println();
+        if (isPrintNewLine) {
+            customPrintStream.println();
+        }
+
     }
 
     /**

@@ -26,6 +26,9 @@ public abstract class SeparatedView {
         }
     }
 
+    /**
+     * clear the presenter view
+     */
     public void clearView() {
         if (presenter != null) {
             presenter.clearView();

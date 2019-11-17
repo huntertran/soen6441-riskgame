@@ -17,7 +17,7 @@ import soen6441riskgame.utils.ConsolePrinter;
  * 3. information about actions that are taking place during this phase. The phase view should be
  * cleared at the beginning of every phase.
  */
-public class PhaseView implements Observer {
+public class PhaseView extends SeparatedView implements Observer {
 
     /**
      * update the PhaseView with new data
@@ -27,6 +27,8 @@ public class PhaseView implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        clearView();
+
         ChangedProperty property = (ChangedProperty) arg;
         if (property != ChangedProperty.GAME_PHASE) {
             return;
@@ -35,14 +37,20 @@ public class PhaseView implements Observer {
         Player player = (Player) o;
 
         if (player != null) {
-            ConsolePrinter.printFormat("Current phase: %s", player.getCurrentPhase());
-            ConsolePrinter.printFormat("Current player: %s", player.getName());
+            ConsolePrinter.printFormat(printStream,
+                                       "Current phase: %s",
+                                       player.getCurrentPhase());
+            ConsolePrinter.printFormat(printStream,
+                                       "Current player: %s",
+                                       player.getName());
 
             if (!player.getCurrentPhaseActions().isEmpty()) {
-                ConsolePrinter.printFormat("Actions:");
+                ConsolePrinter.printFormat(printStream, "Actions:");
 
                 for (String action : player.getCurrentPhaseActions()) {
-                    ConsolePrinter.printFormat("    %s", action);
+                    ConsolePrinter.printFormat(printStream,
+                                               "    %s",
+                                               action);
                 }
             }
         }
