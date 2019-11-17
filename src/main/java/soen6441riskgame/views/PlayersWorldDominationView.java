@@ -26,7 +26,7 @@ public class PlayersWorldDominationView extends SeparatedView implements Observe
      */
     @Override
     public void update(Observable o, Object arg) {
-        presenter.clearView();
+        clearView();
 
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
 

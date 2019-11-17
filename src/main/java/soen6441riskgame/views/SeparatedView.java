@@ -25,4 +25,10 @@ public abstract class SeparatedView {
             printStream = new PrintStream(new WindowOutputStream(presenter));
         }
     }
+
+    public void clearView() {
+        if (presenter != null) {
+            presenter.clearView();
+        }
+    }
 }
