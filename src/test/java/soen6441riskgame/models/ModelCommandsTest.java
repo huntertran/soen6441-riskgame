@@ -2,7 +2,6 @@ package soen6441riskgame.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
 /**
@@ -17,7 +16,24 @@ public class ModelCommandsTest {
      * @param isValid       the expected result
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "attack_commands.csv", numLinesToSkip = 1)
+    @CsvSource({
+                 "attack c1 c2 6, True", // tests the validity of the attack command when attack is launched from one
+                                         // country to other using number on the dice.
+                 "attack countryNameFrom countyNameTo 2 –allout, True", // it tests the validity of the attack command
+                                                                        // when an allout attack is launched from one
+                                                                        // country to other
+                 "attack –noattack, True", // tests the validity of the attack -noattack command.
+                 "attackmove 2, True", // tests the validity of attackmove command
+                 "attack c1 c2 asd, False", // it tests the validity of attack command from one country to other with a
+                                            // random string rather than number on the dice.
+                 "attack countryNameFrom countyNameTo numdice –allout, False", // it tests the validity of attack
+                                                                               // command when allout attack is launched
+                                                                               // from one country to other with a
+                                                                               // random string rather than number on
+                                                                               // the dice.
+                 "attackmove asd, False" // tests the validity of attack command attackmove with a string rather than an
+                                         // integer.
+    })
     public void AttackCommandTest(String attackCommand, boolean isValid) {
         ModelCommands cmds = new ModelCommands(attackCommand);
         boolean actualIsValid = false;
@@ -38,7 +54,14 @@ public class ModelCommandsTest {
      * @param expectedParsedRegularCommandsNumber number of parsed args
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "fortify_commands.csv", numLinesToSkip = 1)
+    @CsvSource({
+                 "fortify fromcountry toCountry 2 –none, 4", // test the validity of fortify command,
+                 "fortify fromcountry toCountry 2, 3", // test the validity of fortify command when player choses not to
+                                                       // fortify during fortification phase.,
+                 "fortify -none, 1", // test the validity of fortify command,,
+                 "fortify fromcountry toCountry num, 0", // test the validity of fortify command,
+                 "fortify fromcountry toCountry num -none, 1",// test the validity of fortify command,
+    })
     public void FortifyCommandTest(String fortifyCommand, int expectedParsedRegularCommandsNumber) {
         ModelCommands cmds = new ModelCommands(fortifyCommand);
 

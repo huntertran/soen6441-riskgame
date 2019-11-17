@@ -1,6 +1,0 @@
-command, expected parsed regularCommands number, description
-fortify fromcountry tocountry 2 –none, 4,test the validity of fortify command
-fortify fromcountry tocountry 2, 3,test the validity of fortify command when player choses not to fortify during fortification phase.
-fortify -none, 1,test the validity of fortify command,
-fortify fromcountry tocountry num, 0, test the validity of fortify command
-fortify fromcountry tocountry num -none, 1, test the validity of fortify command
