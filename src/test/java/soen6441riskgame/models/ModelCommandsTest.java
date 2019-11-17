@@ -1,6 +1,9 @@
 package soen6441riskgame.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -100,5 +103,17 @@ public class ModelCommandsTest {
 
         assertEquals(expectedFrom, actualFrom);
         assertEquals(expectedTo, actualTo);
+    }
+
+    @Test
+    public void GamePlayTest() {
+        ModelCommands cmds = new ModelCommands("showmap");
+        boolean flag = true;
+
+        if ((cmds.cmd != "") || (cmds.cmd != null)) {
+            flag = false;
+        }
+
+        assertFalse(flag);
     }
 }
