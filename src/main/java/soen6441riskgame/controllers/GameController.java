@@ -540,7 +540,7 @@ public class GameController {
                 return;
             }
         }
-        if (!furtherAttackPossible()) {
+        if (!furtherAttackPossible() && !attackMoveCmdRequired) {
             endAttackPhase();
         }
     }
@@ -765,6 +765,7 @@ public class GameController {
                 GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
             }
             // check if player has conquered entire continent
+            /*
             ArrayList<Country> countries = defendingCountry.getContinent().getCountries();
             boolean flag_continent_conquered = true;
             Player currentplayer = getCurrentPlayer();
@@ -781,7 +782,7 @@ public class GameController {
                 currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies()
                                                 + defendingCountry.getContinent().getArmy());
             }
-
+            */
             if (isGameEnded(attackingCountry.getConquerer())) {
                 setEndOfGamePhase();
             } else {
