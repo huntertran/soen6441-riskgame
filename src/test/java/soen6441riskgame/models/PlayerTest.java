@@ -50,11 +50,11 @@ public class PlayerTest {
     }
 
     /**
-     * it tests calculateReinforcementArmies method and checks whether number of reinforcement 
-     * armies for a player in his reinforcement phase are correct or not.
+     * it tests calculateReinforcementArmies method and checks whether number of reinforcement armies
+     * for a player in his reinforcement phase are correct or not.
      */
     @Test
-    public void calculateReinforcementArmiesTest(){
+    public void calculateReinforcementArmiesTest() {
         // setup
         GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
