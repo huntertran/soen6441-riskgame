@@ -10,7 +10,7 @@ import soen6441riskgame.utils.presenter.WindowPane;
  * Abstract class to separate the view for Observer classes
  */
 public abstract class SeparatedView {
-    private WindowPane presenter;
+    protected WindowPane presenter;
     protected PrintStream printStream;
 
     /**

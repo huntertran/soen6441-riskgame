@@ -40,6 +40,10 @@ public class WindowPane extends JPanel {
         return font;
     }
 
+    public void clearView(){
+        textArea.setText(null);
+    }
+
     public void appendText(final String text) {
         if (EventQueue.isDispatchThread()) {
             textArea.append(text);

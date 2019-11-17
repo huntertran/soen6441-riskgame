@@ -26,6 +26,8 @@ public class PlayersWorldDominationView extends SeparatedView implements Observe
      */
     @Override
     public void update(Observable o, Object arg) {
+        presenter.clearView();
+
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
 
         int totalNumberOfCountries = GameBoard.getInstance().getGameBoardMap().getCountries().size();
