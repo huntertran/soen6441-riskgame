@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,8 +31,8 @@ public class WindowPane extends JPanel {
     public Font loadFont() {
         Font font = null;
         try {
-            Font localFont = Font.createFont(Font.TRUETYPE_FONT,
-                                             App.class.getResourceAsStream("/resources/RobotoMono-Regular.ttf"));
+            InputStream fontFile = new BufferedInputStream(new FileInputStream("src\\main\\java\\soen6441riskgame\\resources\\RobotoMono-Regular.ttf"));
+            Font localFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
 
             font = localFont.deriveFont(Font.PLAIN, 14);
         } catch (Exception ex) {
