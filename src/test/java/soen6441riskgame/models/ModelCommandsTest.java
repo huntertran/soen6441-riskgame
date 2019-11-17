@@ -3,9 +3,13 @@ package soen6441riskgame.models;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.platform.commons.util.StringUtils;
+
+import soen6441riskgame.helpers.StringArrayConverter;
 
 /**
  * Tests the functionality of ModelCommands
@@ -105,15 +109,76 @@ public class ModelCommandsTest {
         assertEquals(expectedTo, actualTo);
     }
 
-    @Test
-    public void GamePlayTest() {
-        ModelCommands cmds = new ModelCommands("showmap");
+    @ParameterizedTest
+    @ValueSource(strings = {
+                             "showmap",
+                             "savemap fileName",
+                             "validatemap"
+    })
+    public void GamePlayTest(String command) {
+        ModelCommands cmds = new ModelCommands(command);
         boolean flag = true;
 
         if ((cmds.cmd != "") || (cmds.cmd != null)) {
             flag = false;
         }
 
+        assertFalse(flag);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "editcontinent -add continentName 5 -remove continentName2, 2",
+                 "editcountry -add countryName continentName, 1",
+                 "editcountry -add countryName1 continentName1 -add countryName2 continentName2 -add countryName3 continentName3, 3",
+                 "editcountry -remove countryName, 1",
+                 "editcountry -remove countryName1 -remove countryName2 -remove countryName3, 3",
+                 "editneighbor -add countryName neighborCountryName, 1",
+                 "editneighbor -add countryName1 neighborCountryName1 -add countryName2 neighborCountryName2 -add countryName3 neighborCountryName3, 3",
+                 "editneighbor -remove countryName neighborCountryName, 1",
+                 "editneighbor -add countryName1 neighborCountryName1 -remove countryName2 neighborCountryName2, 2",
+                 "editcontinent -add continentName value, 0"
+    })
+    public void MapEditorTest(String command, int expectedNumberOfSubRoutine) {
+        ModelCommands cmds = new ModelCommands(command);
+
+        int actualNumberOfParsedSubRoutine = 0;
+
+        if ((cmds.cmd != "") || (cmds.cmd != null)) {
+            actualNumberOfParsedSubRoutine = cmds.subRoutine.size();
+        }
+
+        assertEquals(expectedNumberOfSubRoutine, actualNumberOfParsedSubRoutine);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "editcontinent -add continentName 5 -remove continentName2, continentName;continentName2,5;",
+                 "editcountry -add countryName1 continentName1 -add countryName2 continentName2 -add countryName3 continentName3, countryName1;countryName2;countryName3, continentName1;continentName2;continentName3",
+                 "editneighbor -add countryName1 neighborCountryName1 -add countryName2 neighborCountryName2 -add countryName3 neighborCountryName3,countryName1;countryName2;countryName3,neighborCountryName1;neighborCountryName2;neighborCountryName3"
+    })
+    public void MapEditorWithCaseNameTest(String command,
+                                          @ConvertWith(StringArrayConverter.class) String[] expectedValue1Names,
+                                          @ConvertWith(StringArrayConverter.class) String[] expectedValue2Names) {
+        ModelCommands cmds = new ModelCommands(command);
+        boolean flag = true;
+
+        if ((cmds.cmd != "") || (cmds.cmd != null)) {
+            if (cmds.subRoutine.size() > 0) {
+                int i = 0;
+                for (ModelCommandsPair sub : cmds.subRoutine) {
+                    assertEquals(sub.value1, expectedValue1Names[i]);
+
+                    if (!StringUtils.isBlank(sub.value2)) {
+                        assertEquals(sub.value2, expectedValue2Names[i]);
+                    }
+
+                    i++;
+                }
+
+                flag = false;
+            }
+        }
         assertFalse(flag);
     }
 }
