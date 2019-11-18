@@ -1,0 +1,418 @@
+{
+  "countries": [
+    {
+      "coordinate": {
+        "x": 564,
+        "y": 416
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 514,
+        "y": 411
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 451,
+        "y": 411
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 380,
+        "y": 412
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 405,
+        "y": 350
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 358,
+        "y": 347
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 459,
+        "y": 291
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 503,
+        "y": 259
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 472,
+        "y": 249
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 483,
+        "y": 222
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 448,
+        "y": 229
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 425,
+        "y": 214
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 432,
+        "y": 177
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 402,
+        "y": 183
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 397,
+        "y": 214
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 593,
+        "y": 111
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 546,
+        "y": 151
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 509,
+        "y": 136
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 506,
+        "y": 186
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 385,
+        "y": 74
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 573,
+        "y": 228
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 590,
+        "y": 259
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 550,
+        "y": 257
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 543,
+        "y": 280
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 520,
+        "y": 245
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 491,
+        "y": 289
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 533,
+        "y": 338
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 560,
+        "y": 293
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 550,
+        "y": 316
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 576,
+        "y": 313
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 581,
+        "y": 337
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 589,
+        "y": 358
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 586,
+        "y": 280
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 625,
+        "y": 285
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 657,
+        "y": 262
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 600,
+        "y": 315
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 633,
+        "y": 322
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 617,
+        "y": 349
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 625,
+        "y": 381
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 663,
+        "y": 350
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 639,
+        "y": 150
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 599,
+        "y": 150
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 606,
+        "y": 174
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 598,
+        "y": 194
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 633,
+        "y": 208
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    },
+    {
+      "coordinate": {
+        "x": 637,
+        "y": 240
+      },
+      "armyAmount": 0,
+      "continent": {},
+      "conquerer": null
+    }
+  ]
+}

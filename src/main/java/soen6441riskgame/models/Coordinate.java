@@ -1,10 +1,14 @@
 package soen6441riskgame.models;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Coordinate of an entity on bitmap file, not used in console application
  */
 public class Coordinate {
+    @Expose
     private int x;
+    @Expose
     private int y;
 
     /**

@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import com.google.gson.annotations.Expose;
+
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -11,10 +13,15 @@ import soen6441riskgame.utils.ConsolePrinter;
  * Hold country data
  */
 public class Country extends Observable implements Viewable {
+    @Expose
     private Coordinate coordinate;
+    @Expose
     private int armyAmount;
+    @Expose
     private String name;
+    @Expose
     private Continent continent;
+    @Expose
     private Player conquerer;
 
     /**
@@ -102,7 +109,7 @@ public class Country extends Observable implements Viewable {
 
     /**
      * return the order of the country in the country list, starting with 1
-     * 
+     *
      * @return the order of the country
      */
     public int getOrder() {

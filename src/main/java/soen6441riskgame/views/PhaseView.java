@@ -31,12 +31,12 @@ public class PhaseView extends SeparatedView implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        clearView();
-
         ChangedProperty property = (ChangedProperty) arg;
         if (property != ChangedProperty.GAME_PHASE) {
             return;
         }
+
+        clearView();
 
         Player player = (Player) o;
 
