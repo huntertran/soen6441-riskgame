@@ -68,164 +68,166 @@ public class ModelCommands {
 
         for (int j = 0; j < params.length; j++) {
             // check for null or empty value after split
-            if ((params[j] != null) && (!params[j].equals(""))) {
-                // check specific validation criteria as per command
-                // check if ADD command is provided
-                if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
-                    if (cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
-                        // check if number of army are in number format
-                        if (Parser.checkValidInputNumber(params[j + 2])) {
-                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
-                                                                 params[j + 1],
-                                                                 params[j + 2]));
-                            break;
-                        } else {
-                            throw new NumberFormatException();
-                        }
-                    }
-                    // check if the command is GAMEPLAYER
-                    else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
-                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));
-                        break;
-                    }
-                    // command contains sub commands so add separately to subroutine list.
-                    else {
+            if ((params[j] == null) || (params[j].equals(""))) {
+                continue;
+            }
+
+            // check specific validation criteria as per command
+            // check if ADD command is provided
+            if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {
+                if (cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {
+                    // check if number of army are in number format
+                    if (Parser.checkValidInputNumber(params[j + 2])) {
                         subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
                                                              params[j + 1],
                                                              params[j + 2]));
                         break;
+                    } else {
+                        throw new NumberFormatException();
                     }
                 }
-                // check if REMOVE command is provided
-                else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
+                // check if the command is GAMEPLAYER
+                else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));
                     break;
                 }
-                // check if REINFORCE command is provided
-                else if (cmd.equalsIgnoreCase(GameCommands.REINFORCE)) {
+                // command contains sub commands so add separately to subroutine list.
+                else {
+                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
+                                                         params[j + 1],
+                                                         params[j + 2]));
+                    break;
+                }
+            }
+            // check if REMOVE command is provided
+            else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
+                subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));
+                break;
+            }
+            // check if REINFORCE command is provided
+            else if (cmd.equalsIgnoreCase(GameCommands.REINFORCE)) {
+                // check if number of armies are in number format
+                if (Parser.checkValidInputNumber(params[1])) {
+                    regularCommands.add(params[j]);
+                    regularCommands.add(params[j + 1]);
+                    break;
+                }
+            }
+            // check if FORTIFY command is provided
+            else if (cmd.equalsIgnoreCase(GameCommands.FORTIFY)) {
+                // Three parameters of FORTIFY command
+                if (params.length == 3) {
                     // check if number of armies are in number format
-                    if (Parser.checkValidInputNumber(params[1])) {
+                    if (Parser.checkValidInputNumber(params[2])) {
                         regularCommands.add(params[j]);
                         regularCommands.add(params[j + 1]);
+                        regularCommands.add(params[j + 2].replace("-", ""));
                         break;
                     }
-                }
-                // check if FORTIFY command is provided
-                else if (cmd.equalsIgnoreCase(GameCommands.FORTIFY)) {
-                    // Three parameters of FORTIFY command
-                    if (params.length == 3) {
-                        // check if number of armies are in number format
-                        if (Parser.checkValidInputNumber(params[2])) {
-                            regularCommands.add(params[j]);
-                            regularCommands.add(params[j + 1]);
-                            regularCommands.add(params[j + 2].replace("-", ""));
-                            break;
-                        }
-                        // did not provide number
-                        else {
-                            throw new NumberFormatException();
-                        }
-                    } else if (params.length == 4) {
-                        // check if number of armies are in number format
-                        if (Parser.checkValidInputNumber(params[2])) {
-                            regularCommands.add(params[j]);
-                            regularCommands.add(params[j + 1]);
-                            regularCommands.add(params[j + 2]);
-                            regularCommands.add(params[j + 3]);
-                            break;
-                        }
-                        // did not provide number
-                        else {
-                            throw new NumberFormatException();
-                        }
-                    }
-                    // Player does not wish to fortify
-                    else if (params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
-                        regularCommands.add(params[j].toLowerCase());
-                        break;
-                    }
-                    // Unknown command provided throw invalid exception
+                    // did not provide number
                     else {
-                        throw new Exception("Invalid Input");
+                        throw new NumberFormatException();
                     }
-                }
-                // Special command EXCHANGECARDS
-                else if (cmd.equalsIgnoreCase(GameCommands.EXCHANGECARDS)) {
-                    if ((params.length % 3) == 0) {
-                        for (String param : params) {
-                            if (Parser.checkValidInputNumber(param)) {
-                                regularCommands.add(param);
-                            } else {
-                                throw new NumberFormatException();
-                            }
-                        }
-                        break;
-                    } else if ((params.length % 3) == 1) {
-                        int size = params.length - 1;
-                        for (int index = 0; index < size; index++) {
-                            if (Parser.checkValidInputNumber(params[index])) {
-                                regularCommands.add(params[index]);
-                            } else {
-                                throw new NumberFormatException();
-                            }
-                        }
-                        regularCommands.add(params[size]);
-                        break;
-                    } else if (params[j].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
-                        regularCommands.add(params[j].toLowerCase());
-                        break;
-                    }
-                } else if (cmd.equalsIgnoreCase(GameCommands.ATTACK)) {
-                    if (params.length == 3) {
-                        if (Parser.checkValidInputNumber(params[2])) {
-                            regularCommands.add(params[j]);
-                            regularCommands.add(params[j + 1]);
-                            regularCommands.add(params[j + 2]);
-                            break;
-                        } else {
-                            throw new NumberFormatException();
-                        }
-                    } else if (params.length == 2) {
-                        if (paramsArray[1].replace("-", "").equalsIgnoreCase(GameCommands.ALLOUT)) {
-                            regularCommands.add(params[j]);
-                            regularCommands.add(params[j + 1]);
-                            // regularCommands.add(paramsArray[1]);
-                            break;
-                        }
-                    } else if (params.length == 4) {
-                        if (Parser.checkValidInputNumber(params[2])) {
-                            regularCommands.add(params[j]);
-                            regularCommands.add(params[j + 1]);
-                            regularCommands.add(params[j + 2]);
-                            break;
-                        } else {
-                            throw new NumberFormatException();
-                        }
-                    } else if (params.length == 1) {
-                        regularCommands.add(params[j].toLowerCase());
-                        break;
-                    } else {
-                        throw new Exception();
-                    }
-                } else if (cmd.equalsIgnoreCase(GameCommands.DEFEND)) {
-                    if (Parser.checkValidInputNumber(params[j])) {
+                } else if (params.length == 4) {
+                    // check if number of armies are in number format
+                    if (Parser.checkValidInputNumber(params[2])) {
                         regularCommands.add(params[j]);
+                        regularCommands.add(params[j + 1]);
+                        regularCommands.add(params[j + 2]);
+                        regularCommands.add(params[j + 3]);
                         break;
-                    } else {
-                        throw new NumberFormatException();
                     }
-                } else if (cmd.equalsIgnoreCase(GameCommands.ATTACKMOVE)) {
-                    if (Parser.checkValidInputNumber(params[j])) {
-                        regularCommands.add(params[j].toLowerCase());
-                        break;
-                    } else {
+                    // did not provide number
+                    else {
                         throw new NumberFormatException();
                     }
                 }
-                // No specialized command therefore add to regular commands
+                // Player does not wish to fortify
+                else if (params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
+                    regularCommands.add(params[j].toLowerCase());
+                    break;
+                }
+                // Unknown command provided throw invalid exception
                 else {
-                    regularCommands.add(params[j]);
+                    throw new Exception("Invalid Input");
                 }
+            }
+            // Special command EXCHANGECARDS
+            else if (cmd.equalsIgnoreCase(GameCommands.EXCHANGECARDS)) {
+                if ((params.length % 3) == 0) {
+                    for (String param : params) {
+                        if (Parser.checkValidInputNumber(param)) {
+                            regularCommands.add(param);
+                        } else {
+                            throw new NumberFormatException();
+                        }
+                    }
+                    break;
+                } else if ((params.length % 3) == 1) {
+                    int size = params.length - 1;
+                    for (int index = 0; index < size; index++) {
+                        if (Parser.checkValidInputNumber(params[index])) {
+                            regularCommands.add(params[index]);
+                        } else {
+                            throw new NumberFormatException();
+                        }
+                    }
+                    regularCommands.add(params[size]);
+                    break;
+                } else if (params[j].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
+                    regularCommands.add(params[j].toLowerCase());
+                    break;
+                }
+            } else if (cmd.equalsIgnoreCase(GameCommands.ATTACK)) {
+                if (params.length == 3) {
+                    if (Parser.checkValidInputNumber(params[2])) {
+                        regularCommands.add(params[j]);
+                        regularCommands.add(params[j + 1]);
+                        regularCommands.add(params[j + 2]);
+                        break;
+                    } else {
+                        throw new NumberFormatException();
+                    }
+                } else if (params.length == 2) {
+                    if (paramsArray[1].replace("-", "").equalsIgnoreCase(GameCommands.ALLOUT)) {
+                        regularCommands.add(params[j]);
+                        regularCommands.add(params[j + 1]);
+                        // regularCommands.add(paramsArray[1]);
+                        break;
+                    }
+                } else if (params.length == 4) {
+                    if (Parser.checkValidInputNumber(params[2])) {
+                        regularCommands.add(params[j]);
+                        regularCommands.add(params[j + 1]);
+                        regularCommands.add(params[j + 2]);
+                        break;
+                    } else {
+                        throw new NumberFormatException();
+                    }
+                } else if (params.length == 1) {
+                    regularCommands.add(params[j].toLowerCase());
+                    break;
+                } else {
+                    throw new Exception();
+                }
+            } else if (cmd.equalsIgnoreCase(GameCommands.DEFEND)) {
+                if (Parser.checkValidInputNumber(params[j])) {
+                    regularCommands.add(params[j]);
+                    break;
+                } else {
+                    throw new NumberFormatException();
+                }
+            } else if (cmd.equalsIgnoreCase(GameCommands.ATTACKMOVE)) {
+                if (Parser.checkValidInputNumber(params[j])) {
+                    regularCommands.add(params[j].toLowerCase());
+                    break;
+                } else {
+                    throw new NumberFormatException();
+                }
+            }
+            // No specialized command therefore add to regular commands
+            else {
+                regularCommands.add(params[j]);
             }
         }
     }
