@@ -38,10 +38,16 @@ public class ModelCommandsTest {
                                                                                // from one country to other with a
                                                                                // random string rather than number on
                                                                                // the dice.
-                 "attackmove asd, False" // tests the validity of attack command attackmove with a string rather than an
-                                         // integer.
+                 "attackmove asd, False", // tests the validity of attack command attackmove with a string rather than
+                                          // an
+                                          // integer.
+                 "reinforce countryName 1, True", // tests validity of the reinforcement command.
+                 "reinforce countryName 1, True", // tests validity of the reinforcement command.
+                 "exchangecards 1 2 3 -none, True", // tests validity of the reinforcement command.
+                 "exchangecards -none, True", // tests validity of the reinforcement command.
+                 "reinforce countryName num, False"// invalid command
     })
-    public void AttackCommandTest(String attackCommand, boolean isValid) {
+    public void CommonCommandTest(String attackCommand, boolean isValid) {
         ModelCommands cmds = new ModelCommands(attackCommand);
         boolean actualIsValid = false;
 
@@ -67,9 +73,10 @@ public class ModelCommandsTest {
                                                        // fortify during fortification phase.,
                  "fortify -none, 1", // test the validity of fortify command,,
                  "fortify fromcountry toCountry num, 0", // test the validity of fortify command,
-                 "fortify fromcountry toCountry num -none, 1",// test the validity of fortify command,
+                 "fortify fromcountry toCountry num -none, 1", // test the validity of fortify command,
+                 "exchangecards num num num -none, 1"// test the validity of exchangecards
     })
-    public void FortifyCommandTest(String fortifyCommand, int expectedParsedRegularCommandsNumber) {
+    public void CommonCommandParseArgumentTest(String fortifyCommand, int expectedParsedRegularCommandsNumber) {
         ModelCommands cmds = new ModelCommands(fortifyCommand);
 
         int actualParsedRegularCommandsNumber = 0;
@@ -79,6 +86,24 @@ public class ModelCommandsTest {
         }
 
         assertEquals(expectedParsedRegularCommandsNumber, actualParsedRegularCommandsNumber);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "reinforce countryName 1, countryName"
+    })
+    public void ReinforceCommandWithCaseNameTest(String command, String expectedCountryName) {
+        ModelCommands cmds = new ModelCommands(command);
+
+        String actualCountryName = "";
+
+        if ((cmds.cmd != "") || (cmds.cmd != null)) {
+            if (cmds.regularCommands.size() > 0) {
+                actualCountryName = cmds.regularCommands.get(0);
+            }
+        }
+
+        assertEquals(expectedCountryName, actualCountryName);
     }
 
     /**
