@@ -45,7 +45,8 @@ public class ModelCommandsTest {
                  "reinforce countryName 1, True", // tests validity of the reinforcement command.
                  "exchangecards 1 2 3 -none, True", // tests validity of the reinforcement command.
                  "exchangecards -none, True", // tests validity of the reinforcement command.
-                 "reinforce countryName num, False"// invalid command
+                 "reinforce countryName num, False", // invalid command
+                 "loadmap fileName, True"
     })
     public void CommonCommandTest(String attackCommand, boolean isValid) {
         ModelCommands cmds = new ModelCommands(attackCommand);
@@ -74,7 +75,7 @@ public class ModelCommandsTest {
                  "fortify -none, 1", // test the validity of fortify command,,
                  "fortify fromcountry toCountry num, 0", // test the validity of fortify command,
                  "fortify fromcountry toCountry num -none, 1", // test the validity of fortify command,
-                 "exchangecards num num num -none, 1"// test the validity of exchangecards
+                 "exchangecards num num num -none, 1", // test the validity of exchangecards
     })
     public void CommonCommandParseArgumentTest(String fortifyCommand, int expectedParsedRegularCommandsNumber) {
         ModelCommands cmds = new ModelCommands(fortifyCommand);
@@ -138,7 +139,8 @@ public class ModelCommandsTest {
     @ValueSource(strings = {
                              "showmap",
                              "savemap fileName",
-                             "validatemap"
+                             "validatemap",
+                             "populatecountries"
     })
     public void GamePlayTest(String command) {
         ModelCommands cmds = new ModelCommands(command);
@@ -162,9 +164,14 @@ public class ModelCommandsTest {
                  "editneighbor -add countryName1 neighborCountryName1 -add countryName2 neighborCountryName2 -add countryName3 neighborCountryName3, 3",
                  "editneighbor -remove countryName neighborCountryName, 1",
                  "editneighbor -add countryName1 neighborCountryName1 -remove countryName2 neighborCountryName2, 2",
-                 "editcontinent -add continentName value, 0"
+                 "editcontinent -add continentName value, 0",
+                 "gameplayer -add playerName,1",
+                 "gameplayer -remove playerName,1",
+                 "gameplayer -add playerName1 -add playerName2 -add playerName3 -add playerName4,4",
+                 "gameplayer -remove playerName1 -remove playerName2 -remove playerName3,3",
+                 "gameplayer -add playerName1 -add playerName2 -add playerName3 -add playerName4 -remove playerName1 -remove playerName2 -remove playerName3,7"
     })
-    public void MapEditorTest(String command, int expectedNumberOfSubRoutine) {
+    public void CommandWithMultipleSetsOfArgumentTest(String command, int expectedNumberOfSubRoutine) {
         ModelCommands cmds = new ModelCommands(command);
 
         int actualNumberOfParsedSubRoutine = 0;
