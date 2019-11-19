@@ -8,13 +8,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import soen6441riskgame.App;
+import soen6441riskgame.enums.CardType;
+import soen6441riskgame.helpers.GamePlayActionsTestHelper;
+import soen6441riskgame.models.Card;
 import soen6441riskgame.models.ModelCommands;
+import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.singleton.GameBoard;
 
 public class SaveLoadControllerTest {
     private SaveLoadController saveLoadController;
+    private GameController gameController;
 
     /**
      * the before method is executed before each test case to setup the context.
@@ -30,17 +35,26 @@ public class SaveLoadControllerTest {
         String filePath = "smallmap";
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + filePath));
 
-        // add players
-        App.jumpToCommand(new ModelCommands("gameplayer -add hunter -add ben -add tj"));
-
-        // populate countries
-        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
-
         saveLoadController = new SaveLoadController();
+        gameController = new GameController();
     }
 
     @Test
     public void saveGameTest() {
+        GamePlayActionsTestHelper.addPlayersToGame();
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
+        App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
+
+        Player currentPlayer = gameController.getCurrentPlayer();
+
+        // add cards to player
+        for (int index = 0; index < 6; index++) {
+            Card newCard = GameBoard.getInstance()
+                                    .getSpecificCardForTest(CardType.Infantry);
+            newCard.setHoldingPlayer(currentPlayer);
+            currentPlayer.getHoldingCards().add(newCard);
+        }
+
         String saveGameFilePath = "testSavedGame.json";
         boolean result = saveLoadController.saveGame(saveGameFilePath);
 

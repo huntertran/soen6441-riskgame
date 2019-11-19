@@ -5,13 +5,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 26,
       "name": "India",
       "continent": {
         "name": "Asia"
       },
       "conquerer": {
-        "name": "ben"
+        "name": "hunter"
       },
       "serializedOrder": 1
     },
@@ -20,13 +20,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 27,
       "name": "Pakistan",
       "continent": {
         "name": "Asia"
       },
       "conquerer": {
-        "name": "hunter"
+        "name": "ben"
       },
       "serializedOrder": 2
     },
@@ -35,13 +35,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 31,
       "name": "China",
       "continent": {
         "name": "Asia"
       },
       "conquerer": {
-        "name": "ben"
+        "name": "tj"
       },
       "serializedOrder": 3
     },
@@ -50,13 +50,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 10,
       "name": "USA",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "tj"
+        "name": "hunter"
       },
       "serializedOrder": 4
     },
@@ -65,13 +65,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 8,
       "name": "Canada",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "hunter"
+        "name": "ben"
       },
       "serializedOrder": 5
     },
@@ -80,13 +80,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 2,
       "name": "Russia",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "tj"
+        "name": "hunter"
       },
       "serializedOrder": 6
     },
@@ -95,13 +95,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 3,
       "name": "Mexico",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "hunter"
+        "name": "tj"
       },
       "serializedOrder": 7
     }
@@ -119,8 +119,8 @@
   "players": [
     {
       "name": "hunter",
-      "unplacedArmies": 35,
-      "isPlaying": false,
+      "unplacedArmies": 0,
+      "isPlaying": true,
       "nextPlayer": {
         "name": "ben"
       },
@@ -128,13 +128,38 @@
         "name": "tj"
       },
       "currentPhase": "WAITING_TO_TURN",
-      "holdingCards": [],
+      "holdingCards": [
+        {
+          "cardType": "Infantry",
+          "isExchanged": false
+        },
+        {
+          "cardType": "Infantry",
+          "isExchanged": false
+        },
+        {
+          "cardType": "Infantry",
+          "isExchanged": false
+        },
+        {
+          "cardType": "Infantry",
+          "isExchanged": false
+        },
+        {
+          "cardType": "Infantry",
+          "isExchanged": false
+        },
+        {
+          "cardType": "Infantry",
+          "isExchanged": false
+        }
+      ],
       "currentPhaseActions": [],
       "isPlayerBeAwardCard": false
     },
     {
       "name": "ben",
-      "unplacedArmies": 35,
+      "unplacedArmies": 2,
       "isPlaying": false,
       "nextPlayer": {
         "name": "tj"
@@ -149,7 +174,7 @@
     },
     {
       "name": "tj",
-      "unplacedArmies": 35,
+      "unplacedArmies": 3,
       "isPlaying": false,
       "nextPlayer": {
         "name": "hunter"

@@ -2,6 +2,8 @@ package soen6441riskgame.models;
 
 import java.io.PrintStream;
 
+import com.google.gson.annotations.Expose;
+
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -9,7 +11,10 @@ import soen6441riskgame.utils.ConsolePrinter;
  * A card that can be exchanged for armies
  */
 public class Card implements Viewable {
+    @Expose
     private CardType cardType;
+
+    @Expose
     private boolean isExchanged = false;
     private Player holdingPlayer = null;
 
@@ -53,7 +58,7 @@ public class Card implements Viewable {
 
     /**
      * get the player that holding this card
-     * 
+     *
      * @return player object
      */
     public Player getHoldingPlayer() {
@@ -62,7 +67,7 @@ public class Card implements Viewable {
 
     /**
      * hand over this card to the player
-     * 
+     *
      * @param player player who took this card
      */
     public void setHoldingPlayer(Player player) {
