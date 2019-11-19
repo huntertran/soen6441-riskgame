@@ -191,6 +191,7 @@ public class Player extends Observable implements NameOnlySerializable {
             Card card = cardList.next();
             if (card.isExchanged()) {
                 card.setExchanged(false);
+                card.setHoldingPlayer(null);
                 cardList.remove();
             }
         }
