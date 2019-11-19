@@ -613,7 +613,12 @@ public class GameController {
         }
 
         defenderNumDice = Integer.parseInt(args[0]);
-        System.out.println(args[0]);
+        
+        if(attackingCountry == null || defendingCountry == null) {
+            ConsolePrinter.printFormat("You cannot use defend command without attack command.");
+            return;
+        }
+        //System.out.println(args[0]);
         if (!isAttackValid()) {
             ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
             return;
