@@ -8,21 +8,17 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 
-public class ContinentJsonAdapter extends TypeAdapter<Continent> {
+public class NameOnlyJsonAdapter extends TypeAdapter<NameOnlySerializable> {
 
     @Override
-    public void write(JsonWriter out, Continent value) throws IOException {
+    public void write(JsonWriter out, NameOnlySerializable value) throws IOException {
         out.beginObject();
 
-        out.name("name");
-
-        if (value != null) {
-            out.value(value.getName());
-        } else {
-            out.value("");
-        }
+        out.name(value.getPropertyName());
+        out.value(value.getPropertyValue());
 
         out.endObject();
     }

@@ -7,7 +7,7 @@ import java.util.Observable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.JsonAdapter;
 
-import soen6441riskgame.models.serializers.ContinentJsonAdapter;
+import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -21,7 +21,7 @@ public class Country extends Observable implements Viewable {
     private int armyAmount;
     @Expose
     private String name;
-    @JsonAdapter(ContinentJsonAdapter.class)
+    @JsonAdapter(NameOnlyJsonAdapter.class)
     @Expose
     private Continent continent;
 

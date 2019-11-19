@@ -3,6 +3,7 @@ package soen6441riskgame.models;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
+
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
@@ -10,7 +11,7 @@ import soen6441riskgame.utils.GraphChecker;
 /**
  * Hold continent data
  */
-public class Continent extends Observable implements Viewable {
+public class Continent extends Observable implements Viewable, NameOnlySerializable {
     private String name;
     private int army;
     private ArrayList<Country> countries = new ArrayList<Country>();
@@ -28,7 +29,7 @@ public class Continent extends Observable implements Viewable {
 
     /**
      * get the continent order from list, start with 1
-     * 
+     *
      * @return continent order
      */
     public int getOrder() {
@@ -55,7 +56,7 @@ public class Continent extends Observable implements Viewable {
 
     /**
      * get continent name
-     * 
+     *
      * @return continent name
      */
     public String getName() {
@@ -89,7 +90,7 @@ public class Continent extends Observable implements Viewable {
      * check if the continent is a mini-connected graph
      *
      * https://github.com/huntertran/soen6441-riskgame/wiki/Connected-Graph-Validation-Unit-Test
-     * 
+     *
      * @return false if it's not a mini-connected graph
      */
     public boolean isContinentConnected() {
@@ -117,7 +118,7 @@ public class Continent extends Observable implements Viewable {
 
     /**
      * print the continent content without printing it's countries
-     * 
+     *
      * @param printStream the stream to print
      */
     public void viewWithoutCountry(PrintStream printStream) {
@@ -136,5 +137,19 @@ public class Continent extends Observable implements Viewable {
                                    this.getOrder(),
                                    this.getArmy(),
                                    conquererName);
+    }
+
+    @Override
+    public String getPropertyName() {
+        return "name";
+    }
+
+    @Override
+    public String getPropertyValue() {
+        if (name == null || name.isEmpty()) {
+            return "";
+        }
+
+        return name;
     }
 }

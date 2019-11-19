@@ -18,7 +18,7 @@ public class SerializableGame {
         Gson gson = new GsonBuilder().setPrettyPrinting()
                                      .serializeNulls()
                                      .excludeFieldsWithoutExposeAnnotation()
-                                     .registerTypeAdapter(Continent.class, new ContinentJsonAdapter())
+                                     .registerTypeAdapter(Continent.class, new NameOnlyJsonAdapter())
                                      .create();
 
         String jsonString = gson.toJson(this);
