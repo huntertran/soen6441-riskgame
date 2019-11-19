@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import com.google.gson.annotations.Expose;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
@@ -12,7 +13,9 @@ import soen6441riskgame.utils.GraphChecker;
  * Hold continent data
  */
 public class Continent extends Observable implements Viewable, NameOnlySerializable {
+    @Expose
     private String name;
+    @Expose
     private int army;
     private ArrayList<Country> countries = new ArrayList<Country>();
 

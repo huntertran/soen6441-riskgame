@@ -11,9 +11,12 @@ public class SaveLoadController {
     public boolean saveGame(String saveGameFilePath) {
         boolean isSaved = false;
 
-        SerializableGame serializableGame = new SerializableGame.Builder().withCountries(GameBoard.getInstance()
+        SerializableGame serializableGame = new SerializableGame.Builder().setCountries(GameBoard.getInstance()
+                                                                                                 .getGameBoardMap()
+                                                                                                 .getCountries())
+                                                                          .setContinents(GameBoard.getInstance()
                                                                                                   .getGameBoardMap()
-                                                                                                  .getCountries())
+                                                                                                  .getContinents())
                                                                           .build();
 
         String jsonToSave = serializableGame.serialize();

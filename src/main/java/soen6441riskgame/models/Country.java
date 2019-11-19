@@ -14,7 +14,7 @@ import soen6441riskgame.utils.ConsolePrinter;
 /**
  * Hold country data
  */
-public class Country extends Observable implements Viewable {
+public class Country extends Observable implements Viewable, NameOnlySerializable {
     @Expose
     private Coordinate coordinate;
     @Expose
@@ -24,17 +24,22 @@ public class Country extends Observable implements Viewable {
     @JsonAdapter(NameOnlyJsonAdapter.class)
     @Expose
     private Continent continent;
-
+    @JsonAdapter(NameOnlyJsonAdapter.class)
+    @Expose
     private Player conquerer;
+    @Expose
+    private int serializedOrder;
 
     /**
      * constructor
      *
+     * @param order      country order in connected graph
      * @param name       country name
      * @param coordinate country coordinate on bitmap file of the map
      * @param continent  the continent this country belong to
      */
-    public Country(String name, Coordinate coordinate, Continent continent) {
+    public Country(int order, String name, Coordinate coordinate, Continent continent) {
+        this.serializedOrder = order;
         this.name = name;
         this.coordinate = coordinate;
         this.continent = continent;
@@ -116,7 +121,8 @@ public class Country extends Observable implements Viewable {
      * @return the order of the country
      */
     public int getOrder() {
-        return GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;
+        serializedOrder = GameBoard.getInstance().getGameBoardMap().getCountries().indexOf(this) + 1;
+        return serializedOrder;
     }
 
     /**
@@ -290,7 +296,7 @@ public class Country extends Observable implements Viewable {
      * print this country content without printing it's neighbors
      *
      * @param printStream the stream to print
-     * @param indent number of indentation before print
+     * @param indent      number of indentation before print
      */
     public void viewWithoutNeighbors(PrintStream printStream, int indent) {
         this.printIndent(printStream, indent);
@@ -329,5 +335,19 @@ public class Country extends Observable implements Viewable {
         for (Country country : this.getNeighbors()) {
             country.viewWithoutNeighbors(indent + 2);
         }
+    }
+
+    @Override
+    public String getPropertyName() {
+        return "name";
+    }
+
+    @Override
+    public String getPropertyValue() {
+        if (name == null || name.isEmpty()) {
+            return "";
+        }
+
+        return name;
     }
 }

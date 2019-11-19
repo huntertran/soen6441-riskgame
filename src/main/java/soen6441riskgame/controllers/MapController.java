@@ -100,10 +100,10 @@ public final class MapController {
      * @param continentOrder the other of the continent that new country belongs to
      * @param coordinate     the position of the country on a visual map (not used)
      */
-    private void addCountryFromMapFile(String name, int continentOrder, Coordinate coordinate) {
+    private void addCountryFromMapFile(int order, String name, int continentOrder, Coordinate coordinate) {
         for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
             if (continent.getOrder() == continentOrder) {
-                Country country = new Country(name, coordinate, continent);
+                Country country = new Country(order, name, coordinate, continent);
                 updateCountryContinent(country, continent);
             }
         }
@@ -140,7 +140,7 @@ public final class MapController {
 
         int newBorderSize = GameBoard.getInstance().getGameBoardMap().getCountries().size() + 1;
 
-        Country newCountry = new Country(countryName, new Coordinate(0, 0), continent);
+        Country newCountry = new Country(newBorderSize, countryName, new Coordinate(0, 0), continent);
 
         increaseBorder(newBorderSize);
 
@@ -448,14 +448,14 @@ public final class MapController {
 
             String[] fragments = currentLine.split(" ");
 
-            // int countryOrder = Integer.parseInt(fragments[0]);
+            int countryOrder = Integer.parseInt(fragments[0]);
             String countryName = fragments[1];
             int continentOrder = Integer.parseInt(fragments[2]);
             int x = Integer.parseInt(fragments[3]);
             int y = Integer.parseInt(fragments[4]);
             Coordinate coordinate = new Coordinate(x, y);
 
-            addCountryFromMapFile(countryName, continentOrder, coordinate);
+            addCountryFromMapFile(countryOrder, countryName, continentOrder, coordinate);
 
             currentLineIndex = index;
         }

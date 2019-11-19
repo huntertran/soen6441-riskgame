@@ -22,7 +22,6 @@ public class SaveLoadControllerTest {
      */
     @BeforeEach
     public void before() throws IOException {
-
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
 

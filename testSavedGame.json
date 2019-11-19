@@ -9,7 +9,9 @@
       "name": "Malta",
       "continent": {
         "name": "North_Africa"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 1
     },
     {
       "coordinate": {
@@ -20,7 +22,9 @@
       "name": "Tunisia",
       "continent": {
         "name": "North_Africa"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 2
     },
     {
       "coordinate": {
@@ -31,7 +35,9 @@
       "name": "Algeria",
       "continent": {
         "name": "North_Africa"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 3
     },
     {
       "coordinate": {
@@ -42,7 +48,9 @@
       "name": "Morocco",
       "continent": {
         "name": "North_Africa"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 4
     },
     {
       "coordinate": {
@@ -53,7 +61,9 @@
       "name": "Spain",
       "continent": {
         "name": "Iberia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 5
     },
     {
       "coordinate": {
@@ -64,7 +74,9 @@
       "name": "Portugal",
       "continent": {
         "name": "Iberia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 6
     },
     {
       "coordinate": {
@@ -75,7 +87,9 @@
       "name": "France",
       "continent": {
         "name": "Benelux_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 7
     },
     {
       "coordinate": {
@@ -86,7 +100,9 @@
       "name": "Luxembourg",
       "continent": {
         "name": "Benelux_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 8
     },
     {
       "coordinate": {
@@ -97,7 +113,9 @@
       "name": "Belgium",
       "continent": {
         "name": "Benelux_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 9
     },
     {
       "coordinate": {
@@ -108,7 +126,9 @@
       "name": "Netherlands",
       "continent": {
         "name": "Benelux_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 10
     },
     {
       "coordinate": {
@@ -119,7 +139,9 @@
       "name": "England",
       "continent": {
         "name": "Great_Britain"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 11
     },
     {
       "coordinate": {
@@ -130,7 +152,9 @@
       "name": "Wales",
       "continent": {
         "name": "Great_Britain"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 12
     },
     {
       "coordinate": {
@@ -141,7 +165,9 @@
       "name": "Scotland",
       "continent": {
         "name": "Great_Britain"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 13
     },
     {
       "coordinate": {
@@ -152,7 +178,9 @@
       "name": "Northern_Ireland",
       "continent": {
         "name": "Great_Britain"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 14
     },
     {
       "coordinate": {
@@ -163,7 +191,9 @@
       "name": "Ireland",
       "continent": {
         "name": "Great_Britain"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 15
     },
     {
       "coordinate": {
@@ -174,7 +204,9 @@
       "name": "Finland",
       "continent": {
         "name": "Scandinavia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 16
     },
     {
       "coordinate": {
@@ -185,7 +217,9 @@
       "name": "Sweden",
       "continent": {
         "name": "Scandinavia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 17
     },
     {
       "coordinate": {
@@ -196,7 +230,9 @@
       "name": "Norway",
       "continent": {
         "name": "Scandinavia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 18
     },
     {
       "coordinate": {
@@ -207,7 +243,9 @@
       "name": "Denmark",
       "continent": {
         "name": "Scandinavia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 19
     },
     {
       "coordinate": {
@@ -218,7 +256,9 @@
       "name": "Iceland",
       "continent": {
         "name": "Scandinavia"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 20
     },
     {
       "coordinate": {
@@ -229,7 +269,9 @@
       "name": "Poland",
       "continent": {
         "name": "Central_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 21
     },
     {
       "coordinate": {
@@ -240,7 +282,9 @@
       "name": "Slovakia",
       "continent": {
         "name": "Central_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 22
     },
     {
       "coordinate": {
@@ -251,7 +295,9 @@
       "name": "Czech_Republic",
       "continent": {
         "name": "Central_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 23
     },
     {
       "coordinate": {
@@ -262,7 +308,9 @@
       "name": "Austria",
       "continent": {
         "name": "Central_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 24
     },
     {
       "coordinate": {
@@ -273,7 +321,9 @@
       "name": "Germany",
       "continent": {
         "name": "Central_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 25
     },
     {
       "coordinate": {
@@ -284,7 +334,9 @@
       "name": "Switzerland",
       "continent": {
         "name": "Central_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 26
     },
     {
       "coordinate": {
@@ -295,7 +347,9 @@
       "name": "Italy",
       "continent": {
         "name": "Adria_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 27
     },
     {
       "coordinate": {
@@ -306,7 +360,9 @@
       "name": "Slovenia",
       "continent": {
         "name": "Adria_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 28
     },
     {
       "coordinate": {
@@ -317,7 +373,9 @@
       "name": "Croatia",
       "continent": {
         "name": "Adria_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 29
     },
     {
       "coordinate": {
@@ -328,7 +386,9 @@
       "name": "Bosnia_and_Herzegovina",
       "continent": {
         "name": "Adria_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 30
     },
     {
       "coordinate": {
@@ -339,7 +399,9 @@
       "name": "Serbia_and_Montenegro",
       "continent": {
         "name": "Adria_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 31
     },
     {
       "coordinate": {
@@ -350,7 +412,9 @@
       "name": "Albania",
       "continent": {
         "name": "Adria_States"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 32
     },
     {
       "coordinate": {
@@ -361,7 +425,9 @@
       "name": "Hungary",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 33
     },
     {
       "coordinate": {
@@ -372,7 +438,9 @@
       "name": "Romania",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 34
     },
     {
       "coordinate": {
@@ -383,7 +451,9 @@
       "name": "Moldova",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 35
     },
     {
       "coordinate": {
@@ -394,7 +464,9 @@
       "name": "Serbia",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 36
     },
     {
       "coordinate": {
@@ -405,7 +477,9 @@
       "name": "Bulgaria",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 37
     },
     {
       "coordinate": {
@@ -416,7 +490,9 @@
       "name": "Former_Yugoslav_Republic_of_Macedonia",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 38
     },
     {
       "coordinate": {
@@ -427,7 +503,9 @@
       "name": "Greece",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 39
     },
     {
       "coordinate": {
@@ -438,7 +516,9 @@
       "name": "Turkey",
       "continent": {
         "name": "The_Balkans"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 40
     },
     {
       "coordinate": {
@@ -449,7 +529,9 @@
       "name": "Russia",
       "continent": {
         "name": "East_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 41
     },
     {
       "coordinate": {
@@ -460,7 +542,9 @@
       "name": "Estonia",
       "continent": {
         "name": "East_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 42
     },
     {
       "coordinate": {
@@ -471,7 +555,9 @@
       "name": "Latvia",
       "continent": {
         "name": "East_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 43
     },
     {
       "coordinate": {
@@ -482,7 +568,9 @@
       "name": "Lithuania",
       "continent": {
         "name": "East_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 44
     },
     {
       "coordinate": {
@@ -493,7 +581,9 @@
       "name": "Belarus",
       "continent": {
         "name": "East_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 45
     },
     {
       "coordinate": {
@@ -504,7 +594,47 @@
       "name": "Ukraine",
       "continent": {
         "name": "East_Europe"
-      }
+      },
+      "conquerer": null,
+      "serializedOrder": 46
+    }
+  ],
+  "continents": [
+    {
+      "name": "North_Africa",
+      "army": 2
+    },
+    {
+      "name": "Iberia",
+      "army": 1
+    },
+    {
+      "name": "Benelux_States",
+      "army": 2
+    },
+    {
+      "name": "Great_Britain",
+      "army": 3
+    },
+    {
+      "name": "Scandinavia",
+      "army": 3
+    },
+    {
+      "name": "Central_Europe",
+      "army": 5
+    },
+    {
+      "name": "Adria_States",
+      "army": 4
+    },
+    {
+      "name": "The_Balkans",
+      "army": 4
+    },
+    {
+      "name": "East_Europe",
+      "army": 4
     }
   ]
 }
