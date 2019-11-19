@@ -2,639 +2,230 @@
   "countries": [
     {
       "coordinate": {
-        "x": 564,
-        "y": 416
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "Malta",
+      "armyAmount": 1,
+      "name": "India",
       "continent": {
-        "name": "North_Africa"
+        "name": "Asia"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "ben"
+      },
       "serializedOrder": 1
     },
     {
       "coordinate": {
-        "x": 514,
-        "y": 411
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "Tunisia",
+      "armyAmount": 1,
+      "name": "Pakistan",
       "continent": {
-        "name": "North_Africa"
+        "name": "Asia"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "hunter"
+      },
       "serializedOrder": 2
     },
     {
       "coordinate": {
-        "x": 451,
-        "y": 411
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "Algeria",
+      "armyAmount": 1,
+      "name": "China",
       "continent": {
-        "name": "North_Africa"
+        "name": "Asia"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "ben"
+      },
       "serializedOrder": 3
     },
     {
       "coordinate": {
-        "x": 380,
-        "y": 412
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "Morocco",
+      "armyAmount": 1,
+      "name": "USA",
       "continent": {
-        "name": "North_Africa"
+        "name": "America"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "tj"
+      },
       "serializedOrder": 4
     },
     {
       "coordinate": {
-        "x": 405,
-        "y": 350
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "Spain",
+      "armyAmount": 1,
+      "name": "Canada",
       "continent": {
-        "name": "Iberia"
+        "name": "America"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "hunter"
+      },
       "serializedOrder": 5
     },
     {
       "coordinate": {
-        "x": 358,
-        "y": 347
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "Portugal",
+      "armyAmount": 1,
+      "name": "Russia",
       "continent": {
-        "name": "Iberia"
+        "name": "America"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "tj"
+      },
       "serializedOrder": 6
     },
     {
       "coordinate": {
-        "x": 459,
-        "y": 291
+        "x": 0,
+        "y": 0
       },
-      "armyAmount": 0,
-      "name": "France",
+      "armyAmount": 1,
+      "name": "Mexico",
       "continent": {
-        "name": "Benelux_States"
+        "name": "America"
       },
-      "conquerer": null,
+      "conquerer": {
+        "name": "hunter"
+      },
       "serializedOrder": 7
-    },
-    {
-      "coordinate": {
-        "x": 503,
-        "y": 259
-      },
-      "armyAmount": 0,
-      "name": "Luxembourg",
-      "continent": {
-        "name": "Benelux_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 8
-    },
-    {
-      "coordinate": {
-        "x": 472,
-        "y": 249
-      },
-      "armyAmount": 0,
-      "name": "Belgium",
-      "continent": {
-        "name": "Benelux_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 9
-    },
-    {
-      "coordinate": {
-        "x": 483,
-        "y": 222
-      },
-      "armyAmount": 0,
-      "name": "Netherlands",
-      "continent": {
-        "name": "Benelux_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 10
-    },
-    {
-      "coordinate": {
-        "x": 448,
-        "y": 229
-      },
-      "armyAmount": 0,
-      "name": "England",
-      "continent": {
-        "name": "Great_Britain"
-      },
-      "conquerer": null,
-      "serializedOrder": 11
-    },
-    {
-      "coordinate": {
-        "x": 425,
-        "y": 214
-      },
-      "armyAmount": 0,
-      "name": "Wales",
-      "continent": {
-        "name": "Great_Britain"
-      },
-      "conquerer": null,
-      "serializedOrder": 12
-    },
-    {
-      "coordinate": {
-        "x": 432,
-        "y": 177
-      },
-      "armyAmount": 0,
-      "name": "Scotland",
-      "continent": {
-        "name": "Great_Britain"
-      },
-      "conquerer": null,
-      "serializedOrder": 13
-    },
-    {
-      "coordinate": {
-        "x": 402,
-        "y": 183
-      },
-      "armyAmount": 0,
-      "name": "Northern_Ireland",
-      "continent": {
-        "name": "Great_Britain"
-      },
-      "conquerer": null,
-      "serializedOrder": 14
-    },
-    {
-      "coordinate": {
-        "x": 397,
-        "y": 214
-      },
-      "armyAmount": 0,
-      "name": "Ireland",
-      "continent": {
-        "name": "Great_Britain"
-      },
-      "conquerer": null,
-      "serializedOrder": 15
-    },
-    {
-      "coordinate": {
-        "x": 593,
-        "y": 111
-      },
-      "armyAmount": 0,
-      "name": "Finland",
-      "continent": {
-        "name": "Scandinavia"
-      },
-      "conquerer": null,
-      "serializedOrder": 16
-    },
-    {
-      "coordinate": {
-        "x": 546,
-        "y": 151
-      },
-      "armyAmount": 0,
-      "name": "Sweden",
-      "continent": {
-        "name": "Scandinavia"
-      },
-      "conquerer": null,
-      "serializedOrder": 17
-    },
-    {
-      "coordinate": {
-        "x": 509,
-        "y": 136
-      },
-      "armyAmount": 0,
-      "name": "Norway",
-      "continent": {
-        "name": "Scandinavia"
-      },
-      "conquerer": null,
-      "serializedOrder": 18
-    },
-    {
-      "coordinate": {
-        "x": 506,
-        "y": 186
-      },
-      "armyAmount": 0,
-      "name": "Denmark",
-      "continent": {
-        "name": "Scandinavia"
-      },
-      "conquerer": null,
-      "serializedOrder": 19
-    },
-    {
-      "coordinate": {
-        "x": 385,
-        "y": 74
-      },
-      "armyAmount": 0,
-      "name": "Iceland",
-      "continent": {
-        "name": "Scandinavia"
-      },
-      "conquerer": null,
-      "serializedOrder": 20
-    },
-    {
-      "coordinate": {
-        "x": 573,
-        "y": 228
-      },
-      "armyAmount": 0,
-      "name": "Poland",
-      "continent": {
-        "name": "Central_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 21
-    },
-    {
-      "coordinate": {
-        "x": 590,
-        "y": 259
-      },
-      "armyAmount": 0,
-      "name": "Slovakia",
-      "continent": {
-        "name": "Central_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 22
-    },
-    {
-      "coordinate": {
-        "x": 550,
-        "y": 257
-      },
-      "armyAmount": 0,
-      "name": "Czech_Republic",
-      "continent": {
-        "name": "Central_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 23
-    },
-    {
-      "coordinate": {
-        "x": 543,
-        "y": 280
-      },
-      "armyAmount": 0,
-      "name": "Austria",
-      "continent": {
-        "name": "Central_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 24
-    },
-    {
-      "coordinate": {
-        "x": 520,
-        "y": 245
-      },
-      "armyAmount": 0,
-      "name": "Germany",
-      "continent": {
-        "name": "Central_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 25
-    },
-    {
-      "coordinate": {
-        "x": 491,
-        "y": 289
-      },
-      "armyAmount": 0,
-      "name": "Switzerland",
-      "continent": {
-        "name": "Central_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 26
-    },
-    {
-      "coordinate": {
-        "x": 533,
-        "y": 338
-      },
-      "armyAmount": 0,
-      "name": "Italy",
-      "continent": {
-        "name": "Adria_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 27
-    },
-    {
-      "coordinate": {
-        "x": 560,
-        "y": 293
-      },
-      "armyAmount": 0,
-      "name": "Slovenia",
-      "continent": {
-        "name": "Adria_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 28
-    },
-    {
-      "coordinate": {
-        "x": 550,
-        "y": 316
-      },
-      "armyAmount": 0,
-      "name": "Croatia",
-      "continent": {
-        "name": "Adria_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 29
-    },
-    {
-      "coordinate": {
-        "x": 576,
-        "y": 313
-      },
-      "armyAmount": 0,
-      "name": "Bosnia_and_Herzegovina",
-      "continent": {
-        "name": "Adria_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 30
-    },
-    {
-      "coordinate": {
-        "x": 581,
-        "y": 337
-      },
-      "armyAmount": 0,
-      "name": "Serbia_and_Montenegro",
-      "continent": {
-        "name": "Adria_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 31
-    },
-    {
-      "coordinate": {
-        "x": 589,
-        "y": 358
-      },
-      "armyAmount": 0,
-      "name": "Albania",
-      "continent": {
-        "name": "Adria_States"
-      },
-      "conquerer": null,
-      "serializedOrder": 32
-    },
-    {
-      "coordinate": {
-        "x": 586,
-        "y": 280
-      },
-      "armyAmount": 0,
-      "name": "Hungary",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 33
-    },
-    {
-      "coordinate": {
-        "x": 625,
-        "y": 285
-      },
-      "armyAmount": 0,
-      "name": "Romania",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 34
-    },
-    {
-      "coordinate": {
-        "x": 657,
-        "y": 262
-      },
-      "armyAmount": 0,
-      "name": "Moldova",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 35
-    },
-    {
-      "coordinate": {
-        "x": 600,
-        "y": 315
-      },
-      "armyAmount": 0,
-      "name": "Serbia",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 36
-    },
-    {
-      "coordinate": {
-        "x": 633,
-        "y": 322
-      },
-      "armyAmount": 0,
-      "name": "Bulgaria",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 37
-    },
-    {
-      "coordinate": {
-        "x": 617,
-        "y": 349
-      },
-      "armyAmount": 0,
-      "name": "Former_Yugoslav_Republic_of_Macedonia",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 38
-    },
-    {
-      "coordinate": {
-        "x": 625,
-        "y": 381
-      },
-      "armyAmount": 0,
-      "name": "Greece",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 39
-    },
-    {
-      "coordinate": {
-        "x": 663,
-        "y": 350
-      },
-      "armyAmount": 0,
-      "name": "Turkey",
-      "continent": {
-        "name": "The_Balkans"
-      },
-      "conquerer": null,
-      "serializedOrder": 40
-    },
-    {
-      "coordinate": {
-        "x": 639,
-        "y": 150
-      },
-      "armyAmount": 0,
-      "name": "Russia",
-      "continent": {
-        "name": "East_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 41
-    },
-    {
-      "coordinate": {
-        "x": 599,
-        "y": 150
-      },
-      "armyAmount": 0,
-      "name": "Estonia",
-      "continent": {
-        "name": "East_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 42
-    },
-    {
-      "coordinate": {
-        "x": 606,
-        "y": 174
-      },
-      "armyAmount": 0,
-      "name": "Latvia",
-      "continent": {
-        "name": "East_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 43
-    },
-    {
-      "coordinate": {
-        "x": 598,
-        "y": 194
-      },
-      "armyAmount": 0,
-      "name": "Lithuania",
-      "continent": {
-        "name": "East_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 44
-    },
-    {
-      "coordinate": {
-        "x": 633,
-        "y": 208
-      },
-      "armyAmount": 0,
-      "name": "Belarus",
-      "continent": {
-        "name": "East_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 45
-    },
-    {
-      "coordinate": {
-        "x": 637,
-        "y": 240
-      },
-      "armyAmount": 0,
-      "name": "Ukraine",
-      "continent": {
-        "name": "East_Europe"
-      },
-      "conquerer": null,
-      "serializedOrder": 46
     }
   ],
   "continents": [
     {
-      "name": "North_Africa",
-      "army": 2
-    },
-    {
-      "name": "Iberia",
-      "army": 1
-    },
-    {
-      "name": "Benelux_States",
-      "army": 2
-    },
-    {
-      "name": "Great_Britain",
+      "name": "Asia",
       "army": 3
     },
     {
-      "name": "Scandinavia",
-      "army": 3
-    },
-    {
-      "name": "Central_Europe",
-      "army": 5
-    },
-    {
-      "name": "Adria_States",
-      "army": 4
-    },
-    {
-      "name": "The_Balkans",
-      "army": 4
-    },
-    {
-      "name": "East_Europe",
+      "name": "America",
       "army": 4
     }
+  ],
+  "players": [
+    {
+      "name": "hunter",
+      "unplacedArmies": 35,
+      "isPlaying": false,
+      "nextPlayer": {
+        "name": "ben"
+      },
+      "previousPlayer": {
+        "name": "tj"
+      },
+      "currentPhase": "WAITING_TO_TURN",
+      "holdingCards": [],
+      "currentPhaseActions": [],
+      "isPlayerBeAwardCard": false
+    },
+    {
+      "name": "ben",
+      "unplacedArmies": 35,
+      "isPlaying": false,
+      "nextPlayer": {
+        "name": "tj"
+      },
+      "previousPlayer": {
+        "name": "hunter"
+      },
+      "currentPhase": "WAITING_TO_TURN",
+      "holdingCards": [],
+      "currentPhaseActions": [],
+      "isPlayerBeAwardCard": false
+    },
+    {
+      "name": "tj",
+      "unplacedArmies": 35,
+      "isPlaying": false,
+      "nextPlayer": {
+        "name": "hunter"
+      },
+      "previousPlayer": {
+        "name": "ben"
+      },
+      "currentPhase": "WAITING_TO_TURN",
+      "holdingCards": [],
+      "currentPhaseActions": [],
+      "isPlayerBeAwardCard": false
+    }
+  ],
+  "borders": [
+    [
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      0
+    ]
   ]
 }

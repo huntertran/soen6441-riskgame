@@ -17,6 +17,12 @@ public class SaveLoadController {
                                                                           .setContinents(GameBoard.getInstance()
                                                                                                   .getGameBoardMap()
                                                                                                   .getContinents())
+                                                                          .setBorders(GameBoard.getInstance()
+                                                                                               .getGameBoardMap()
+                                                                                               .getBorders())
+                                                                          .setPlayers(GameBoard.getInstance()
+                                                                                               .getGameBoardPlayer()
+                                                                                               .getPlayers())
                                                                           .build();
 
         String jsonToSave = serializableGame.serialize();

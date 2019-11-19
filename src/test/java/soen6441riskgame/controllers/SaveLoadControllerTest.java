@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import soen6441riskgame.App;
 import soen6441riskgame.models.ModelCommands;
+import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.singleton.GameBoard;
 
@@ -25,8 +26,15 @@ public class SaveLoadControllerTest {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
 
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        // String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "smallmap";
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + filePath));
+
+        // add players
+        App.jumpToCommand(new ModelCommands("gameplayer -add hunter -add ben -add tj"));
+
+        // populate countries
+        App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
 
         saveLoadController = new SaveLoadController();
     }

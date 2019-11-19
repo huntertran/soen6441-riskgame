@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
+
 import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
+import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
@@ -15,17 +19,37 @@ import soen6441riskgame.utils.ConsolePrinter;
  * Each player is a node in a linked list
  */
 public class Player extends Observable implements NameOnlySerializable {
-    private String name;
-    private int unplacedArmies;
-    private boolean isPlaying = false;
-    private Player nextPlayer;
-    private Player previousPlayer;
-    private GamePhase currentPhase;
-    private ArrayList<Card> holdingCards = new ArrayList<Card>();
-    private ArrayList<String> currentPhaseActions = new ArrayList<String>();
     private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
     private static final int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN = 3;
     private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
+
+    @Expose
+    private String name;
+
+    @Expose
+    private int unplacedArmies;
+
+    @Expose
+    private boolean isPlaying = false;
+
+    @JsonAdapter(NameOnlyJsonAdapter.class)
+    @Expose
+    private Player nextPlayer;
+
+    @JsonAdapter(NameOnlyJsonAdapter.class)
+    @Expose
+    private Player previousPlayer;
+
+    @Expose
+    private GamePhase currentPhase;
+
+    @Expose
+    private ArrayList<Card> holdingCards = new ArrayList<Card>();
+
+    @Expose
+    private ArrayList<String> currentPhaseActions = new ArrayList<String>();
+
+    @Expose
     private boolean isPlayerBeAwardCard = false;
 
     /**
