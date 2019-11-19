@@ -82,6 +82,14 @@ public class GameBoard implements Resettable {
     }
 
     /**
+     * get cards deck for save load function
+     * @return card deck
+     */
+    public Card[] getCardsForSaveLoad(){
+        return cards;
+    }
+
+    /**
      * randomly get an available card from deck
      *
      * @return a card that not hold by any player

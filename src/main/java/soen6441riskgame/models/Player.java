@@ -43,7 +43,6 @@ public class Player extends Observable implements NameOnlySerializable {
     @Expose
     private GamePhase currentPhase;
 
-    @Expose
     private ArrayList<Card> holdingCards = new ArrayList<Card>();
 
     @Expose

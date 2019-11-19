@@ -23,6 +23,8 @@ public class SaveLoadController {
                                                                           .setPlayers(GameBoard.getInstance()
                                                                                                .getGameBoardPlayer()
                                                                                                .getPlayers())
+                                                                          .setCards(GameBoard.getInstance()
+                                                                                             .getCardsForSaveLoad())
                                                                           .build();
 
         String jsonToSave = serializableGame.serialize();

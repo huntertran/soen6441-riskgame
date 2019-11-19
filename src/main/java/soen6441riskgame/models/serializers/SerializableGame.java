@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
+import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.NameOnlySerializable;
@@ -21,6 +22,8 @@ public class SerializableGame {
     private ArrayList<Player> players;
     @Expose
     private int[][] borders;
+    @Expose
+    private Card[] cards;
 
     public String serialize() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
@@ -38,6 +41,7 @@ public class SerializableGame {
         private ArrayList<Continent> continents;
         private ArrayList<Player> players;
         private int[][] borders;
+        private Card[] cards;
 
         public Builder setContinents(ArrayList<Continent> continents) {
             this.continents = continents;
@@ -59,12 +63,18 @@ public class SerializableGame {
             return this;
         }
 
+        public Builder setCards(Card[] cards) {
+            this.cards = cards;
+            return this;
+        }
+
         public SerializableGame build() {
             SerializableGame serializableGame = new SerializableGame();
             serializableGame.continents = this.continents;
             serializableGame.countries = this.countries;
             serializableGame.players = this.players;
             serializableGame.borders = this.borders;
+            serializableGame.cards = this.cards;
             return serializableGame;
         }
     }

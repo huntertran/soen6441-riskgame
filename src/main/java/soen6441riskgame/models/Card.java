@@ -3,8 +3,10 @@ package soen6441riskgame.models;
 import java.io.PrintStream;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 
 import soen6441riskgame.enums.CardType;
+import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
@@ -16,6 +18,9 @@ public class Card implements Viewable {
 
     @Expose
     private boolean isExchanged = false;
+
+    @JsonAdapter(NameOnlyJsonAdapter.class)
+    @Expose
     private Player holdingPlayer = null;
 
     /**
