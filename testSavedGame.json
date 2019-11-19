@@ -6,8 +6,10 @@
         "y": 416
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Malta",
+      "continent": {
+        "name": "North_Africa"
+      }
     },
     {
       "coordinate": {
@@ -15,8 +17,10 @@
         "y": 411
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Tunisia",
+      "continent": {
+        "name": "North_Africa"
+      }
     },
     {
       "coordinate": {
@@ -24,8 +28,10 @@
         "y": 411
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Algeria",
+      "continent": {
+        "name": "North_Africa"
+      }
     },
     {
       "coordinate": {
@@ -33,8 +39,10 @@
         "y": 412
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Morocco",
+      "continent": {
+        "name": "North_Africa"
+      }
     },
     {
       "coordinate": {
@@ -42,8 +50,10 @@
         "y": 350
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Spain",
+      "continent": {
+        "name": "Iberia"
+      }
     },
     {
       "coordinate": {
@@ -51,8 +61,10 @@
         "y": 347
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Portugal",
+      "continent": {
+        "name": "Iberia"
+      }
     },
     {
       "coordinate": {
@@ -60,8 +72,10 @@
         "y": 291
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "France",
+      "continent": {
+        "name": "Benelux_States"
+      }
     },
     {
       "coordinate": {
@@ -69,8 +83,10 @@
         "y": 259
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Luxembourg",
+      "continent": {
+        "name": "Benelux_States"
+      }
     },
     {
       "coordinate": {
@@ -78,8 +94,10 @@
         "y": 249
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Belgium",
+      "continent": {
+        "name": "Benelux_States"
+      }
     },
     {
       "coordinate": {
@@ -87,8 +105,10 @@
         "y": 222
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Netherlands",
+      "continent": {
+        "name": "Benelux_States"
+      }
     },
     {
       "coordinate": {
@@ -96,8 +116,10 @@
         "y": 229
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "England",
+      "continent": {
+        "name": "Great_Britain"
+      }
     },
     {
       "coordinate": {
@@ -105,8 +127,10 @@
         "y": 214
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Wales",
+      "continent": {
+        "name": "Great_Britain"
+      }
     },
     {
       "coordinate": {
@@ -114,8 +138,10 @@
         "y": 177
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Scotland",
+      "continent": {
+        "name": "Great_Britain"
+      }
     },
     {
       "coordinate": {
@@ -123,8 +149,10 @@
         "y": 183
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Northern_Ireland",
+      "continent": {
+        "name": "Great_Britain"
+      }
     },
     {
       "coordinate": {
@@ -132,8 +160,10 @@
         "y": 214
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Ireland",
+      "continent": {
+        "name": "Great_Britain"
+      }
     },
     {
       "coordinate": {
@@ -141,8 +171,10 @@
         "y": 111
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Finland",
+      "continent": {
+        "name": "Scandinavia"
+      }
     },
     {
       "coordinate": {
@@ -150,8 +182,10 @@
         "y": 151
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Sweden",
+      "continent": {
+        "name": "Scandinavia"
+      }
     },
     {
       "coordinate": {
@@ -159,8 +193,10 @@
         "y": 136
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Norway",
+      "continent": {
+        "name": "Scandinavia"
+      }
     },
     {
       "coordinate": {
@@ -168,8 +204,10 @@
         "y": 186
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Denmark",
+      "continent": {
+        "name": "Scandinavia"
+      }
     },
     {
       "coordinate": {
@@ -177,8 +215,10 @@
         "y": 74
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Iceland",
+      "continent": {
+        "name": "Scandinavia"
+      }
     },
     {
       "coordinate": {
@@ -186,8 +226,10 @@
         "y": 228
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Poland",
+      "continent": {
+        "name": "Central_Europe"
+      }
     },
     {
       "coordinate": {
@@ -195,8 +237,10 @@
         "y": 259
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Slovakia",
+      "continent": {
+        "name": "Central_Europe"
+      }
     },
     {
       "coordinate": {
@@ -204,8 +248,10 @@
         "y": 257
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Czech_Republic",
+      "continent": {
+        "name": "Central_Europe"
+      }
     },
     {
       "coordinate": {
@@ -213,8 +259,10 @@
         "y": 280
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Austria",
+      "continent": {
+        "name": "Central_Europe"
+      }
     },
     {
       "coordinate": {
@@ -222,8 +270,10 @@
         "y": 245
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Germany",
+      "continent": {
+        "name": "Central_Europe"
+      }
     },
     {
       "coordinate": {
@@ -231,8 +281,10 @@
         "y": 289
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Switzerland",
+      "continent": {
+        "name": "Central_Europe"
+      }
     },
     {
       "coordinate": {
@@ -240,8 +292,10 @@
         "y": 338
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Italy",
+      "continent": {
+        "name": "Adria_States"
+      }
     },
     {
       "coordinate": {
@@ -249,8 +303,10 @@
         "y": 293
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Slovenia",
+      "continent": {
+        "name": "Adria_States"
+      }
     },
     {
       "coordinate": {
@@ -258,8 +314,10 @@
         "y": 316
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Croatia",
+      "continent": {
+        "name": "Adria_States"
+      }
     },
     {
       "coordinate": {
@@ -267,8 +325,10 @@
         "y": 313
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Bosnia_and_Herzegovina",
+      "continent": {
+        "name": "Adria_States"
+      }
     },
     {
       "coordinate": {
@@ -276,8 +336,10 @@
         "y": 337
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Serbia_and_Montenegro",
+      "continent": {
+        "name": "Adria_States"
+      }
     },
     {
       "coordinate": {
@@ -285,8 +347,10 @@
         "y": 358
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Albania",
+      "continent": {
+        "name": "Adria_States"
+      }
     },
     {
       "coordinate": {
@@ -294,8 +358,10 @@
         "y": 280
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Hungary",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -303,8 +369,10 @@
         "y": 285
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Romania",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -312,8 +380,10 @@
         "y": 262
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Moldova",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -321,8 +391,10 @@
         "y": 315
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Serbia",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -330,8 +402,10 @@
         "y": 322
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Bulgaria",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -339,8 +413,10 @@
         "y": 349
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Former_Yugoslav_Republic_of_Macedonia",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -348,8 +424,10 @@
         "y": 381
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Greece",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -357,8 +435,10 @@
         "y": 350
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Turkey",
+      "continent": {
+        "name": "The_Balkans"
+      }
     },
     {
       "coordinate": {
@@ -366,8 +446,10 @@
         "y": 150
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Russia",
+      "continent": {
+        "name": "East_Europe"
+      }
     },
     {
       "coordinate": {
@@ -375,8 +457,10 @@
         "y": 150
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Estonia",
+      "continent": {
+        "name": "East_Europe"
+      }
     },
     {
       "coordinate": {
@@ -384,8 +468,10 @@
         "y": 174
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Latvia",
+      "continent": {
+        "name": "East_Europe"
+      }
     },
     {
       "coordinate": {
@@ -393,8 +479,10 @@
         "y": 194
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Lithuania",
+      "continent": {
+        "name": "East_Europe"
+      }
     },
     {
       "coordinate": {
@@ -402,8 +490,10 @@
         "y": 208
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Belarus",
+      "continent": {
+        "name": "East_Europe"
+      }
     },
     {
       "coordinate": {
@@ -411,8 +501,10 @@
         "y": 240
       },
       "armyAmount": 0,
-      "continent": {},
-      "conquerer": null
+      "name": "Ukraine",
+      "continent": {
+        "name": "East_Europe"
+      }
     }
   ]
 }

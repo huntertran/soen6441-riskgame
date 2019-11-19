@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
+import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 
 public class SerializableGame {
@@ -17,7 +18,7 @@ public class SerializableGame {
         Gson gson = new GsonBuilder().setPrettyPrinting()
                                      .serializeNulls()
                                      .excludeFieldsWithoutExposeAnnotation()
-                                     .setExclusionStrategies(new CountryJsonExcludeStrategy(String.class))
+                                     .registerTypeAdapter(Continent.class, new ContinentJsonAdapter())
                                      .create();
 
         String jsonString = gson.toJson(this);
