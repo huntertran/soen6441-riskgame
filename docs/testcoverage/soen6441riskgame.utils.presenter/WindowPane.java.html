@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WindowPane.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils.presenter</a> &gt; <span class="el_source">WindowPane.java</span></div><h1>WindowPane.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils.presenter;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+/**
+ * re-present a separated view
+ */
+public class WindowPane extends JPanel {
+    private static final long serialVersionUID = 3555490927568246300L;
+    private JTextArea textArea;
+
+    /**
+     * Presenter constructor
+     */
+<span class="nc" id="L25">    public WindowPane() {</span>
+<span class="nc" id="L26">        setLayout(new BorderLayout());</span>
+<span class="nc" id="L27">        textArea = new JTextArea();</span>
+<span class="nc" id="L28">        textArea.setBackground(Color.BLACK);</span>
+<span class="nc" id="L29">        textArea.setForeground(Color.WHITE);</span>
+<span class="nc" id="L30">        Font font = loadFont();</span>
+<span class="nc" id="L31">        textArea.setFont(font);</span>
+<span class="nc" id="L32">        add(new JScrollPane(textArea));</span>
+<span class="nc" id="L33">    }</span>
+
+    /**
+     * Load RobotoMono font
+     * 
+     * @return the loaded font, or null is cannot load the font
+     */
+    public Font loadFont() {
+<span class="nc" id="L41">        Font font = null;</span>
+        try {
+<span class="nc" id="L43">            InputStream fontFile = new BufferedInputStream(new FileInputStream(&quot;src\\main\\java\\soen6441riskgame\\resources\\RobotoMono-Regular.ttf&quot;));</span>
+<span class="nc" id="L44">            Font localFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);</span>
+
+<span class="nc" id="L46">            font = localFont.deriveFont(Font.PLAIN, 14);</span>
+<span class="nc" id="L47">        } catch (Exception ex) {</span>
+<span class="nc" id="L48">            font = null;</span>
+<span class="nc" id="L49">        }</span>
+
+<span class="nc" id="L51">        return font;</span>
+    }
+
+    /**
+     * Clear the view
+     */
+    public void clearView() {
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (textArea != null) {</span>
+<span class="nc" id="L59">            textArea.setText(null);</span>
+        }
+<span class="nc" id="L61">    }</span>
+
+    /**
+     * append new text to view
+     * 
+     * @param text the text to append
+     */
+    public void appendText(final String text) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (EventQueue.isDispatchThread()) {</span>
+<span class="nc" id="L70">            textArea.append(text);</span>
+<span class="nc" id="L71">            textArea.setCaretPosition(textArea.getText().length());</span>
+        } else {
+<span class="nc" id="L73">            EventQueue.invokeLater(new Runnable() {</span>
+                @Override
+                public void run() {
+<span class="nc" id="L76">                    appendText(text);</span>
+<span class="nc" id="L77">                }</span>
+            });
+        }
+<span class="nc" id="L80">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

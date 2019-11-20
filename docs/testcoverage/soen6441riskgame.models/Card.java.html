@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Card.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models</a> &gt; <span class="el_source">Card.java</span></div><h1>Card.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models;
 
+import java.io.PrintStream;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
+
 import soen6441riskgame.enums.CardType;
+import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * A card that can be exchanged for armies
  */
 public class Card implements Viewable {
+    @Expose
     private CardType cardType;
-<span class="fc" id="L11">    private boolean isExchanged = false;</span>
-<span class="fc" id="L12">    private Player holdingPlayer = null;</span>
+
+<span class="fc" id="L19">    @Expose</span>
+    private boolean isExchanged = false;
+
+<span class="fc" id="L22">    @JsonAdapter(NameOnlyJsonAdapter.class)</span>
+    @Expose
+    private Player holdingPlayer = null;
 
     /**
      * constructor
      *
      * @param type type of card
      */
-<span class="fc" id="L19">    public Card(CardType type) {</span>
-<span class="fc" id="L20">        cardType = type;</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L31">    public Card(CardType type) {</span>
+<span class="fc" id="L32">        cardType = type;</span>
+<span class="fc" id="L33">    }</span>
 
     /**
      * get the type of card
@@ -26,7 +38,7 @@ public class Card implements Viewable {
      * @return card type
      */
     public CardType getCardType() {
-<span class="fc" id="L29">        return cardType;</span>
+<span class="fc" id="L41">        return cardType;</span>
     }
 
     /**
@@ -36,7 +48,7 @@ public class Card implements Viewable {
      * @return is card exchanged for armies
      */
     public boolean isExchanged() {
-<span class="fc" id="L39">        return isExchanged;</span>
+<span class="fc" id="L51">        return isExchanged;</span>
     }
 
     /**
@@ -46,34 +58,36 @@ public class Card implements Viewable {
      * @param isExchanged the value to set
      */
     public void setExchanged(boolean isExchanged) {
-<span class="fc" id="L49">        this.isExchanged = isExchanged;</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L61">        this.isExchanged = isExchanged;</span>
+<span class="fc" id="L62">    }</span>
 
     /**
      * get the player that holding this card
-     * 
+     *
      * @return player object
      */
     public Player getHoldingPlayer() {
-<span class="fc" id="L58">        return holdingPlayer;</span>
+<span class="fc" id="L70">        return holdingPlayer;</span>
     }
 
     /**
      * hand over this card to the player
-     * 
+     *
      * @param player player who took this card
      */
     public void setHoldingPlayer(Player player) {
-<span class="fc" id="L67">        holdingPlayer = player;</span>
-<span class="fc" id="L68">    }</span>
+<span class="fc" id="L79">        holdingPlayer = player;</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * print the card content
      */
     @Override
-    public void view(int indent) {
-<span class="fc" id="L75">        this.printIndent(indent);</span>
-<span class="fc" id="L76">        ConsolePrinter.printFormat(&quot;Card type: %s&quot;, cardType.toString());</span>
-<span class="fc" id="L77">    }</span>
+    public void view(PrintStream printStream, int indent) {
+<span class="fc" id="L87">        this.printIndent(printStream, indent);</span>
+<span class="fc" id="L88">        ConsolePrinter.printFormat(printStream,</span>
+                                   &quot;Card type: %s&quot;,
+<span class="fc" id="L90">                                   cardType.toString());</span>
+<span class="fc" id="L91">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

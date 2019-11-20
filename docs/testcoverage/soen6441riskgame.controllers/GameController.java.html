@@ -123,7 +123,7 @@ import soen6441riskgame.utils.Parser;
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">            if (!country.isConquered()) {</span>
 <span class="fc" id="L124">                unAssignedCountries.add(country);</span>
             }
-        }
+<span class="fc" id="L126">        }</span>
 
 <span class="fc bfc" id="L128" title="All 2 branches covered.">        while (unAssignedCountries.size() &gt; 0) {</span>
 <span class="fc bfc" id="L129" title="All 2 branches covered.">            if (playerIndexToAssign == totalPlayer) {</span>
@@ -144,7 +144,7 @@ import soen6441riskgame.utils.Parser;
 
 <span class="fc" id="L145">            playerIndexToAssign++;</span>
 <span class="fc" id="L146">            unAssignedCountries.remove(countryToAssign);</span>
-        }
+<span class="fc" id="L147">        }</span>
 
 <span class="fc" id="L149">        System.out.println(&quot;All countries are randomly assigned to players&quot;);</span>
 <span class="fc" id="L150">    }</span>
@@ -195,7 +195,7 @@ import soen6441riskgame.utils.Parser;
 
 <span class="fc bfc" id="L196" title="All 2 branches covered.">        for (Player player : players) {</span>
 <span class="fc" id="L197">            player.setUnplacedArmies(unplacedArmiesEachPlayer);</span>
-        }
+<span class="fc" id="L198">        }</span>
 <span class="fc" id="L199">    }</span>
 
     /**
@@ -219,7 +219,7 @@ import soen6441riskgame.utils.Parser;
 
 <span class="pc bpc" id="L220" title="1 of 2 branches missed.">        if (currentPlayer.getUnplacedArmies() != 0) {</span>
 <span class="fc" id="L221">            country.placeArmy(country.getConquerer());</span>
-<span class="fc" id="L222">        } else {</span>
+        } else {
 <span class="nc" id="L223">            turnToNextPlayer();</span>
 <span class="nc" id="L224">            getCurrentPlayer(true);</span>
         }
@@ -244,9 +244,9 @@ import soen6441riskgame.utils.Parser;
 
 <span class="fc" id="L245">                    country.receiveArmiesFromUnPlacedArmies(armiesToPlace);</span>
                 }
-            }
+<span class="fc" id="L247">            }</span>
             // }
-        }
+<span class="fc" id="L249">        }</span>
 <span class="fc" id="L250">    }</span>
 
     /**
@@ -272,7 +272,7 @@ import soen6441riskgame.utils.Parser;
 <span class="fc" id="L272">                player.setPlaying(true);</span>
 <span class="fc" id="L273">                return player;</span>
             }
-        }
+<span class="nc" id="L275">        }</span>
 
 <span class="nc" id="L277">        return null;</span>
     }
@@ -302,7 +302,7 @@ import soen6441riskgame.utils.Parser;
 
 <span class="fc bfc" id="L303" title="All 2 branches covered.">        for (Country country : player.getConqueredCountries()) {</span>
 <span class="fc" id="L304">            country.viewWithoutNeighbors(2);</span>
-        }
+<span class="fc" id="L305">        }</span>
 
 <span class="fc" id="L307">        ArrayList&lt;Card&gt; cards = player.getHoldingCards();</span>
 <span class="fc bfc" id="L308" title="All 2 branches covered.">        if (!cards.isEmpty()) {</span>
@@ -313,7 +313,7 @@ import soen6441riskgame.utils.Parser;
 <span class="fc" id="L313">                System.out.print(cardPosition);</span>
 <span class="fc" id="L314">                card.view(1);</span>
 <span class="fc" id="L315">                cardPosition++;</span>
-            }
+<span class="fc" id="L316">            }</span>
         }
 <span class="fc" id="L318">    }</span>
 
@@ -331,7 +331,7 @@ import soen6441riskgame.utils.Parser;
 <span class="fc bfc" id="L331" title="All 2 branches covered.">            if (player.isPlaying()) {</span>
 <span class="fc" id="L332">                currentPlayer = player;</span>
             }
-        }
+<span class="fc" id="L334">        }</span>
 
 <span class="fc bfc" id="L336" title="All 2 branches covered.">        if (currentPlayer == null) {</span>
 <span class="fc" id="L337">            currentPlayer = startRoundRobinPlayers();</span>
@@ -382,21 +382,8 @@ import soen6441riskgame.utils.Parser;
         }
 
 <span class="fc" id="L384">        Player currentPlayer = getCurrentPlayer(false);</span>
-
-<span class="fc bfc" id="L386" title="All 2 branches covered.">        if (!country.isCountryBelongToPlayer(currentPlayer)) {</span>
-<span class="fc" id="L387">            return;</span>
-        }
-
-<span class="pc bpc" id="L390" title="1 of 2 branches missed.">        if (currentPlayer.getUnplacedArmies() != 0) {</span>
-<span class="fc" id="L391">            country.receiveArmiesFromUnPlacedArmies(numberOfArmies);</span>
-<span class="fc" id="L392">            currentPlayer.addCurrentPhaseAction(&quot;Reinforce: &quot; + country.getName() + &quot; with &quot; + numberOfArmies);</span>
-        }
-
-<span class="fc bfc" id="L395" title="All 2 branches covered.">        if (currentPlayer.getUnplacedArmies() == 0) {</span>
-<span class="fc" id="L396">            ConsolePrinter.printFormat(&quot;Player %s enter ATTACK phase&quot;, currentPlayer.getName());</span>
-<span class="fc" id="L397">            currentPlayer.setCurrentPhase(GamePhase.ATTACK);</span>
-        }
-<span class="fc" id="L399">    }</span>
+<span class="fc" id="L385">        currentPlayer.reinforce(country, numberOfArmies);</span>
+<span class="fc" id="L386">    }</span>
 
     /**
      * FORTIFICATION PHASE enter fortification phase
@@ -405,17 +392,17 @@ import soen6441riskgame.utils.Parser;
      *         fortification phase
      */
     public boolean enterFortifyPhase() {
-<span class="fc" id="L408">        Player currentPlayer = getCurrentPlayer(true);</span>
+<span class="fc" id="L395">        Player currentPlayer = getCurrentPlayer(true);</span>
 
-<span class="pc bpc" id="L410" title="1 of 4 branches missed.">        if (currentPlayer.getCurrentPhase() == GamePhase.ATTACK &amp;&amp; !attackMoveCmdRequired) {</span>
-<span class="fc" id="L411">            currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);</span>
-<span class="fc bfc" id="L412" title="All 2 branches covered.">        } else if (currentPlayer.getCurrentPhase() != GamePhase.FORTIFICATION) {</span>
-<span class="fc" id="L413">            ConsolePrinter.printFormat(&quot;Player %s cannot fortify armies in %s phase&quot;,</span>
-<span class="fc" id="L414">                                       currentPlayer.getName(),</span>
-<span class="fc" id="L415">                                       currentPlayer.getCurrentPhase().toString());</span>
+<span class="pc bpc" id="L397" title="1 of 4 branches missed.">        if (currentPlayer.getCurrentPhase() == GamePhase.ATTACK &amp;&amp; !attackMoveCmdRequired) {</span>
+<span class="fc" id="L398">            currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        } else if (currentPlayer.getCurrentPhase() != GamePhase.FORTIFICATION) {</span>
+<span class="fc" id="L400">            ConsolePrinter.printFormat(&quot;Player %s cannot fortify armies in %s phase&quot;,</span>
+<span class="fc" id="L401">                                       currentPlayer.getName(),</span>
+<span class="fc" id="L402">                                       currentPlayer.getCurrentPhase().toString());</span>
         }
 
-<span class="fc bfc" id="L418" title="All 2 branches covered.">        return currentPlayer.getCurrentPhase() == GamePhase.FORTIFICATION;</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        return currentPlayer.getCurrentPhase() == GamePhase.FORTIFICATION;</span>
     }
 
     /**
@@ -430,30 +417,30 @@ import soen6441riskgame.utils.Parser;
      * @param args[2] number of armies
      */
     public void handleMultipleFortificationCommand(String[] args) {
-<span class="fc" id="L433">        int numberOfCommandSet = args.length / 3;</span>
-<span class="fc" id="L434">        int numberOfLeftOverArgs = args.length % 3;</span>
+<span class="fc" id="L420">        int numberOfCommandSet = args.length / 3;</span>
+<span class="fc" id="L421">        int numberOfLeftOverArgs = args.length % 3;</span>
 
-<span class="fc bfc" id="L436" title="All 2 branches covered.">        for (int index = 0; index &lt; numberOfCommandSet; index++) {</span>
-<span class="fc" id="L437">            String[] commandSet = new String[] { args[(3 * index) + 0],</span>
-<span class="fc" id="L438">                                                 args[(3 * index) + 1],</span>
-<span class="fc" id="L439">                                                 args[(3 * index) + 2] };</span>
-<span class="fc" id="L440">            handleFortifyCommand(commandSet);</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        for (int index = 0; index &lt; numberOfCommandSet; index++) {</span>
+<span class="fc" id="L424">            String[] commandSet = new String[] { args[(3 * index) + 0],</span>
+                                                 args[(3 * index) + 1],
+                                                 args[(3 * index) + 2] };
+<span class="fc" id="L427">            handleFortifyCommand(commandSet);</span>
         }
 
-<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        if (numberOfLeftOverArgs &gt; 0) {</span>
-<span class="nc bnc" id="L444" title="All 2 branches missed.">            if (numberOfLeftOverArgs &gt; 1) {</span>
-<span class="nc" id="L445">                ConsolePrinter.printFormat(&quot;You have some invalid command arguments&quot;);</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">        if (numberOfLeftOverArgs &gt; 0) {</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">            if (numberOfLeftOverArgs &gt; 1) {</span>
+<span class="nc" id="L432">                ConsolePrinter.printFormat(&quot;You have some invalid command arguments&quot;);</span>
             }
 
-<span class="nc" id="L448">            String lastArg = args[args.length - 1].toLowerCase();</span>
+<span class="nc" id="L435">            String lastArg = args[args.length - 1].toLowerCase();</span>
 
-<span class="nc bnc" id="L450" title="All 4 branches missed.">            if (lastArg.equals(&quot;-none&quot;) || lastArg.equals(&quot;none&quot;)) {</span>
-<span class="nc" id="L451">                turnToNextPlayer();</span>
-<span class="nc" id="L452">                getCurrentPlayer(true);</span>
-<span class="nc" id="L453">                return;</span>
+<span class="nc bnc" id="L437" title="All 4 branches missed.">            if (lastArg.equals(&quot;-none&quot;) || lastArg.equals(&quot;none&quot;)) {</span>
+<span class="nc" id="L438">                turnToNextPlayer();</span>
+<span class="nc" id="L439">                getCurrentPlayer(true);</span>
+<span class="nc" id="L440">                return;</span>
             }
         }
-<span class="fc" id="L456">    }</span>
+<span class="fc" id="L443">    }</span>
 
     /**
      * move any number of armies from one country to another if they are connected
@@ -465,37 +452,24 @@ import soen6441riskgame.utils.Parser;
      * @param args[2] number of armies
      */
     private void handleFortifyCommand(String[] args) {
-        // if (args[0].toLowerCase().equals(&quot;none&quot;)) {
-        // turnToNextPlayer();
-        // getCurrentPlayer(true);
-        // return;
-        // }
+<span class="fc" id="L455">        Country fromCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);</span>
+<span class="fc" id="L456">        Country toCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);</span>
+<span class="fc" id="L457">        int numberOfArmies = Parser.parseWithDefault(args[2], 0);</span>
 
-<span class="fc" id="L474">        Country fromCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);</span>
-<span class="fc" id="L475">        Country toCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);</span>
-<span class="fc" id="L476">        int numberOfArmies = Parser.parseWithDefault(args[2], 0);</span>
-
-<span class="pc bpc" id="L478" title="2 of 4 branches missed.">        if (fromCountry == null || toCountry == null) {</span>
-<span class="nc" id="L479">            System.out.println(&quot;The country name(s) not existed&quot;);</span>
-<span class="nc" id="L480">            return;</span>
+<span class="pc bpc" id="L459" title="2 of 4 branches missed.">        if (fromCountry == null || toCountry == null) {</span>
+<span class="nc" id="L460">            System.out.println(&quot;The country name(s) not existed&quot;);</span>
+<span class="nc" id="L461">            return;</span>
         }
 
-<span class="fc" id="L483">        Player currentPlayer = getCurrentPlayer(false);</span>
+<span class="fc" id="L464">        Player currentPlayer = getCurrentPlayer(false);</span>
 
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">        if (!fromCountry.isCountryBelongToPlayer(currentPlayer)</span>
-<span class="pc bpc" id="L486" title="1 of 2 branches missed.">            || !toCountry.isCountryBelongToPlayer(currentPlayer)) {</span>
-<span class="nc" id="L487">            return;</span>
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">        if (!fromCountry.isCountryBelongToPlayer(currentPlayer)</span>
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">            || !toCountry.isCountryBelongToPlayer(currentPlayer)) {</span>
+<span class="nc" id="L468">            return;</span>
         }
 
-<span class="fc" id="L490">        fromCountry.moveArmies(toCountry, numberOfArmies);</span>
-<span class="fc" id="L491">        currentPlayer.addCurrentPhaseAction(&quot;Fortify: from &quot;</span>
-<span class="fc" id="L492">                                            + fromCountry.getName()</span>
-<span class="fc" id="L493">                                            + &quot; to &quot;</span>
-<span class="fc" id="L494">                                            + toCountry.getName()</span>
-<span class="fc" id="L495">                                            + &quot; with &quot;</span>
-<span class="fc" id="L496">                                            + String.valueOf(numberOfArmies)</span>
-<span class="fc" id="L497">                                            + &quot; armies&quot;);</span>
-<span class="fc" id="L498">    }</span>
+<span class="fc" id="L471">        currentPlayer.fortify(fromCountry, toCountry, numberOfArmies);</span>
+<span class="fc" id="L472">    }</span>
 
     /**
      * ATTACK PHASE enter attack phase
@@ -503,17 +477,17 @@ import soen6441riskgame.utils.Parser;
      * @return true if enter attack phase successfully or the current player is already in attack phase
      */
     public boolean enterAttackPhase() {
-<span class="fc" id="L506">        Player currentPlayer = getCurrentPlayer(true);</span>
+<span class="fc" id="L480">        Player currentPlayer = getCurrentPlayer(true);</span>
 
-<span class="pc bpc" id="L508" title="1 of 2 branches missed.">        if (currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT) {</span>
-<span class="fc" id="L509">            currentPlayer.setCurrentPhase(GamePhase.ATTACK);</span>
-<span class="pc bnc" id="L510" title="All 2 branches missed.">        } else if (currentPlayer.getCurrentPhase() != GamePhase.ATTACK) {</span>
-<span class="nc" id="L511">            ConsolePrinter.printFormat(&quot;Player %s cannot use attack in %s phase&quot;,</span>
-<span class="nc" id="L512">                                       currentPlayer.getName(),</span>
-<span class="nc" id="L513">                                       currentPlayer.getCurrentPhase());</span>
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">        if (currentPlayer.getCurrentPhase() == GamePhase.REINFORCEMENT) {</span>
+<span class="fc" id="L483">            currentPlayer.setCurrentPhase(GamePhase.ATTACK);</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">        } else if (currentPlayer.getCurrentPhase() != GamePhase.ATTACK) {</span>
+<span class="nc" id="L485">            ConsolePrinter.printFormat(&quot;Player %s cannot use attack in %s phase&quot;,</span>
+<span class="nc" id="L486">                                       currentPlayer.getName(),</span>
+<span class="nc" id="L487">                                       currentPlayer.getCurrentPhase());</span>
         }
 
-<span class="pc bpc" id="L516" title="1 of 2 branches missed.">        return currentPlayer.getCurrentPhase() == GamePhase.ATTACK;</span>
+<span class="pc bpc" id="L490" title="1 of 2 branches missed.">        return currentPlayer.getCurrentPhase() == GamePhase.ATTACK;</span>
     }
 
     /**
@@ -525,67 +499,76 @@ import soen6441riskgame.utils.Parser;
      * @param args[0] from country
      * @param args[1] to country
      * @param args[2] number of dice rolls or -allout option
-     *
      */
     public void handleAttackCommand(String[] args) {
         // ConsolePrinter.printFormat(&quot;attack conditions testing&quot;);
 
-<span class="pc bpc" id="L533" title="1 of 2 branches missed.">        if (attackMoveCmdRequired) {</span>
-<span class="nc" id="L534">            ConsolePrinter.printFormat(&quot;Player %s need to move armies into your conquered country %s&quot;,</span>
-<span class="nc" id="L535">                                       getCurrentPlayer(false).getName(), defendingCountry.getName());</span>
-<span class="nc" id="L536">            return;</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">        if (attackMoveCmdRequired) {</span>
+<span class="nc" id="L507">            ConsolePrinter.printFormat(&quot;Player %s need to move armies into your conquered country %s&quot;,</span>
+<span class="nc" id="L508">                                       getCurrentPlayer(false).getName(),</span>
+<span class="nc" id="L509">                                       defendingCountry.getName());</span>
+<span class="nc" id="L510">            return;</span>
         }
 
         // check if its no attack
-<span class="fc bfc" id="L540" title="All 4 branches covered.">        if (args[0].toLowerCase().equals(&quot;-noattack&quot;) || args[0].toLowerCase().equals(&quot;noattack&quot;)) {</span>
-<span class="fc" id="L541">            endAttackPhase();</span>
-<span class="fc" id="L542">            return;</span>
+<span class="fc bfc" id="L514" title="All 4 branches covered.">        if (args[0].toLowerCase().equals(&quot;-noattack&quot;) || args[0].toLowerCase().equals(&quot;noattack&quot;)) {</span>
+<span class="fc" id="L515">            endAttackPhase();</span>
+<span class="fc" id="L516">            return;</span>
         }
 
         // need to check whether these countries are existent or not
-<span class="fc" id="L546">        attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);</span>
-<span class="fc" id="L547">        defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);</span>
+<span class="fc" id="L520">        attackingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[0]);</span>
+<span class="fc" id="L521">        defendingCountry = GameBoard.getInstance().getGameBoardMap().getCountryFromName(args[1]);</span>
 
-<span class="pc bpc" id="L549" title="2 of 4 branches missed.">        if (args[2].equals(&quot;allout&quot;) || args[2].equals(&quot;-allout&quot;)) {</span>
-<span class="nc bnc" id="L550" title="All 2 branches missed.">            attackerNumDice = (attackingCountry.getArmyAmount() - 1) &lt; 3 ? attackingCountry.getArmyAmount() - 1 : 3;</span>
-<span class="nc bnc" id="L551" title="All 2 branches missed.">            if (!isAttackValid()) {</span>
-<span class="nc" id="L552">                return;</span>
+<span class="pc bpc" id="L523" title="2 of 4 branches missed.">        if (args[2].equals(&quot;allout&quot;) || args[2].equals(&quot;-allout&quot;)) {</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">            attackerNumDice = (attackingCountry.getArmyAmount() - 1) &lt; 3 ? attackingCountry.getArmyAmount() - 1 : 3;</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">            if (!isAttackValid()) {</span>
+<span class="nc" id="L526">                return;</span>
             } else {
-<span class="nc" id="L554">                alloutFlag = true;</span>
-<span class="nc" id="L555">                simulateAttack();</span>
+<span class="nc" id="L528">                alloutFlag = true;</span>
+<span class="nc" id="L529">                simulateAttack();</span>
             }
-<span class="nc" id="L557">        } else {</span>
-<span class="pc bpc" id="L558" title="1 of 2 branches missed.">            if (Parser.checkValidInputNumber(args[2])) {</span>
-<span class="fc" id="L559">                int numDice = Integer.parseInt(args[2]);</span>
-<span class="fc" id="L560">                attackerNumDice = numDice; // saving the number of dice</span>
-<span class="fc" id="L561">            } else {</span>
-<span class="nc" id="L562">                ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
+        } else {
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">            if (Parser.checkValidInputNumber(args[2])) {</span>
+<span class="fc" id="L533">                int numDice = Integer.parseInt(args[2]);</span>
+<span class="fc" id="L534">                attackerNumDice = numDice; // saving the number of dice</span>
+<span class="fc" id="L535">            } else {</span>
+<span class="nc" id="L536">                ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
             }
             // check if attack is valid
-<span class="fc bfc" id="L565" title="All 2 branches covered.">            if (!isAttackValid()) {</span>
-<span class="fc" id="L566">                return;</span>
+<span class="fc bfc" id="L539" title="All 2 branches covered.">            if (!isAttackValid()) {</span>
+<span class="fc" id="L540">                return;</span>
             }
         }
-<span class="pc bpc" id="L569" title="1 of 2 branches missed.">        if (!furtherAttackPossible()) {</span>
-<span class="nc" id="L570">            endAttackPhase();</span>
+        /*
+        if (!furtherAttackPossible() &amp;&amp; !attackMoveCmdRequired) {
+            endAttackPhase();
         }
-<span class="fc" id="L572">    }</span>
+        */
+<span class="fc" id="L548">    }</span>
 
     /**
      * it simulates the attack command for -allout option
      */
     private void simulateAttack() {
-<span class="nc bnc" id="L578" title="All 2 branches missed.">        while (alloutFlag) {</span>
-<span class="nc bnc" id="L579" title="All 2 branches missed.">            attackerNumDice = (attackingCountry.getArmyAmount() - 1) &lt; 3 ? attackingCountry.getArmyAmount() - 1 : 3;</span>
-<span class="nc bnc" id="L580" title="All 2 branches missed.">            int defender_dice = defendingCountry.getArmyAmount() &lt; 2 ? defendingCountry.getArmyAmount() : 2;</span>
-<span class="nc bnc" id="L581" title="All 2 branches missed.">            if (isAttackValid()) {</span>
-<span class="nc" id="L582">                handleDefendCommand(new String[] { Integer.toString(defender_dice) });</span>
-<span class="nc" id="L583">            } else {</span>
-<span class="nc" id="L584">                alloutFlag = false;</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">        while (alloutFlag) {</span>
+<span class="nc bnc" id="L555" title="All 2 branches missed.">            attackerNumDice = (attackingCountry.getArmyAmount() - 1) &lt; 3 ? attackingCountry.getArmyAmount() - 1 : 3;</span>
+<span class="nc bnc" id="L556" title="All 2 branches missed.">            int defender_dice = defendingCountry.getArmyAmount() &lt; 2 ? defendingCountry.getArmyAmount() : 2;</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">            if (attackMoveCmdRequired) {</span>
+<span class="nc" id="L558">                alloutFlag = false;</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">            } else if (isAttackValid()) {</span>
+<span class="nc" id="L560">                handleDefendCommand(new String[] { Integer.toString(defender_dice) });</span>
+            } else {
+<span class="nc" id="L562">                alloutFlag = false;</span>
+<span class="nc" id="L563">                defendingCountry = null;</span>
+<span class="nc" id="L564">                attackingCountry = null;</span>
+<span class="nc" id="L565">                attackerNumDice = 0;</span>
+<span class="nc" id="L566">                defenderNumDice = 0;</span>
+<span class="nc" id="L567">                ConsolePrinter.printFormat(&quot;The attack has ended as no other move is possible.&quot;);</span>
             }
-        }
-<span class="nc" id="L587">        ConsolePrinter.printFormat(&quot;The attack has ended as no other move is possible.&quot;);</span>
-<span class="nc" id="L588">    }</span>
+<span class="nc" id="L569">        }</span>
+        //if(attackMoveCmdRequired)
+<span class="nc" id="L571">    }</span>
 
     /**
      * it checks whether further attack is possible.(i.e. if the number of army in a country is greater
@@ -595,20 +578,20 @@ import soen6441riskgame.utils.Parser;
      *
      */
     private boolean furtherAttackPossible() {
-<span class="fc" id="L598">        Player player = getCurrentPlayer(false);</span>
+<span class="fc" id="L581">        Player player = getCurrentPlayer(false);</span>
         // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
-<span class="fc" id="L600">        ArrayList&lt;Country&gt; countries = player.getConqueredCountries();</span>
-<span class="pc bpc" id="L601" title="1 of 2 branches missed.">        for (Country country : countries) {</span>
-<span class="pc bpc" id="L602" title="1 of 2 branches missed.">            if (country.getArmyAmount() &gt; 1) {</span>
-<span class="fc" id="L603">                ArrayList&lt;Country&gt; neighbours = country.getNeighbors();</span>
-<span class="pc bpc" id="L604" title="1 of 2 branches missed.">                for (Country neighbouringCountry : neighbours) {</span>
-<span class="pc bpc" id="L605" title="1 of 2 branches missed.">                    if (neighbouringCountry.getConquerer() != player) {</span>
-<span class="fc" id="L606">                        return true;</span>
+<span class="fc" id="L583">        ArrayList&lt;Country&gt; countries = player.getConqueredCountries();</span>
+<span class="pc bpc" id="L584" title="1 of 2 branches missed.">        for (Country country : countries) {</span>
+<span class="pc bpc" id="L585" title="1 of 2 branches missed.">            if (country.getArmyAmount() &gt; 1) {</span>
+<span class="fc" id="L586">                ArrayList&lt;Country&gt; neighbours = country.getNeighbors();</span>
+<span class="pc bpc" id="L587" title="1 of 2 branches missed.">                for (Country neighbouringCountry : neighbours) {</span>
+<span class="pc bpc" id="L588" title="1 of 2 branches missed.">                    if (neighbouringCountry.getConquerer() != player) {</span>
+<span class="fc" id="L589">                        return true;</span>
                     }
-                }
+<span class="nc" id="L591">                }</span>
             }
-        }
-<span class="nc" id="L611">        return false;</span>
+<span class="nc" id="L593">        }</span>
+<span class="nc" id="L594">        return false;</span>
     }
 
     /**
@@ -619,206 +602,221 @@ import soen6441riskgame.utils.Parser;
      */
     public void handleDefendCommand(String[] args) {
 
-<span class="pc bpc" id="L622" title="1 of 2 branches missed.">        if (attackMoveCmdRequired) {</span>
-<span class="nc" id="L623">            ConsolePrinter.printFormat(&quot;Player %s need to move armies into your conquered country %s&quot;,</span>
-<span class="nc" id="L624">                                       getCurrentPlayer(false).getName(), defendingCountry.getName());</span>
-<span class="nc" id="L625">            return;</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">        if (attackMoveCmdRequired) {</span>
+<span class="nc" id="L606">            ConsolePrinter.printFormat(&quot;Player %s need to move armies into your conquered country %s&quot;,</span>
+<span class="nc" id="L607">                                       getCurrentPlayer(false).getName(), defendingCountry.getName());</span>
+<span class="nc" id="L608">            return;</span>
         }
-<span class="pc bpc" id="L627" title="1 of 2 branches missed.">        if (!Parser.checkValidInputNumber(args[0])) {</span>
-<span class="nc" id="L628">            ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
+<span class="pc bpc" id="L610" title="1 of 2 branches missed.">        if (!Parser.checkValidInputNumber(args[0])) {</span>
+<span class="nc" id="L611">            ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
+<span class="nc" id="L612">            return;</span>
+        }
+
+<span class="fc" id="L615">        defenderNumDice = Integer.parseInt(args[0]);</span>
+        
+<span class="pc bpc" id="L617" title="2 of 4 branches missed.">        if(attackingCountry == null || defendingCountry == null) {</span>
+<span class="nc" id="L618">            ConsolePrinter.printFormat(&quot;You cannot use defend command without attack command.&quot;);</span>
+<span class="nc" id="L619">            return;</span>
+        }
+        //System.out.println(args[0]);
+<span class="pc bpc" id="L622" title="1 of 2 branches missed.">        if (!isAttackValid()) {</span>
+<span class="nc" id="L623">            ConsolePrinter.printFormat(&quot;Defend command not allowed as attack is invalid&quot;);</span>
+<span class="nc" id="L624">            return;</span>
+        }
+
+<span class="pc bpc" id="L627" title="1 of 2 branches missed.">        else if (defenderNumDice &gt; 2) {</span>
+<span class="nc" id="L628">            ConsolePrinter.printFormat(&quot;You can only defend with a maximum of 2 armies at a time&quot;);</span>
 <span class="nc" id="L629">            return;</span>
+<span class="pc bpc" id="L630" title="1 of 2 branches missed.">        } else if (defenderNumDice &gt; defendingCountry.getArmyAmount()) {</span>
+<span class="nc" id="L631">            ConsolePrinter.printFormat(&quot;Error. Number of dice rolls should be less than or equal to the number of armies in the defending country but atmost 2.&quot;);</span>
+<span class="nc" id="L632">            return;</span>
         }
 
-<span class="fc" id="L632">        defenderNumDice = Integer.parseInt(args[0]);</span>
-<span class="fc" id="L633">        System.out.println(args[0]);</span>
-<span class="pc bpc" id="L634" title="1 of 2 branches missed.">        if (!isAttackValid()) {</span>
-<span class="nc" id="L635">            ConsolePrinter.printFormat(&quot;Defend command not allowed as attack is invalid&quot;);</span>
-<span class="nc" id="L636">            return;</span>
+<span class="fc" id="L635">        int[] attackerDiceValues = new int[attackerNumDice];</span>
+<span class="fc" id="L636">        int[] defenderDiceValues = new int[defenderNumDice];</span>
+
+<span class="fc" id="L638">        String printDiceValues = &quot;Attacker: &quot;;</span>
+
+<span class="fc bfc" id="L640" title="All 2 branches covered.">        for (int i = 0; i &lt; attackerNumDice; i++) {</span>
+<span class="fc" id="L641">            attackerDiceValues[i] = rollDice();</span>
+<span class="fc" id="L642">            printDiceValues += attackerDiceValues[i] + &quot;    &quot;;</span>
         }
-
-<span class="pc bpc" id="L639" title="1 of 2 branches missed.">        else if (defenderNumDice &gt; 2) {</span>
-<span class="nc" id="L640">            ConsolePrinter.printFormat(&quot;You can only defend with a maximum of 2 armies at a time&quot;);</span>
-<span class="nc" id="L641">            return;</span>
-<span class="pc bpc" id="L642" title="1 of 2 branches missed.">        } else if (defenderNumDice &gt; defendingCountry.getArmyAmount()) {</span>
-<span class="nc" id="L643">            ConsolePrinter.printFormat(&quot;Error. Number of dice rolls should be less than or equal to the number of armies in the defending country but atmost 2.&quot;);</span>
-<span class="nc" id="L644">            return;</span>
+<span class="fc" id="L644">        printDiceValues += &quot;\nDefender: &quot;;</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">        for (int i = 0; i &lt; defenderNumDice; i++) {</span>
+<span class="fc" id="L646">            defenderDiceValues[i] = rollDice();</span>
+<span class="fc" id="L647">            printDiceValues += defenderDiceValues[i] + &quot;    &quot;;</span>
         }
+<span class="fc" id="L649">        ConsolePrinter.printFormat(&quot;%s&quot;, printDiceValues);</span>
 
-<span class="fc" id="L647">        int[] attackerDiceValues = new int[attackerNumDice];</span>
-<span class="fc" id="L648">        int[] defenderDiceValues = new int[defenderNumDice];</span>
-
-<span class="fc" id="L650">        String printDiceValues = &quot;Attacker: &quot;;</span>
-
-<span class="fc bfc" id="L652" title="All 2 branches covered.">        for (int i = 0; i &lt; attackerNumDice; i++) {</span>
-<span class="fc" id="L653">            attackerDiceValues[i] = rollDice();</span>
-<span class="fc" id="L654">            printDiceValues += attackerDiceValues[i] + &quot;    &quot;;</span>
-        }
-<span class="fc" id="L656">        printDiceValues += &quot;\nDefender: &quot;;</span>
-<span class="fc bfc" id="L657" title="All 2 branches covered.">        for (int i = 0; i &lt; defenderNumDice; i++) {</span>
-<span class="fc" id="L658">            defenderDiceValues[i] = rollDice();</span>
-<span class="fc" id="L659">            printDiceValues += defenderDiceValues[i] + &quot;    &quot;;</span>
-        }
-<span class="fc" id="L661">        ConsolePrinter.printFormat(&quot;%s&quot;, printDiceValues);</span>
-
-<span class="fc" id="L663">        Player currentPlayer = getCurrentPlayer();</span>
+<span class="fc" id="L651">        Player currentPlayer = getCurrentPlayer();</span>
 
         // now we will check who loses an army
-<span class="pc bpc" id="L666" title="3 of 4 branches missed.">        if (defenderNumDice == 1 || attackerNumDice == 1) {</span>
-<span class="pc bpc" id="L667" title="1 of 2 branches missed.">            if (getMax(attackerDiceValues, false) &gt; getMax(defenderDiceValues, false)) {</span>
+<span class="pc bpc" id="L654" title="3 of 4 branches missed.">        if (defenderNumDice == 1 || attackerNumDice == 1) {</span>
+<span class="pc bpc" id="L655" title="1 of 2 branches missed.">            if (getMax(attackerDiceValues, false) &gt; getMax(defenderDiceValues, false)) {</span>
                 // defending army is lost
-<span class="fc" id="L669">                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);</span>
-<span class="fc" id="L670">                ConsolePrinter.printFormat(&quot;The defender %s has lost 1 army from %s. %d armies left.&quot;,</span>
-<span class="fc" id="L671">                                           defendingCountry.getConquerer().getName(),</span>
-<span class="fc" id="L672">                                           defendingCountry.getName(),</span>
-<span class="fc" id="L673">                                           defendingCountry.getArmyAmount());</span>
+<span class="nc" id="L657">                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);</span>
+<span class="nc" id="L658">                ConsolePrinter.printFormat(&quot;The defender %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="nc" id="L659">                                           defendingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L660">                                           defendingCountry.getName(),</span>
+<span class="nc" id="L661">                                           defendingCountry.getArmyAmount());</span>
 
-<span class="fc" id="L675">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The defender &quot;</span>
-<span class="fc" id="L676">                                                    + defendingCountry.getConquerer().getName()</span>
-<span class="fc" id="L677">                                                    + &quot; has lost 1 army from &quot;</span>
-<span class="fc" id="L678">                                                    + defendingCountry.getName()</span>
-<span class="fc" id="L679">                                                    + &quot;.&quot;</span>
-<span class="fc" id="L680">                                                    + defendingCountry.getArmyAmount()</span>
-<span class="fc" id="L681">                                                    + &quot;  armies left.&quot;);</span>
+<span class="nc" id="L663">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The defender &quot;</span>
+<span class="nc" id="L664">                                                    + defendingCountry.getConquerer().getName()</span>
+                                                    + &quot; has lost 1 army from &quot;
+<span class="nc" id="L666">                                                    + defendingCountry.getName()</span>
+                                                    + &quot;.&quot;
+<span class="nc" id="L668">                                                    + defendingCountry.getArmyAmount()</span>
+                                                    + &quot;  armies left.&quot;);
 
-<span class="fc" id="L683">            } else {</span>
+            } else {
                 // attacking army is lost
-<span class="nc" id="L685">                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);</span>
-<span class="nc" id="L686">                ConsolePrinter.printFormat(&quot;The attacker %s has lost 1 army from %s. %d armies left.&quot;,</span>
-<span class="nc" id="L687">                                           attackingCountry.getConquerer().getName(),</span>
-<span class="nc" id="L688">                                           attackingCountry.getName(),</span>
-<span class="nc" id="L689">                                           attackingCountry.getArmyAmount());</span>
+<span class="fc" id="L673">                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);</span>
+<span class="fc" id="L674">                ConsolePrinter.printFormat(&quot;The attacker %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="fc" id="L675">                                           attackingCountry.getConquerer().getName(),</span>
+<span class="fc" id="L676">                                           attackingCountry.getName(),</span>
+<span class="fc" id="L677">                                           attackingCountry.getArmyAmount());</span>
 
-<span class="nc" id="L691">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The attacker &quot;</span>
-<span class="nc" id="L692">                                                    + attackingCountry.getConquerer().getName()</span>
-<span class="nc" id="L693">                                                    + &quot; has lost 1 army from &quot;</span>
-<span class="nc" id="L694">                                                    + attackingCountry.getName()</span>
-<span class="nc" id="L695">                                                    + &quot;.&quot;</span>
-<span class="nc" id="L696">                                                    + attackingCountry.getArmyAmount()</span>
-<span class="nc" id="L697">                                                    + &quot;  armies left.&quot;);</span>
+<span class="fc" id="L679">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The attacker &quot;</span>
+<span class="fc" id="L680">                                                    + attackingCountry.getConquerer().getName()</span>
+                                                    + &quot; has lost 1 army from &quot;
+<span class="fc" id="L682">                                                    + attackingCountry.getName()</span>
+                                                    + &quot;.&quot;
+<span class="fc" id="L684">                                                    + attackingCountry.getArmyAmount()</span>
+                                                    + &quot;  armies left.&quot;);
 
             }
-<span class="nc" id="L700">        } else {</span>
-<span class="nc bnc" id="L701" title="All 2 branches missed.">            if (getMax(attackerDiceValues, false) &gt; getMax(defenderDiceValues, false)) {</span>
+        } else {
+<span class="nc bnc" id="L689" title="All 2 branches missed.">            if (getMax(attackerDiceValues, false) &gt; getMax(defenderDiceValues, false)) {</span>
                 // defending army is lost
-<span class="nc" id="L703">                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);</span>
-<span class="nc" id="L704">                ConsolePrinter.printFormat(&quot;The defender %s has lost 1 army from %s. %d armies left.&quot;,</span>
-<span class="nc" id="L705">                                           defendingCountry.getConquerer().getName(),</span>
-<span class="nc" id="L706">                                           defendingCountry.getName(),</span>
-<span class="nc" id="L707">                                           defendingCountry.getArmyAmount());</span>
+<span class="nc" id="L691">                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);</span>
+<span class="nc" id="L692">                ConsolePrinter.printFormat(&quot;The defender %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="nc" id="L693">                                           defendingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L694">                                           defendingCountry.getName(),</span>
+<span class="nc" id="L695">                                           defendingCountry.getArmyAmount());</span>
 
-<span class="nc" id="L709">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The defender &quot;</span>
-<span class="nc" id="L710">                                                    + defendingCountry.getConquerer().getName()</span>
-<span class="nc" id="L711">                                                    + &quot; has lost 1 army from &quot;</span>
-<span class="nc" id="L712">                                                    + defendingCountry.getName()</span>
-<span class="nc" id="L713">                                                    + &quot;.&quot;</span>
-<span class="nc" id="L714">                                                    + defendingCountry.getArmyAmount()</span>
-<span class="nc" id="L715">                                                    + &quot;  armies left.&quot;);</span>
+<span class="nc" id="L697">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The defender &quot;</span>
+<span class="nc" id="L698">                                                    + defendingCountry.getConquerer().getName()</span>
+                                                    + &quot; has lost 1 army from &quot;
+<span class="nc" id="L700">                                                    + defendingCountry.getName()</span>
+                                                    + &quot;.&quot;
+<span class="nc" id="L702">                                                    + defendingCountry.getArmyAmount()</span>
+                                                    + &quot;  armies left.&quot;);
 
-<span class="nc" id="L717">            } else {</span>
+            } else {
                 // attacking army is lost
-<span class="nc" id="L719">                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);</span>
-<span class="nc" id="L720">                ConsolePrinter.printFormat(&quot;The attacker %s has lost 1 army from %s. %d armies left.&quot;,</span>
-<span class="nc" id="L721">                                           attackingCountry.getConquerer().getName(),</span>
-<span class="nc" id="L722">                                           attackingCountry.getName(),</span>
-<span class="nc" id="L723">                                           attackingCountry.getArmyAmount());</span>
-<span class="nc" id="L724">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The attacker &quot;</span>
-<span class="nc" id="L725">                                                    + attackingCountry.getConquerer().getName()</span>
-<span class="nc" id="L726">                                                    + &quot; has lost 1 army from &quot;</span>
-<span class="nc" id="L727">                                                    + attackingCountry.getName()</span>
-<span class="nc" id="L728">                                                    + &quot;.&quot;</span>
-<span class="nc" id="L729">                                                    + attackingCountry.getArmyAmount()</span>
-<span class="nc" id="L730">                                                    + &quot;  armies left.&quot;);</span>
+<span class="nc" id="L707">                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);</span>
+<span class="nc" id="L708">                ConsolePrinter.printFormat(&quot;The attacker %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="nc" id="L709">                                           attackingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L710">                                           attackingCountry.getName(),</span>
+<span class="nc" id="L711">                                           attackingCountry.getArmyAmount());</span>
+<span class="nc" id="L712">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The attacker &quot;</span>
+<span class="nc" id="L713">                                                    + attackingCountry.getConquerer().getName()</span>
+                                                    + &quot; has lost 1 army from &quot;
+<span class="nc" id="L715">                                                    + attackingCountry.getName()</span>
+                                                    + &quot;.&quot;
+<span class="nc" id="L717">                                                    + attackingCountry.getArmyAmount()</span>
+                                                    + &quot;  armies left.&quot;);
 
             }
-<span class="nc bnc" id="L733" title="All 2 branches missed.">            if (getMax(attackerDiceValues, true) &gt; getMax(defenderDiceValues, true)) {</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">            if (getMax(attackerDiceValues, true) &gt; getMax(defenderDiceValues, true)) {</span>
                 // defending army is lost
-<span class="nc" id="L735">                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);</span>
-<span class="nc" id="L736">                ConsolePrinter.printFormat(&quot;The defender %s has lost 1 army from %s. %d armies left.&quot;,</span>
-<span class="nc" id="L737">                                           defendingCountry.getConquerer().getName(),</span>
-<span class="nc" id="L738">                                           defendingCountry.getName(),</span>
-<span class="nc" id="L739">                                           defendingCountry.getArmyAmount());</span>
-<span class="nc" id="L740">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The defender &quot;</span>
-<span class="nc" id="L741">                                                    + defendingCountry.getConquerer().getName()</span>
-<span class="nc" id="L742">                                                    + &quot; has lost 1 army from &quot;</span>
-<span class="nc" id="L743">                                                    + defendingCountry.getName()</span>
-<span class="nc" id="L744">                                                    + &quot;.&quot;</span>
-<span class="nc" id="L745">                                                    + defendingCountry.getArmyAmount()</span>
-<span class="nc" id="L746">                                                    + &quot;  armies left.&quot;);</span>
+<span class="nc" id="L723">                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);</span>
+<span class="nc" id="L724">                ConsolePrinter.printFormat(&quot;The defender %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="nc" id="L725">                                           defendingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L726">                                           defendingCountry.getName(),</span>
+<span class="nc" id="L727">                                           defendingCountry.getArmyAmount());</span>
+<span class="nc" id="L728">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The defender &quot;</span>
+<span class="nc" id="L729">                                                    + defendingCountry.getConquerer().getName()</span>
+                                                    + &quot; has lost 1 army from &quot;
+<span class="nc" id="L731">                                                    + defendingCountry.getName()</span>
+                                                    + &quot;.&quot;
+<span class="nc" id="L733">                                                    + defendingCountry.getArmyAmount()</span>
+                                                    + &quot;  armies left.&quot;);
 
-<span class="nc" id="L748">            } else {</span>
+            } else {
                 // attacking army is lost
-<span class="nc" id="L750">                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);</span>
-<span class="nc" id="L751">                ConsolePrinter.printFormat(&quot;The attacker %s has lost 1 army from %s. %d armies left.&quot;,</span>
-<span class="nc" id="L752">                                           attackingCountry.getConquerer().getName(),</span>
-<span class="nc" id="L753">                                           attackingCountry.getName(),</span>
-<span class="nc" id="L754">                                           attackingCountry.getArmyAmount());</span>
-<span class="nc" id="L755">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The attacker &quot;</span>
-<span class="nc" id="L756">                                                    + attackingCountry.getConquerer().getName()</span>
-<span class="nc" id="L757">                                                    + &quot; has lost 1 army from &quot;</span>
-<span class="nc" id="L758">                                                    + attackingCountry.getName()</span>
-<span class="nc" id="L759">                                                    + &quot;.&quot;</span>
-<span class="nc" id="L760">                                                    + attackingCountry.getArmyAmount()</span>
-<span class="nc" id="L761">                                                    + &quot;  armies left.&quot;);</span>
+<span class="nc" id="L738">                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);</span>
+<span class="nc" id="L739">                ConsolePrinter.printFormat(&quot;The attacker %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="nc" id="L740">                                           attackingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L741">                                           attackingCountry.getName(),</span>
+<span class="nc" id="L742">                                           attackingCountry.getArmyAmount());</span>
+<span class="nc" id="L743">                currentPlayer.addCurrentPhaseAction(&quot;Attack: The attacker &quot;</span>
+<span class="nc" id="L744">                                                    + attackingCountry.getConquerer().getName()</span>
+                                                    + &quot; has lost 1 army from &quot;
+<span class="nc" id="L746">                                                    + attackingCountry.getName()</span>
+                                                    + &quot;.&quot;
+<span class="nc" id="L748">                                                    + attackingCountry.getArmyAmount()</span>
+                                                    + &quot;  armies left.&quot;);
 
             }
         }
         // now check if defender's armies left is 0, set conquerer as attacker
-<span class="pc bpc" id="L766" title="1 of 2 branches missed.">        if (defendingCountry.getArmyAmount() == 0) {</span>
-<span class="fc" id="L767">            ConsolePrinter.printFormat(&quot;The attacker %s has conquered the country %s successfully. He has %s army available to move.&quot;,</span>
-<span class="fc" id="L768">                                       attackingCountry.getConquerer().getName(),</span>
-<span class="fc" id="L769">                                       defendingCountry.getName(),</span>
-<span class="fc" id="L770">                                       attackingCountry.getArmyAmount() - 1);</span>
+<span class="pc bpc" id="L754" title="1 of 2 branches missed.">        if (defendingCountry.getArmyAmount() == 0) {</span>
+<span class="nc" id="L755">            ConsolePrinter.printFormat(&quot;The attacker %s has conquered the country %s successfully. He has %s army available to move.&quot;,</span>
+<span class="nc" id="L756">                                       attackingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L757">                                       defendingCountry.getName(),</span>
+<span class="nc" id="L758">                                       attackingCountry.getArmyAmount() - 1);</span>
 
-<span class="fc" id="L772">            defendingCountry.setConquerer(attackingCountry.getConquerer());</span>
+<span class="nc" id="L760">            defendingCountry.setConquerer(attackingCountry.getConquerer());</span>
 
             // set attacker can be reward a card when attack phase end
-<span class="fc" id="L775">            attackingCountry.getConquerer().setPlayerBeAwardCard(true);</span>
+<span class="nc" id="L763">            attackingCountry.getConquerer().setPlayerBeAwardCard(true);</span>
 
             // check if defender has any countries that he has conquered. if not remove him from the game.
-<span class="pc bpc" id="L778" title="1 of 2 branches missed.">            if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {</span>
+<span class="nc bnc" id="L766" title="All 2 branches missed.">            if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {</span>
                 // remove player
-<span class="nc" id="L780">                GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());</span>
+<span class="nc" id="L768">                GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());</span>
             }
             // check if player has conquered entire continent
-<span class="fc" id="L783">            ArrayList&lt;Country&gt; countries = defendingCountry.getContinent().getCountries();</span>
-<span class="fc" id="L784">            boolean flag_continent_conquered = true;</span>
-<span class="fc" id="L785">            Player currentplayer = getCurrentPlayer();</span>
-<span class="fc bfc" id="L786" title="All 2 branches covered.">            for (Country country : countries) {</span>
-<span class="fc bfc" id="L787" title="All 2 branches covered.">                if (country.getConquerer() != currentplayer) {</span>
-<span class="fc" id="L788">                    flag_continent_conquered = false;</span>
+            /*
+            ArrayList&lt;Country&gt; countries = defendingCountry.getContinent().getCountries();
+            boolean flag_continent_conquered = true;
+            Player currentplayer = getCurrentPlayer();
+            for (Country country : countries) {
+                if (country.getConquerer() != currentplayer) {
+                    flag_continent_conquered = false;
                 }
             }
 
-<span class="pc bpc" id="L792" title="1 of 2 branches missed.">            if (flag_continent_conquered) {</span>
-<span class="nc" id="L793">                ConsolePrinter.printFormat(&quot;You have conquered the continent %s , so you receive %s unplaced armies&quot;,</span>
-<span class="nc" id="L794">                                           defendingCountry.getContinent().getName(),</span>
-<span class="nc" id="L795">                                           defendingCountry.getContinent().getArmy());</span>
-<span class="nc" id="L796">                currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies()</span>
-<span class="nc" id="L797">                                                + defendingCountry.getContinent().getArmy());</span>
+            if (flag_continent_conquered) {
+                ConsolePrinter.printFormat(&quot;You have conquered the continent %s , so you receive %s unplaced armies&quot;,
+                                           defendingCountry.getContinent().getName(),
+                                           defendingCountry.getContinent().getArmy());
+                currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies()
+                                                + defendingCountry.getContinent().getArmy());
             }
-
-<span class="pc bpc" id="L800" title="1 of 2 branches missed.">            if (isGameEnded(attackingCountry.getConquerer())) {</span>
-<span class="nc" id="L801">                setEndOfGamePhase();</span>
-<span class="nc" id="L802">            } else {</span>
+            */
+<span class="nc bnc" id="L789" title="All 2 branches missed.">            if (isGameEnded(attackingCountry.getConquerer())) {</span>
+<span class="nc" id="L790">                setEndOfGamePhase();</span>
+            } else {
                 // move armies
-<span class="fc" id="L804">                ConsolePrinter.printFormat(&quot;Player %s needs to move armies into your conquered country %s&quot;,</span>
-<span class="fc" id="L805">                                           attackingCountry.getConquerer().getName(),</span>
-<span class="fc" id="L806">                                           defendingCountry.getName());</span>
-<span class="fc" id="L807">                attackMoveCmdRequired = true;</span>
+<span class="nc" id="L793">                ConsolePrinter.printFormat(&quot;Player %s needs to move armies into your conquered country %s&quot;,</span>
+<span class="nc" id="L794">                                           attackingCountry.getConquerer().getName(),</span>
+<span class="nc" id="L795">                                           defendingCountry.getName());</span>
+<span class="nc" id="L796">                attackMoveCmdRequired = true;</span>
             }
-<span class="fc" id="L809">        } else {</span>
-<span class="nc bnc" id="L810" title="All 2 branches missed.">            if (!alloutFlag) {</span>
+        } else {
+<span class="pc bpc" id="L799" title="1 of 2 branches missed.">            if (!alloutFlag) {</span>
                 // reinitialize variables to null
-<span class="nc" id="L812">                defendingCountry = null;</span>
-<span class="nc" id="L813">                attackingCountry = null;</span>
-<span class="nc" id="L814">                attackerNumDice = 0;</span>
-<span class="nc" id="L815">                defenderNumDice = 0;</span>
+<span class="fc" id="L801">                defendingCountry = null;</span>
+<span class="fc" id="L802">                attackingCountry = null;</span>
+<span class="fc" id="L803">                attackerNumDice = 0;</span>
+<span class="fc" id="L804">                defenderNumDice = 0;</span>
             }
         }
-<span class="pc bpc" id="L818" title="5 of 6 branches missed.">        if (!furtherAttackPossible() &amp;&amp; !isGameEnded(attackingCountry.getConquerer()) &amp;&amp; !attackMoveCmdRequired) {</span>
-<span class="nc" id="L819">            endAttackPhase();</span>
+<span class="pc bpc" id="L807" title="5 of 6 branches missed.">        if (!furtherAttackPossible() &amp;&amp; !isGameEnded(attackingCountry.getConquerer()) &amp;&amp; !attackMoveCmdRequired) {</span>
+<span class="nc bnc" id="L808" title="All 2 branches missed.">            if(alloutFlag) {</span>
+<span class="nc" id="L809">                isAttackValid();</span>
+            }
+<span class="nc" id="L811">            ConsolePrinter.printFormat(&quot;No other attack is possible from any country.&quot;);</span>
+<span class="nc" id="L812">            defendingCountry = null;</span>
+<span class="nc" id="L813">            attackingCountry = null;</span>
+<span class="nc" id="L814">            attackerNumDice = 0;</span>
+<span class="nc" id="L815">            defenderNumDice = 0;</span>
+<span class="nc" id="L816">            alloutFlag = false;</span>
+<span class="nc" id="L817">            endAttackPhase();</span>
         }
-<span class="fc" id="L821">    }</span>
+<span class="fc" id="L819">    }</span>
 
     /**
      * it handles the attack move command and moves the army from attacking country to defending country
@@ -828,32 +826,32 @@ import soen6441riskgame.utils.Parser;
      *
      */
     public void handleAttackMoveCommand(String[] args) {
-<span class="nc bnc" id="L831" title="All 2 branches missed.">        if (attackMoveCmdRequired) {</span>
-<span class="nc bnc" id="L832" title="All 2 branches missed.">            if (Parser.checkValidInputNumber(args[0])) {</span>
-<span class="nc" id="L833">                int army_to_be_moved = Integer.parseInt(args[0]);</span>
-<span class="nc bnc" id="L834" title="All 4 branches missed.">                if (army_to_be_moved &lt; attackerNumDice &amp;&amp; attackingCountry.getArmyAmount() - 1 &gt; army_to_be_moved) {</span>
-<span class="nc" id="L835">                    ConsolePrinter.printFormat(&quot;You need to move atleast %s army to the conquered country.&quot;,</span>
-<span class="nc" id="L836">                                               attackerNumDice);</span>
-<span class="nc bnc" id="L837" title="All 2 branches missed.">                } else if (attackingCountry.getArmyAmount() - 1 &lt; army_to_be_moved) {</span>
-<span class="nc" id="L838">                    ConsolePrinter.printFormat(&quot;You only have %s army available to move. You cannot move more armies than what you have.&quot;,</span>
-<span class="nc" id="L839">                                               attackerNumDice);</span>
-<span class="nc" id="L840">                } else {</span>
-<span class="nc" id="L841">                    attackingCountry.moveArmies(defendingCountry, army_to_be_moved);</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">        if (attackMoveCmdRequired) {</span>
+<span class="nc bnc" id="L830" title="All 2 branches missed.">            if (Parser.checkValidInputNumber(args[0])) {</span>
+<span class="nc" id="L831">                int army_to_be_moved = Integer.parseInt(args[0]);</span>
+<span class="nc bnc" id="L832" title="All 4 branches missed.">                if (army_to_be_moved &lt; attackerNumDice &amp;&amp; attackingCountry.getArmyAmount() - 1 &gt; army_to_be_moved) {</span>
+<span class="nc" id="L833">                    ConsolePrinter.printFormat(&quot;You need to move atleast %s army to the conquered country.&quot;,</span>
+<span class="nc" id="L834">                                               attackerNumDice);</span>
+<span class="nc bnc" id="L835" title="All 2 branches missed.">                } else if (attackingCountry.getArmyAmount() - 1 &lt; army_to_be_moved) {</span>
+<span class="nc" id="L836">                    ConsolePrinter.printFormat(&quot;You only have %s army available to move. You cannot move more armies than what you have.&quot;,</span>
+<span class="nc" id="L837">                                               attackerNumDice);</span>
+                } else {
+<span class="nc" id="L839">                    attackingCountry.moveArmies(defendingCountry, army_to_be_moved);</span>
                     // reinitialize variables to null
-<span class="nc" id="L843">                    defendingCountry = null;</span>
-<span class="nc" id="L844">                    attackingCountry = null;</span>
-<span class="nc" id="L845">                    attackerNumDice = 0;</span>
-<span class="nc" id="L846">                    defenderNumDice = 0;</span>
-<span class="nc" id="L847">                    alloutFlag = false;</span>
-<span class="nc" id="L848">                    attackMoveCmdRequired = false;</span>
-<span class="nc" id="L849">                    ConsolePrinter.printFormat(&quot;The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.&quot;);</span>
+<span class="nc" id="L841">                    defendingCountry = null;</span>
+<span class="nc" id="L842">                    attackingCountry = null;</span>
+<span class="nc" id="L843">                    attackerNumDice = 0;</span>
+<span class="nc" id="L844">                    defenderNumDice = 0;</span>
+<span class="nc" id="L845">                    alloutFlag = false;</span>
+<span class="nc" id="L846">                    attackMoveCmdRequired = false;</span>
+<span class="nc" id="L847">                    ConsolePrinter.printFormat(&quot;The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.&quot;);</span>
                 }
 
-<span class="nc" id="L852">            } else {</span>
-<span class="nc" id="L853">                ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
+<span class="nc" id="L850">            } else {</span>
+<span class="nc" id="L851">                ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
             }
         }
-<span class="nc" id="L856">    }</span>
+<span class="nc" id="L854">    }</span>
 
     /**
      * it checks whether the game has ended or not.
@@ -865,16 +863,16 @@ import soen6441riskgame.utils.Parser;
      */
     private boolean isGameEnded(Player player) {
         // check whether this player has won the game
-<span class="fc" id="L868">        Player currentPlayer = getCurrentPlayer(false);</span>
-<span class="fc" id="L869">        boolean gameEnded = true;</span>
-<span class="fc" id="L870">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
-<span class="fc bfc" id="L871" title="All 2 branches covered.">        for (Country country : countries) {</span>
-<span class="fc bfc" id="L872" title="All 2 branches covered.">            if (country.getConquerer() != currentPlayer) {</span>
-<span class="fc" id="L873">                gameEnded = false;</span>
+<span class="nc" id="L866">        Player currentPlayer = getCurrentPlayer(false);</span>
+<span class="nc" id="L867">        boolean gameEnded = true;</span>
+<span class="nc" id="L868">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">        for (Country country : countries) {</span>
+<span class="nc bnc" id="L870" title="All 2 branches missed.">            if (country.getConquerer() != currentPlayer) {</span>
+<span class="nc" id="L871">                gameEnded = false;</span>
             }
-        }
+<span class="nc" id="L873">        }</span>
 
-<span class="fc" id="L877">        return gameEnded;</span>
+<span class="nc" id="L875">        return gameEnded;</span>
     }
 
     /**
@@ -889,26 +887,26 @@ import soen6441riskgame.utils.Parser;
      *
      */
     private int getMax(int[] inputArray, boolean second_max) {
-<span class="fc" id="L892">        int maxValue = inputArray[0];</span>
-<span class="fc" id="L893">        int maxIndex = 0;</span>
-<span class="fc bfc" id="L894" title="All 2 branches covered.">        for (int i = 1; i &lt; inputArray.length; i++) {</span>
-<span class="pc bpc" id="L895" title="1 of 2 branches missed.">            if (inputArray[i] &gt; maxValue) {</span>
-<span class="nc" id="L896">                maxValue = inputArray[i];</span>
-<span class="nc" id="L897">                maxIndex = i;</span>
+<span class="fc" id="L890">        int maxValue = inputArray[0];</span>
+<span class="fc" id="L891">        int maxIndex = 0;</span>
+<span class="fc bfc" id="L892" title="All 2 branches covered.">        for (int i = 1; i &lt; inputArray.length; i++) {</span>
+<span class="fc bfc" id="L893" title="All 2 branches covered.">            if (inputArray[i] &gt; maxValue) {</span>
+<span class="fc" id="L894">                maxValue = inputArray[i];</span>
+<span class="fc" id="L895">                maxIndex = i;</span>
             }
         }
 
-<span class="pc bpc" id="L901" title="1 of 2 branches missed.">        if (second_max) {</span>
-<span class="nc" id="L902">            int secondMaxValue = -1;</span>
-<span class="nc bnc" id="L903" title="All 2 branches missed.">            for (int i = 0; i &lt; inputArray.length; i++) {</span>
-<span class="nc bnc" id="L904" title="All 4 branches missed.">                if (inputArray[i] &gt; secondMaxValue &amp;&amp; maxIndex != i) {</span>
-<span class="nc" id="L905">                    secondMaxValue = inputArray[i];</span>
+<span class="pc bpc" id="L899" title="1 of 2 branches missed.">        if (second_max) {</span>
+<span class="nc" id="L900">            int secondMaxValue = -1;</span>
+<span class="nc bnc" id="L901" title="All 2 branches missed.">            for (int i = 0; i &lt; inputArray.length; i++) {</span>
+<span class="nc bnc" id="L902" title="All 4 branches missed.">                if (inputArray[i] &gt; secondMaxValue &amp;&amp; maxIndex != i) {</span>
+<span class="nc" id="L903">                    secondMaxValue = inputArray[i];</span>
                 }
             }
-<span class="nc" id="L908">            maxValue = secondMaxValue;</span>
+<span class="nc" id="L906">            maxValue = secondMaxValue;</span>
         }
 
-<span class="fc" id="L911">        return maxValue;</span>
+<span class="fc" id="L909">        return maxValue;</span>
     }
 
     /**
@@ -917,59 +915,59 @@ import soen6441riskgame.utils.Parser;
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
      */
     public boolean isAttackValid() {
-<span class="fc" id="L920">        Player currentPlayer = getCurrentPlayer(false);</span>
-<span class="fc bfc" id="L921" title="All 2 branches covered.">        if (attackingCountry == null) {</span>
-<span class="nc" id="L922">            ConsolePrinter.printFormat(&quot;The country %s you have entered is non-existent&quot;, attackingCountry.getName());</span>
-<span class="nc" id="L923">            return false;</span>
-<span class="pc bpc" id="L924" title="1 of 2 branches missed.">        } else if (defendingCountry == null) {</span>
-<span class="nc" id="L925">            ConsolePrinter.printFormat(&quot;The country %s you have entered is non-existent&quot;, defendingCountry.getName());</span>
-<span class="nc" id="L926">            return false;</span>
+<span class="fc" id="L918">        Player currentPlayer = getCurrentPlayer(false);</span>
+<span class="fc bfc" id="L919" title="All 2 branches covered.">        if (attackingCountry == null) {</span>
+<span class="nc" id="L920">            ConsolePrinter.printFormat(&quot;The country %s you have entered is non-existent&quot;, attackingCountry.getName());</span>
+<span class="nc" id="L921">            return false;</span>
+<span class="pc bpc" id="L922" title="1 of 2 branches missed.">        } else if (defendingCountry == null) {</span>
+<span class="nc" id="L923">            ConsolePrinter.printFormat(&quot;The country %s you have entered is non-existent&quot;, defendingCountry.getName());</span>
+<span class="nc" id="L924">            return false;</span>
         }
 
         // check if attacking country belongs to the current player
-<span class="fc bfc" id="L930" title="All 2 branches covered.">        else if (!attackingCountry.getConquerer().equals(currentPlayer)) {</span>
-<span class="fc" id="L931">            ConsolePrinter.printFormat(&quot;The country %s does not belong to %s&quot;,</span>
-<span class="fc" id="L932">                                       attackingCountry.getName(),</span>
-<span class="fc" id="L933">                                       currentPlayer.getName());</span>
-<span class="fc" id="L934">            return false;</span>
+<span class="fc bfc" id="L928" title="All 2 branches covered.">        else if (!attackingCountry.getConquerer().equals(currentPlayer)) {</span>
+<span class="fc" id="L929">            ConsolePrinter.printFormat(&quot;The country %s does not belong to %s&quot;,</span>
+<span class="fc" id="L930">                                       attackingCountry.getName(),</span>
+<span class="fc" id="L931">                                       currentPlayer.getName());</span>
+<span class="fc" id="L932">            return false;</span>
         }
         // check if the defending country does not belong to the current player
-<span class="pc bpc" id="L937" title="1 of 2 branches missed.">        else if (defendingCountry.getConquerer().equals(currentPlayer)) {</span>
-<span class="nc" id="L938">            ConsolePrinter.printFormat(&quot;The country %s belongs to %s. You cannot attack your own country.&quot;,</span>
-<span class="nc" id="L939">                                       defendingCountry.getName(),</span>
-<span class="nc" id="L940">                                       currentPlayer.getName());</span>
-<span class="nc" id="L941">            return false;</span>
+<span class="pc bpc" id="L935" title="1 of 2 branches missed.">        else if (defendingCountry.getConquerer().equals(currentPlayer)) {</span>
+<span class="nc" id="L936">            ConsolePrinter.printFormat(&quot;The country %s belongs to %s. You cannot attack your own country.&quot;,</span>
+<span class="nc" id="L937">                                       defendingCountry.getName(),</span>
+<span class="nc" id="L938">                                       currentPlayer.getName());</span>
+<span class="nc" id="L939">            return false;</span>
         }
         // the countries have to be neighbours
-<span class="pc bpc" id="L944" title="1 of 2 branches missed.">        else if (!attackingCountry.isNeighboringCountries(defendingCountry)) {</span>
-<span class="nc" id="L945">            ConsolePrinter.printFormat(&quot;The countries %s and %s are not neighbouring countries. You can only attack neighbouring countries.&quot;,</span>
-<span class="nc" id="L946">                                       attackingCountry.getName(),</span>
-<span class="nc" id="L947">                                       defendingCountry.getName());</span>
-<span class="nc" id="L948">            return false;</span>
+<span class="pc bpc" id="L942" title="1 of 2 branches missed.">        else if (!attackingCountry.isNeighboringCountries(defendingCountry)) {</span>
+<span class="nc" id="L943">            ConsolePrinter.printFormat(&quot;The countries %s and %s are not neighbouring countries. You can only attack neighbouring countries.&quot;,</span>
+<span class="nc" id="L944">                                       attackingCountry.getName(),</span>
+<span class="nc" id="L945">                                       defendingCountry.getName());</span>
+<span class="nc" id="L946">            return false;</span>
         }
         // check if you have more than 2 army in attacking country
-<span class="pc bpc" id="L951" title="1 of 2 branches missed.">        else if (attackingCountry.getArmyAmount() &lt; 2) {</span>
-<span class="nc" id="L952">            ConsolePrinter.printFormat(&quot;The country %s has less than 2 armies. You need atleast 2 armies to attack a country.&quot;,</span>
-<span class="nc" id="L953">                                       attackingCountry.getName());</span>
-<span class="nc" id="L954">            return false;</span>
+<span class="pc bpc" id="L949" title="1 of 2 branches missed.">        else if (attackingCountry.getArmyAmount() &lt; 2) {</span>
+<span class="nc" id="L950">            ConsolePrinter.printFormat(&quot;The country %s has less than 2 armies. You need atleast 2 armies to attack a country.&quot;,</span>
+<span class="nc" id="L951">                                       attackingCountry.getName());</span>
+<span class="nc" id="L952">            return false;</span>
         }
         // check if the player has more armies than the numDice. numDice can be atmost 3.
-<span class="pc bpc" id="L957" title="1 of 2 branches missed.">        else if ((attackingCountry.getArmyAmount() - 1) &lt; attackerNumDice) {</span>
-<span class="nc" id="L958">            ConsolePrinter.printFormat(&quot;The number of armies available to attack are less than %s&quot;, attackerNumDice);</span>
-<span class="nc" id="L959">            return false;</span>
+<span class="pc bpc" id="L955" title="1 of 2 branches missed.">        else if ((attackingCountry.getArmyAmount() - 1) &lt; attackerNumDice) {</span>
+<span class="nc" id="L956">            ConsolePrinter.printFormat(&quot;The number of armies available to attack are less than %s&quot;, attackerNumDice);</span>
+<span class="nc" id="L957">            return false;</span>
         }
         // also numdice has to be less than 3
-<span class="pc bpc" id="L962" title="1 of 2 branches missed.">        else if (attackerNumDice &gt; 3) {</span>
-<span class="nc" id="L963">            ConsolePrinter.printFormat(&quot;You can only attack with a maximum of 3 armies at a time&quot;);</span>
-<span class="nc" id="L964">            return false;</span>
+<span class="pc bpc" id="L960" title="1 of 2 branches missed.">        else if (attackerNumDice &gt; 3) {</span>
+<span class="nc" id="L961">            ConsolePrinter.printFormat(&quot;You can only attack with a maximum of 3 armies at a time&quot;);</span>
+<span class="nc" id="L962">            return false;</span>
         }
 
         // attack execution
         else {
-<span class="pc bpc" id="L969" title="1 of 4 branches missed.">            if (defenderNumDice == 0 &amp;&amp; !alloutFlag) {</span>
-<span class="fc" id="L970">                ConsolePrinter.printFormat(&quot;Attack conditions met. Enter defend command&quot;);</span>
+<span class="pc bpc" id="L967" title="1 of 4 branches missed.">            if (defenderNumDice == 0 &amp;&amp; !alloutFlag) {</span>
+<span class="fc" id="L968">                ConsolePrinter.printFormat(&quot;Attack conditions met. Enter defend command&quot;);</span>
             }
-<span class="fc" id="L972">            return true;</span>
+<span class="fc" id="L970">            return true;</span>
         }
     }
 
@@ -979,32 +977,32 @@ import soen6441riskgame.utils.Parser;
      * @return int it returns the random number from 1 to 6 on the dice.
      */
     private int rollDice() {
-<span class="fc" id="L982">        Random random = new Random();</span>
-<span class="fc" id="L983">        return random.nextInt(6) + 1;</span>
+<span class="fc" id="L980">        Random random = new Random();</span>
+<span class="fc" id="L981">        return random.nextInt(6) + 1;</span>
     }
 
     /**
      * it ends the attack phase and sets the current game phase to fortification
      */
     public void endAttackPhase() {
-<span class="fc" id="L990">        defendingCountry = null;</span>
-<span class="fc" id="L991">        attackingCountry = null;</span>
-<span class="fc" id="L992">        attackerNumDice = 0;</span>
-<span class="fc" id="L993">        defenderNumDice = 0;</span>
-<span class="fc" id="L994">        Player currentPlayer = getCurrentPlayer(true);</span>
-<span class="fc" id="L995">        ConsolePrinter.printFormat(&quot;End of attack Phase. Player %s has entered fortification phase&quot;,</span>
-<span class="fc" id="L996">                                   currentPlayer.getName());</span>
-<span class="fc" id="L997">        currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);</span>
-<span class="fc" id="L998">    }</span>
+<span class="fc" id="L988">        defendingCountry = null;</span>
+<span class="fc" id="L989">        attackingCountry = null;</span>
+<span class="fc" id="L990">        attackerNumDice = 0;</span>
+<span class="fc" id="L991">        defenderNumDice = 0;</span>
+<span class="fc" id="L992">        Player currentPlayer = getCurrentPlayer(false);</span>
+<span class="fc" id="L993">        ConsolePrinter.printFormat(&quot;End of attack Phase. Player %s has entered fortification phase&quot;,</span>
+<span class="fc" id="L994">                                   currentPlayer.getName());</span>
+<span class="fc" id="L995">        currentPlayer.setCurrentPhase(GamePhase.FORTIFICATION);</span>
+<span class="fc" id="L996">    }</span>
 
     /**
      * it sets the game phase to end of game when a player has won the game
      */
     public void setEndOfGamePhase() {
-<span class="fc" id="L1004">        Player currentPlayer = getCurrentPlayer(true);</span>
-<span class="fc" id="L1005">        ConsolePrinter.printFormat(&quot;Congratulations, The player %s has won the game.&quot;, currentPlayer.getName());</span>
-<span class="fc" id="L1006">        currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);</span>
-<span class="fc" id="L1007">    }</span>
+<span class="fc" id="L1002">        Player currentPlayer = getCurrentPlayer(false);</span>
+<span class="fc" id="L1003">        ConsolePrinter.printFormat(&quot;Congratulations, The player %s has won the game.&quot;, currentPlayer.getName());</span>
+<span class="fc" id="L1004">        currentPlayer.setCurrentPhase(GamePhase.END_OF_GAME);</span>
+<span class="fc" id="L1005">    }</span>
 
     /**
      * build set a card
@@ -1013,34 +1011,34 @@ import soen6441riskgame.utils.Parser;
      * @return a set of card
      */
     private CardSet buildCardSet(String[] args) {
-<span class="fc" id="L1016">        Player currentPlayer = getCurrentPlayer();</span>
+<span class="fc" id="L1014">        Player currentPlayer = getCurrentPlayer();</span>
 
-<span class="pc bpc" id="L1018" title="1 of 2 branches missed.">        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {</span>
-<span class="nc" id="L1019">            ConsolePrinter.printFormat(&quot;Cannot exchange cards in %s phase&quot;,</span>
-<span class="nc" id="L1020">                                       currentPlayer.getCurrentPhase().toString());</span>
-<span class="nc" id="L1021">            return null;</span>
+<span class="pc bpc" id="L1016" title="1 of 2 branches missed.">        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {</span>
+<span class="nc" id="L1017">            ConsolePrinter.printFormat(&quot;Cannot exchange cards in %s phase&quot;,</span>
+<span class="nc" id="L1018">                                       currentPlayer.getCurrentPhase().toString());</span>
+<span class="nc" id="L1019">            return null;</span>
         }
 
-<span class="pc bpc" id="L1024" title="1 of 2 branches missed.">        if (args.length &gt; 3) {</span>
-<span class="nc" id="L1025">            ConsolePrinter.printFormat(&quot;A set of card only have 3 card&quot;);</span>
-<span class="nc" id="L1026">            return null;</span>
+<span class="pc bpc" id="L1022" title="1 of 2 branches missed.">        if (args.length &gt; 3) {</span>
+<span class="nc" id="L1023">            ConsolePrinter.printFormat(&quot;A set of card only have 3 card&quot;);</span>
+<span class="nc" id="L1024">            return null;</span>
         }
 
-<span class="fc" id="L1029">        Card[] cards = new Card[3];</span>
+<span class="fc" id="L1027">        Card[] cards = new Card[3];</span>
 
-<span class="fc bfc" id="L1031" title="All 2 branches covered.">        for (int index = 0; index &lt; 3; index++) {</span>
-<span class="pc bpc" id="L1032" title="1 of 2 branches missed.">            if (Parser.checkValidInputNumber(args[index])) {</span>
-<span class="fc" id="L1033">                int cardPosition = Parser.parseWithDefault(args[index], 0);</span>
-<span class="fc" id="L1034">                cards[index] = currentPlayer.getHoldingCard(cardPosition);</span>
+<span class="fc bfc" id="L1029" title="All 2 branches covered.">        for (int index = 0; index &lt; 3; index++) {</span>
+<span class="pc bpc" id="L1030" title="1 of 2 branches missed.">            if (Parser.checkValidInputNumber(args[index])) {</span>
+<span class="fc" id="L1031">                int cardPosition = Parser.parseWithDefault(args[index], 0);</span>
+<span class="fc" id="L1032">                cards[index] = currentPlayer.getHoldingCard(cardPosition);</span>
 
-<span class="pc bpc" id="L1036" title="1 of 2 branches missed.">                if (cards[index].isExchanged()) {</span>
-<span class="nc" id="L1037">                    ConsolePrinter.printFormat(&quot;Card(s) you want to trade is already exchanged for armies&quot;);</span>
-<span class="nc" id="L1038">                    return null;</span>
+<span class="pc bpc" id="L1034" title="1 of 2 branches missed.">                if (cards[index].isExchanged()) {</span>
+<span class="nc" id="L1035">                    ConsolePrinter.printFormat(&quot;Card(s) you want to trade is already exchanged for armies&quot;);</span>
+<span class="nc" id="L1036">                    return null;</span>
                 }
             }
         }
 
-<span class="fc" id="L1043">        return new CardSet(cards[0], cards[1], cards[2]);</span>
+<span class="fc" id="L1041">        return new CardSet(cards[0], cards[1], cards[2]);</span>
     }
 
     /**
@@ -1049,30 +1047,30 @@ import soen6441riskgame.utils.Parser;
      * @param args 3 number as position of card in a set, -none at the end to not exchange
      */
     public void exchangeCard(String[] args) {
-<span class="fc" id="L1052">        Player currentPlayer = getCurrentPlayer();</span>
-<span class="fc" id="L1053">        int numberOfTradedArmies = 0;</span>
-<span class="fc" id="L1054">        int tradeTime = 1;</span>
+<span class="fc" id="L1050">        Player currentPlayer = getCurrentPlayer();</span>
+<span class="fc" id="L1051">        int numberOfTradedArmies = 0;</span>
+<span class="fc" id="L1052">        int tradeTime = 1;</span>
 
-<span class="fc" id="L1056">        int paramLeftOver = args.length % 3;</span>
-<span class="fc" id="L1057">        int size = args.length - paramLeftOver;</span>
+<span class="fc" id="L1054">        int paramLeftOver = args.length % 3;</span>
+<span class="fc" id="L1055">        int size = args.length - paramLeftOver;</span>
 
-<span class="fc bfc" id="L1059" title="All 2 branches covered.">        for (int index = 0; index &lt; size; index = index + 3) {</span>
+<span class="fc bfc" id="L1057" title="All 2 branches covered.">        for (int index = 0; index &lt; size; index = index + 3) {</span>
 
-<span class="fc" id="L1061">            CardSet cardSet = buildCardSet(new String[] {</span>
-<span class="fc" id="L1062">                                                          args[index],</span>
-<span class="fc" id="L1063">                                                          args[index + 1],</span>
-<span class="fc" id="L1064">                                                          args[index + 2]</span>
+<span class="fc" id="L1059">            CardSet cardSet = buildCardSet(new String[] {</span>
+                                                          args[index],
+                                                          args[index + 1],
+                                                          args[index + 2]
             });
 
-<span class="fc" id="L1067">            numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);</span>
-<span class="fc" id="L1068">            cardSet.setCardsExchanged();</span>
-<span class="fc" id="L1069">            tradeTime++;</span>
+<span class="fc" id="L1065">            numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);</span>
+<span class="fc" id="L1066">            cardSet.setCardsExchanged();</span>
+<span class="fc" id="L1067">            tradeTime++;</span>
         }
 
-<span class="fc" id="L1072">        int newUnplacedArmies = currentPlayer.getUnplacedArmies() + numberOfTradedArmies;</span>
-<span class="fc" id="L1073">        currentPlayer.setUnplacedArmies(newUnplacedArmies);</span>
+<span class="fc" id="L1070">        int newUnplacedArmies = currentPlayer.getUnplacedArmies() + numberOfTradedArmies;</span>
+<span class="fc" id="L1071">        currentPlayer.setUnplacedArmies(newUnplacedArmies);</span>
 
-<span class="fc" id="L1075">        currentPlayer.removeExchangedCards();</span>
-<span class="fc" id="L1076">    }</span>
+<span class="fc" id="L1073">        currentPlayer.removeExchangedCards();</span>
+<span class="fc" id="L1074">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

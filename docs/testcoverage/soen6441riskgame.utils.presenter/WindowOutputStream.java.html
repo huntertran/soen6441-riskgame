@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WindowOutputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils.presenter</a> &gt; <span class="el_source">WindowOutputStream.java</span></div><h1>WindowOutputStream.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils.presenter;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+/**
+ * custom OutputStream for separated view
+ */
+public class WindowOutputStream extends OutputStream {
+    private StringBuilder buffer;
+    private WindowPane windowPane;
+
+    /**
+     * constructor
+     *
+     * @param windowPane the window pane to write text to
+     */
+<span class="nc" id="L18">    public WindowOutputStream(WindowPane windowPane) {</span>
+<span class="nc" id="L19">        buffer = new StringBuilder(128);</span>
+<span class="nc" id="L20">        this.windowPane = windowPane;</span>
+<span class="nc" id="L21">    }</span>
+
+    /**
+     * write character b to output stream
+     *
+     * @param b character to write
+     */
+    @Override
+    public void write(int b) throws IOException {
+<span class="nc" id="L30">        char c = (char) b;</span>
+<span class="nc" id="L31">        String value = Character.toString(c);</span>
+<span class="nc" id="L32">        buffer.append(value);</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (value.equals(&quot;\n&quot;)) {</span>
+<span class="nc" id="L34">            windowPane.appendText(buffer.toString());</span>
+<span class="nc" id="L35">            buffer.delete(0, buffer.length());</span>
+        }
+<span class="nc" id="L37">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -6,9 +6,26 @@ set namespaceSeparator none
 class "<b><size:14>SaveLoadController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.SaveLoadController  [[../../soen6441riskgame/controllers/SaveLoadController.html{soen6441riskgame.controllers.SaveLoadController}]] {
 +SaveLoadController()
 +boolean saveGame(String saveGameFilePath)
++SerializableGame deserialize(JsonReader reader)
 +boolean loadGame(String savedGameFilePath)
 }
 
+
+class "<b><size:14>JsonReader</b>\n<size:10>com.google.gson.stream" as com.google.gson.stream.JsonReader  #lightgrey {
+}
+
+hide com.google.gson.stream.JsonReader fields
+hide com.google.gson.stream.JsonReader methods
+
+soen6441riskgame.controllers.SaveLoadController ..> com.google.gson.stream.JsonReader
+
+class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame fields
+hide soen6441riskgame.models.serializers.SerializableGame methods
+
+soen6441riskgame.controllers.SaveLoadController ..> soen6441riskgame.models.serializers.SerializableGame
 
 
 @enduml

@@ -110,12 +110,6 @@ class "<b><size:14>ModelCommandsPair</b>" as soen6441riskgame.models.ModelComman
 hide soen6441riskgame.models.ModelCommandsPair fields
 hide soen6441riskgame.models.ModelCommandsPair methods
 
-interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.NameOnlySerializable  [[../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
-}
-
-hide soen6441riskgame.models.NameOnlySerializable fields
-hide soen6441riskgame.models.NameOnlySerializable methods
-
 class "<b><size:14>Player</b>" as soen6441riskgame.models.Player  [[../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
 }
 

@@ -34,7 +34,7 @@ import soen6441riskgame.views.PhaseView;
 <span class="fc bfc" id="L34" title="All 2 branches covered.">            if (player.getName().equals(name)) {</span>
 <span class="fc" id="L35">                return player;</span>
             }
-        }
+<span class="fc" id="L37">        }</span>
 <span class="fc" id="L38">        return null;</span>
     }
 
@@ -73,7 +73,7 @@ import soen6441riskgame.views.PhaseView;
 <span class="fc" id="L73">            ArrayList&lt;Country&gt; countries = player.getConqueredCountries();</span>
 <span class="pc bpc" id="L74" title="1 of 2 branches missed.">            for (Country country : countries) {</span>
 <span class="nc" id="L75">                country.setConquerer(null);</span>
-            }
+<span class="nc" id="L76">            }</span>
 
 <span class="fc" id="L78">            players.remove(player);</span>
 <span class="fc" id="L79">            Player previousPlayer = player.getPreviousPlayer();</span>

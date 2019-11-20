@@ -4,15 +4,24 @@ skinparam svgLinkTarget _parent
 skinparam linetype ortho
 set namespaceSeparator none
 class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] {
--ArrayList<Country> countries
--ArrayList<Continent> continents
--ArrayList<Player> players
+-List<Country> countries
+-List<Continent> continents
+-List<Player> players
 -int borders
 -Card cards
 +SerializableGame()
 +String serialize()
++void deserialize(JsonReader reader)
 }
 
+
+class "<b><size:14>SaveLoadController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.SaveLoadController  [[../../../soen6441riskgame/controllers/SaveLoadController.html{soen6441riskgame.controllers.SaveLoadController}]] #white {
+}
+
+hide soen6441riskgame.controllers.SaveLoadController fields
+hide soen6441riskgame.controllers.SaveLoadController methods
+
+soen6441riskgame.controllers.SaveLoadController ..> soen6441riskgame.models.serializers.SerializableGame
 
 
 class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
@@ -21,7 +30,7 @@ class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441ris
 hide soen6441riskgame.models.Country fields
 hide soen6441riskgame.models.Country methods
 
-soen6441riskgame.models.serializers.SerializableGame ..> soen6441riskgame.models.Country
+soen6441riskgame.models.serializers.SerializableGame -->  "countries *" soen6441riskgame.models.Country
 
 
 class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] #white {
@@ -30,7 +39,7 @@ class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441r
 hide soen6441riskgame.models.Continent fields
 hide soen6441riskgame.models.Continent methods
 
-soen6441riskgame.models.serializers.SerializableGame ..> soen6441riskgame.models.Continent
+soen6441riskgame.models.serializers.SerializableGame -->  "continents *" soen6441riskgame.models.Continent
 
 
 class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
@@ -39,7 +48,7 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 hide soen6441riskgame.models.Player fields
 hide soen6441riskgame.models.Player methods
 
-soen6441riskgame.models.serializers.SerializableGame ..> soen6441riskgame.models.Player
+soen6441riskgame.models.serializers.SerializableGame -->  "players *" soen6441riskgame.models.Player
 
 class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] #white {
 }
@@ -48,6 +57,14 @@ hide soen6441riskgame.models.Card fields
 hide soen6441riskgame.models.Card methods
 
 soen6441riskgame.models.serializers.SerializableGame -->  "cards" soen6441riskgame.models.Card
+
+class "<b><size:14>JsonReader</b>\n<size:10>com.google.gson.stream" as com.google.gson.stream.JsonReader  #lightgrey {
+}
+
+hide com.google.gson.stream.JsonReader fields
+hide com.google.gson.stream.JsonReader methods
+
+soen6441riskgame.models.serializers.SerializableGame ..> com.google.gson.stream.JsonReader
 
 class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] {
 }

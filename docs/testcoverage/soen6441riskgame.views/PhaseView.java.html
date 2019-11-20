@@ -17,7 +17,11 @@ import soen6441riskgame.utils.ConsolePrinter;
  * 3. information about actions that are taking place during this phase. The phase view should be
  * cleared at the beginning of every phase.
  */
-<span class="fc" id="L20">public class PhaseView implements Observer {</span>
+public class PhaseView extends SeparatedView implements Observer {
+
+    public PhaseView() {
+<span class="fc" id="L23">        super(&quot;Phase&quot;);</span>
+<span class="fc" id="L24">    }</span>
 
     /**
      * update the PhaseView with new data
@@ -27,25 +31,33 @@ import soen6441riskgame.utils.ConsolePrinter;
      */
     @Override
     public void update(Observable o, Object arg) {
-<span class="fc" id="L30">        ChangedProperty property = (ChangedProperty) arg;</span>
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (property != ChangedProperty.GAME_PHASE) {</span>
-<span class="nc" id="L32">            return;</span>
+<span class="fc" id="L34">        ChangedProperty property = (ChangedProperty) arg;</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (property != ChangedProperty.GAME_PHASE) {</span>
+<span class="nc" id="L36">            return;</span>
         }
 
-<span class="fc" id="L35">        Player player = (Player) o;</span>
+<span class="fc" id="L39">        clearView();</span>
 
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (player != null) {</span>
-<span class="fc" id="L38">            ConsolePrinter.printFormat(&quot;Current phase: %s&quot;, player.getCurrentPhase());</span>
-<span class="fc" id="L39">            ConsolePrinter.printFormat(&quot;Current player: %s&quot;, player.getName());</span>
+<span class="fc" id="L41">        Player player = (Player) o;</span>
 
-<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (!player.getCurrentPhaseActions().isEmpty()) {</span>
-<span class="fc" id="L42">                ConsolePrinter.printFormat(&quot;Actions:&quot;);</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (player != null) {</span>
+<span class="fc" id="L44">            ConsolePrinter.printFormat(printStream,</span>
+                                       &quot;Current phase: %s&quot;,
+<span class="fc" id="L46">                                       player.getCurrentPhase());</span>
+<span class="fc" id="L47">            ConsolePrinter.printFormat(printStream,</span>
+                                       &quot;Current player: %s&quot;,
+<span class="fc" id="L49">                                       player.getName());</span>
 
-<span class="fc bfc" id="L44" title="All 2 branches covered.">                for (String action : player.getCurrentPhaseActions()) {</span>
-<span class="fc" id="L45">                    ConsolePrinter.printFormat(&quot;    %s&quot;, action);</span>
-                }
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if (!player.getCurrentPhaseActions().isEmpty()) {</span>
+<span class="fc" id="L52">                ConsolePrinter.printFormat(printStream, &quot;Actions:&quot;);</span>
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                for (String action : player.getCurrentPhaseActions()) {</span>
+<span class="fc" id="L55">                    ConsolePrinter.printFormat(printStream,</span>
+                                               &quot;    %s&quot;,
+                                               action);
+<span class="fc" id="L58">                }</span>
             }
         }
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L61">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

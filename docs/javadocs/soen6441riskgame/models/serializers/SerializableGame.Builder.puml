@@ -4,15 +4,15 @@ skinparam svgLinkTarget _parent
 skinparam linetype ortho
 set namespaceSeparator none
 class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] {
--ArrayList<Country> countries
--ArrayList<Continent> continents
--ArrayList<Player> players
+-List<Country> countries
+-List<Continent> continents
+-List<Player> players
 -int borders
 -Card cards
 +Builder()
-+SerializableGame.Builder setContinents(ArrayList<Continent> continents)
-+SerializableGame.Builder setCountries(ArrayList<Country> countries)
-+SerializableGame.Builder setPlayers(ArrayList<Player> players)
++SerializableGame.Builder setContinents(List<Continent> continents)
++SerializableGame.Builder setCountries(List<Country> countries)
++SerializableGame.Builder setPlayers(List<Player> players)
 +SerializableGame.Builder setBorders(int borders)
 +SerializableGame.Builder setCards(Card cards)
 +SerializableGame build()
@@ -26,7 +26,7 @@ class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441ris
 hide soen6441riskgame.models.Country fields
 hide soen6441riskgame.models.Country methods
 
-soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.Country
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "countries *" soen6441riskgame.models.Country
 
 
 class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] #white {
@@ -35,7 +35,7 @@ class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441r
 hide soen6441riskgame.models.Continent fields
 hide soen6441riskgame.models.Continent methods
 
-soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.Continent
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "continents *" soen6441riskgame.models.Continent
 
 
 class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
@@ -44,7 +44,7 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 hide soen6441riskgame.models.Player fields
 hide soen6441riskgame.models.Player methods
 
-soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.Player
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "players *" soen6441riskgame.models.Player
 
 class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] #white {
 }

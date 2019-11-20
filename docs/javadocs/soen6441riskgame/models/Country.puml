@@ -89,13 +89,13 @@ hide soen6441riskgame.models.Viewable methods
 
 soen6441riskgame.models.Country ..|> soen6441riskgame.models.Viewable
 
-interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.NameOnlySerializable  [[../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
+interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] #white {
 }
 
-hide soen6441riskgame.models.NameOnlySerializable fields
-hide soen6441riskgame.models.NameOnlySerializable methods
+hide soen6441riskgame.models.serializers.NameOnlySerializable fields
+hide soen6441riskgame.models.serializers.NameOnlySerializable methods
 
-soen6441riskgame.models.Country ..|> soen6441riskgame.models.NameOnlySerializable
+soen6441riskgame.models.Country ..|> soen6441riskgame.models.serializers.NameOnlySerializable
 
 
 soen6441riskgame.models.Country ..> soen6441riskgame.models.Country
@@ -116,7 +116,7 @@ class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serial
 hide soen6441riskgame.models.serializers.SerializableGame fields
 hide soen6441riskgame.models.serializers.SerializableGame methods
 
-soen6441riskgame.models.serializers.SerializableGame ..> soen6441riskgame.models.Country
+soen6441riskgame.models.serializers.SerializableGame -->  "countries *" soen6441riskgame.models.Country
 
 class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] #white {
 }
@@ -124,7 +124,7 @@ class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.model
 hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
 hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
 
-soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.Country
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "countries *" soen6441riskgame.models.Country
 
 class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] #white {
 }

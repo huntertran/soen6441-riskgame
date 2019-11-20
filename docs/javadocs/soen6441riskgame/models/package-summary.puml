@@ -47,12 +47,6 @@ class "<b><size:14>ModelCommandsPair</b>" as soen6441riskgame.models.ModelComman
 hide soen6441riskgame.models.ModelCommandsPair fields
 hide soen6441riskgame.models.ModelCommandsPair methods
 
-interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.NameOnlySerializable  [[../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
-}
-
-hide soen6441riskgame.models.NameOnlySerializable fields
-hide soen6441riskgame.models.NameOnlySerializable methods
-
 class "<b><size:14>Player</b>" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
 }
 
@@ -70,19 +64,16 @@ soen6441riskgame.models.Card ..|> soen6441riskgame.models.Viewable
 soen6441riskgame.models.CardSet ..> soen6441riskgame.models.Card
 soen6441riskgame.models.Continent ..> soen6441riskgame.models.Country
 soen6441riskgame.models.Continent ..|> soen6441riskgame.models.Viewable
-soen6441riskgame.models.Continent ..|> soen6441riskgame.models.NameOnlySerializable
 soen6441riskgame.models.Continent ..> soen6441riskgame.models.Player
 soen6441riskgame.models.Country -->  "coordinate" soen6441riskgame.models.Coordinate
 soen6441riskgame.models.Country -->  "continent" soen6441riskgame.models.Continent
 soen6441riskgame.models.Country -->  "conquerer" soen6441riskgame.models.Player
 soen6441riskgame.models.Country ..|> soen6441riskgame.models.Viewable
-soen6441riskgame.models.Country ..|> soen6441riskgame.models.NameOnlySerializable
 soen6441riskgame.models.Country ..> soen6441riskgame.models.Country
 soen6441riskgame.models.ModelCommands -->  "subRoutine *" soen6441riskgame.models.ModelCommandsPair
 soen6441riskgame.models.Player -->  "nextPlayer" soen6441riskgame.models.Player
 soen6441riskgame.models.Player -->  "previousPlayer" soen6441riskgame.models.Player
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
-soen6441riskgame.models.Player ..|> soen6441riskgame.models.NameOnlySerializable
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
 package soen6441riskgame.models.commands [[../../soen6441riskgame/models/commands/package-summary.html{soen6441riskgame.models.commands}]] {
@@ -103,19 +94,13 @@ hide soen6441riskgame.models.commands.MapEditorCommands methods
 package soen6441riskgame.models.serializers [[../../soen6441riskgame/models/serializers/package-summary.html{soen6441riskgame.models.serializers}]] {
 }
 
-class "<b><size:14>ArrayNameOnlyJsonAdapter</b>" as soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/ArrayNameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter}]] {
-}
-
-hide soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter fields
-hide soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter methods
-
 class "<b><size:14>NameOnlyJsonAdapter</b>" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] {
 }
 
 hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter fields
 hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter methods
 
-class "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
+interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
 }
 
 hide soen6441riskgame.models.serializers.NameOnlySerializable fields

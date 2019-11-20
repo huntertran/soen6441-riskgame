@@ -84,7 +84,7 @@ public class CardSet {
 <span class="nc" id="L84">                ConsolePrinter.printFormat(&quot;Some cards in set are invalid (null): %d&quot;, cards.indexOf(card));</span>
             }
 <span class="fc" id="L86">            cardValue += card.getCardType().getCardTypeAsInt();</span>
-        }
+<span class="fc" id="L87">        }</span>
 
 <span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (cardValue == allInfantry()</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">            || cardValue == allCavalry()</span>
@@ -127,7 +127,7 @@ public class CardSet {
 <span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (isSetValid()) {</span>
 <span class="pc bpc" id="L128" title="1 of 2 branches missed.">            if (tradeTime &gt; 6) {</span>
 <span class="nc" id="L129">                armies = 15 + (tradeTime - 6) * 5;</span>
-<span class="nc" id="L130">            } else {</span>
+            } else {
 <span class="pc bpc" id="L131" title="5 of 7 branches missed.">                switch (tradeTime) {</span>
                     case 1: {
 <span class="fc" id="L133">                        return 4;</span>
@@ -163,7 +163,7 @@ public class CardSet {
     public void setCardsExchanged() {
 <span class="fc bfc" id="L164" title="All 2 branches covered.">        for (Card card : cards) {</span>
 <span class="fc" id="L165">            card.setExchanged(true);</span>
-        }
+<span class="fc" id="L166">        }</span>
 <span class="fc" id="L167">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

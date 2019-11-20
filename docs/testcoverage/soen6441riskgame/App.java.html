@@ -28,7 +28,7 @@ public final class App {
 
 <span class="nc bnc" id="L29" title="All 2 branches missed.">        if (args.length == 0) {</span>
 <span class="nc" id="L30">            runFromBeginning();</span>
-<span class="nc" id="L31">        } else {</span>
+        } else {
 <span class="nc" id="L32">            String commands = String.join(&quot; &quot;, args);</span>
 <span class="nc" id="L33">            ModelCommands cmds = new ModelCommands(commands);</span>
 <span class="nc" id="L34">            jumpToCommand(cmds);</span>
@@ -46,23 +46,23 @@ public final class App {
 <span class="fc" id="L46">        MapController mapController = new MapController();</span>
 <span class="fc" id="L47">        GameController gameController = new GameController();</span>
         try {
-<span class="pc bpc" id="L49" title="36 of 58 branches missed.">            switch (command) {</span>
+<span class="pc bpc" id="L49" title="9 of 20 branches missed.">            switch (command) {</span>
                 case MapEditorCommands.EDITCONTINENT: {
 <span class="nc bnc" id="L51" title="All 2 branches missed.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
 <span class="nc" id="L52">                        mapController.editContinent(sub.toStringArray());</span>
-                    }
+<span class="nc" id="L53">                    }</span>
 <span class="nc" id="L54">                    break;</span>
                 }
                 case MapEditorCommands.EDITCOUNTRY: {
 <span class="nc bnc" id="L57" title="All 2 branches missed.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
 <span class="nc" id="L58">                        mapController.editCountry(sub.toStringArray());</span>
-                    }
+<span class="nc" id="L59">                    }</span>
 <span class="nc" id="L60">                    break;</span>
                 }
                 case MapEditorCommands.EDITNEIGHBOR: {
 <span class="nc bnc" id="L63" title="All 2 branches missed.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
 <span class="nc" id="L64">                        mapController.editNeighbor(sub.toStringArray());</span>
-                    }
+<span class="nc" id="L65">                    }</span>
 <span class="nc" id="L66">                    break;</span>
                 }
                 case MapEditorCommands.SHOWMAP: {
@@ -74,7 +74,7 @@ public final class App {
 <span class="nc" id="L74">                        mapController.saveMap(args.regularCommands.get(0));</span>
 <span class="nc" id="L75">                    } catch (IOException e) {</span>
 <span class="nc" id="L76">                        System.out.println(&quot;Error: &quot; + e.getClass().getName());</span>
-                    }
+<span class="nc" id="L77">                    }</span>
 <span class="nc" id="L78">                    break;</span>
                 }
                 case MapEditorCommands.EDITMAP: {
@@ -82,7 +82,7 @@ public final class App {
 <span class="nc" id="L82">                        mapController.editMap(args.regularCommands.get(0));</span>
 <span class="nc" id="L83">                    } catch (IOException e) {</span>
 <span class="nc" id="L84">                        System.out.println(&quot;Error: &quot; + e.getClass().getName());</span>
-                    }
+<span class="nc" id="L85">                    }</span>
 <span class="nc" id="L86">                    break;</span>
                 }
                 case MapEditorCommands.VALIDATEMAP: {
@@ -96,16 +96,16 @@ public final class App {
                         // if (mapController.isMapValid()) {
                         // mapController.showMap();
                         // }
-<span class="pc" id="L99">                    } catch (IOException e) {</span>
+<span class="nc" id="L99">                    } catch (IOException e) {</span>
 <span class="nc" id="L100">                        System.out.println(&quot;Error: &quot; + e.getClass().getName());</span>
-                    }
+<span class="fc" id="L101">                    }</span>
 
 <span class="nc" id="L103">                    break;</span>
                 }
                 case GameCommands.GAMEPLAYER: {
 <span class="fc bfc" id="L106" title="All 2 branches covered.">                    for (ModelCommandsPair sub : args.subRoutine) {</span>
 <span class="fc" id="L107">                        gameController.handleGamePlayerCommand(sub.toStringArray());</span>
-                    }
+<span class="fc" id="L108">                    }</span>
 <span class="fc" id="L109">                    break;</span>
                 }
                 case GameCommands.POPULATECOUNTRIES: {
@@ -113,7 +113,7 @@ public final class App {
 <span class="fc" id="L113">                        gameController.populateCountries();</span>
 <span class="fc" id="L114">                        gameController.initPlayersUnplacedArmies();</span>
                     }
-<span class="fc" id="L116">                    break;</span>
+                    break;
                 }
                 case GameCommands.PLACEARMY: {
                     // gameController.startRoundRobinPlayers();
@@ -131,7 +131,7 @@ public final class App {
 <span class="fc" id="L131">                        gameController.handleReinforceCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
                     }
 
-<span class="fc" id="L134">                    break;</span>
+                    break;
                 }
                 case GameCommands.EXCHANGECARDS: {
 <span class="fc" id="L137">                    gameController.exchangeCard(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
@@ -143,7 +143,7 @@ public final class App {
 <span class="fc" id="L143">                        gameController.handleAttackCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
                     }
 
-<span class="fc" id="L146">                    break;</span>
+                    break;
                 }
                 case GameCommands.DEFEND: {
 <span class="nc" id="L149">                    boolean isAttackEntered = gameController.enterAttackPhase();</span>
@@ -152,7 +152,7 @@ public final class App {
 <span class="nc" id="L152">                        gameController.handleDefendCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
                     }
 
-<span class="nc" id="L155">                    break;</span>
+                    break;
                 }
                 case GameCommands.ATTACKMOVE: {
 <span class="nc" id="L158">                    boolean isAttackEntered = gameController.enterAttackPhase();</span>
@@ -161,7 +161,7 @@ public final class App {
 <span class="nc" id="L161">                        gameController.handleAttackMoveCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
                     }
 
-<span class="nc" id="L164">                    break;</span>
+                    break;
                 }
                 case GameCommands.FORTIFY: {
 <span class="fc" id="L167">                    boolean isFortifyPhase = gameController.enterFortifyPhase();</span>
@@ -170,7 +170,7 @@ public final class App {
 <span class="fc" id="L170">                        gameController.handleMultipleFortificationCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));</span>
                     }
 
-<span class="fc" id="L173">                    break;</span>
+                    break;
                 }
                 case GameCommands.CURRENTPLAYER: {
 <span class="fc" id="L176">                    gameController.showCurrentPlayer();</span>
@@ -181,9 +181,9 @@ public final class App {
                     break;
                 }
             }
-<span class="pc" id="L184">        } catch (Exception e) {</span>
+<span class="fc" id="L184">        } catch (Exception e) {</span>
 <span class="fc" id="L185">            System.out.println(e);</span>
-        }
+<span class="fc" id="L186">        }</span>
 <span class="fc" id="L187">    }</span>
 
     /**
@@ -201,7 +201,7 @@ public final class App {
 <span class="nc" id="L201">            jumpToCommand(cmds);</span>
 <span class="nc" id="L202">            System.out.print(&quot;ENTER YOUR ACTION: &quot;);</span>
 <span class="nc" id="L203">            command = scanner.nextLine();</span>
-        }
+<span class="nc" id="L204">        }</span>
 
 <span class="nc" id="L206">        scanner.close();</span>
 <span class="nc" id="L207">    }</span>

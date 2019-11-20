@@ -18,13 +18,13 @@ hide com.google.gson.TypeAdapterNameOnlySerializable methods
 
 soen6441riskgame.models.serializers.NameOnlyJsonAdapter --|> com.google.gson.TypeAdapterNameOnlySerializable
 
-interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.NameOnlySerializable  [[../../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] #white {
+interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
 }
 
-hide soen6441riskgame.models.NameOnlySerializable fields
-hide soen6441riskgame.models.NameOnlySerializable methods
+hide soen6441riskgame.models.serializers.NameOnlySerializable fields
+hide soen6441riskgame.models.serializers.NameOnlySerializable methods
 
-soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.NameOnlySerializable
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.serializers.NameOnlySerializable
 
 class "<b><size:14>JsonWriter</b>\n<size:10>com.google.gson.stream" as com.google.gson.stream.JsonWriter  #lightgrey {
 }
