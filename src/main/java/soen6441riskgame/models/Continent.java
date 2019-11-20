@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import com.google.gson.annotations.Expose;
+
+import soen6441riskgame.models.serializers.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;

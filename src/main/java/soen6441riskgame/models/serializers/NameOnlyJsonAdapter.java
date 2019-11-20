@@ -8,7 +8,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import soen6441riskgame.models.Continent;
-import soen6441riskgame.models.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 
 public class NameOnlyJsonAdapter extends TypeAdapter<NameOnlySerializable> {

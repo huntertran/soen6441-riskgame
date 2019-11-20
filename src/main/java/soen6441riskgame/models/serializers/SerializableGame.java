@@ -9,7 +9,6 @@ import com.google.gson.annotations.Expose;
 import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
-import soen6441riskgame.models.NameOnlySerializable;
 import soen6441riskgame.models.Player;
 
 public class SerializableGame {
