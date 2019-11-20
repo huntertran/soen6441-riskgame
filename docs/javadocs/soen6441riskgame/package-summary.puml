@@ -1,0 +1,207 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame [[../soen6441riskgame/package-summary.html{soen6441riskgame}]] #lightyellow {
+}
+
+class "<b><size:14>App</b>" as soen6441riskgame.App  [[../soen6441riskgame/App.html{soen6441riskgame.App}]] {
+}
+
+hide soen6441riskgame.App fields
+hide soen6441riskgame.App methods
+
+package soen6441riskgame.controllers [[../soen6441riskgame/controllers/package-summary.html{soen6441riskgame.controllers}]] {
+}
+
+class "<b><size:14>GameController</b>" as soen6441riskgame.controllers.GameController  [[../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] {
+}
+
+hide soen6441riskgame.controllers.GameController fields
+hide soen6441riskgame.controllers.GameController methods
+
+class "<b><size:14>MapController</b>" as soen6441riskgame.controllers.MapController  [[../soen6441riskgame/controllers/MapController.html{soen6441riskgame.controllers.MapController}]] {
+}
+
+hide soen6441riskgame.controllers.MapController fields
+hide soen6441riskgame.controllers.MapController methods
+
+class "<b><size:14>SaveLoadController</b>" as soen6441riskgame.controllers.SaveLoadController  [[../soen6441riskgame/controllers/SaveLoadController.html{soen6441riskgame.controllers.SaveLoadController}]] {
+}
+
+hide soen6441riskgame.controllers.SaveLoadController fields
+hide soen6441riskgame.controllers.SaveLoadController methods
+
+package soen6441riskgame.enums [[../soen6441riskgame/enums/package-summary.html{soen6441riskgame.enums}]] {
+}
+
+enum "<b><size:14>CardType</b>" as soen6441riskgame.enums.CardType  [[../soen6441riskgame/enums/CardType.html{soen6441riskgame.enums.CardType}]] {
+}
+
+hide soen6441riskgame.enums.CardType fields
+hide soen6441riskgame.enums.CardType methods
+
+enum "<b><size:14>ChangedProperty</b>" as soen6441riskgame.enums.ChangedProperty  [[../soen6441riskgame/enums/ChangedProperty.html{soen6441riskgame.enums.ChangedProperty}]] {
+}
+
+hide soen6441riskgame.enums.ChangedProperty fields
+hide soen6441riskgame.enums.ChangedProperty methods
+
+enum "<b><size:14>CommonCommandArgs</b>" as soen6441riskgame.enums.CommonCommandArgs  [[../soen6441riskgame/enums/CommonCommandArgs.html{soen6441riskgame.enums.CommonCommandArgs}]] {
+}
+
+hide soen6441riskgame.enums.CommonCommandArgs fields
+hide soen6441riskgame.enums.CommonCommandArgs methods
+
+enum "<b><size:14>GamePhase</b>" as soen6441riskgame.enums.GamePhase  [[../soen6441riskgame/enums/GamePhase.html{soen6441riskgame.enums.GamePhase}]] {
+}
+
+hide soen6441riskgame.enums.GamePhase fields
+hide soen6441riskgame.enums.GamePhase methods
+
+enum "<b><size:14>MapPart</b>" as soen6441riskgame.enums.MapPart  [[../soen6441riskgame/enums/MapPart.html{soen6441riskgame.enums.MapPart}]] {
+}
+
+hide soen6441riskgame.enums.MapPart fields
+hide soen6441riskgame.enums.MapPart methods
+
+package soen6441riskgame.models [[../soen6441riskgame/models/package-summary.html{soen6441riskgame.models}]] {
+}
+
+class "<b><size:14>Card</b>" as soen6441riskgame.models.Card  [[../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
+}
+
+hide soen6441riskgame.models.Card fields
+hide soen6441riskgame.models.Card methods
+
+class "<b><size:14>CardSet</b>" as soen6441riskgame.models.CardSet  [[../soen6441riskgame/models/CardSet.html{soen6441riskgame.models.CardSet}]] {
+}
+
+hide soen6441riskgame.models.CardSet fields
+hide soen6441riskgame.models.CardSet methods
+
+class "<b><size:14>Continent</b>" as soen6441riskgame.models.Continent  [[../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+class "<b><size:14>Coordinate</b>" as soen6441riskgame.models.Coordinate  [[../soen6441riskgame/models/Coordinate.html{soen6441riskgame.models.Coordinate}]] {
+}
+
+hide soen6441riskgame.models.Coordinate fields
+hide soen6441riskgame.models.Coordinate methods
+
+class "<b><size:14>Country</b>" as soen6441riskgame.models.Country  [[../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+class "<b><size:14>ModelCommands</b>" as soen6441riskgame.models.ModelCommands  [[../soen6441riskgame/models/ModelCommands.html{soen6441riskgame.models.ModelCommands}]] {
+}
+
+hide soen6441riskgame.models.ModelCommands fields
+hide soen6441riskgame.models.ModelCommands methods
+
+class "<b><size:14>ModelCommandsPair</b>" as soen6441riskgame.models.ModelCommandsPair  [[../soen6441riskgame/models/ModelCommandsPair.html{soen6441riskgame.models.ModelCommandsPair}]] {
+}
+
+hide soen6441riskgame.models.ModelCommandsPair fields
+hide soen6441riskgame.models.ModelCommandsPair methods
+
+interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.NameOnlySerializable  [[../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
+}
+
+hide soen6441riskgame.models.NameOnlySerializable fields
+hide soen6441riskgame.models.NameOnlySerializable methods
+
+class "<b><size:14>Player</b>" as soen6441riskgame.models.Player  [[../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+interface "<b><size:14>Viewable</b>" as soen6441riskgame.models.Viewable  [[../soen6441riskgame/models/Viewable.html{soen6441riskgame.models.Viewable}]] {
+}
+
+hide soen6441riskgame.models.Viewable fields
+hide soen6441riskgame.models.Viewable methods
+
+package soen6441riskgame.singleton [[../soen6441riskgame/singleton/package-summary.html{soen6441riskgame.singleton}]] {
+}
+
+class "<b><size:14>GameBoard</b>" as soen6441riskgame.singleton.GameBoard  [[../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+class "<b><size:14>GameBoardMap</b>" as soen6441riskgame.singleton.GameBoardMap  [[../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardMap fields
+hide soen6441riskgame.singleton.GameBoardMap methods
+
+class "<b><size:14>GameBoardPlayer</b>" as soen6441riskgame.singleton.GameBoardPlayer  [[../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlayer fields
+hide soen6441riskgame.singleton.GameBoardPlayer methods
+
+interface "<b><size:14>Resettable</b>" as soen6441riskgame.singleton.Resettable  [[../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
+}
+
+hide soen6441riskgame.singleton.Resettable fields
+hide soen6441riskgame.singleton.Resettable methods
+
+package soen6441riskgame.utils [[../soen6441riskgame/utils/package-summary.html{soen6441riskgame.utils}]] {
+}
+
+class "<b><size:14>ConsolePrinter</b>" as soen6441riskgame.utils.ConsolePrinter  [[../soen6441riskgame/utils/ConsolePrinter.html{soen6441riskgame.utils.ConsolePrinter}]] {
+}
+
+hide soen6441riskgame.utils.ConsolePrinter fields
+hide soen6441riskgame.utils.ConsolePrinter methods
+
+class "<b><size:14>GraphChecker</b>" as soen6441riskgame.utils.GraphChecker  [[../soen6441riskgame/utils/GraphChecker.html{soen6441riskgame.utils.GraphChecker}]] {
+}
+
+hide soen6441riskgame.utils.GraphChecker fields
+hide soen6441riskgame.utils.GraphChecker methods
+
+class "<b><size:14>Parser</b>" as soen6441riskgame.utils.Parser  [[../soen6441riskgame/utils/Parser.html{soen6441riskgame.utils.Parser}]] {
+}
+
+hide soen6441riskgame.utils.Parser fields
+hide soen6441riskgame.utils.Parser methods
+
+package soen6441riskgame.views [[../soen6441riskgame/views/package-summary.html{soen6441riskgame.views}]] {
+}
+
+class "<b><size:14>ExchangeCardView</b>" as soen6441riskgame.views.ExchangeCardView  [[../soen6441riskgame/views/ExchangeCardView.html{soen6441riskgame.views.ExchangeCardView}]] {
+}
+
+hide soen6441riskgame.views.ExchangeCardView fields
+hide soen6441riskgame.views.ExchangeCardView methods
+
+class "<b><size:14>PhaseView</b>" as soen6441riskgame.views.PhaseView  [[../soen6441riskgame/views/PhaseView.html{soen6441riskgame.views.PhaseView}]] {
+}
+
+hide soen6441riskgame.views.PhaseView fields
+hide soen6441riskgame.views.PhaseView methods
+
+class "<b><size:14>PlayersWorldDominationView</b>" as soen6441riskgame.views.PlayersWorldDominationView  [[../soen6441riskgame/views/PlayersWorldDominationView.html{soen6441riskgame.views.PlayersWorldDominationView}]] {
+}
+
+hide soen6441riskgame.views.PlayersWorldDominationView fields
+hide soen6441riskgame.views.PlayersWorldDominationView methods
+
+class "<b><size:14>SeparatedView</b>" as soen6441riskgame.views.SeparatedView  [[../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] {
+}
+
+hide soen6441riskgame.views.SeparatedView fields
+hide soen6441riskgame.views.SeparatedView methods
+
+
+@enduml

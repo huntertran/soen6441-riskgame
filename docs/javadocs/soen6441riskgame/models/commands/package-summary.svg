@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="120px" preserveAspectRatio="none" style="width:442px;height:120px;" version="1.1" viewBox="0 0 442 120" width="442px" zoomAndPan="magnify"><defs><filter height="300%" id="f1t56frkw0nx69" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--cluster soen6441riskgame.models.commands--><a target="_parent" xlink:actuate="onRequest" xlink:href="../../../soen6441riskgame/models/commands/package-summary.html" xlink:show="new" xlink:title="soen6441riskgame.models.commands" xlink:type="simple"><polygon fill="#FFFFE0" filter="url(#f1t56frkw0nx69)" points="22,24,293,24,300,47.6094,420,47.6094,420,108,22,108,22,24" style="stroke: #000000; stroke-width: 2.0;"/><line style="stroke: #000000; stroke-width: 2.0;" x1="22" x2="300" y1="47.6094" y2="47.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="265" x="26" y="40.5332">soen6441riskgame.models.commands</text></a><!--class soen6441riskgame.models.commands.GameCommands--><a target="_parent" xlink:actuate="onRequest" xlink:href="../../../soen6441riskgame/models/commands/GameCommands.html" xlink:show="new" xlink:title="soen6441riskgame.models.commands.GameCommands" xlink:type="simple"><rect fill="#FEFECE" filter="url(#f1t56frkw0nx69)" height="32" id="soen6441riskgame.models.commands.GameCommands" style="stroke: #A80036; stroke-width: 1.5;" width="149" x="254.5" y="60"/><ellipse cx="269.5" cy="76" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M272.2656,71.875 Q272.4219,71.6563 272.6094,71.5469 Q272.7969,71.4375 273.0156,71.4375 Q273.3906,71.4375 273.625,71.6953 Q273.8594,71.9531 273.8594,72.5625 L273.8594,74.0156 Q273.8594,74.625 273.625,74.8906 Q273.3906,75.1563 273.0156,75.1563 Q272.6719,75.1563 272.4688,74.9531 Q272.2656,74.7656 272.1563,74.25 Q272.1094,73.8906 271.9219,73.7031 Q271.5938,73.3281 270.9844,73.1094 Q270.375,72.8906 269.75,72.8906 Q268.9844,72.8906 268.3516,73.2188 Q267.7188,73.5469 267.2266,74.2969 Q266.7344,75.0469 266.7344,76.0781 L266.7344,77.1719 Q266.7344,78.4063 267.625,79.2266 Q268.5156,80.0469 270.1094,80.0469 Q271.0469,80.0469 271.7031,79.7969 Q272.0938,79.6406 272.5156,79.2031 Q272.7813,78.9375 272.9297,78.8594 Q273.0781,78.7813 273.2813,78.7813 Q273.6094,78.7813 273.8672,79.0391 Q274.125,79.2969 274.125,79.6406 Q274.125,79.9844 273.7813,80.3906 Q273.2813,80.9688 272.4844,81.2969 Q271.4063,81.75 270.1094,81.75 Q268.5938,81.75 267.3906,81.125 Q266.4063,80.625 265.7188,79.5547 Q265.0313,78.4844 265.0313,77.2031 L265.0313,76.0469 Q265.0313,74.7188 265.6484,73.5703 Q266.2656,72.4219 267.3594,71.8047 Q268.4531,71.1875 269.6875,71.1875 Q270.4219,71.1875 271.0703,71.3516 Q271.7188,71.5156 272.2656,71.875 Z "/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="117" x="283.5" y="81.7285">GameCommands</text></a><!--class soen6441riskgame.models.commands.MapEditorCommands--><a target="_parent" xlink:actuate="onRequest" xlink:href="../../../soen6441riskgame/models/commands/MapEditorCommands.html" xlink:show="new" xlink:title="soen6441riskgame.models.commands.MapEditorCommands" xlink:type="simple"><rect fill="#FEFECE" filter="url(#f1t56frkw0nx69)" height="32" id="soen6441riskgame.models.commands.MapEditorCommands" style="stroke: #A80036; stroke-width: 1.5;" width="181" x="38.5" y="60"/><ellipse cx="53.5" cy="76" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M56.2656,71.875 Q56.4219,71.6563 56.6094,71.5469 Q56.7969,71.4375 57.0156,71.4375 Q57.3906,71.4375 57.625,71.6953 Q57.8594,71.9531 57.8594,72.5625 L57.8594,74.0156 Q57.8594,74.625 57.625,74.8906 Q57.3906,75.1563 57.0156,75.1563 Q56.6719,75.1563 56.4688,74.9531 Q56.2656,74.7656 56.1563,74.25 Q56.1094,73.8906 55.9219,73.7031 Q55.5938,73.3281 54.9844,73.1094 Q54.375,72.8906 53.75,72.8906 Q52.9844,72.8906 52.3516,73.2188 Q51.7188,73.5469 51.2266,74.2969 Q50.7344,75.0469 50.7344,76.0781 L50.7344,77.1719 Q50.7344,78.4063 51.625,79.2266 Q52.5156,80.0469 54.1094,80.0469 Q55.0469,80.0469 55.7031,79.7969 Q56.0938,79.6406 56.5156,79.2031 Q56.7813,78.9375 56.9297,78.8594 Q57.0781,78.7813 57.2813,78.7813 Q57.6094,78.7813 57.8672,79.0391 Q58.125,79.2969 58.125,79.6406 Q58.125,79.9844 57.7813,80.3906 Q57.2813,80.9688 56.4844,81.2969 Q55.4063,81.75 54.1094,81.75 Q52.5938,81.75 51.3906,81.125 Q50.4063,80.625 49.7188,79.5547 Q49.0313,78.4844 49.0313,77.2031 L49.0313,76.0469 Q49.0313,74.7188 49.6484,73.5703 Q50.2656,72.4219 51.3594,71.8047 Q52.4531,71.1875 53.6875,71.1875 Q54.4219,71.1875 55.0703,71.3516 Q55.7188,71.5156 56.2656,71.875 Z "/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="149" x="67.5" y="81.7285">MapEditorCommands</text></a><!--
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.models.commands [[../../../soen6441riskgame/models/commands/package-summary.html{soen6441riskgame.models.commands}]] #lightyellow {
+}
+
+class "<b><size:14>GameCommands</b>" as soen6441riskgame.models.commands.GameCommands  [[../../../soen6441riskgame/models/commands/GameCommands.html{soen6441riskgame.models.commands.GameCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.GameCommands fields
+hide soen6441riskgame.models.commands.GameCommands methods
+
+class "<b><size:14>MapEditorCommands</b>" as soen6441riskgame.models.commands.MapEditorCommands  [[../../../soen6441riskgame/models/commands/MapEditorCommands.html{soen6441riskgame.models.commands.MapEditorCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.MapEditorCommands fields
+hide soen6441riskgame.models.commands.MapEditorCommands methods
+
+
+@enduml
+
+PlantUML version 1.2017.15(Mon Jul 03 12:45:34 EDT 2017)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_231-b11
+Operating System: Windows 10
+OS Version: 10.0
+Default Encoding: Cp1252
+Language: en
+Country: US
+--></g></svg>

@@ -1,0 +1,20 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
++NameOnlySerializable()
+}
+
+
+class "<b><size:14>ArrayNameOnlyJsonAdapter</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter  [[../../../soen6441riskgame/models/serializers/ArrayNameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter}]] {
+}
+
+hide soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter fields
+hide soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter methods
+
+soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter ..> soen6441riskgame.models.serializers.NameOnlySerializable
+
+
+@enduml

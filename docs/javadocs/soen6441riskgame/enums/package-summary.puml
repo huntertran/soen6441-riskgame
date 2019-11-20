@@ -1,0 +1,39 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.enums [[../../soen6441riskgame/enums/package-summary.html{soen6441riskgame.enums}]] #lightyellow {
+}
+
+enum "<b><size:14>CardType</b>" as soen6441riskgame.enums.CardType  [[../../soen6441riskgame/enums/CardType.html{soen6441riskgame.enums.CardType}]] {
+}
+
+hide soen6441riskgame.enums.CardType fields
+hide soen6441riskgame.enums.CardType methods
+
+enum "<b><size:14>ChangedProperty</b>" as soen6441riskgame.enums.ChangedProperty  [[../../soen6441riskgame/enums/ChangedProperty.html{soen6441riskgame.enums.ChangedProperty}]] {
+}
+
+hide soen6441riskgame.enums.ChangedProperty fields
+hide soen6441riskgame.enums.ChangedProperty methods
+
+enum "<b><size:14>CommonCommandArgs</b>" as soen6441riskgame.enums.CommonCommandArgs  [[../../soen6441riskgame/enums/CommonCommandArgs.html{soen6441riskgame.enums.CommonCommandArgs}]] {
+}
+
+hide soen6441riskgame.enums.CommonCommandArgs fields
+hide soen6441riskgame.enums.CommonCommandArgs methods
+
+enum "<b><size:14>GamePhase</b>" as soen6441riskgame.enums.GamePhase  [[../../soen6441riskgame/enums/GamePhase.html{soen6441riskgame.enums.GamePhase}]] {
+}
+
+hide soen6441riskgame.enums.GamePhase fields
+hide soen6441riskgame.enums.GamePhase methods
+
+enum "<b><size:14>MapPart</b>" as soen6441riskgame.enums.MapPart  [[../../soen6441riskgame/enums/MapPart.html{soen6441riskgame.enums.MapPart}]] {
+}
+
+hide soen6441riskgame.enums.MapPart fields
+hide soen6441riskgame.enums.MapPart methods
+
+
+@enduml

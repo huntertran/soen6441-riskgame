@@ -1,0 +1,31 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>WindowOutputStream</b>\n<size:10>soen6441riskgame.utils.presenter" as soen6441riskgame.utils.presenter.WindowOutputStream  [[../../../soen6441riskgame/utils/presenter/WindowOutputStream.html{soen6441riskgame.utils.presenter.WindowOutputStream}]] {
+-StringBuilder buffer
+-WindowPane windowPane
++WindowOutputStream(WindowPane windowPane)
++void write(int b)
+}
+
+
+class "<b><size:14>WindowPane</b>\n<size:10>soen6441riskgame.utils.presenter" as soen6441riskgame.utils.presenter.WindowPane  [[../../../soen6441riskgame/utils/presenter/WindowPane.html{soen6441riskgame.utils.presenter.WindowPane}]] {
+}
+
+hide soen6441riskgame.utils.presenter.WindowPane fields
+hide soen6441riskgame.utils.presenter.WindowPane methods
+
+soen6441riskgame.utils.presenter.WindowOutputStream -->  "windowPane" soen6441riskgame.utils.presenter.WindowPane
+
+class "<b><size:14>OutputStream</b>\n<size:10>java.io" as java.io.OutputStream  #lightgrey {
+}
+
+hide java.io.OutputStream fields
+hide java.io.OutputStream methods
+
+soen6441riskgame.utils.presenter.WindowOutputStream --|> java.io.OutputStream
+
+
+@enduml

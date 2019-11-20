@@ -1,0 +1,54 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>NameOnlyJsonAdapter</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] {
++NameOnlyJsonAdapter()
++void write(JsonWriter out,NameOnlySerializable value)
++Continent read(JsonReader in)
+}
+
+
+class "<b><size:14>TypeAdapter<NameOnlySerializable></b>\n<size:10>com.google.gson" as com.google.gson.TypeAdapterNameOnlySerializable  #lightgrey {
+}
+
+hide com.google.gson.TypeAdapterNameOnlySerializable fields
+hide com.google.gson.TypeAdapterNameOnlySerializable methods
+
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter --|> com.google.gson.TypeAdapterNameOnlySerializable
+
+interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.NameOnlySerializable  [[../../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] #white {
+}
+
+hide soen6441riskgame.models.NameOnlySerializable fields
+hide soen6441riskgame.models.NameOnlySerializable methods
+
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.NameOnlySerializable
+
+class "<b><size:14>JsonWriter</b>\n<size:10>com.google.gson.stream" as com.google.gson.stream.JsonWriter  #lightgrey {
+}
+
+hide com.google.gson.stream.JsonWriter fields
+hide com.google.gson.stream.JsonWriter methods
+
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> com.google.gson.stream.JsonWriter
+
+class "<b><size:14>JsonReader</b>\n<size:10>com.google.gson.stream" as com.google.gson.stream.JsonReader  #lightgrey {
+}
+
+hide com.google.gson.stream.JsonReader fields
+hide com.google.gson.stream.JsonReader methods
+
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> com.google.gson.stream.JsonReader
+
+class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] #white {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.Continent
+
+
+@enduml

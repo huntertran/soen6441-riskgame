@@ -1,0 +1,36 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.views [[../../soen6441riskgame/views/package-summary.html{soen6441riskgame.views}]] #lightyellow {
+}
+
+class "<b><size:14>ExchangeCardView</b>" as soen6441riskgame.views.ExchangeCardView  [[../../soen6441riskgame/views/ExchangeCardView.html{soen6441riskgame.views.ExchangeCardView}]] {
+}
+
+hide soen6441riskgame.views.ExchangeCardView fields
+hide soen6441riskgame.views.ExchangeCardView methods
+
+class "<b><size:14>PhaseView</b>" as soen6441riskgame.views.PhaseView  [[../../soen6441riskgame/views/PhaseView.html{soen6441riskgame.views.PhaseView}]] {
+}
+
+hide soen6441riskgame.views.PhaseView fields
+hide soen6441riskgame.views.PhaseView methods
+
+class "<b><size:14>PlayersWorldDominationView</b>" as soen6441riskgame.views.PlayersWorldDominationView  [[../../soen6441riskgame/views/PlayersWorldDominationView.html{soen6441riskgame.views.PlayersWorldDominationView}]] {
+}
+
+hide soen6441riskgame.views.PlayersWorldDominationView fields
+hide soen6441riskgame.views.PlayersWorldDominationView methods
+
+class "<b><size:14>SeparatedView</b>" as soen6441riskgame.views.SeparatedView  [[../../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] {
+}
+
+hide soen6441riskgame.views.SeparatedView fields
+hide soen6441riskgame.views.SeparatedView methods
+
+soen6441riskgame.views.ExchangeCardView --|> soen6441riskgame.views.SeparatedView
+soen6441riskgame.views.PhaseView --|> soen6441riskgame.views.SeparatedView
+soen6441riskgame.views.PlayersWorldDominationView --|> soen6441riskgame.views.SeparatedView
+
+@enduml

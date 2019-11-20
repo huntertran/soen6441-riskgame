@@ -1,0 +1,23 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>MapEditorCommands</b>\n<size:10>soen6441riskgame.models.commands" as soen6441riskgame.models.commands.MapEditorCommands  [[../../../soen6441riskgame/models/commands/MapEditorCommands.html{soen6441riskgame.models.commands.MapEditorCommands}]] {
+{static} +String EDITCONTINENT
+{static} +String EDITCOUNTRY
+{static} +String EDITNEIGHBOR
+{static} +String SHOWMAP
+{static} +String SAVEMAP
+{static} +String EDITMAP
+{static} +String VALIDATEMAP
+{static} +String LOADMAP
+{static} +String CREATEMAP
+{static} +String ADD
+{static} +String REMOVE
++MapEditorCommands()
+}
+
+
+
+@enduml

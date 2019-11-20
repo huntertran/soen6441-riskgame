@@ -1,0 +1,45 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.NameOnlySerializable  [[../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
+{abstract} +String getPropertyName()
+{abstract} +String getPropertyValue()
+}
+
+
+class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+soen6441riskgame.models.Continent ..|> soen6441riskgame.models.NameOnlySerializable
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.models.Country ..|> soen6441riskgame.models.NameOnlySerializable
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.Player ..|> soen6441riskgame.models.NameOnlySerializable
+
+class "<b><size:14>NameOnlyJsonAdapter</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter fields
+hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter methods
+
+soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.NameOnlySerializable
+
+
+@enduml

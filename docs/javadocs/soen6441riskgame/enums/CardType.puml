@@ -1,0 +1,32 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+enum "<b><size:14>CardType</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.CardType  [[../../soen6441riskgame/enums/CardType.html{soen6441riskgame.enums.CardType}]] {
+-int cardValue
+-CardType(int cardValue)
+{static} +CardType values()
+{static} +CardType valueOf(String name)
++int getCardTypeAsInt()
+}
+
+
+class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] #white {
+}
+
+hide soen6441riskgame.models.Card fields
+hide soen6441riskgame.models.Card methods
+
+soen6441riskgame.models.Card -->  "cardType" soen6441riskgame.enums.CardType
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard ..> soen6441riskgame.enums.CardType
+
+
+@enduml

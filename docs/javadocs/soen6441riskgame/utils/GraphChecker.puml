@@ -1,0 +1,22 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GraphChecker</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.GraphChecker  [[../../soen6441riskgame/utils/GraphChecker.html{soen6441riskgame.utils.GraphChecker}]] {
++GraphChecker()
+{static} +boolean isCountriesConnected(ArrayList<Country> countries)
+}
+
+
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.utils.GraphChecker ..> soen6441riskgame.models.Country
+
+
+@enduml

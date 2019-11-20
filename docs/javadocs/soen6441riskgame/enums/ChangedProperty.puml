@@ -1,0 +1,14 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+enum "<b><size:14>ChangedProperty</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.ChangedProperty  [[../../soen6441riskgame/enums/ChangedProperty.html{soen6441riskgame.enums.ChangedProperty}]] {
+-ChangedProperty()
+{static} +ChangedProperty values()
+{static} +ChangedProperty valueOf(String name)
+}
+
+
+
+@enduml

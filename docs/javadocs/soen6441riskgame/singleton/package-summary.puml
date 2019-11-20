@@ -1,0 +1,39 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.singleton [[../../soen6441riskgame/singleton/package-summary.html{soen6441riskgame.singleton}]] #lightyellow {
+}
+
+class "<b><size:14>GameBoard</b>" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+class "<b><size:14>GameBoardMap</b>" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardMap fields
+hide soen6441riskgame.singleton.GameBoardMap methods
+
+class "<b><size:14>GameBoardPlayer</b>" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlayer fields
+hide soen6441riskgame.singleton.GameBoardPlayer methods
+
+interface "<b><size:14>Resettable</b>" as soen6441riskgame.singleton.Resettable  [[../../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
+}
+
+hide soen6441riskgame.singleton.Resettable fields
+hide soen6441riskgame.singleton.Resettable methods
+
+soen6441riskgame.singleton.GameBoard -->  "instance" soen6441riskgame.singleton.GameBoard
+soen6441riskgame.singleton.GameBoard -->  "gameBoardPlayer" soen6441riskgame.singleton.GameBoardPlayer
+soen6441riskgame.singleton.GameBoard -->  "gameBoardMap" soen6441riskgame.singleton.GameBoardMap
+soen6441riskgame.singleton.GameBoard ..|> soen6441riskgame.singleton.Resettable
+soen6441riskgame.singleton.GameBoardMap ..|> soen6441riskgame.singleton.Resettable
+soen6441riskgame.singleton.GameBoardPlayer ..|> soen6441riskgame.singleton.Resettable
+
+@enduml

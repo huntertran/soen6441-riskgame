@@ -1,0 +1,87 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
+-CardType cardType
+-boolean isExchanged
+-Player holdingPlayer
++Card(CardType type)
++CardType getCardType()
++boolean isExchanged()
++void setExchanged(boolean isExchanged)
++Player getHoldingPlayer()
++void setHoldingPlayer(Player player)
++void view(PrintStream printStream,int indent)
+}
+
+
+enum "<b><size:14>CardType</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.CardType  [[../../soen6441riskgame/enums/CardType.html{soen6441riskgame.enums.CardType}]] #white {
+}
+
+hide soen6441riskgame.enums.CardType fields
+hide soen6441riskgame.enums.CardType methods
+
+soen6441riskgame.models.Card -->  "cardType" soen6441riskgame.enums.CardType
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.Card -->  "holdingPlayer" soen6441riskgame.models.Player
+
+interface "<b><size:14>Viewable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Viewable  [[../../soen6441riskgame/models/Viewable.html{soen6441riskgame.models.Viewable}]] {
+}
+
+hide soen6441riskgame.models.Viewable fields
+hide soen6441riskgame.models.Viewable methods
+
+soen6441riskgame.models.Card ..|> soen6441riskgame.models.Viewable
+
+class "<b><size:14>PrintStream</b>\n<size:10>java.io" as java.io.PrintStream  #lightgrey {
+}
+
+hide java.io.PrintStream fields
+hide java.io.PrintStream methods
+
+soen6441riskgame.models.Card ..> java.io.PrintStream
+
+class "<b><size:14>CardSet</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.CardSet  [[../../soen6441riskgame/models/CardSet.html{soen6441riskgame.models.CardSet}]] {
+}
+
+hide soen6441riskgame.models.CardSet fields
+hide soen6441riskgame.models.CardSet methods
+
+soen6441riskgame.models.CardSet ..> soen6441riskgame.models.Card
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
+
+class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame fields
+hide soen6441riskgame.models.serializers.SerializableGame methods
+
+soen6441riskgame.models.serializers.SerializableGame -->  "cards" soen6441riskgame.models.Card
+
+class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
+hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
+
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "cards" soen6441riskgame.models.Card
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard -->  "cards" soen6441riskgame.models.Card
+
+
+@enduml

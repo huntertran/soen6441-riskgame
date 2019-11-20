@@ -1,0 +1,31 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>ExchangeCardView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.ExchangeCardView  [[../../soen6441riskgame/views/ExchangeCardView.html{soen6441riskgame.views.ExchangeCardView}]] {
++ExchangeCardView()
++void update(Observable o,Object arg)
+}
+
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard -->  "exchangeCardView" soen6441riskgame.views.ExchangeCardView
+
+class "<b><size:14>SeparatedView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.SeparatedView  [[../../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] {
+}
+
+hide soen6441riskgame.views.SeparatedView fields
+hide soen6441riskgame.views.SeparatedView methods
+
+soen6441riskgame.views.ExchangeCardView --|> soen6441riskgame.views.SeparatedView
+
+
+
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+enum "<b><size:14>GamePhase</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.GamePhase  [[../../soen6441riskgame/enums/GamePhase.html{soen6441riskgame.enums.GamePhase}]] {
+-int phase
+-GamePhase(int phase)
+{static} +GamePhase values()
+{static} +GamePhase valueOf(String name)
++int getGamePhaseAsInt()
+}
+
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.Player -->  "currentPhase" soen6441riskgame.enums.GamePhase
+
+
+@enduml

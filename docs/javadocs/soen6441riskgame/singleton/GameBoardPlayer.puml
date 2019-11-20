@@ -1,0 +1,52 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] {
+-ArrayList<Player> players
+-PhaseView phaseView
++GameBoardPlayer()
++ArrayList<Player> getPlayers()
++Player getPlayerFromName(String name)
++void addPlayer(String name)
++void removePlayer(String name)
++void reset()
+}
+
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard -->  "gameBoardPlayer" soen6441riskgame.singleton.GameBoardPlayer
+
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.singleton.GameBoardPlayer ..> soen6441riskgame.models.Player
+
+class "<b><size:14>PhaseView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.PhaseView  [[../../soen6441riskgame/views/PhaseView.html{soen6441riskgame.views.PhaseView}]] #white {
+}
+
+hide soen6441riskgame.views.PhaseView fields
+hide soen6441riskgame.views.PhaseView methods
+
+soen6441riskgame.singleton.GameBoardPlayer -->  "phaseView" soen6441riskgame.views.PhaseView
+
+interface "<b><size:14>Resettable</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.Resettable  [[../../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
+}
+
+hide soen6441riskgame.singleton.Resettable fields
+hide soen6441riskgame.singleton.Resettable methods
+
+soen6441riskgame.singleton.GameBoardPlayer ..|> soen6441riskgame.singleton.Resettable
+
+
+@enduml

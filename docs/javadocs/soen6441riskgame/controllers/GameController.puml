@@ -1,0 +1,70 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] {
+{static} +int MINIMUM_NUMBER_OF_PLAYER
+{static} +int MAXIMUM_NUMBER_OF_PLAYER
+{static} +int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY
+{static} +int attackerNumDice
+{static} +int defenderNumDice
+{static} +Country attackingCountry
+{static} +Country defendingCountry
+{static} +boolean alloutFlag
+{static} +boolean attackMoveCmdRequired
++GameController()
++void handleGamePlayerCommand(String args)
++boolean isNumberOfPlayerValid()
++void populateCountries()
++void initPlayersUnplacedArmies()
++void handlePlaceArmyCommand(String countryName)
++void handlePlaceAllCommand()
++Player getCurrentPlayer()
++Player startRoundRobinPlayers()
++void turnToNextPlayer()
++void showCurrentPlayer()
++boolean enterReinforcement()
++void handleReinforceCommand(String args)
++boolean enterFortifyPhase()
++void handleMultipleFortificationCommand(String args)
++boolean enterAttackPhase()
++void handleAttackCommand(String args)
++void handleDefendCommand(String args)
++void handleAttackMoveCommand(String args)
++boolean isAttackValid()
++void endAttackPhase()
++void setEndOfGamePhase()
++void exchangeCard(String args)
+-Player getCurrentPlayer(boolean isShowMessage)
+-void handleFortifyCommand(String args)
+-void simulateAttack()
+-boolean furtherAttackPossible()
+-boolean isGameEnded(Player player)
+-int getMax(int inputArray,boolean second_max)
+-int rollDice()
+-CardSet buildCardSet(String args)
+}
+
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.controllers.GameController -->  "attackingCountry" soen6441riskgame.models.Country
+
+soen6441riskgame.controllers.GameController -->  "defendingCountry" soen6441riskgame.models.Country
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.controllers.GameController ..> soen6441riskgame.models.Player
+
+
+
+@enduml

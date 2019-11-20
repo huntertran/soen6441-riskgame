@@ -1,0 +1,32 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>CardSet</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.CardSet  [[../../soen6441riskgame/models/CardSet.html{soen6441riskgame.models.CardSet}]] {
+-ArrayList<Card> cards
+{static} -int NUMBER_OF_CARD_IN_SET
++CardSet(Card first,Card second,Card third)
++int getTradeInArmies(int tradeTime)
++void setCardsExchanged()
+-int allInfantry()
+-int allCavalry()
+-int allArtillery()
+-int allWild()
+-int oneOfEach()
+-boolean isSetValid()
+}
+
+
+
+
+class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
+}
+
+hide soen6441riskgame.models.Card fields
+hide soen6441riskgame.models.Card methods
+
+soen6441riskgame.models.CardSet ..> soen6441riskgame.models.Card
+
+
+@enduml

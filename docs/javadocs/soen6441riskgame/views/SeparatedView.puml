@@ -1,0 +1,55 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>SeparatedView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.SeparatedView  [[../../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] {
+#WindowPane presenter
+#PrintStream printStream
++SeparatedView(String viewName)
++void clearView()
+}
+
+
+class "<b><size:14>ExchangeCardView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.ExchangeCardView  [[../../soen6441riskgame/views/ExchangeCardView.html{soen6441riskgame.views.ExchangeCardView}]] {
+}
+
+hide soen6441riskgame.views.ExchangeCardView fields
+hide soen6441riskgame.views.ExchangeCardView methods
+
+soen6441riskgame.views.ExchangeCardView --|> soen6441riskgame.views.SeparatedView
+
+class "<b><size:14>PhaseView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.PhaseView  [[../../soen6441riskgame/views/PhaseView.html{soen6441riskgame.views.PhaseView}]] {
+}
+
+hide soen6441riskgame.views.PhaseView fields
+hide soen6441riskgame.views.PhaseView methods
+
+soen6441riskgame.views.PhaseView --|> soen6441riskgame.views.SeparatedView
+
+class "<b><size:14>PlayersWorldDominationView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.PlayersWorldDominationView  [[../../soen6441riskgame/views/PlayersWorldDominationView.html{soen6441riskgame.views.PlayersWorldDominationView}]] {
+}
+
+hide soen6441riskgame.views.PlayersWorldDominationView fields
+hide soen6441riskgame.views.PlayersWorldDominationView methods
+
+soen6441riskgame.views.PlayersWorldDominationView --|> soen6441riskgame.views.SeparatedView
+
+class "<b><size:14>WindowPane</b>\n<size:10>soen6441riskgame.utils.presenter" as soen6441riskgame.utils.presenter.WindowPane  [[../../soen6441riskgame/utils/presenter/WindowPane.html{soen6441riskgame.utils.presenter.WindowPane}]] #white {
+}
+
+hide soen6441riskgame.utils.presenter.WindowPane fields
+hide soen6441riskgame.utils.presenter.WindowPane methods
+
+soen6441riskgame.views.SeparatedView -->  "presenter" soen6441riskgame.utils.presenter.WindowPane
+
+class "<b><size:14>PrintStream</b>\n<size:10>java.io" as java.io.PrintStream  #lightgrey {
+}
+
+hide java.io.PrintStream fields
+hide java.io.PrintStream methods
+
+soen6441riskgame.views.SeparatedView -->  "printStream" java.io.PrintStream
+
+
+@enduml

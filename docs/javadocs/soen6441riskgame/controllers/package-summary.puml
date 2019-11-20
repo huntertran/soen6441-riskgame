@@ -1,0 +1,27 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.controllers [[../../soen6441riskgame/controllers/package-summary.html{soen6441riskgame.controllers}]] #lightyellow {
+}
+
+class "<b><size:14>GameController</b>" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] {
+}
+
+hide soen6441riskgame.controllers.GameController fields
+hide soen6441riskgame.controllers.GameController methods
+
+class "<b><size:14>MapController</b>" as soen6441riskgame.controllers.MapController  [[../../soen6441riskgame/controllers/MapController.html{soen6441riskgame.controllers.MapController}]] {
+}
+
+hide soen6441riskgame.controllers.MapController fields
+hide soen6441riskgame.controllers.MapController methods
+
+class "<b><size:14>SaveLoadController</b>" as soen6441riskgame.controllers.SaveLoadController  [[../../soen6441riskgame/controllers/SaveLoadController.html{soen6441riskgame.controllers.SaveLoadController}]] {
+}
+
+hide soen6441riskgame.controllers.SaveLoadController fields
+hide soen6441riskgame.controllers.SaveLoadController methods
+
+
+@enduml

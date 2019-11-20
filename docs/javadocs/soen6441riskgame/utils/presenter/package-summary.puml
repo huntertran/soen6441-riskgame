@@ -1,0 +1,22 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.utils.presenter [[../../../soen6441riskgame/utils/presenter/package-summary.html{soen6441riskgame.utils.presenter}]] #lightyellow {
+}
+
+class "<b><size:14>WindowOutputStream</b>" as soen6441riskgame.utils.presenter.WindowOutputStream  [[../../../soen6441riskgame/utils/presenter/WindowOutputStream.html{soen6441riskgame.utils.presenter.WindowOutputStream}]] {
+}
+
+hide soen6441riskgame.utils.presenter.WindowOutputStream fields
+hide soen6441riskgame.utils.presenter.WindowOutputStream methods
+
+class "<b><size:14>WindowPane</b>" as soen6441riskgame.utils.presenter.WindowPane  [[../../../soen6441riskgame/utils/presenter/WindowPane.html{soen6441riskgame.utils.presenter.WindowPane}]] {
+}
+
+hide soen6441riskgame.utils.presenter.WindowPane fields
+hide soen6441riskgame.utils.presenter.WindowPane methods
+
+soen6441riskgame.utils.presenter.WindowOutputStream -->  "windowPane" soen6441riskgame.utils.presenter.WindowPane
+
+@enduml

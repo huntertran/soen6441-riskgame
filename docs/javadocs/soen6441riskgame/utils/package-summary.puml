@@ -1,0 +1,42 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.utils [[../../soen6441riskgame/utils/package-summary.html{soen6441riskgame.utils}]] #lightyellow {
+}
+
+class "<b><size:14>ConsolePrinter</b>" as soen6441riskgame.utils.ConsolePrinter  [[../../soen6441riskgame/utils/ConsolePrinter.html{soen6441riskgame.utils.ConsolePrinter}]] {
+}
+
+hide soen6441riskgame.utils.ConsolePrinter fields
+hide soen6441riskgame.utils.ConsolePrinter methods
+
+class "<b><size:14>GraphChecker</b>" as soen6441riskgame.utils.GraphChecker  [[../../soen6441riskgame/utils/GraphChecker.html{soen6441riskgame.utils.GraphChecker}]] {
+}
+
+hide soen6441riskgame.utils.GraphChecker fields
+hide soen6441riskgame.utils.GraphChecker methods
+
+class "<b><size:14>Parser</b>" as soen6441riskgame.utils.Parser  [[../../soen6441riskgame/utils/Parser.html{soen6441riskgame.utils.Parser}]] {
+}
+
+hide soen6441riskgame.utils.Parser fields
+hide soen6441riskgame.utils.Parser methods
+
+package soen6441riskgame.utils.presenter [[../../soen6441riskgame/utils/presenter/package-summary.html{soen6441riskgame.utils.presenter}]] {
+}
+
+class "<b><size:14>WindowOutputStream</b>" as soen6441riskgame.utils.presenter.WindowOutputStream  [[../../soen6441riskgame/utils/presenter/WindowOutputStream.html{soen6441riskgame.utils.presenter.WindowOutputStream}]] {
+}
+
+hide soen6441riskgame.utils.presenter.WindowOutputStream fields
+hide soen6441riskgame.utils.presenter.WindowOutputStream methods
+
+class "<b><size:14>WindowPane</b>" as soen6441riskgame.utils.presenter.WindowPane  [[../../soen6441riskgame/utils/presenter/WindowPane.html{soen6441riskgame.utils.presenter.WindowPane}]] {
+}
+
+hide soen6441riskgame.utils.presenter.WindowPane fields
+hide soen6441riskgame.utils.presenter.WindowPane methods
+
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>PhaseView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.PhaseView  [[../../soen6441riskgame/views/PhaseView.html{soen6441riskgame.views.PhaseView}]] {
++PhaseView()
++void update(Observable o,Object arg)
+}
+
+
+class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlayer fields
+hide soen6441riskgame.singleton.GameBoardPlayer methods
+
+soen6441riskgame.singleton.GameBoardPlayer -->  "phaseView" soen6441riskgame.views.PhaseView
+
+class "<b><size:14>SeparatedView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.SeparatedView  [[../../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] {
+}
+
+hide soen6441riskgame.views.SeparatedView fields
+hide soen6441riskgame.views.SeparatedView methods
+
+soen6441riskgame.views.PhaseView --|> soen6441riskgame.views.SeparatedView
+
+
+
+
+@enduml

@@ -1,0 +1,70 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>MapController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.MapController  [[../../soen6441riskgame/controllers/MapController.html{soen6441riskgame.controllers.MapController}]] {
+{static} -int MINIMUM_AMOUNT_OF_COUNTRIES
++MapController()
++void addContinent(String continentName,String continentValue,int order)
++void addCountry(String countryName,String continentName)
++void addNeighbor(String countryName,String neighborCountryName)
++void createNewCountry(String countryName,Continent continent)
++void editContinent(String args)
++void editCountry(String args)
++void editMap(String fileName)
++void editNeighbor(String args)
++Continent getContinentFromName(String continentName)
++boolean isContinentExisted(String continentName)
++boolean isCountryExisted(String countryName)
++void loadMap(String fileName)
++void removeContinent(String continentName)
++void removeCountry(String countryName)
++void removeNeighbor(String countryName,String neighborCountryName)
++void resetMap()
++void saveMap(String fileName)
++void showMap()
++boolean isMapValid()
++void validateMap()
+-void addBorders(int countryOrder,int borderWithCountries)
+-void addCountryFromMapFile(int order,String name,int continentOrder,Coordinate coordinate)
+-void increaseBorder(int newBorderSize)
+-ArrayList<Continent> getEmptyContinents()
+-ArrayList<Country> getIsolatedCountries()
+-boolean isNotEnoughCountries(int minimumNumberOfCountries)
+-boolean isStillInCurrentDataBlock(int currentLineIndex,List<String> lines)
+-int loadBordersFromFile(int currentLineIndex,List<String> lines)
+-int loadContinentsFromFile(int currentLineIndex,List<String> lines)
+-int loadCountriesFromFile(int currentLineIndex,List<String> lines)
+-void removeBorder(int borderLocation)
+-void writeBordersToFile(FileWriter writer)
+-void writeCountriesToFile(FileWriter writer)
+-void writeContinentsToFile(FileWriter writer)
+-void updateCountryContinent(Country country,Continent continent)
+-ArrayList<Country> getCountriesHaveNoContinent()
+}
+
+
+
+class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] #white {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+soen6441riskgame.controllers.MapController ..> soen6441riskgame.models.Continent
+
+
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.controllers.MapController ..> soen6441riskgame.models.Country
+
+
+
+
+@enduml

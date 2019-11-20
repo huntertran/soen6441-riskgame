@@ -1,0 +1,31 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>PlayersWorldDominationView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.PlayersWorldDominationView  [[../../soen6441riskgame/views/PlayersWorldDominationView.html{soen6441riskgame.views.PlayersWorldDominationView}]] {
++PlayersWorldDominationView()
++void update(Observable o,Object arg)
+}
+
+
+class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoardMap fields
+hide soen6441riskgame.singleton.GameBoardMap methods
+
+soen6441riskgame.singleton.GameBoardMap -->  "playersWorldDominationView" soen6441riskgame.views.PlayersWorldDominationView
+
+class "<b><size:14>SeparatedView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.SeparatedView  [[../../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] {
+}
+
+hide soen6441riskgame.views.SeparatedView fields
+hide soen6441riskgame.views.SeparatedView methods
+
+soen6441riskgame.views.PlayersWorldDominationView --|> soen6441riskgame.views.SeparatedView
+
+
+
+
+@enduml

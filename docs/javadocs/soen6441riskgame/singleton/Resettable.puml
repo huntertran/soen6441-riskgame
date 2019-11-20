@@ -1,0 +1,36 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+interface "<b><size:14>Resettable</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.Resettable  [[../../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
+{abstract} +void reset()
+}
+
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard ..|> soen6441riskgame.singleton.Resettable
+
+class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardMap fields
+hide soen6441riskgame.singleton.GameBoardMap methods
+
+soen6441riskgame.singleton.GameBoardMap ..|> soen6441riskgame.singleton.Resettable
+
+class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlayer fields
+hide soen6441riskgame.singleton.GameBoardPlayer methods
+
+soen6441riskgame.singleton.GameBoardPlayer ..|> soen6441riskgame.singleton.Resettable
+
+
+@enduml

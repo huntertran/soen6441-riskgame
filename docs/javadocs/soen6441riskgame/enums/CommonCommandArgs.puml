@@ -1,0 +1,17 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+enum "<b><size:14>CommonCommandArgs</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.CommonCommandArgs  [[../../soen6441riskgame/enums/CommonCommandArgs.html{soen6441riskgame.enums.CommonCommandArgs}]] {
+-String argument
+-CommonCommandArgs(String argument)
+{static} +CommonCommandArgs values()
+{static} +CommonCommandArgs valueOf(String name)
++String getArgument()
+{static} +CommonCommandArgs fromString(String argumentString)
+}
+
+
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>ModelCommandsPair</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.ModelCommandsPair  [[../../soen6441riskgame/models/ModelCommandsPair.html{soen6441riskgame.models.ModelCommandsPair}]] {
++String param
++String value1
++String value2
++ModelCommandsPair(String new_param,String new_value1,String new_value2)
++ModelCommandsPair(String new_param,String new_value1)
++String toStringArray()
+}
+
+
+class "<b><size:14>ModelCommands</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.ModelCommands  [[../../soen6441riskgame/models/ModelCommands.html{soen6441riskgame.models.ModelCommands}]] {
+}
+
+hide soen6441riskgame.models.ModelCommands fields
+hide soen6441riskgame.models.ModelCommands methods
+
+soen6441riskgame.models.ModelCommands -->  "subRoutine *" soen6441riskgame.models.ModelCommandsPair
+
+
+@enduml

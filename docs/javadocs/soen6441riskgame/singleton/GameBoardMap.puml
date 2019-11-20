@@ -1,0 +1,71 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] {
+-PlayersWorldDominationView playersWorldDominationView
+-String mapName
+-ArrayList<Continent> continents
+-ArrayList<Country> countries
+-int borders
++GameBoardMap()
++PlayersWorldDominationView getPlayersWorldDominationView()
++int getBorders()
++void setBorders(int graph)
++ArrayList<Continent> getContinents()
++String getMapName()
++void setMapName(String mapName)
++ArrayList<Country> getCountries()
++void reset()
++void showContinents()
++void showCountries()
++Country getCountryFromName(String countryName)
++void printBorders()
+}
+
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard -->  "gameBoardMap" soen6441riskgame.singleton.GameBoardMap
+
+class "<b><size:14>PlayersWorldDominationView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.PlayersWorldDominationView  [[../../soen6441riskgame/views/PlayersWorldDominationView.html{soen6441riskgame.views.PlayersWorldDominationView}]] #white {
+}
+
+hide soen6441riskgame.views.PlayersWorldDominationView fields
+hide soen6441riskgame.views.PlayersWorldDominationView methods
+
+soen6441riskgame.singleton.GameBoardMap -->  "playersWorldDominationView" soen6441riskgame.views.PlayersWorldDominationView
+
+
+class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] #white {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+soen6441riskgame.singleton.GameBoardMap ..> soen6441riskgame.models.Continent
+
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.singleton.GameBoardMap ..> soen6441riskgame.models.Country
+
+interface "<b><size:14>Resettable</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.Resettable  [[../../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
+}
+
+hide soen6441riskgame.singleton.Resettable fields
+hide soen6441riskgame.singleton.Resettable methods
+
+soen6441riskgame.singleton.GameBoardMap ..|> soen6441riskgame.singleton.Resettable
+
+
+@enduml

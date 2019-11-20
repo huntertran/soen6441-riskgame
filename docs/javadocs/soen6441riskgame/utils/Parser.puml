@@ -1,0 +1,14 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Parser</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.Parser  [[../../soen6441riskgame/utils/Parser.html{soen6441riskgame.utils.Parser}]] {
++Parser()
+{static} +int parseWithDefault(String number,int defaultValue)
+{static} +boolean checkValidInputNumber(String value)
+}
+
+
+
+@enduml

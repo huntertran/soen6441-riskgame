@@ -1,0 +1,65 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>WindowPane</b>\n<size:10>soen6441riskgame.utils.presenter" as soen6441riskgame.utils.presenter.WindowPane  [[../../../soen6441riskgame/utils/presenter/WindowPane.html{soen6441riskgame.utils.presenter.WindowPane}]] {
+{static} -long serialVersionUID
+-JTextArea textArea
++WindowPane()
++Font loadFont()
++void clearView()
++void appendText(String text)
+}
+
+
+class "<b><size:14>ConsolePrinter</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.ConsolePrinter  [[../../../soen6441riskgame/utils/ConsolePrinter.html{soen6441riskgame.utils.ConsolePrinter}]] #white {
+}
+
+hide soen6441riskgame.utils.ConsolePrinter fields
+hide soen6441riskgame.utils.ConsolePrinter methods
+
+soen6441riskgame.utils.ConsolePrinter ..> soen6441riskgame.utils.presenter.WindowPane
+
+class "<b><size:14>WindowOutputStream</b>\n<size:10>soen6441riskgame.utils.presenter" as soen6441riskgame.utils.presenter.WindowOutputStream  [[../../../soen6441riskgame/utils/presenter/WindowOutputStream.html{soen6441riskgame.utils.presenter.WindowOutputStream}]] {
+}
+
+hide soen6441riskgame.utils.presenter.WindowOutputStream fields
+hide soen6441riskgame.utils.presenter.WindowOutputStream methods
+
+soen6441riskgame.utils.presenter.WindowOutputStream -->  "windowPane" soen6441riskgame.utils.presenter.WindowPane
+
+class "<b><size:14>JTextArea</b>\n<size:10>javax.swing" as javax.swing.JTextArea  #lightgrey {
+}
+
+hide javax.swing.JTextArea fields
+hide javax.swing.JTextArea methods
+
+soen6441riskgame.utils.presenter.WindowPane -->  "textArea" javax.swing.JTextArea
+
+class "<b><size:14>JPanel</b>\n<size:10>javax.swing" as javax.swing.JPanel  #lightgrey {
+}
+
+hide javax.swing.JPanel fields
+hide javax.swing.JPanel methods
+
+soen6441riskgame.utils.presenter.WindowPane --|> javax.swing.JPanel
+
+class "<b><size:14>Font</b>\n<size:10>java.awt" as java.awt.Font  #lightgrey {
+}
+
+hide java.awt.Font fields
+hide java.awt.Font methods
+
+soen6441riskgame.utils.presenter.WindowPane ..> java.awt.Font
+
+class "<b><size:14>SeparatedView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.SeparatedView  [[../../../soen6441riskgame/views/SeparatedView.html{soen6441riskgame.views.SeparatedView}]] #white {
+}
+
+hide soen6441riskgame.views.SeparatedView fields
+hide soen6441riskgame.views.SeparatedView methods
+
+soen6441riskgame.views.SeparatedView -->  "presenter" soen6441riskgame.utils.presenter.WindowPane
+
+
+@enduml

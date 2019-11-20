@@ -1,0 +1,37 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>ModelCommands</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.ModelCommands  [[../../soen6441riskgame/models/ModelCommands.html{soen6441riskgame.models.ModelCommands}]] {
++String cmd
++List<String> regularCommands
++List<ModelCommandsPair> subRoutine
++ModelCommands(String new_args)
+-void init(String new_args)
+-void populateRegularCommandsOrSubRoutines(String paramsArray,String s)
+-void buildSubRoutines(String paramsArray,String s,String params)
+-void buildRegularCommands(String paramsArray,String s,String params)
+}
+
+
+class "<b><size:14>App</b>\n<size:10>soen6441riskgame" as soen6441riskgame.App  [[../../soen6441riskgame/App.html{soen6441riskgame.App}]] #white {
+}
+
+hide soen6441riskgame.App fields
+hide soen6441riskgame.App methods
+
+soen6441riskgame.App ..> soen6441riskgame.models.ModelCommands
+
+
+
+class "<b><size:14>ModelCommandsPair</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.ModelCommandsPair  [[../../soen6441riskgame/models/ModelCommandsPair.html{soen6441riskgame.models.ModelCommandsPair}]] {
+}
+
+hide soen6441riskgame.models.ModelCommandsPair fields
+hide soen6441riskgame.models.ModelCommandsPair methods
+
+soen6441riskgame.models.ModelCommands -->  "subRoutine *" soen6441riskgame.models.ModelCommandsPair
+
+
+@enduml

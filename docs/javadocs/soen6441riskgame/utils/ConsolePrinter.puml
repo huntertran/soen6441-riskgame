@@ -1,0 +1,36 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>ConsolePrinter</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.ConsolePrinter  [[../../soen6441riskgame/utils/ConsolePrinter.html{soen6441riskgame.utils.ConsolePrinter}]] {
+{static} -boolean isJUnitTest
++ConsolePrinter()
+{static} +boolean isJUnitTest()
+{static} +void printFormat(String format,Object args)
+{static} +void printFormat(PrintStream customPrintStream,String format,Object args)
+{static} +void printFormat(PrintStream customPrintStream,boolean isPrintNewLine,String format,Object args)
+{static} +void print2dArray(int array,String headers)
+{static} +WindowPane createWindowPane(String title,int width,int height)
+{static} -void setJUnitTest()
+}
+
+
+class "<b><size:14>PrintStream</b>\n<size:10>java.io" as java.io.PrintStream  #lightgrey {
+}
+
+hide java.io.PrintStream fields
+hide java.io.PrintStream methods
+
+soen6441riskgame.utils.ConsolePrinter ..> java.io.PrintStream
+
+class "<b><size:14>WindowPane</b>\n<size:10>soen6441riskgame.utils.presenter" as soen6441riskgame.utils.presenter.WindowPane  [[../../soen6441riskgame/utils/presenter/WindowPane.html{soen6441riskgame.utils.presenter.WindowPane}]] #white {
+}
+
+hide soen6441riskgame.utils.presenter.WindowPane fields
+hide soen6441riskgame.utils.presenter.WindowPane methods
+
+soen6441riskgame.utils.ConsolePrinter ..> soen6441riskgame.utils.presenter.WindowPane
+
+
+@enduml

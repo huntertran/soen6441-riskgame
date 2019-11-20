@@ -1,0 +1,21 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.models.commands [[../../../soen6441riskgame/models/commands/package-summary.html{soen6441riskgame.models.commands}]] #lightyellow {
+}
+
+class "<b><size:14>GameCommands</b>" as soen6441riskgame.models.commands.GameCommands  [[../../../soen6441riskgame/models/commands/GameCommands.html{soen6441riskgame.models.commands.GameCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.GameCommands fields
+hide soen6441riskgame.models.commands.GameCommands methods
+
+class "<b><size:14>MapEditorCommands</b>" as soen6441riskgame.models.commands.MapEditorCommands  [[../../../soen6441riskgame/models/commands/MapEditorCommands.html{soen6441riskgame.models.commands.MapEditorCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.MapEditorCommands fields
+hide soen6441riskgame.models.commands.MapEditorCommands methods
+
+
+@enduml

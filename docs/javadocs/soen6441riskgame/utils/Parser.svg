@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="116px" preserveAspectRatio="none" style="width:293px;height:116px;" version="1.1" viewBox="0 0 293 116" width="293px" zoomAndPan="magnify"><defs><filter height="300%" id="f113xofq5ym6ta" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--class soen6441riskgame.utils.Parser--><a target="_parent" xlink:actuate="onRequest" xlink:href="../../soen6441riskgame/utils/Parser.html" xlink:show="new" xlink:title="soen6441riskgame.utils.Parser" xlink:type="simple"><rect fill="#FEFECE" filter="url(#f113xofq5ym6ta)" height="97.6953" id="soen6441riskgame.utils.Parser" style="stroke: #A80036; stroke-width: 1.5;" width="276" x="6" y="8"/><ellipse cx="85.25" cy="28.0938" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M88.0156,23.9688 Q88.1719,23.75 88.3594,23.6406 Q88.5469,23.5313 88.7656,23.5313 Q89.1406,23.5313 89.375,23.7891 Q89.6094,24.0469 89.6094,24.6563 L89.6094,26.1094 Q89.6094,26.7188 89.375,26.9844 Q89.1406,27.25 88.7656,27.25 Q88.4219,27.25 88.2188,27.0469 Q88.0156,26.8594 87.9063,26.3438 Q87.8594,25.9844 87.6719,25.7969 Q87.3438,25.4219 86.7344,25.2031 Q86.125,24.9844 85.5,24.9844 Q84.7344,24.9844 84.1016,25.3125 Q83.4688,25.6406 82.9766,26.3906 Q82.4844,27.1406 82.4844,28.1719 L82.4844,29.2656 Q82.4844,30.5 83.375,31.3203 Q84.2656,32.1406 85.8594,32.1406 Q86.7969,32.1406 87.4531,31.8906 Q87.8438,31.7344 88.2656,31.2969 Q88.5313,31.0313 88.6797,30.9531 Q88.8281,30.875 89.0313,30.875 Q89.3594,30.875 89.6172,31.1328 Q89.875,31.3906 89.875,31.7344 Q89.875,32.0781 89.5313,32.4844 Q89.0313,33.0625 88.2344,33.3906 Q87.1563,33.8438 85.8594,33.8438 Q84.3438,33.8438 83.1406,33.2188 Q82.1563,32.7188 81.4688,31.6484 Q80.7813,30.5781 80.7813,29.2969 L80.7813,28.1406 Q80.7813,26.8125 81.3984,25.6641 Q82.0156,24.5156 83.1094,23.8984 Q84.2031,23.2813 85.4375,23.2813 Q86.1719,23.2813 86.8203,23.4453 Q87.4688,23.6094 88.0156,23.9688 Z "/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="46" x="137.25" y="27.5332">Parser</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="109" x="105.75" y="40.9902">soen6441riskgame.utils</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="281" y1="48.1875" y2="48.1875"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="281" y1="56.1875" y2="56.1875"/><ellipse cx="17" cy="68.6055" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="40" x="26" y="71.6064">Parser()</text><ellipse cx="17" cy="82.4414" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="250" x="26" y="85.4424">int parseWithDefault(String number,int defaultValue)</text><line style="stroke: #000000; stroke-width: 1.0;" x1="26" x2="276" y1="87.4424" y2="87.4424"/><ellipse cx="17" cy="96.2773" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="219" x="26" y="99.2783">boolean checkValidInputNumber(String value)</text><line style="stroke: #000000; stroke-width: 1.0;" x1="26" x2="245" y1="101.2783" y2="101.2783"/></a><!--
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Parser</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.Parser  [[../../soen6441riskgame/utils/Parser.html{soen6441riskgame.utils.Parser}]] {
++Parser()
+{static} +int parseWithDefault(String number,int defaultValue)
+{static} +boolean checkValidInputNumber(String value)
+}
+
+
+
+@enduml
+
+PlantUML version 1.2017.15(Mon Jul 03 12:45:34 EDT 2017)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_231-b11
+Operating System: Windows 10
+OS Version: 10.0
+Default Encoding: Cp1252
+Language: en
+Country: US
+--></g></svg>

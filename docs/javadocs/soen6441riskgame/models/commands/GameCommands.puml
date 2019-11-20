@@ -1,0 +1,26 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GameCommands</b>\n<size:10>soen6441riskgame.models.commands" as soen6441riskgame.models.commands.GameCommands  [[../../../soen6441riskgame/models/commands/GameCommands.html{soen6441riskgame.models.commands.GameCommands}]] {
+{static} +String GAMEPLAYER
+{static} +String POPULATECOUNTRIES
+{static} +String PLACEARMY
+{static} +String PLACEALL
+{static} +String REINFORCE
+{static} +String ATTACK
+{static} +String DEFEND
+{static} +String FORTIFY
+{static} +String CURRENTPLAYER
+{static} +String EXCHANGECARDS
+{static} +String NONE
+{static} +String EXIT
+{static} +String ATTACKMOVE
+{static} +String ALLOUT
++GameCommands()
+}
+
+
+
+@enduml

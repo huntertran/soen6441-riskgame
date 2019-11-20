@@ -1,0 +1,137 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.models [[../../soen6441riskgame/models/package-summary.html{soen6441riskgame.models}]] #lightyellow {
+}
+
+class "<b><size:14>Card</b>" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
+}
+
+hide soen6441riskgame.models.Card fields
+hide soen6441riskgame.models.Card methods
+
+class "<b><size:14>CardSet</b>" as soen6441riskgame.models.CardSet  [[../../soen6441riskgame/models/CardSet.html{soen6441riskgame.models.CardSet}]] {
+}
+
+hide soen6441riskgame.models.CardSet fields
+hide soen6441riskgame.models.CardSet methods
+
+class "<b><size:14>Continent</b>" as soen6441riskgame.models.Continent  [[../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+class "<b><size:14>Coordinate</b>" as soen6441riskgame.models.Coordinate  [[../../soen6441riskgame/models/Coordinate.html{soen6441riskgame.models.Coordinate}]] {
+}
+
+hide soen6441riskgame.models.Coordinate fields
+hide soen6441riskgame.models.Coordinate methods
+
+class "<b><size:14>Country</b>" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+class "<b><size:14>ModelCommands</b>" as soen6441riskgame.models.ModelCommands  [[../../soen6441riskgame/models/ModelCommands.html{soen6441riskgame.models.ModelCommands}]] {
+}
+
+hide soen6441riskgame.models.ModelCommands fields
+hide soen6441riskgame.models.ModelCommands methods
+
+class "<b><size:14>ModelCommandsPair</b>" as soen6441riskgame.models.ModelCommandsPair  [[../../soen6441riskgame/models/ModelCommandsPair.html{soen6441riskgame.models.ModelCommandsPair}]] {
+}
+
+hide soen6441riskgame.models.ModelCommandsPair fields
+hide soen6441riskgame.models.ModelCommandsPair methods
+
+interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.NameOnlySerializable  [[../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
+}
+
+hide soen6441riskgame.models.NameOnlySerializable fields
+hide soen6441riskgame.models.NameOnlySerializable methods
+
+class "<b><size:14>Player</b>" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+interface "<b><size:14>Viewable</b>" as soen6441riskgame.models.Viewable  [[../../soen6441riskgame/models/Viewable.html{soen6441riskgame.models.Viewable}]] {
+}
+
+hide soen6441riskgame.models.Viewable fields
+hide soen6441riskgame.models.Viewable methods
+
+soen6441riskgame.models.Card -->  "holdingPlayer" soen6441riskgame.models.Player
+soen6441riskgame.models.Card ..|> soen6441riskgame.models.Viewable
+soen6441riskgame.models.CardSet ..> soen6441riskgame.models.Card
+soen6441riskgame.models.Continent ..> soen6441riskgame.models.Country
+soen6441riskgame.models.Continent ..|> soen6441riskgame.models.Viewable
+soen6441riskgame.models.Continent ..|> soen6441riskgame.models.NameOnlySerializable
+soen6441riskgame.models.Continent ..> soen6441riskgame.models.Player
+soen6441riskgame.models.Country -->  "coordinate" soen6441riskgame.models.Coordinate
+soen6441riskgame.models.Country -->  "continent" soen6441riskgame.models.Continent
+soen6441riskgame.models.Country -->  "conquerer" soen6441riskgame.models.Player
+soen6441riskgame.models.Country ..|> soen6441riskgame.models.Viewable
+soen6441riskgame.models.Country ..|> soen6441riskgame.models.NameOnlySerializable
+soen6441riskgame.models.Country ..> soen6441riskgame.models.Country
+soen6441riskgame.models.ModelCommands -->  "subRoutine *" soen6441riskgame.models.ModelCommandsPair
+soen6441riskgame.models.Player -->  "nextPlayer" soen6441riskgame.models.Player
+soen6441riskgame.models.Player -->  "previousPlayer" soen6441riskgame.models.Player
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
+soen6441riskgame.models.Player ..|> soen6441riskgame.models.NameOnlySerializable
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
+package soen6441riskgame.models.commands [[../../soen6441riskgame/models/commands/package-summary.html{soen6441riskgame.models.commands}]] {
+}
+
+class "<b><size:14>GameCommands</b>" as soen6441riskgame.models.commands.GameCommands  [[../../soen6441riskgame/models/commands/GameCommands.html{soen6441riskgame.models.commands.GameCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.GameCommands fields
+hide soen6441riskgame.models.commands.GameCommands methods
+
+class "<b><size:14>MapEditorCommands</b>" as soen6441riskgame.models.commands.MapEditorCommands  [[../../soen6441riskgame/models/commands/MapEditorCommands.html{soen6441riskgame.models.commands.MapEditorCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.MapEditorCommands fields
+hide soen6441riskgame.models.commands.MapEditorCommands methods
+
+package soen6441riskgame.models.serializers [[../../soen6441riskgame/models/serializers/package-summary.html{soen6441riskgame.models.serializers}]] {
+}
+
+class "<b><size:14>ArrayNameOnlyJsonAdapter</b>" as soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/ArrayNameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter}]] {
+}
+
+hide soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter fields
+hide soen6441riskgame.models.serializers.ArrayNameOnlyJsonAdapter methods
+
+class "<b><size:14>NameOnlyJsonAdapter</b>" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] {
+}
+
+hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter fields
+hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter methods
+
+class "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
+}
+
+hide soen6441riskgame.models.serializers.NameOnlySerializable fields
+hide soen6441riskgame.models.serializers.NameOnlySerializable methods
+
+class "<b><size:14>SerializableGame</b>" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame fields
+hide soen6441riskgame.models.serializers.SerializableGame methods
+
+class "<b><size:14>SerializableGame.Builder</b>" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
+hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
+
+
+@enduml

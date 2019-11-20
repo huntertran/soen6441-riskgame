@@ -1,0 +1,146 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
+-Coordinate coordinate
+-int armyAmount
+-String name
+-Continent continent
+-Player conquerer
+-int serializedOrder
++Country(int order,String name,Coordinate coordinate,Continent continent)
++Player getConquerer()
++void setConquerer(Player conquerer)
++Continent getContinent()
++String getName()
++int getArmyAmount()
++void setArmyAmount(int armyAmount)
++int getOrder()
++Coordinate getCoordinate()
++ArrayList<Country> getNeighbors()
++boolean isConquered()
++void receiveArmiesFromUnPlacedArmies(int amount)
++void increaseArmies(int amount)
++void decreaseArmies(int amount)
++void moveArmies(Country toCountry,int armiesToMove)
++void placeArmy(Player player)
++boolean isNeighboringCountries(Country neighborCountry)
++boolean isCountryBelongToPlayer(Player player)
++void viewWithoutNeighbors(int indent)
++void viewWithoutNeighbors(PrintStream printStream,int indent)
++void view(PrintStream printStream,int indent)
++String getPropertyName()
++String getPropertyValue()
+}
+
+
+class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] #white {
+}
+
+hide soen6441riskgame.controllers.GameController fields
+hide soen6441riskgame.controllers.GameController methods
+
+soen6441riskgame.controllers.GameController -->  "attackingCountry" soen6441riskgame.models.Country
+
+soen6441riskgame.controllers.GameController -->  "defendingCountry" soen6441riskgame.models.Country
+
+class "<b><size:14>MapController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.MapController  [[../../soen6441riskgame/controllers/MapController.html{soen6441riskgame.controllers.MapController}]] #white {
+}
+
+hide soen6441riskgame.controllers.MapController fields
+hide soen6441riskgame.controllers.MapController methods
+
+soen6441riskgame.controllers.MapController ..> soen6441riskgame.models.Country
+
+class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+soen6441riskgame.models.Continent ..> soen6441riskgame.models.Country
+
+class "<b><size:14>Coordinate</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Coordinate  [[../../soen6441riskgame/models/Coordinate.html{soen6441riskgame.models.Coordinate}]] {
+}
+
+hide soen6441riskgame.models.Coordinate fields
+hide soen6441riskgame.models.Coordinate methods
+
+soen6441riskgame.models.Country -->  "coordinate" soen6441riskgame.models.Coordinate
+
+soen6441riskgame.models.Country -->  "continent" soen6441riskgame.models.Continent
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.Country -->  "conquerer" soen6441riskgame.models.Player
+
+
+interface "<b><size:14>Viewable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Viewable  [[../../soen6441riskgame/models/Viewable.html{soen6441riskgame.models.Viewable}]] {
+}
+
+hide soen6441riskgame.models.Viewable fields
+hide soen6441riskgame.models.Viewable methods
+
+soen6441riskgame.models.Country ..|> soen6441riskgame.models.Viewable
+
+interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.NameOnlySerializable  [[../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
+}
+
+hide soen6441riskgame.models.NameOnlySerializable fields
+hide soen6441riskgame.models.NameOnlySerializable methods
+
+soen6441riskgame.models.Country ..|> soen6441riskgame.models.NameOnlySerializable
+
+
+soen6441riskgame.models.Country ..> soen6441riskgame.models.Country
+
+class "<b><size:14>PrintStream</b>\n<size:10>java.io" as java.io.PrintStream  #lightgrey {
+}
+
+hide java.io.PrintStream fields
+hide java.io.PrintStream methods
+
+soen6441riskgame.models.Country ..> java.io.PrintStream
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
+
+class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame fields
+hide soen6441riskgame.models.serializers.SerializableGame methods
+
+soen6441riskgame.models.serializers.SerializableGame ..> soen6441riskgame.models.Country
+
+class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
+hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
+
+soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.Country
+
+class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoardMap fields
+hide soen6441riskgame.singleton.GameBoardMap methods
+
+soen6441riskgame.singleton.GameBoardMap ..> soen6441riskgame.models.Country
+
+class "<b><size:14>GraphChecker</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.GraphChecker  [[../../soen6441riskgame/utils/GraphChecker.html{soen6441riskgame.utils.GraphChecker}]] #white {
+}
+
+hide soen6441riskgame.utils.GraphChecker fields
+hide soen6441riskgame.utils.GraphChecker methods
+
+soen6441riskgame.utils.GraphChecker ..> soen6441riskgame.models.Country
+
+
+@enduml

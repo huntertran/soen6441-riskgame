@@ -1,0 +1,140 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+{static} -int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE
+{static} -int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN
+{static} -int INIT_ARMY_DIVIDE_FRACTION
+-String name
+-int unplacedArmies
+-boolean isPlaying
+-Player nextPlayer
+-Player previousPlayer
+-GamePhase currentPhase
+-ArrayList<Card> holdingCards
+-ArrayList<String> currentPhaseActions
+-boolean isPlayerBeAwardCard
++Player(String name)
++boolean isPlayerBeAwardCard()
++void setPlayerBeAwardCard(boolean isPlayerAwardCard)
++GamePhase getCurrentPhase()
++void setCurrentPhase(GamePhase newPhase)
++void getACardFromDeck()
++ArrayList<Card> getHoldingCards()
++Card getHoldingCard(int position)
++void removeExchangedCards()
++ArrayList<String> getCurrentPhaseActions()
++void addCurrentPhaseAction(String action)
++Player getPreviousPlayer()
++void setPreviousPlayer(Player previousPlayer)
++Player getNextPlayer()
++void setNextPlayer(Player nextPlayer)
++String getName()
++int getTotalArmies()
++ArrayList<Continent> getConqueredContinents()
++ArrayList<Country> getConqueredCountries()
++boolean isPlaying()
++void setPlaying(boolean isPlaying)
++int getUnplacedArmies()
++void setUnplacedArmies(int unplacedArmies)
++void calculateReinforcementArmies()
++void reinforce(Country country,int numberOfArmies)
++void fortify(Country fromCountry,Country toCountry,int numberOfArmies)
++String getPropertyName()
++String getPropertyValue()
+-int getArmiesFromAllConqueredCountries()
+-int getArmiesFromConqueredContinents()
+}
+
+
+class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] #white {
+}
+
+hide soen6441riskgame.controllers.GameController fields
+hide soen6441riskgame.controllers.GameController methods
+
+soen6441riskgame.controllers.GameController ..> soen6441riskgame.models.Player
+
+class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
+}
+
+hide soen6441riskgame.models.Card fields
+hide soen6441riskgame.models.Card methods
+
+soen6441riskgame.models.Card -->  "holdingPlayer" soen6441riskgame.models.Player
+
+class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Continent  [[../../soen6441riskgame/models/Continent.html{soen6441riskgame.models.Continent}]] {
+}
+
+hide soen6441riskgame.models.Continent fields
+hide soen6441riskgame.models.Continent methods
+
+soen6441riskgame.models.Continent ..> soen6441riskgame.models.Player
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.models.Country -->  "conquerer" soen6441riskgame.models.Player
+
+soen6441riskgame.models.Player -->  "nextPlayer" soen6441riskgame.models.Player
+
+soen6441riskgame.models.Player -->  "previousPlayer" soen6441riskgame.models.Player
+
+enum "<b><size:14>GamePhase</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.GamePhase  [[../../soen6441riskgame/enums/GamePhase.html{soen6441riskgame.enums.GamePhase}]] #white {
+}
+
+hide soen6441riskgame.enums.GamePhase fields
+hide soen6441riskgame.enums.GamePhase methods
+
+soen6441riskgame.models.Player -->  "currentPhase" soen6441riskgame.enums.GamePhase
+
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
+
+
+
+interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.NameOnlySerializable  [[../../soen6441riskgame/models/NameOnlySerializable.html{soen6441riskgame.models.NameOnlySerializable}]] {
+}
+
+hide soen6441riskgame.models.NameOnlySerializable fields
+hide soen6441riskgame.models.NameOnlySerializable methods
+
+soen6441riskgame.models.Player ..|> soen6441riskgame.models.NameOnlySerializable
+
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
+
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
+
+class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame fields
+hide soen6441riskgame.models.serializers.SerializableGame methods
+
+soen6441riskgame.models.serializers.SerializableGame ..> soen6441riskgame.models.Player
+
+class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
+hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
+
+soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.Player
+
+class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlayer fields
+hide soen6441riskgame.singleton.GameBoardPlayer methods
+
+soen6441riskgame.singleton.GameBoardPlayer ..> soen6441riskgame.models.Player
+
+
+@enduml

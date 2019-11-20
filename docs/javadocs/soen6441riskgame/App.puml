@@ -1,0 +1,23 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>App</b>\n<size:10>soen6441riskgame" as soen6441riskgame.App  [[../soen6441riskgame/App.html{soen6441riskgame.App}]] {
+-App()
+{static} +void main(String args)
+{static} +void jumpToCommand(ModelCommands args)
+{static} +void runFromBeginning()
+}
+
+
+class "<b><size:14>ModelCommands</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.ModelCommands  [[../soen6441riskgame/models/ModelCommands.html{soen6441riskgame.models.ModelCommands}]] #white {
+}
+
+hide soen6441riskgame.models.ModelCommands fields
+hide soen6441riskgame.models.ModelCommands methods
+
+soen6441riskgame.App ..> soen6441riskgame.models.ModelCommands
+
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Coordinate</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Coordinate  [[../../soen6441riskgame/models/Coordinate.html{soen6441riskgame.models.Coordinate}]] {
+-int x
+-int y
++Coordinate(int x,int y)
++int getY()
++int getX()
+}
+
+
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.models.Country -->  "coordinate" soen6441riskgame.models.Coordinate
+
+
+@enduml
