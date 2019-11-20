@@ -1,24 +1,31 @@
 package soen6441riskgame.models.serializers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.annotations.Expose;
+import com.google.gson.stream.JsonReader;
 
 import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 
 public class SerializableGame {
 
     @Expose
-    private ArrayList<Country> countries;
+    private List<Country> countries;
     @Expose
-    private ArrayList<Continent> continents;
+    private List<Continent> continents;
     @Expose
-    private ArrayList<Player> players;
+    private List<Player> players;
     @Expose
     private int[][] borders;
     @Expose
@@ -35,24 +42,41 @@ public class SerializableGame {
         return jsonString;
     }
 
+    public void deserialize(JsonReader reader) {
+        GameBoard.getInstance().reset();
+        Gson gson = new GsonBuilder().registerTypeAdapter(NameOnlySerializable.class, new NameOnlyJsonAdapter())
+                                     .create();
+
+        JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+
+        continents = new ArrayList<Continent>(Arrays.asList(gson.fromJson(jsonObject.get("continents"),
+                                                                          Continent[].class)));
+
+        for (Continent continent : continents) {
+            GameBoard.getInstance().getGameBoardMap().getContinents().add(continent);
+        }
+
+        ConsolePrinter.printFormat(jsonObject.toString());
+    }
+
     public static class Builder {
-        private ArrayList<Country> countries;
-        private ArrayList<Continent> continents;
-        private ArrayList<Player> players;
+        private List<Country> countries;
+        private List<Continent> continents;
+        private List<Player> players;
         private int[][] borders;
         private Card[] cards;
 
-        public Builder setContinents(ArrayList<Continent> continents) {
+        public Builder setContinents(List<Continent> continents) {
             this.continents = continents;
             return this;
         }
 
-        public Builder setCountries(ArrayList<Country> countries) {
+        public Builder setCountries(List<Country> countries) {
             this.countries = countries;
             return this;
         }
 
-        public Builder setPlayers(ArrayList<Player> players) {
+        public Builder setPlayers(List<Player> players) {
             this.players = players;
             return this;
         }

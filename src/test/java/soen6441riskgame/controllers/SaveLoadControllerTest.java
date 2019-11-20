@@ -39,8 +39,7 @@ public class SaveLoadControllerTest {
         gameController = new GameController();
     }
 
-    @Test
-    public void saveGameTest() {
+    private String setupForSave(){
         GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
@@ -55,9 +54,24 @@ public class SaveLoadControllerTest {
             currentPlayer.getHoldingCards().add(newCard);
         }
 
-        String saveGameFilePath = "testSavedGame.json";
+        return "testSavedGame.json";
+    }
+
+    @Test
+    public void saveGameTest() {
+        String saveGameFilePath = setupForSave();
         boolean result = saveLoadController.saveGame(saveGameFilePath);
 
         assertTrue(result);
+    }
+
+    @Test
+    public void loadGameTest(){
+        String saveGameFilePath = setupForSave();
+        boolean saveResult = saveLoadController.saveGame(saveGameFilePath);
+        boolean readResult = saveLoadController.loadGame(saveGameFilePath);
+
+        assertTrue(saveResult);
+        assertTrue(readResult);
     }
 }
