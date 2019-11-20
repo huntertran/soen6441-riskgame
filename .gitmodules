@@ -1,0 +1,3 @@
+[submodule "plugins/uml-java-doclet"]
+	path = plugins/uml-java-doclet
+	url = https://github.com/huntertran/uml-java-doclet.git
