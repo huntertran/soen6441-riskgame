@@ -632,124 +632,9 @@ public class GameController {
             return;
         }
 
-        int[] attackerDiceValues = new int[attackerNumDice];
-        int[] defenderDiceValues = new int[defenderNumDice];
-
-        String printDiceValues = "Attacker: ";
-
-        for (int i = 0; i < attackerNumDice; i++) {
-            attackerDiceValues[i] = rollDice();
-            printDiceValues += attackerDiceValues[i] + "    ";
-        }
-        printDiceValues += "\nDefender: ";
-        for (int i = 0; i < defenderNumDice; i++) {
-            defenderDiceValues[i] = rollDice();
-            printDiceValues += defenderDiceValues[i] + "    ";
-        }
-        ConsolePrinter.printFormat("%s", printDiceValues);
-
-        Player currentPlayer = getCurrentPlayer();
-
-        // now we will check who loses an army
-        if (defenderNumDice == 1 || attackerNumDice == 1) {
-            if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
-                // defending army is lost
-                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
-                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
-                                           defendingCountry.getConquerer().getName(),
-                                           defendingCountry.getName(),
-                                           defendingCountry.getArmyAmount());
-
-                currentPlayer.addCurrentPhaseAction("Attack: The defender "
-                                                    + defendingCountry.getConquerer().getName()
-                                                    + " has lost 1 army from "
-                                                    + defendingCountry.getName()
-                                                    + "."
-                                                    + defendingCountry.getArmyAmount()
-                                                    + "  armies left.");
-
-            } else {
-                // attacking army is lost
-                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
-                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
-                                           attackingCountry.getConquerer().getName(),
-                                           attackingCountry.getName(),
-                                           attackingCountry.getArmyAmount());
-
-                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
-                                                    + attackingCountry.getConquerer().getName()
-                                                    + " has lost 1 army from "
-                                                    + attackingCountry.getName()
-                                                    + "."
-                                                    + attackingCountry.getArmyAmount()
-                                                    + "  armies left.");
-
-            }
-        } else {
-            if (getMax(attackerDiceValues, false) > getMax(defenderDiceValues, false)) {
-                // defending army is lost
-                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
-                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
-                                           defendingCountry.getConquerer().getName(),
-                                           defendingCountry.getName(),
-                                           defendingCountry.getArmyAmount());
-
-                currentPlayer.addCurrentPhaseAction("Attack: The defender "
-                                                    + defendingCountry.getConquerer().getName()
-                                                    + " has lost 1 army from "
-                                                    + defendingCountry.getName()
-                                                    + "."
-                                                    + defendingCountry.getArmyAmount()
-                                                    + "  armies left.");
-
-            } else {
-                // attacking army is lost
-                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
-                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
-                                           attackingCountry.getConquerer().getName(),
-                                           attackingCountry.getName(),
-                                           attackingCountry.getArmyAmount());
-                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
-                                                    + attackingCountry.getConquerer().getName()
-                                                    + " has lost 1 army from "
-                                                    + attackingCountry.getName()
-                                                    + "."
-                                                    + attackingCountry.getArmyAmount()
-                                                    + "  armies left.");
-
-            }
-            if (getMax(attackerDiceValues, true) > getMax(defenderDiceValues, true)) {
-                // defending army is lost
-                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
-                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
-                                           defendingCountry.getConquerer().getName(),
-                                           defendingCountry.getName(),
-                                           defendingCountry.getArmyAmount());
-                currentPlayer.addCurrentPhaseAction("Attack: The defender "
-                                                    + defendingCountry.getConquerer().getName()
-                                                    + " has lost 1 army from "
-                                                    + defendingCountry.getName()
-                                                    + "."
-                                                    + defendingCountry.getArmyAmount()
-                                                    + "  armies left.");
-
-            } else {
-                // attacking army is lost
-                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
-                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
-                                           attackingCountry.getConquerer().getName(),
-                                           attackingCountry.getName(),
-                                           attackingCountry.getArmyAmount());
-                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
-                                                    + attackingCountry.getConquerer().getName()
-                                                    + " has lost 1 army from "
-                                                    + attackingCountry.getName()
-                                                    + "."
-                                                    + attackingCountry.getArmyAmount()
-                                                    + "  armies left.");
-
-            }
-        }
+        Player currentPlayer = getCurrentPlayer(false);
+        currentPlayer.attack(attackingCountry , defendingCountry, attackerNumDice, defenderNumDice);
+        
         // now check if defender's armies left is 0, set conquerer as attacker
         if (defendingCountry.getArmyAmount() == 0) {
             ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
@@ -876,40 +761,6 @@ public class GameController {
     }
 
     /**
-     * it returns the maximum value and second max value from the array of dice values
-     *
-     * @param args[0] dice-values the array of the dice values rolled
-     * @param args[0] second_max if second max is true, then second max value is returned. else only the
-     *                max value is returned.
-     *
-     * @return int it returns the maximum value or second max value based on the value of second_max
-     *         flag
-     *
-     */
-    private int getMax(int[] inputArray, boolean second_max) {
-        int maxValue = inputArray[0];
-        int maxIndex = 0;
-        for (int i = 1; i < inputArray.length; i++) {
-            if (inputArray[i] > maxValue) {
-                maxValue = inputArray[i];
-                maxIndex = i;
-            }
-        }
-
-        if (second_max) {
-            int secondMaxValue = -1;
-            for (int i = 0; i < inputArray.length; i++) {
-                if (inputArray[i] > secondMaxValue && maxIndex != i) {
-                    secondMaxValue = inputArray[i];
-                }
-            }
-            maxValue = secondMaxValue;
-        }
-
-        return maxValue;
-    }
-
-    /**
      * it returns whether the attack is valid (true) or not (false)
      *
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
@@ -971,15 +822,7 @@ public class GameController {
         }
     }
 
-    /**
-     * it executes the dice roll.
-     *
-     * @return int it returns the random number from 1 to 6 on the dice.
-     */
-    private int rollDice() {
-        Random random = new Random();
-        return random.nextInt(6) + 1;
-    }
+    
 
     /**
      * it ends the attack phase and sets the current game phase to fortification

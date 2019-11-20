@@ -13,7 +13,7 @@ import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
 import soen6441riskgame.models.serializers.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
-
+import soen6441riskgame.utils.GameHelper;
 /**
  * Hold player data
  *
@@ -463,5 +463,136 @@ public class Player extends Observable implements NameOnlySerializable {
         }
 
         return name;
+    }
+    
+    /**
+     * do the attack
+     *
+     * @param attackingCountry      attacker country
+     * @param defendingCountry      defender country
+     * @param attackerNumDice      number of dices for attacker
+     * @param defenderNumDice      number of dices for defender
+     */
+    public void attack(Country attackingCountry, Country defendingCountry, int attackerNumDice, int defenderNumDice) {
+      //attack starts
+        int[] attackerDiceValues = new int[attackerNumDice];
+        int[] defenderDiceValues = new int[defenderNumDice];
+
+        String printDiceValues = "Attacker: ";
+
+        for (int i = 0; i < attackerNumDice; i++) {
+            attackerDiceValues[i] = GameHelper.rollDice();
+            printDiceValues += attackerDiceValues[i] + "    ";
+        }
+        printDiceValues += "\nDefender: ";
+        for (int i = 0; i < defenderNumDice; i++) {
+            defenderDiceValues[i] = GameHelper.rollDice();
+            printDiceValues += defenderDiceValues[i] + "    ";
+        }
+        ConsolePrinter.printFormat("%s", printDiceValues);
+
+        Player currentPlayer = this;
+
+        // now we will check who loses an army
+        if (defenderNumDice == 1 || attackerNumDice == 1) {
+            if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
+                // defending army is lost
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
+                                           defendingCountry.getConquerer().getName(),
+                                           defendingCountry.getName(),
+                                           defendingCountry.getArmyAmount());
+
+                currentPlayer.addCurrentPhaseAction("Attack: The defender "
+                                                    + defendingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + defendingCountry.getName()
+                                                    + "."
+                                                    + defendingCountry.getArmyAmount()
+                                                    + "  armies left.");
+
+            } else {
+                // attacking army is lost
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
+                                           attackingCountry.getConquerer().getName(),
+                                           attackingCountry.getName(),
+                                           attackingCountry.getArmyAmount());
+
+                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
+                                                    + attackingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + attackingCountry.getName()
+                                                    + "."
+                                                    + attackingCountry.getArmyAmount()
+                                                    + "  armies left.");
+
+            }
+        } else {
+            if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
+                // defending army is lost
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
+                                           defendingCountry.getConquerer().getName(),
+                                           defendingCountry.getName(),
+                                           defendingCountry.getArmyAmount());
+
+                currentPlayer.addCurrentPhaseAction("Attack: The defender "
+                                                    + defendingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + defendingCountry.getName()
+                                                    + "."
+                                                    + defendingCountry.getArmyAmount()
+                                                    + "  armies left.");
+
+            } else {
+                // attacking army is lost
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
+                                           attackingCountry.getConquerer().getName(),
+                                           attackingCountry.getName(),
+                                           attackingCountry.getArmyAmount());
+                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
+                                                    + attackingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + attackingCountry.getName()
+                                                    + "."
+                                                    + attackingCountry.getArmyAmount()
+                                                    + "  armies left.");
+
+            }
+            if (GameHelper.getMax(attackerDiceValues, true) > GameHelper.getMax(defenderDiceValues, true)) {
+                // defending army is lost
+                defendingCountry.setArmyAmount(defendingCountry.getArmyAmount() - 1);
+                ConsolePrinter.printFormat("The defender %s has lost 1 army from %s. %d armies left.",
+                                           defendingCountry.getConquerer().getName(),
+                                           defendingCountry.getName(),
+                                           defendingCountry.getArmyAmount());
+                currentPlayer.addCurrentPhaseAction("Attack: The defender "
+                                                    + defendingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + defendingCountry.getName()
+                                                    + "."
+                                                    + defendingCountry.getArmyAmount()
+                                                    + "  armies left.");
+
+            } else {
+                // attacking army is lost
+                attackingCountry.setArmyAmount(attackingCountry.getArmyAmount() - 1);
+                ConsolePrinter.printFormat("The attacker %s has lost 1 army from %s. %d armies left.",
+                                           attackingCountry.getConquerer().getName(),
+                                           attackingCountry.getName(),
+                                           attackingCountry.getArmyAmount());
+                currentPlayer.addCurrentPhaseAction("Attack: The attacker "
+                                                    + attackingCountry.getConquerer().getName()
+                                                    + " has lost 1 army from "
+                                                    + attackingCountry.getName()
+                                                    + "."
+                                                    + attackingCountry.getArmyAmount()
+                                                    + "  armies left.");
+
+            }
+        }
+        //attack ends
     }
 }
