@@ -16,6 +16,8 @@ public abstract class SeparatedView {
     /**
      * Init the class. Use standard output when running in JUnit test Use custom PrintStream when
      * running normally
+     *
+     * @param viewName name of the view
      */
     public SeparatedView(String viewName) {
         if (ConsolePrinter.isJUnitTest()) {

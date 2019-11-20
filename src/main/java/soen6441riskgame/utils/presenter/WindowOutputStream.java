@@ -12,6 +12,8 @@ public class WindowOutputStream extends OutputStream {
 
     /**
      * constructor
+     *
+     * @param windowPane the window pane to write text to
      */
     public WindowOutputStream(WindowPane windowPane) {
         buffer = new StringBuilder(128);
@@ -20,7 +22,7 @@ public class WindowOutputStream extends OutputStream {
 
     /**
      * write character b to output stream
-     * 
+     *
      * @param b character to write
      */
     @Override
