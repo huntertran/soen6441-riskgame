@@ -512,26 +512,24 @@ public class Player extends Observable implements NameOnlySerializable {
             if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
                 // defending army is lost
                 lostOneArmy(defendingCountry, currentPlayer);
+            } else {
+                // attacking army is lost
+                lostOneArmy(attackingCountry, currentPlayer);
+            }
+        } else {
+            if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
+                // defending army is lost
+                lostOneArmy(defendingCountry, currentPlayer);
 
             } else {
                 // attacking army is lost
                 lostOneArmy(attackingCountry, currentPlayer);
-
-            }
-        } else {
-            if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
-                lostOneArmy(defendingCountry, currentPlayer);
-
-            } else {
-                lostOneArmy(attackingCountry, currentPlayer);
-
             }
             if (GameHelper.getMax(attackerDiceValues, true) > GameHelper.getMax(defenderDiceValues, true)) {
                 lostOneArmy(defendingCountry, currentPlayer);
 
             } else {
                 lostOneArmy(attackingCountry, currentPlayer);
-
             }
         }
         // attack ends
