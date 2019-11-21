@@ -1,10 +1,10 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
-
 import soen6441riskgame.App;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
+
 
 class StrategyAggressive implements IStrategy {
 

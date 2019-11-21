@@ -37,4 +37,5 @@ public final class GameCommands {
 
     public static final String DASH = "-";
     public static final String SPACE = " ";
+    public static final String NOATTACK = "noattack";
 }
