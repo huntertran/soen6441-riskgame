@@ -12,7 +12,7 @@ public class GameHelper {
         Random random = new Random();
         return random.nextInt(6) + 1;
     }
-    
+
     /**
      * it returns the maximum value and second max value from the array of dice values
      *
