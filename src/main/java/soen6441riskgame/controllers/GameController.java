@@ -785,6 +785,7 @@ public class GameController {
                 // remove player
                 GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
             }
+            
             // check if player has conquered entire continent
             /*
              * ArrayList<Country> countries = defendingCountry.getContinent().getCountries(); boolean
@@ -799,6 +800,9 @@ public class GameController {
              * defendingCountry.getContinent().getArmy()); }
              */
             if (isGameEnded(attackingCountry.getConquerer())) {
+                alloutFlag = false;
+                resetAttack();
+                attackMoveCmdRequired = false;
                 setEndOfGamePhase();
             } else {
                 // move armies
@@ -813,7 +817,8 @@ public class GameController {
                 resetAttack();
             }
         }
-        if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer()) && !attackMoveCmdRequired) {
+        Player currentplayer = getCurrentPlayer(false);
+        if (!isGameEnded(currentplayer) && !furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer()) && !attackMoveCmdRequired) {
             if (alloutFlag) {
                 isAttackValid();
             }
