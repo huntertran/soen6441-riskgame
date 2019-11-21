@@ -522,7 +522,9 @@ public class GameController {
 
         if (args[2].equals("allout") || args[2].equals("-allout")) {
             attackerNumDice = (attackingCountry.getArmyAmount() - 1) < 3 ? attackingCountry.getArmyAmount() - 1 : 3;
+            alloutFlag = true;
             if (!isAttackValid()) {
+                alloutFlag = false;
                 return;
             } else {
                 alloutFlag = true;
@@ -756,7 +758,7 @@ public class GameController {
         // attack execution
         else {
             if (defenderNumDice == 0 && !alloutFlag) {
-                ConsolePrinter.printFormat("Attack conditions met. Enter defend command");
+                ConsolePrinter.printFormat("Enter defend command");
             }
             return true;
         }
