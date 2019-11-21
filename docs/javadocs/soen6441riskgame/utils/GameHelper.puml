@@ -1,0 +1,14 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GameHelper</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.GameHelper  [[../../soen6441riskgame/utils/GameHelper.html{soen6441riskgame.utils.GameHelper}]] {
++GameHelper()
+{static} +int rollDice()
+{static} +int getMax(int inputArray,boolean secondMax)
+}
+
+
+
+@enduml

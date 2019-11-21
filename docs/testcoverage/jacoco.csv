@@ -1,7 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 soen6441riskgame,soen6441riskgame.utils.presenter,WindowOutputStream,42,0,2,0,11,0,3,0,2,0
-soen6441riskgame,soen6441riskgame.utils.presenter,WindowPane,90,0,4,0,25,0,6,0,4,0
-soen6441riskgame,soen6441riskgame.utils.presenter,WindowPane.new Runnable() {...},15,0,0,0,3,0,2,0,2,0
+soen6441riskgame,soen6441riskgame.utils.presenter,WindowPane,90,0,4,0,24,0,7,0,5,0
 soen6441riskgame,soen6441riskgame.models.commands,GameCommands,3,0,0,0,1,0,1,0,1,0
 soen6441riskgame,soen6441riskgame.models.commands,MapEditorCommands,3,0,0,0,1,0,1,0,1,0
 soen6441riskgame,soen6441riskgame.views,PlayersWorldDominationView,0,95,0,4,0,20,0,4,0,2
@@ -9,31 +8,32 @@ soen6441riskgame,soen6441riskgame.views,SeparatedView,19,13,2,2,3,6,2,2,0,2
 soen6441riskgame,soen6441riskgame.views,ExchangeCardView,39,13,3,1,8,6,2,2,0,2
 soen6441riskgame,soen6441riskgame.views,PhaseView,1,72,2,6,1,17,2,4,0,2
 soen6441riskgame,soen6441riskgame.singleton,GameBoard,48,170,5,15,8,40,4,18,1,11
-soen6441riskgame,soen6441riskgame.singleton,GameBoardMap,33,108,4,6,9,29,5,13,3,10
+soen6441riskgame,soen6441riskgame.singleton,GameBoardMap,15,108,2,6,4,29,2,13,1,10
 soen6441riskgame,soen6441riskgame.singleton,GameBoardPlayer,16,145,3,9,3,37,3,9,0,6
 soen6441riskgame,soen6441riskgame.models.serializers,SerializableGame,53,22,2,0,10,8,2,2,1,2
 soen6441riskgame,soen6441riskgame.models.serializers,SerializableGame.Builder,0,59,0,0,0,18,0,7,0,7
 soen6441riskgame,soen6441riskgame.models.serializers,NameOnlyJsonAdapter,32,20,4,0,9,6,3,2,1,2
-soen6441riskgame,soen6441riskgame.controllers,GameController,892,1174,117,123,210,285,91,64,3,29
+soen6441riskgame,soen6441riskgame.controllers,GameController,473,1082,91,121,133,282,77,64,2,30
 soen6441riskgame,soen6441riskgame.controllers,GameController.new Object() {...},4,29,0,0,0,1,0,1,0,1
 soen6441riskgame,soen6441riskgame.controllers,SaveLoadController,15,111,0,0,4,40,0,4,0,4
 soen6441riskgame,soen6441riskgame.controllers,MapController.new Object() {...},10,69,0,0,0,2,0,1,0,1
-soen6441riskgame,soen6441riskgame.controllers,MapController,126,1299,31,123,34,279,31,88,2,35
-soen6441riskgame,soen6441riskgame.models,ModelCommandsPair,5,73,2,2,1,18,2,3,0,3
-soen6441riskgame,soen6441riskgame.models,ModelCommands,89,582,19,70,17,110,15,37,0,5
-soen6441riskgame,soen6441riskgame.models,Player,85,437,17,47,23,119,16,46,1,29
+soen6441riskgame,soen6441riskgame.controllers,MapController,126,1296,30,121,34,278,30,87,2,35
+soen6441riskgame,soen6441riskgame.models,ModelCommandsPair,5,61,2,2,1,16,2,3,0,3
+soen6441riskgame,soen6441riskgame.models,ModelCommands,89,591,20,71,17,111,16,37,0,5
+soen6441riskgame,soen6441riskgame.models,Player,110,614,25,57,27,154,22,54,1,34
 soen6441riskgame,soen6441riskgame.models,Continent,26,136,4,12,5,37,4,16,0,12
 soen6441riskgame,soen6441riskgame.models,Card,0,45,0,0,0,16,0,7,0,7
-soen6441riskgame,soen6441riskgame.models,CardSet,79,86,19,10,20,24,18,8,4,5
+soen6441riskgame,soen6441riskgame.models,CardSet,72,87,19,10,19,24,18,8,4,5
 soen6441riskgame,soen6441riskgame.models,Coordinate,0,15,0,0,0,6,0,3,0,3
-soen6441riskgame,soen6441riskgame.models,Country,77,355,11,21,16,92,11,28,2,21
+soen6441riskgame,soen6441riskgame.models,Country,93,329,10,18,20,84,10,27,2,21
 soen6441riskgame,soen6441riskgame.models,Viewable,17,17,0,2,6,5,3,3,3,2
 soen6441riskgame,soen6441riskgame.enums,CommonCommandArgs,2,89,1,3,1,12,1,5,0,4
 soen6441riskgame,soen6441riskgame.enums,CardType,0,59,0,0,0,9,0,3,0,3
 soen6441riskgame,soen6441riskgame.enums,MapPart,0,106,0,4,0,15,0,6,0,4
 soen6441riskgame,soen6441riskgame.enums,ChangedProperty,0,24,0,0,0,3,0,1,0,1
 soen6441riskgame,soen6441riskgame.enums,GamePhase,0,81,0,0,0,11,0,3,0,3
-soen6441riskgame,soen6441riskgame.utils,ConsolePrinter,71,136,8,12,17,30,8,11,2,7
+soen6441riskgame,soen6441riskgame.utils,ConsolePrinter,72,141,7,13,18,29,8,11,2,7
 soen6441riskgame,soen6441riskgame.utils,Parser,10,29,3,3,5,9,4,2,1,2
-soen6441riskgame,soen6441riskgame.utils,GraphChecker,3,110,1,19,1,26,2,10,1,1
-soen6441riskgame,soen6441riskgame,App,202,133,26,18,53,35,21,13,2,1
+soen6441riskgame,soen6441riskgame.utils,GraphChecker,3,108,1,19,1,26,2,10,1,1
+soen6441riskgame,soen6441riskgame.utils,GameHelper,27,39,7,5,6,10,5,4,1,2
+soen6441riskgame,soen6441riskgame,App,221,129,26,18,56,33,21,13,2,1

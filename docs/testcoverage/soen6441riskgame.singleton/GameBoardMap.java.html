@@ -53,18 +53,14 @@ import soen6441riskgame.views.PlayersWorldDominationView;
 <span class="fc" id="L53">        return continents;</span>
     }
 
-    public String getMapName() {
-<span class="nc" id="L57">        return mapName;</span>
-    }
-
     /**
      * set the name of the map (for saving)
      *
      * @param mapName name of map
      */
     public void setMapName(String mapName) {
-<span class="fc" id="L66">        this.mapName = mapName;</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L62">        this.mapName = mapName;</span>
+<span class="fc" id="L63">    }</span>
 
     /**
      * get the list of Country objects
@@ -72,7 +68,7 @@ import soen6441riskgame.views.PlayersWorldDominationView;
      * @return list of Country objects
      */
     public ArrayList&lt;Country&gt; getCountries() {
-<span class="fc" id="L75">        return countries;</span>
+<span class="fc" id="L71">        return countries;</span>
     }
 
     /**
@@ -80,30 +76,21 @@ import soen6441riskgame.views.PlayersWorldDominationView;
      */
     @Override
     public void reset() {
-<span class="fc" id="L83">        mapName = &quot;&quot;;</span>
-<span class="fc" id="L84">        continents = new ArrayList&lt;Continent&gt;();</span>
-<span class="fc" id="L85">        countries = new ArrayList&lt;Country&gt;();</span>
-<span class="fc" id="L86">        borders = new int[1][1];</span>
+<span class="fc" id="L79">        mapName = &quot;&quot;;</span>
+<span class="fc" id="L80">        continents = new ArrayList&lt;Continent&gt;();</span>
+<span class="fc" id="L81">        countries = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L82">        borders = new int[1][1];</span>
 
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L84">    }</span>
 
     /**
      * print all continents
      */
     public void showContinents() {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        for (Continent continent : continents) {</span>
-<span class="nc" id="L95">            continent.view();</span>
-<span class="nc" id="L96">        }</span>
-<span class="nc" id="L97">    }</span>
-
-    /**
-     * print all countries
-     */
-    public void showCountries() {
-<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (Country country : countries) {</span>
-<span class="nc" id="L104">            country.view();</span>
-<span class="nc" id="L105">        }</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        for (Continent continent : continents) {</span>
+<span class="nc" id="L91">            continent.view();</span>
+<span class="nc" id="L92">        }</span>
+<span class="nc" id="L93">    }</span>
 
     /**
      * get country object from name
@@ -112,30 +99,30 @@ import soen6441riskgame.views.PlayersWorldDominationView;
      * @return null if country name is not existed in map
      */
     public Country getCountryFromName(String countryName) {
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (Country country : getCountries()) {</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">            if (country.getName().equals(countryName)) {</span>
-<span class="fc" id="L117">                return country;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (Country country : getCountries()) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            if (country.getName().equals(countryName)) {</span>
+<span class="fc" id="L104">                return country;</span>
             }
-<span class="fc" id="L119">        }</span>
+<span class="fc" id="L106">        }</span>
 
-<span class="fc" id="L121">        return null;</span>
+<span class="fc" id="L108">        return null;</span>
     }
 
     /**
      * Print the current border in matrix style
      */
     public void printBorders() {
-<span class="fc" id="L128">        int[][] borders = getBorders();</span>
-<span class="fc" id="L129">        ArrayList&lt;Country&gt; countries = getCountries();</span>
+<span class="fc" id="L115">        int[][] borders = getBorders();</span>
+<span class="fc" id="L116">        ArrayList&lt;Country&gt; countries = getCountries();</span>
 
-<span class="fc" id="L131">        String[] countryNames = new String[countries.size()];</span>
+<span class="fc" id="L118">        String[] countryNames = new String[countries.size()];</span>
 
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (int index = 0; index &lt; countries.size(); index++) {</span>
-<span class="fc" id="L134">            countryNames[index] = countries.get(index).getName();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        for (int index = 0; index &lt; countries.size(); index++) {</span>
+<span class="fc" id="L121">            countryNames[index] = countries.get(index).getName();</span>
         }
 
-<span class="fc" id="L137">        ConsolePrinter.print2dArray(borders, countryNames);</span>
-<span class="fc" id="L138">    }</span>
+<span class="fc" id="L124">        ConsolePrinter.print2dArray(borders, countryNames);</span>
+<span class="fc" id="L125">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

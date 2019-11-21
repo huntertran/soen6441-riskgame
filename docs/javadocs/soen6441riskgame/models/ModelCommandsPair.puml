@@ -7,8 +7,8 @@ class "<b><size:14>ModelCommandsPair</b>\n<size:10>soen6441riskgame.models" as s
 +String param
 +String value1
 +String value2
-+ModelCommandsPair(String new_param,String new_value1,String new_value2)
-+ModelCommandsPair(String new_param,String new_value1)
++ModelCommandsPair(String newParam,String newValue1,String newValue2)
++ModelCommandsPair(String newParam,String newValue1)
 +String toStringArray()
 }
 

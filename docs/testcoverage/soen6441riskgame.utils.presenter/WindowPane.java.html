@@ -34,11 +34,11 @@ public class WindowPane extends JPanel {
 
     /**
      * Load RobotoMono font
-     * 
+     *
      * @return the loaded font, or null is cannot load the font
      */
     public Font loadFont() {
-<span class="nc" id="L41">        Font font = null;</span>
+        Font font;
         try {
 <span class="nc" id="L43">            InputStream fontFile = new BufferedInputStream(new FileInputStream(&quot;src\\main\\java\\soen6441riskgame\\resources\\RobotoMono-Regular.ttf&quot;));</span>
 <span class="nc" id="L44">            Font localFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);</span>
@@ -62,7 +62,7 @@ public class WindowPane extends JPanel {
 
     /**
      * append new text to view
-     * 
+     *
      * @param text the text to append
      */
     public void appendText(final String text) {
@@ -70,13 +70,8 @@ public class WindowPane extends JPanel {
 <span class="nc" id="L70">            textArea.append(text);</span>
 <span class="nc" id="L71">            textArea.setCaretPosition(textArea.getText().length());</span>
         } else {
-<span class="nc" id="L73">            EventQueue.invokeLater(new Runnable() {</span>
-                @Override
-                public void run() {
-<span class="nc" id="L76">                    appendText(text);</span>
-<span class="nc" id="L77">                }</span>
-            });
+<span class="nc" id="L73">            EventQueue.invokeLater(() -&gt; appendText(text));</span>
         }
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L75">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

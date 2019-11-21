@@ -18,38 +18,38 @@ public interface Viewable {
 
     /**
      * view with a number of indent on custom printStream
-     * 
+     *
      * @param printStream the stream to print
      * @param indent      number of indent
      */
-    public void view(PrintStream printStream, int indent);
+    void view(PrintStream printStream, int indent);
 
     /**
      * view without indent
      */
-    public default void view() {
+    default void view() {
 <span class="nc" id="L31">        view(GameBoard.getInstance().standardPrintStream, 0);</span>
 <span class="nc" id="L32">    }</span>
 
-    public default void view(int indent) {
+    default void view(int indent) {
 <span class="fc" id="L35">        view(GameBoard.getInstance().standardPrintStream, indent);</span>
 <span class="fc" id="L36">    }</span>
 
     /**
      * view without indent on custom printStream
-     * 
+     *
      * @param printStream the stream to print
      */
-    public default void view(PrintStream printStream) {
+    default void view(PrintStream printStream) {
 <span class="nc" id="L44">        view(printStream, 0);</span>
 <span class="nc" id="L45">    }</span>
 
     /**
      * print the indent with 4 spaces
-     * 
+     *
      * @param indent number of indent
      */
-    public default void printIndent(int indent) {
+    default void printIndent(int indent) {
         // for (int index = 0; index &lt; indent; index++) {
         // System.out.print(&quot; &quot;);
         // }
@@ -58,11 +58,11 @@ public interface Viewable {
 
     /**
      * print the indent with 4 spaces
-     * 
+     *
      * @param printStream the stream to print.
      * @param indent      number of indent
      */
-    public default void printIndent(PrintStream printStream, int indent) {
+    default void printIndent(PrintStream printStream, int indent) {
 <span class="fc bfc" id="L66" title="All 2 branches covered.">        for (int index = 0; index &lt; indent; index++) {</span>
 <span class="fc" id="L67">            printStream.print(&quot;    &quot;);</span>
         }

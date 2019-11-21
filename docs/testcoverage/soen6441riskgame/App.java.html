@@ -181,29 +181,30 @@ public final class App {
                     break;
                 }
             }
-<span class="fc" id="L184">        } catch (Exception e) {</span>
-<span class="fc" id="L185">            System.out.println(e);</span>
-<span class="fc" id="L186">        }</span>
-<span class="fc" id="L187">    }</span>
+<span class="nc" id="L184">        } catch (Exception e) {</span>
+<span class="nc" id="L185">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L186">            System.out.println(&quot;exception on line &quot; + e.getStackTrace()[0].getLineNumber());</span>
+<span class="fc" id="L187">        }</span>
+<span class="fc" id="L188">    }</span>
 
     /**
      * start the game from beginning, allow user to enter commands and arguments
      */
     public static void runFromBeginning() {
-<span class="nc" id="L193">        Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L194">        Scanner scanner = new Scanner(System.in);</span>
 
-<span class="nc" id="L195">        System.out.println(&quot;GAME START&quot;);</span>
-<span class="nc" id="L196">        System.out.print(&quot;ENTER YOUR ACTION: &quot;);</span>
-<span class="nc" id="L197">        String command = scanner.nextLine();</span>
+<span class="nc" id="L196">        System.out.println(&quot;GAME START&quot;);</span>
+<span class="nc" id="L197">        System.out.print(&quot;ENTER YOUR ACTION: &quot;);</span>
+<span class="nc" id="L198">        String command = scanner.nextLine();</span>
 
-<span class="nc bnc" id="L199" title="All 2 branches missed.">        while (!command.equals(GameCommands.EXIT)) {</span>
-<span class="nc" id="L200">            ModelCommands cmds = new ModelCommands(command);</span>
-<span class="nc" id="L201">            jumpToCommand(cmds);</span>
-<span class="nc" id="L202">            System.out.print(&quot;ENTER YOUR ACTION: &quot;);</span>
-<span class="nc" id="L203">            command = scanner.nextLine();</span>
-<span class="nc" id="L204">        }</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        while (!command.equals(GameCommands.EXIT)) {</span>
+<span class="nc" id="L201">            ModelCommands cmds = new ModelCommands(command);</span>
+<span class="nc" id="L202">            jumpToCommand(cmds);</span>
+<span class="nc" id="L203">            System.out.print(&quot;ENTER YOUR ACTION: &quot;);</span>
+<span class="nc" id="L204">            command = scanner.nextLine();</span>
+<span class="nc" id="L205">        }</span>
 
-<span class="nc" id="L206">        scanner.close();</span>
-<span class="nc" id="L207">    }</span>
+<span class="nc" id="L207">        scanner.close();</span>
+<span class="nc" id="L208">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -31,7 +31,7 @@ class "<b><size:14>MapController</b>\n<size:10>soen6441riskgame.controllers" as 
 -void increaseBorder(int newBorderSize)
 -ArrayList<Continent> getEmptyContinents()
 -ArrayList<Country> getIsolatedCountries()
--boolean isNotEnoughCountries(int minimumNumberOfCountries)
+-boolean isNotEnoughCountries()
 -boolean isStillInCurrentDataBlock(int currentLineIndex,List<String> lines)
 -int loadBordersFromFile(int currentLineIndex,List<String> lines)
 -int loadContinentsFromFile(int currentLineIndex,List<String> lines)

@@ -17,11 +17,9 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 -ArrayList<String> currentPhaseActions
 -boolean isPlayerBeAwardCard
 +Player(String name)
-+boolean isPlayerBeAwardCard()
 +void setPlayerBeAwardCard(boolean isPlayerAwardCard)
 +GamePhase getCurrentPhase()
 +void setCurrentPhase(GamePhase newPhase)
-+void getACardFromDeck()
 +ArrayList<Card> getHoldingCards()
 +Card getHoldingCard(int position)
 +void removeExchangedCards()
@@ -44,8 +42,15 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 +void fortify(Country fromCountry,Country toCountry,int numberOfArmies)
 +String getPropertyName()
 +String getPropertyValue()
++void attack(Country attackingCountry,Country defendingCountry,int attackerNumDice,int defenderNumDice)
++void attackMove(Country fromCountry,Country toCountry,int numberOfArmies)
+-boolean isPlayerBeAwardCard()
+-boolean isChangePhaseAllowed(GamePhase newPhase)
+-void getACardFromDeck()
 -int getArmiesFromAllConqueredCountries()
 -int getArmiesFromConqueredContinents()
+-void printDiceValues(int attackerNumDice,int defenderNumDice,int attackerDiceValues,int defenderDiceValues)
+-void lostOneArmy(Country lostArmyCountry,Player lostArmyPlayer)
 }
 
 

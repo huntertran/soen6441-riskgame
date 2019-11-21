@@ -7,11 +7,11 @@ class "<b><size:14>ModelCommands</b>\n<size:10>soen6441riskgame.models" as soen6
 +String cmd
 +List<String> regularCommands
 +List<ModelCommandsPair> subRoutine
-+ModelCommands(String new_args)
++ModelCommands(String newArgs)
 -void init(String new_args)
 -void populateRegularCommandsOrSubRoutines(String paramsArray,String s)
--void buildSubRoutines(String paramsArray,String s,String params)
--void buildRegularCommands(String paramsArray,String s,String params)
+-void buildSubRoutines(String s,String params)
+-void buildRegularCommands(String paramsArray,String params)
 }
 
 

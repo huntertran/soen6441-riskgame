@@ -11,6 +11,12 @@ class "<b><size:14>ConsolePrinter</b>" as soen6441riskgame.utils.ConsolePrinter 
 hide soen6441riskgame.utils.ConsolePrinter fields
 hide soen6441riskgame.utils.ConsolePrinter methods
 
+class "<b><size:14>GameHelper</b>" as soen6441riskgame.utils.GameHelper  [[../../soen6441riskgame/utils/GameHelper.html{soen6441riskgame.utils.GameHelper}]] {
+}
+
+hide soen6441riskgame.utils.GameHelper fields
+hide soen6441riskgame.utils.GameHelper methods
+
 class "<b><size:14>GraphChecker</b>" as soen6441riskgame.utils.GraphChecker  [[../../soen6441riskgame/utils/GraphChecker.html{soen6441riskgame.utils.GraphChecker}]] {
 }
 

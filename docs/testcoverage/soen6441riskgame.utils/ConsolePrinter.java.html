@@ -3,8 +3,6 @@
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.List;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.presenter.WindowPane;
@@ -12,41 +10,40 @@ import soen6441riskgame.utils.presenter.WindowPane;
 /**
  * Helper to print out to console with proper format
  */
-<span class="nc" id="L15">public class ConsolePrinter {</span>
+<span class="nc" id="L13">public class ConsolePrinter {</span>
 
-<span class="fc" id="L17">    private static boolean isJUnitTest = true;</span>
+<span class="fc" id="L15">    private static boolean isJUnitTest = true;</span>
 
-    /**
+    /*
      * determine if current program is run from a test runner
      */
     static {
-<span class="fc" id="L23">        setJUnitTest();</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L21">        setJUnitTest();</span>
+<span class="fc" id="L22">    }</span>
 
     /**
      * is current program run from a test runner
-     * 
+     *
      * @return is current program run from a test runner
      */
     public static boolean isJUnitTest() {
-<span class="fc" id="L32">        return isJUnitTest;</span>
+<span class="fc" id="L30">        return isJUnitTest;</span>
     }
 
     /**
      * check if current program run from a test runner
      */
     private static void setJUnitTest() {
-<span class="fc" id="L39">        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();</span>
-<span class="fc" id="L40">        List&lt;StackTraceElement&gt; list = Arrays.asList(stackTrace);</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        for (StackTraceElement element : list) {</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (element.getClassName().startsWith(&quot;org.junit.&quot;)) {</span>
-<span class="fc" id="L43">                isJUnitTest = true;</span>
-<span class="fc" id="L44">                return;</span>
+<span class="fc" id="L37">        StackTraceElement[] list = Thread.currentThread().getStackTrace();</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        for (StackTraceElement element : list) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            if (element.getClassName().startsWith(&quot;org.junit.&quot;)) {</span>
+<span class="fc" id="L40">                isJUnitTest = true;</span>
+<span class="fc" id="L41">                return;</span>
             }
-<span class="fc" id="L46">        }</span>
+        }
 
-<span class="nc" id="L48">        isJUnitTest = false;</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L45">        isJUnitTest = false;</span>
+<span class="nc" id="L46">    }</span>
 
     /**
      * print the string with format and args replaced, end with a line break
@@ -55,23 +52,23 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * @param args   args in string
      */
     public static void printFormat(String format, Object... args) {
-<span class="fc" id="L58">        printFormat(GameBoard.getInstance().standardPrintStream, format, args);</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L55">        printFormat(GameBoard.getInstance().standardPrintStream, format, args);</span>
+<span class="fc" id="L56">    }</span>
 
     /**
      * print to custom print stream
-     * 
+     *
      * @param customPrintStream the PrintStream to print
      * @param format            string with format
      * @param args              args in string
      */
     public static void printFormat(PrintStream customPrintStream, String format, Object... args) {
-<span class="fc" id="L69">        printFormat(customPrintStream, true, format, args);</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L66">        printFormat(customPrintStream, true, format, args);</span>
+<span class="fc" id="L67">    }</span>
 
     /**
      * print to custom print stream
-     * 
+     *
      * @param customPrintStream the PrintStream to print
      * @param isPrintNewLine    is print new line at then end
      * @param format            string with format
@@ -81,27 +78,30 @@ import soen6441riskgame.utils.presenter.WindowPane;
                                    boolean isPrintNewLine,
                                    String format,
                                    Object... args) {
-<span class="fc" id="L84">        customPrintStream.format(format, args);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (isPrintNewLine) {</span>
-<span class="fc" id="L86">            customPrintStream.println();</span>
+<span class="fc" id="L81">        customPrintStream.format(format, args);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (isPrintNewLine) {</span>
+<span class="fc" id="L83">            customPrintStream.println();</span>
         }
 
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L86">    }</span>
 
     /**
      * print the array in matrix style, with header
-     * 
+     *
      * @param array   array to print
      * @param headers if header is empty or null, the index will be printed
      */
     public static void print2dArray(int[][] array, String[] headers) {
-<span class="pc bpc" id="L98" title="2 of 4 branches missed.">        if (headers == null || headers.length == 0) {</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (array.length &gt; 0) {</span>
-<span class="nc" id="L100">                headers = new String[array[0].length];</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if(array.length == 0){</span>
+<span class="nc" id="L96">            System.out.println(&quot;Empty array&quot;);</span>
+<span class="nc" id="L97">            return;</span>
+        }
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">                for (int index = 0; index &lt; headers.length; index++) {</span>
-<span class="nc" id="L103">                    headers[index] = &quot;[&quot; + index + &quot;]&quot;;</span>
-                }
+<span class="pc bpc" id="L100" title="2 of 4 branches missed.">        if (headers == null || headers.length == 0) {</span>
+<span class="nc" id="L101">            headers = new String[array[0].length];</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            for (int index = 0; index &lt; headers.length; index++) {</span>
+<span class="nc" id="L104">                headers[index] = &quot;[&quot; + index + &quot;]&quot;;</span>
             }
         }
 
@@ -124,7 +124,7 @@ import soen6441riskgame.utils.presenter.WindowPane;
 
     /**
      * create a new window for separated output
-     * 
+     *
      * @param title  title of new window
      * @param width  width of new window
      * @param height height of new window

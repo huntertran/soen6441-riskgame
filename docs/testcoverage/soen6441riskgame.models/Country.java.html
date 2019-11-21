@@ -249,22 +249,14 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
      * @return false if any of two countries is not existed
      */
     public boolean isNeighboringCountries(Country neighborCountry) {
-<span class="fc" id="L252">        int countryOrder = -1;</span>
-<span class="fc" id="L253">        int neighbouringCountryOrder = -1;</span>
-<span class="fc" id="L254">        countryOrder = getOrder();</span>
-<span class="fc" id="L255">        neighbouringCountryOrder = neighborCountry.getOrder();</span>
+<span class="fc" id="L252">        int countryOrder = getOrder();</span>
+<span class="fc" id="L253">        int neighbouringCountryOrder = neighborCountry.getOrder();</span>
 
-<span class="fc" id="L257">        int relationshipWithNeighbor = GameBoard.getInstance()</span>
-<span class="fc" id="L258">                                                .getGameBoardMap()</span>
-<span class="fc" id="L259">                                                .getBorders()[countryOrder - 1][neighbouringCountryOrder - 1];</span>
+<span class="fc" id="L255">        int relationshipWithNeighbor = GameBoard.getInstance()</span>
+<span class="fc" id="L256">                                                .getGameBoardMap()</span>
+<span class="fc" id="L257">                                                .getBorders()[countryOrder - 1][neighbouringCountryOrder - 1];</span>
 
-<span class="pc bpc" id="L261" title="2 of 6 branches missed.">        if (relationshipWithNeighbor == 1</span>
-            &amp;&amp; countryOrder != -1
-            &amp;&amp; neighbouringCountryOrder != -1) {
-<span class="fc" id="L264">            return true;</span>
-        }
-
-<span class="fc" id="L267">        return false;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        return relationshipWithNeighbor == 1;</span>
     }
 
     /**
@@ -274,14 +266,14 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
      * @return true if the country belong to that player
      */
     public boolean isCountryBelongToPlayer(Player player) {
-<span class="fc bfc" id="L277" title="All 2 branches covered.">        if (!getConquerer().equals(player)) {</span>
-<span class="fc" id="L278">            ConsolePrinter.printFormat(&quot;The country %s is not belong to %s&quot;,</span>
-<span class="fc" id="L279">                                       getName(),</span>
-<span class="fc" id="L280">                                       player.getName());</span>
-<span class="fc" id="L281">            return false;</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">        if (!getConquerer().equals(player)) {</span>
+<span class="nc" id="L270">            ConsolePrinter.printFormat(&quot;The country %s is not belong to %s&quot;,</span>
+<span class="nc" id="L271">                                       getName(),</span>
+<span class="nc" id="L272">                                       player.getName());</span>
+<span class="nc" id="L273">            return false;</span>
         }
 
-<span class="fc" id="L284">        return true;</span>
+<span class="fc" id="L276">        return true;</span>
     }
 
     /**
@@ -290,8 +282,8 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
      * @param indent number of indentation before print
      */
     public void viewWithoutNeighbors(int indent) {
-<span class="fc" id="L293">        viewWithoutNeighbors(GameBoard.getInstance().standardPrintStream, indent);</span>
-<span class="fc" id="L294">    }</span>
+<span class="fc" id="L285">        viewWithoutNeighbors(GameBoard.getInstance().standardPrintStream, indent);</span>
+<span class="fc" id="L286">    }</span>
 
     /**
      * print this country content without printing it's neighbors
@@ -300,23 +292,23 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
      * @param indent      number of indentation before print
      */
     public void viewWithoutNeighbors(PrintStream printStream, int indent) {
-<span class="fc" id="L303">        this.printIndent(printStream, indent);</span>
-<span class="fc" id="L304">        String printString = &quot;Country: %s\t| No.: %s\t| Army: %s &quot;;</span>
+<span class="fc" id="L295">        this.printIndent(printStream, indent);</span>
+<span class="fc" id="L296">        String printString = &quot;Country: %s\t| No.: %s\t| Army: %s &quot;;</span>
 
-<span class="fc" id="L306">        String conquererName = &quot;&quot;;</span>
+<span class="fc" id="L298">        String conquererName = &quot;&quot;;</span>
 
-<span class="fc bfc" id="L308" title="All 2 branches covered.">        if (this.getConquerer() != null) {</span>
-<span class="fc" id="L309">            printString += &quot;\t| Conquerer: %s&quot;;</span>
-<span class="fc" id="L310">            conquererName = this.getConquerer().getName();</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        if (this.getConquerer() != null) {</span>
+<span class="fc" id="L301">            printString += &quot;\t| Conquerer: %s&quot;;</span>
+<span class="fc" id="L302">            conquererName = this.getConquerer().getName();</span>
         }
 
-<span class="fc" id="L313">        ConsolePrinter.printFormat(printStream,</span>
+<span class="fc" id="L305">        ConsolePrinter.printFormat(printStream,</span>
                                    printString,
-<span class="fc" id="L315">                                   this.getName(),</span>
-<span class="fc" id="L316">                                   this.getOrder(),</span>
-<span class="fc" id="L317">                                   this.getArmyAmount(),</span>
+<span class="fc" id="L307">                                   this.getName(),</span>
+<span class="fc" id="L308">                                   this.getOrder(),</span>
+<span class="fc" id="L309">                                   this.getArmyAmount(),</span>
                                    conquererName);
-<span class="fc" id="L319">    }</span>
+<span class="fc" id="L311">    }</span>
 
     // /**
     // * print this country content
@@ -328,28 +320,28 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
     // }
 
     public void view(PrintStream printStream, int indent) {
-<span class="fc" id="L331">        this.viewWithoutNeighbors(indent);</span>
+<span class="fc" id="L323">        this.viewWithoutNeighbors(indent);</span>
 
-<span class="fc" id="L333">        this.printIndent(printStream, indent + 1);</span>
+<span class="fc" id="L325">        this.printIndent(printStream, indent + 1);</span>
 
-<span class="fc" id="L335">        printStream.println(&quot;Neighbors:&quot;);</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">        for (Country country : this.getNeighbors()) {</span>
-<span class="nc" id="L337">            country.viewWithoutNeighbors(indent + 2);</span>
-<span class="nc" id="L338">        }</span>
-<span class="fc" id="L339">    }</span>
+<span class="fc" id="L327">        printStream.println(&quot;Neighbors:&quot;);</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">        for (Country country : this.getNeighbors()) {</span>
+<span class="nc" id="L329">            country.viewWithoutNeighbors(indent + 2);</span>
+<span class="nc" id="L330">        }</span>
+<span class="fc" id="L331">    }</span>
 
     @Override
     public String getPropertyName() {
-<span class="nc" id="L343">        return &quot;name&quot;;</span>
+<span class="nc" id="L335">        return &quot;name&quot;;</span>
     }
 
     @Override
     public String getPropertyValue() {
-<span class="nc bnc" id="L348" title="All 4 branches missed.">        if (name == null || name.isEmpty()) {</span>
-<span class="nc" id="L349">            return &quot;&quot;;</span>
+<span class="nc bnc" id="L340" title="All 4 branches missed.">        if (name == null || name.isEmpty()) {</span>
+<span class="nc" id="L341">            return &quot;&quot;;</span>
         }
 
-<span class="nc" id="L352">        return name;</span>
+<span class="nc" id="L344">        return name;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

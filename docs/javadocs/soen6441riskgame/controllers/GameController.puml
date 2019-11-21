@@ -4,15 +4,15 @@ skinparam svgLinkTarget _parent
 skinparam linetype ortho
 set namespaceSeparator none
 class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] {
-{static} +int MINIMUM_NUMBER_OF_PLAYER
-{static} +int MAXIMUM_NUMBER_OF_PLAYER
-{static} +int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY
-{static} +int attackerNumDice
-{static} +int defenderNumDice
 {static} +Country attackingCountry
 {static} +Country defendingCountry
-{static} +boolean alloutFlag
-{static} +boolean attackMoveCmdRequired
+{static} ~boolean attackMoveCmdRequired
+{static} -int MINIMUM_NUMBER_OF_PLAYER
+{static} -int MAXIMUM_NUMBER_OF_PLAYER
+{static} -int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY
+{static} -int attackerNumDice
+{static} -int defenderNumDice
+{static} -boolean alloutFlag
 +GameController()
 +void handleGamePlayerCommand(String args)
 +boolean isNumberOfPlayerValid()
@@ -22,7 +22,6 @@ class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as
 +void handlePlaceAllCommand()
 +Player getCurrentPlayer()
 +Player startRoundRobinPlayers()
-+void turnToNextPlayer()
 +void showCurrentPlayer()
 +boolean enterReinforcement()
 +void handleReinforceCommand(String args)
@@ -32,17 +31,18 @@ class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as
 +void handleAttackCommand(String args)
 +void handleDefendCommand(String args)
 +void handleAttackMoveCommand(String args)
-+boolean isAttackValid()
-+void endAttackPhase()
-+void setEndOfGamePhase()
 +void exchangeCard(String args)
+~void turnToNextPlayer()
+~boolean isAttackValid()
+~void setEndOfGamePhase()
 -Player getCurrentPlayer(boolean isShowMessage)
 -void handleFortifyCommand(String args)
 -void simulateAttack()
 -boolean furtherAttackPossible()
--boolean isGameEnded(Player player)
--int getMax(int inputArray,boolean second_max)
--int rollDice()
+-void resetAttack()
+-boolean isGameEnded()
+-void attackResult()
+-void endAttackPhase()
 -CardSet buildCardSet(String args)
 }
 

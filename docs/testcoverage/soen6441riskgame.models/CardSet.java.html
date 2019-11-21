@@ -81,26 +81,24 @@ public class CardSet {
 <span class="fc" id="L81">        int cardValue = 0;</span>
 <span class="fc bfc" id="L82" title="All 2 branches covered.">        for (Card card : cards) {</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if (card == null) {</span>
-<span class="nc" id="L84">                ConsolePrinter.printFormat(&quot;Some cards in set are invalid (null): %d&quot;, cards.indexOf(card));</span>
+<span class="nc" id="L84">                ConsolePrinter.printFormat(&quot;Some cards in set are invalid (null)&quot;);</span>
+<span class="nc" id="L85">                return false;</span>
             }
-<span class="fc" id="L86">            cardValue += card.getCardType().getCardTypeAsInt();</span>
-<span class="fc" id="L87">        }</span>
 
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (cardValue == allInfantry()</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">            || cardValue == allCavalry()</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">            || cardValue == allArtillery()</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">            || cardValue == allWild()</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">            || cardValue == oneOfEach()</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">            || cardValue &gt; CardType.Wild.getCardTypeAsInt()) {</span>
-<span class="fc" id="L95">            return true;</span>
-        } else {
-<span class="nc" id="L97">            return false;</span>
-        }
+<span class="fc" id="L88">            cardValue += card.getCardType().getCardTypeAsInt();</span>
+<span class="fc" id="L89">        }</span>
+
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        return cardValue == allInfantry()</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            || cardValue == allCavalry()</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            || cardValue == allArtillery()</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            || cardValue == allWild()</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            || cardValue == oneOfEach()</span>
+<span class="pc bnc" id="L96" title="All 2 branches missed.">            || cardValue &gt; CardType.Wild.getCardTypeAsInt();</span>
     }
 
     /**
      * get the armies that can be trade by the set
-     * 
+     *
      * The first set traded in - 4 armies
      *
      * The second set traded in - 6 armies
@@ -123,47 +121,47 @@ public class CardSet {
      * @return the number of armies
      */
     public int getTradeInArmies(int tradeTime) {
-<span class="fc" id="L126">        int armies = 0;</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (isSetValid()) {</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            if (tradeTime &gt; 6) {</span>
-<span class="nc" id="L129">                armies = 15 + (tradeTime - 6) * 5;</span>
+<span class="fc" id="L124">        int armies = 0;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (isSetValid()) {</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">            if (tradeTime &gt; 6) {</span>
+<span class="nc" id="L127">                armies = 15 + (tradeTime - 6) * 5;</span>
             } else {
-<span class="pc bpc" id="L131" title="5 of 7 branches missed.">                switch (tradeTime) {</span>
+<span class="pc bpc" id="L129" title="5 of 7 branches missed.">                switch (tradeTime) {</span>
                     case 1: {
-<span class="fc" id="L133">                        return 4;</span>
+<span class="fc" id="L131">                        return 4;</span>
                     }
                     case 2: {
-<span class="fc" id="L136">                        return 6;</span>
+<span class="fc" id="L134">                        return 6;</span>
                     }
                     case 3: {
-<span class="nc" id="L139">                        return 8;</span>
+<span class="nc" id="L137">                        return 8;</span>
                     }
                     case 4: {
-<span class="nc" id="L142">                        return 10;</span>
+<span class="nc" id="L140">                        return 10;</span>
                     }
                     case 5: {
-<span class="nc" id="L145">                        return 12;</span>
+<span class="nc" id="L143">                        return 12;</span>
                     }
                     case 6: {
-<span class="nc" id="L148">                        return 15;</span>
+<span class="nc" id="L146">                        return 15;</span>
                     }
                     default: {
-<span class="nc" id="L151">                        return 0;</span>
+<span class="nc" id="L149">                        return 0;</span>
                     }
                 }
             }
         }
 
-<span class="nc" id="L157">        return armies;</span>
+<span class="nc" id="L155">        return armies;</span>
     }
 
     /**
      * mark all the cards in set were exchanged
      */
     public void setCardsExchanged() {
-<span class="fc bfc" id="L164" title="All 2 branches covered.">        for (Card card : cards) {</span>
-<span class="fc" id="L165">            card.setExchanged(true);</span>
-<span class="fc" id="L166">        }</span>
-<span class="fc" id="L167">    }</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc" id="L163">            card.setExchanged(true);</span>
+<span class="fc" id="L164">        }</span>
+<span class="fc" id="L165">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils</a> &gt; <span class="el_source">GameHelper.java</span></div><h1>GameHelper.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils;
+
+import java.util.Random;
+
+<span class="nc" id="L5">public class GameHelper {</span>
+    /**
+     * it executes the dice roll.
+     *
+     * @return int it returns the random number from 1 to 6 on the dice.
+     */
+    public static int rollDice() {
+<span class="fc" id="L12">        Random random = new Random();</span>
+<span class="fc" id="L13">        return random.nextInt(6) + 1;</span>
+    }
+
+    /**
+     * it returns the maximum value and second max value from the array of dice values
+     *
+     * @param inputArray dice-values the array of the dice values rolled
+     * @param secondMax secondMax if second max is true, then second max value is returned. else only the
+     *                max value is returned.
+     *
+     * @return int it returns the maximum value or second max value based on the value of secondMax
+     *         flag
+     *
+     */
+    public static int getMax(int[] inputArray, boolean secondMax) {
+<span class="fc" id="L28">        int maxValue = inputArray[0];</span>
+<span class="fc" id="L29">        int maxIndex = 0;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (int i = 1; i &lt; inputArray.length; i++) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            if (inputArray[i] &gt; maxValue) {</span>
+<span class="fc" id="L32">                maxValue = inputArray[i];</span>
+<span class="fc" id="L33">                maxIndex = i;</span>
+            }
+        }
+
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (secondMax) {</span>
+<span class="nc" id="L38">            int secondMaxValue = -1;</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            for (int i = 0; i &lt; inputArray.length; i++) {</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">                if (inputArray[i] &gt; secondMaxValue &amp;&amp; maxIndex != i) {</span>
+<span class="nc" id="L41">                    secondMaxValue = inputArray[i];</span>
+                }
+            }
+<span class="nc" id="L44">            maxValue = secondMaxValue;</span>
+        }
+
+<span class="fc" id="L47">        return maxValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
