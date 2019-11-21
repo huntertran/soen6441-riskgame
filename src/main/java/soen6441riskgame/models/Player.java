@@ -14,6 +14,7 @@ import soen6441riskgame.models.serializers.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
+
 /**
  * Hold player data
  *
@@ -99,27 +100,7 @@ public class Player extends Observable implements NameOnlySerializable {
     public void setCurrentPhase(GamePhase newPhase) {
         if (currentPhase != newPhase) {
 
-            boolean isChangePhaseAllowed = true;
-
-            if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {
-                isChangePhaseAllowed = false;
-
-                if (newPhase != GamePhase.WAITING_TO_TURN
-                    || currentPhase != GamePhase.FORTIFICATION) {
-                    isChangePhaseAllowed = false;
-                } else {
-                    isChangePhaseAllowed = true;
-                }
-            }
-
-            if (newPhase == GamePhase.ATTACK) {
-                if (holdingCards.size() >= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {
-                    ConsolePrinter.printFormat("You have more than %d cards. Must exchange before attacking.",
-                                               MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);
-
-                    isChangePhaseAllowed = false;
-                }
-            }
+            boolean isChangePhaseAllowed = isChangePhaseAllowed(newPhase);
 
             if (isChangePhaseAllowed) {
                 currentPhase = newPhase;
@@ -143,6 +124,36 @@ public class Player extends Observable implements NameOnlySerializable {
                                            newPhase.toString());
             }
         }
+    }
+
+    private boolean isChangePhaseAllowed(GamePhase newPhase) {
+        boolean isChangePhaseAllowed = true;
+
+        if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {
+            isChangePhaseAllowed = false;
+
+            if (newPhase != GamePhase.WAITING_TO_TURN
+                || currentPhase != GamePhase.FORTIFICATION) {
+                isChangePhaseAllowed = false;
+            } else {
+                isChangePhaseAllowed = true;
+            }
+        }
+
+        if (newPhase == GamePhase.ATTACK) {
+            if (holdingCards.size() >= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {
+                ConsolePrinter.printFormat("You have more than %d cards. Must exchange before attacking.",
+                                           MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);
+
+                isChangePhaseAllowed = false;
+            }
+        }
+
+        if (newPhase == GamePhase.END_OF_GAME && currentPhase == GamePhase.ATTACK) {
+            isChangePhaseAllowed = true;
+        }
+
+        return isChangePhaseAllowed;
     }
 
     /**
@@ -464,17 +475,17 @@ public class Player extends Observable implements NameOnlySerializable {
 
         return name;
     }
-    
+
     /**
      * do the attack
      *
-     * @param attackingCountry      attacker country
-     * @param defendingCountry      defender country
-     * @param attackerNumDice      number of dices for attacker
-     * @param defenderNumDice      number of dices for defender
+     * @param attackingCountry attacker country
+     * @param defendingCountry defender country
+     * @param attackerNumDice  number of dices for attacker
+     * @param defenderNumDice  number of dices for defender
      */
     public void attack(Country attackingCountry, Country defendingCountry, int attackerNumDice, int defenderNumDice) {
-      //attack starts
+        // attack starts
         int[] attackerDiceValues = new int[attackerNumDice];
         int[] defenderDiceValues = new int[defenderNumDice];
 
@@ -593,9 +604,8 @@ public class Player extends Observable implements NameOnlySerializable {
 
             }
         }
-        //attack ends
+        // attack ends
     }
-    
 
     /**
      * do the attack move
