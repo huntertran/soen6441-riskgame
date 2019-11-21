@@ -595,4 +595,16 @@ public class Player extends Observable implements NameOnlySerializable {
         }
         //attack ends
     }
+    
+
+    /**
+     * do the attack move
+     *
+     * @param fromCountry    from country
+     * @param toCountry      to country
+     * @param numberOfArmies armies to move
+     */
+    public void attackMove(Country fromCountry, Country toCountry, int numberOfArmies) {
+        fromCountry.moveArmies(toCountry, numberOfArmies);
+    }
 }

@@ -541,10 +541,8 @@ public class GameController {
             }
         }
         /*
-        if (!furtherAttackPossible() && !attackMoveCmdRequired) {
-            endAttackPhase();
-        }
-        */
+         * if (!furtherAttackPossible() && !attackMoveCmdRequired) { endAttackPhase(); }
+         */
     }
 
     /**
@@ -560,14 +558,10 @@ public class GameController {
                 handleDefendCommand(new String[] { Integer.toString(defender_dice) });
             } else {
                 alloutFlag = false;
-                defendingCountry = null;
-                attackingCountry = null;
-                attackerNumDice = 0;
-                defenderNumDice = 0;
+                resetAttack();
                 ConsolePrinter.printFormat("The attack has ended as no other move is possible.");
             }
         }
-        //if(attackMoveCmdRequired)
     }
 
     /**
@@ -613,12 +607,12 @@ public class GameController {
         }
 
         defenderNumDice = Integer.parseInt(args[0]);
-        
-        if(attackingCountry == null || defendingCountry == null) {
+
+        if (attackingCountry == null || defendingCountry == null) {
             ConsolePrinter.printFormat("You cannot use defend command without attack command.");
             return;
         }
-        //System.out.println(args[0]);
+        // System.out.println(args[0]);
         if (!isAttackValid()) {
             ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
             return;
@@ -633,74 +627,9 @@ public class GameController {
         }
 
         Player currentPlayer = getCurrentPlayer(false);
-        currentPlayer.attack(attackingCountry , defendingCountry, attackerNumDice, defenderNumDice);
-        
-        // now check if defender's armies left is 0, set conquerer as attacker
-        if (defendingCountry.getArmyAmount() == 0) {
-            ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
-                                       attackingCountry.getConquerer().getName(),
-                                       defendingCountry.getName(),
-                                       attackingCountry.getArmyAmount() - 1);
+        currentPlayer.attack(attackingCountry, defendingCountry, attackerNumDice, defenderNumDice);
 
-            defendingCountry.setConquerer(attackingCountry.getConquerer());
-
-            // set attacker can be reward a card when attack phase end
-            attackingCountry.getConquerer().setPlayerBeAwardCard(true);
-
-            // check if defender has any countries that he has conquered. if not remove him from the game.
-            if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {
-                // remove player
-                GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
-            }
-            // check if player has conquered entire continent
-            /*
-            ArrayList<Country> countries = defendingCountry.getContinent().getCountries();
-            boolean flag_continent_conquered = true;
-            Player currentplayer = getCurrentPlayer();
-            for (Country country : countries) {
-                if (country.getConquerer() != currentplayer) {
-                    flag_continent_conquered = false;
-                }
-            }
-
-            if (flag_continent_conquered) {
-                ConsolePrinter.printFormat("You have conquered the continent %s , so you receive %s unplaced armies",
-                                           defendingCountry.getContinent().getName(),
-                                           defendingCountry.getContinent().getArmy());
-                currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies()
-                                                + defendingCountry.getContinent().getArmy());
-            }
-            */
-            if (isGameEnded(attackingCountry.getConquerer())) {
-                setEndOfGamePhase();
-            } else {
-                // move armies
-                ConsolePrinter.printFormat("Player %s needs to move armies into your conquered country %s",
-                                           attackingCountry.getConquerer().getName(),
-                                           defendingCountry.getName());
-                attackMoveCmdRequired = true;
-            }
-        } else {
-            if (!alloutFlag) {
-                // reinitialize variables to null
-                defendingCountry = null;
-                attackingCountry = null;
-                attackerNumDice = 0;
-                defenderNumDice = 0;
-            }
-        }
-        if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer()) && !attackMoveCmdRequired) {
-            if(alloutFlag) {
-                isAttackValid();
-            }
-            ConsolePrinter.printFormat("No other attack is possible from any country.");
-            defendingCountry = null;
-            attackingCountry = null;
-            attackerNumDice = 0;
-            defenderNumDice = 0;
-            alloutFlag = false;
-            endAttackPhase();
-        }
+        attackResult();
     }
 
     /**
@@ -721,12 +650,11 @@ public class GameController {
                     ConsolePrinter.printFormat("You only have %s army available to move. You cannot move more armies than what you have.",
                                                attackerNumDice);
                 } else {
-                    attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
+                    Player currentPlayer = getCurrentPlayer(false);
+                    currentPlayer.attackMove(attackingCountry, defendingCountry, army_to_be_moved);
+                    // attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
                     // reinitialize variables to null
-                    defendingCountry = null;
-                    attackingCountry = null;
-                    attackerNumDice = 0;
-                    defenderNumDice = 0;
+                    resetAttack();
                     alloutFlag = false;
                     attackMoveCmdRequired = false;
                     ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
@@ -736,6 +664,18 @@ public class GameController {
                 ConsolePrinter.printFormat("Invalid Input");
             }
         }
+    }
+
+    /**
+     * it resets the attack variables
+     * 
+     */
+    private void resetAttack() {
+        // reinitialize variables to null
+        defendingCountry = null;
+        attackingCountry = null;
+        attackerNumDice = 0;
+        defenderNumDice = 0;
     }
 
     /**
@@ -822,16 +762,71 @@ public class GameController {
         }
     }
 
-    
+    /**
+     * it prints the result of the attack.
+     */
+    public void attackResult() {
+        // now check if defender's armies left is 0, set conquerer as attacker
+        if (defendingCountry.getArmyAmount() == 0) {
+            ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
+                                       attackingCountry.getConquerer().getName(),
+                                       defendingCountry.getName(),
+                                       attackingCountry.getArmyAmount() - 1);
+
+            defendingCountry.setConquerer(attackingCountry.getConquerer());
+
+            // set attacker can be reward a card when attack phase end
+            attackingCountry.getConquerer().setPlayerBeAwardCard(true);
+
+            // check if defender has any countries that he has conquered. if not remove him from the game.
+            if (defendingCountry.getConquerer().getConqueredCountries().isEmpty()) {
+                // remove player
+                GameBoard.getInstance().getGameBoardPlayer().removePlayer(defendingCountry.getConquerer().getName());
+            }
+            // check if player has conquered entire continent
+            /*
+             * ArrayList<Country> countries = defendingCountry.getContinent().getCountries(); boolean
+             * flag_continent_conquered = true; Player currentplayer = getCurrentPlayer(); for (Country country
+             * : countries) { if (country.getConquerer() != currentplayer) { flag_continent_conquered = false; }
+             * }
+             * 
+             * if (flag_continent_conquered) { ConsolePrinter.
+             * printFormat("You have conquered the continent %s , so you receive %s unplaced armies",
+             * defendingCountry.getContinent().getName(), defendingCountry.getContinent().getArmy());
+             * currentplayer.setUnplacedArmies(currentplayer.getUnplacedArmies() +
+             * defendingCountry.getContinent().getArmy()); }
+             */
+            if (isGameEnded(attackingCountry.getConquerer())) {
+                setEndOfGamePhase();
+            } else {
+                // move armies
+                ConsolePrinter.printFormat("Player %s needs to move armies into your conquered country %s",
+                                           attackingCountry.getConquerer().getName(),
+                                           defendingCountry.getName());
+                attackMoveCmdRequired = true;
+            }
+        } else {
+            if (!alloutFlag) {
+                // reinitialize variables to null
+                resetAttack();
+            }
+        }
+        if (!furtherAttackPossible() && !isGameEnded(attackingCountry.getConquerer()) && !attackMoveCmdRequired) {
+            if (alloutFlag) {
+                isAttackValid();
+            }
+            ConsolePrinter.printFormat("No other attack is possible from any country.");
+            resetAttack();
+            alloutFlag = false;
+            endAttackPhase();
+        }
+    }
 
     /**
      * it ends the attack phase and sets the current game phase to fortification
      */
     public void endAttackPhase() {
-        defendingCountry = null;
-        attackingCountry = null;
-        attackerNumDice = 0;
-        defenderNumDice = 0;
+        resetAttack();
         Player currentPlayer = getCurrentPlayer(false);
         ConsolePrinter.printFormat("End of attack Phase. Player %s has entered fortification phase",
                                    currentPlayer.getName());
