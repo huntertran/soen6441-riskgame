@@ -555,9 +555,9 @@ public class Player extends Observable implements NameOnlySerializable {
                                              + lostArmyCountry.getConquerer().getName()
                                              + " has lost 1 army from "
                                              + lostArmyCountry.getName()
-                                             + "."
+                                             + " | "
                                              + lostArmyCountry.getArmyAmount()
-                                             + "  armies left.");
+                                             + " armies left.");
     }
 
     /**
