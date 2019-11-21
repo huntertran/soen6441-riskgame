@@ -8,7 +8,6 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
-import soen6441riskgame.singleton.GameBoard;
 
 public class GamePlayActionsTestHelper {
     public static void multipleFortify(GameController gameController, int fortifyTimes) {
@@ -19,8 +18,8 @@ public class GamePlayActionsTestHelper {
 
             Country toCountry = getPlayerCountryForToCountryArg(player, fromCountry);
 
-            fortify(gameController,
-                    1,
+            fortify(
+                1,
                     fromCountry,
                     toCountry);
         }
@@ -58,8 +57,7 @@ public class GamePlayActionsTestHelper {
         return toCountry;
     }
 
-    public static void fortify(GameController gameController,
-                               int armies,
+    public static void fortify(int armies,
                                Country fromCountry,
                                Country toCountry) {
 
@@ -75,8 +73,7 @@ public class GamePlayActionsTestHelper {
         }
     }
 
-    public static ArrayList<Player> addPlayersToGame() {
+    public static void addPlayersToGame() {
         App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add hunter -add ben -add tj"));
-        return GameBoard.getInstance().getGameBoardPlayer().getPlayers();
     }
 }

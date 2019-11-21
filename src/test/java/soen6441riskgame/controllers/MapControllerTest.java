@@ -33,7 +33,7 @@ public class MapControllerTest {
     /**
      * This loadMapTest function tests if the map loaded from a file is working properly.
      *
-     * @throws IOException
+     * @throws IOException if file not found
      */
     @Test
     public void loadMapTest() throws IOException {
@@ -44,12 +44,12 @@ public class MapControllerTest {
         mapController.loadMap(filePath);
 
         // Assertions
-        Assertions.assertTrue(GameBoard.getInstance()
-                                       .getGameBoardMap()
-                                       .getContinents()
-                                       .get(0)
-                                       .getName()
-                                       .equals("North_Africa"));
+        Assertions.assertEquals("North_Africa",
+            GameBoard.getInstance()
+            .getGameBoardMap()
+            .getContinents()
+            .get(0)
+            .getName());
     }
 
     /**
@@ -62,11 +62,12 @@ public class MapControllerTest {
     public void addContinentTest(String continentName, String continentValue) {
         // Action
         mapController.addContinent(continentName, continentValue);
+        Continent continent = mapController.getContinentFromName(continentName);
 
         // Assertions
         Assertions.assertTrue(mapController.isContinentExisted(continentName));
-        Assertions.assertEquals(continentValue,
-                                Integer.toString(mapController.getContinentFromName(continentName).getArmy()));
+        Assertions.assertNotNull(continent);
+        Assertions.assertEquals(continentValue, Integer.toString(continent.getArmy()));
     }
 
     /**
@@ -185,7 +186,7 @@ public class MapControllerTest {
                              "Europe" })
     public void removeContinentTest(String continent1) {
         // Action
-        String arguments[] = { "-remove", continent1 };
+        String[] arguments = { "-remove", continent1 };
         mapController.editContinent(arguments);
 
         // Assertions
@@ -227,7 +228,7 @@ public class MapControllerTest {
         mapController.addCountry(country, continent);
 
         // Action
-        String arguments[] = { "-remove", country };
+        String[] arguments = { "-remove", country };
         mapController.editCountry(arguments);
 
         // Assertions
@@ -295,7 +296,7 @@ public class MapControllerTest {
 
         boolean isNeighbor = Parser.parseWithDefault(neighboringCountry, 0) == 1;
 
-        String arguments[] = { arg, country1, country2 };
+        String[] arguments = { arg, country1, country2 };
 
         // Action
         mapController.editNeighbor(arguments);
@@ -309,7 +310,7 @@ public class MapControllerTest {
 
     /**
      * it tests the saveMap method and checks whether the map is saved correctly or not.
-     * @throws IOException
+     * @throws IOException if file not found
      */
     @Test
     public void saveMapTest() throws IOException {
@@ -332,7 +333,7 @@ public class MapControllerTest {
 /**
      * it tests if the map is valid or not by checking if sufficient
      * number of countries are added.
-     * @throws IOException
+     * @throws IOException if file not found
      */
     @Test
     public void validateMapNotEnoughCountryTest() throws IOException {
@@ -358,7 +359,7 @@ public class MapControllerTest {
 
     /**
      * it tests if there is an isolated country on the map, which if true, will make map invalid.
-     * @throws IOException
+     * @throws IOException if file not found
      */
     @Test
     public void validateMapIsolatedCountryTest() throws IOException {
@@ -379,7 +380,7 @@ public class MapControllerTest {
 
     /**
      * it tests for the validity of the map by after removal of countries from a continent.
-     * @throws IOException
+     * @throws IOException if file not found
      */
     @Test
     public void validateMapEmptyContinentTest() throws IOException {
@@ -407,8 +408,8 @@ public class MapControllerTest {
     /**
      * Test for un-connected graph. The explanation can be found at
      * https://github.com/huntertran/soen6441-riskgame/wiki/Connected-Graph-Validation-Unit-Test
-     * 
-     * @throws IOException
+     *
+     * @throws IOException if file not found
      */
     @Test
     public void validateMapNotConnectedContinentTest() throws IOException {

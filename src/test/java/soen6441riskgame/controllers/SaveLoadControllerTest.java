@@ -2,8 +2,6 @@ package soen6441riskgame.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +21,9 @@ public class SaveLoadControllerTest {
 
     /**
      * the before method is executed before each test case to setup the context.
-     *
-     * @throws IOException
      */
     @BeforeEach
-    public void before() throws IOException {
+    public void before() {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
 

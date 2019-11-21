@@ -1,10 +1,7 @@
 package soen6441riskgame.controllers;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import soen6441riskgame.App;
 import soen6441riskgame.helpers.GamePlayActionsTestHelper;
 import soen6441riskgame.models.Country;
@@ -23,10 +20,9 @@ public class GamePlayTest {
 
     /**
      * the before method is executed before each test case to setup the context.
-     * @throws IOException
      */
     @BeforeEach
-    public void before() throws IOException {
+    public void before() {
 
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);

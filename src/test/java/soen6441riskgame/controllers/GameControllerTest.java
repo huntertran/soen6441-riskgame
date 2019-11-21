@@ -230,7 +230,7 @@ public class GameControllerTest {
 
         // Assertion
         Player p1 = gameController.getCurrentPlayer();
-        assertTrue(p1.getCurrentPhase() == GamePhase.ATTACK);
+        assertSame(p1.getCurrentPhase(), GamePhase.ATTACK);
     }
 
     /**
@@ -306,7 +306,7 @@ public class GameControllerTest {
         gameController.handleAttackCommand(new String[] { "-noattack" });
 
         // Assert
-        assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.FORTIFICATION);
+        assertSame(gameController.getCurrentPlayer().getCurrentPhase(), GamePhase.FORTIFICATION);
     }
 
     /**
@@ -325,7 +325,7 @@ public class GameControllerTest {
         gameController.setEndOfGamePhase();
 
         // Assert
-        assertTrue(gameController.getCurrentPlayer().getCurrentPhase() == GamePhase.END_OF_GAME);
+        assertSame(gameController.getCurrentPlayer().getCurrentPhase(), GamePhase.END_OF_GAME);
     }
 
     /**
@@ -435,7 +435,7 @@ public class GameControllerTest {
                                             + " "
                                             + targetCountry.getName()
                                             + " "
-                                            + String.valueOf(armyAmount)));
+                                            + armyAmount));
 
         // assert
         assertEquals(expectedNumberOfArmies, targetCountry.getArmyAmount());
@@ -536,8 +536,8 @@ public class GameControllerTest {
             toCountryArmiesAfterFortify += armiesToMove;
         }
 
-        GamePlayActionsTestHelper.fortify(gameController,
-                                          armiesToMove,
+        GamePlayActionsTestHelper.fortify(
+            armiesToMove,
                                           fromCountry,
                                           toCountry);
 

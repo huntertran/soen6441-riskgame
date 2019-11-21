@@ -1,8 +1,5 @@
 package soen6441riskgame.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -10,6 +7,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.commons.util.StringUtils;
 
 import soen6441riskgame.helpers.StringArrayConverter;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the functionality of ModelCommands
@@ -52,10 +51,8 @@ public class ModelCommandsTest {
         ModelCommands cmds = new ModelCommands(attackCommand);
         boolean actualIsValid = false;
 
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            if (cmds.regularCommands.size() > 0) {
-                actualIsValid = true;
-            }
+        if (cmds.regularCommands.size() > 0) {
+            actualIsValid = true;
         }
 
         assertEquals(isValid, actualIsValid);
@@ -80,11 +77,7 @@ public class ModelCommandsTest {
     public void CommonCommandParseArgumentTest(String fortifyCommand, int expectedParsedRegularCommandsNumber) {
         ModelCommands cmds = new ModelCommands(fortifyCommand);
 
-        int actualParsedRegularCommandsNumber = 0;
-
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            actualParsedRegularCommandsNumber = cmds.regularCommands.size();
-        }
+        int actualParsedRegularCommandsNumber = cmds.regularCommands.size();
 
         assertEquals(expectedParsedRegularCommandsNumber, actualParsedRegularCommandsNumber);
     }
@@ -98,10 +91,8 @@ public class ModelCommandsTest {
 
         String actualCountryName = "";
 
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            if (cmds.regularCommands.size() > 0) {
-                actualCountryName = cmds.regularCommands.get(0);
-            }
+        if (cmds.regularCommands.size() > 0) {
+            actualCountryName = cmds.regularCommands.get(0);
         }
 
         assertEquals(expectedCountryName, actualCountryName);
@@ -124,11 +115,9 @@ public class ModelCommandsTest {
         String actualFrom = "";
         String actualTo = "";
 
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            if (cmds.regularCommands.size() > 0) {
-                actualFrom = cmds.regularCommands.get(0);
-                actualTo = cmds.regularCommands.get(1);
-            }
+        if (cmds.regularCommands.size() > 0) {
+            actualFrom = cmds.regularCommands.get(0);
+            actualTo = cmds.regularCommands.get(1);
         }
 
         assertEquals(expectedFrom, actualFrom);
@@ -144,13 +133,8 @@ public class ModelCommandsTest {
     })
     public void GamePlayTest(String command) {
         ModelCommands cmds = new ModelCommands(command);
-        boolean flag = true;
-
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            flag = false;
-        }
-
-        assertFalse(flag);
+        assertEquals(cmds.cmd, command.split(" ")[0]);
+        assertEquals(0, cmds.subRoutine.size());
     }
 
     @ParameterizedTest
@@ -174,11 +158,7 @@ public class ModelCommandsTest {
     public void CommandWithMultipleSetsOfArgumentTest(String command, int expectedNumberOfSubRoutine) {
         ModelCommands cmds = new ModelCommands(command);
 
-        int actualNumberOfParsedSubRoutine = 0;
-
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            actualNumberOfParsedSubRoutine = cmds.subRoutine.size();
-        }
+        int actualNumberOfParsedSubRoutine = cmds.subRoutine.size();
 
         assertEquals(expectedNumberOfSubRoutine, actualNumberOfParsedSubRoutine);
     }
@@ -195,22 +175,21 @@ public class ModelCommandsTest {
         ModelCommands cmds = new ModelCommands(command);
         boolean flag = true;
 
-        if ((cmds.cmd != "") || (cmds.cmd != null)) {
-            if (cmds.subRoutine.size() > 0) {
-                int i = 0;
-                for (ModelCommandsPair sub : cmds.subRoutine) {
-                    assertEquals(sub.value1, expectedValue1Names[i]);
+        if (cmds.subRoutine.size() > 0) {
+            int i = 0;
+            for (ModelCommandsPair sub : cmds.subRoutine) {
+                assertEquals(sub.value1, expectedValue1Names[i]);
 
-                    if (!StringUtils.isBlank(sub.value2)) {
-                        assertEquals(sub.value2, expectedValue2Names[i]);
-                    }
-
-                    i++;
+                if (!StringUtils.isBlank(sub.value2)) {
+                    assertEquals(sub.value2, expectedValue2Names[i]);
                 }
 
-                flag = false;
+                i++;
             }
+
+            flag = false;
         }
+
         assertFalse(flag);
     }
 }
