@@ -81,26 +81,24 @@ public class CardSet {
         int cardValue = 0;
         for (Card card : cards) {
             if (card == null) {
-                ConsolePrinter.printFormat("Some cards in set are invalid (null): %d", cards.indexOf(card));
+                ConsolePrinter.printFormat("Some cards in set are invalid (null)");
+                return false;
             }
+
             cardValue += card.getCardType().getCardTypeAsInt();
         }
 
-        if (cardValue == allInfantry()
+        return cardValue == allInfantry()
             || cardValue == allCavalry()
             || cardValue == allArtillery()
             || cardValue == allWild()
             || cardValue == oneOfEach()
-            || cardValue > CardType.Wild.getCardTypeAsInt()) {
-            return true;
-        } else {
-            return false;
-        }
+            || cardValue > CardType.Wild.getCardTypeAsInt();
     }
 
     /**
      * get the armies that can be trade by the set
-     * 
+     *
      * The first set traded in - 4 armies
      *
      * The second set traded in - 6 armies

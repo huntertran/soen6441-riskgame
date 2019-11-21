@@ -34,9 +34,9 @@ public final class MapController {
      */
     private void addBorders(int countryOrder, int... borderWithCountries) {
         int[][] graph = GameBoard.getInstance().getGameBoardMap().getBorders();
-        for (int index = 0; index < borderWithCountries.length; index++) {
-            graph[countryOrder - 1][borderWithCountries[index] - 1] = 1;
-            graph[borderWithCountries[index] - 1][countryOrder - 1] = 1;
+        for (int borderWithCountry : borderWithCountries) {
+            graph[countryOrder - 1][borderWithCountry - 1] = 1;
+            graph[borderWithCountry - 1][countryOrder - 1] = 1;
         }
     }
 
@@ -345,17 +345,16 @@ public final class MapController {
      * check if the number of country is lower than the minimum amount of country required currently the
      * minimum required is {@MINIMUM_AMOUNT_OF_COUNTRIES}
      *
-     * @param minimumNumberOfCountries check for the minimum number of country
      * @return false if the number of country is lower than the minimum amount of country required
      */
-    private boolean isNotEnoughCountries(int minimumNumberOfCountries) {
+    private boolean isNotEnoughCountries() {
         int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
-        boolean isNotEnoughCountries = numberOfCountry < minimumNumberOfCountries;
+        boolean isNotEnoughCountries = numberOfCountry < MapController.MINIMUM_AMOUNT_OF_COUNTRIES;
 
         if (isNotEnoughCountries) {
             ConsolePrinter.printFormat("Not enough countries. Created: %d - Minimum required: %s",
                                        numberOfCountry,
-                                       minimumNumberOfCountries);
+                MapController.MINIMUM_AMOUNT_OF_COUNTRIES);
         }
 
         return isNotEnoughCountries;
@@ -367,12 +366,12 @@ public final class MapController {
      *
      * @param currentLineIndex the current line index
      * @param lines            all the lines in map file
-     * @return
+     * @return if the current data line is still in a block or not
      */
     private boolean isStillInCurrentDataBlock(int currentLineIndex, List<String> lines) {
         if (currentLineIndex < lines.size()) {
             String currentLine = lines.get(currentLineIndex);
-            return currentLine != "" && currentLine.contains(" ");
+            return !currentLine.equals("") && currentLine.contains(" ");
         }
 
         return false;
@@ -491,9 +490,6 @@ public final class MapController {
                              .setMapName(currentLine.split("name")[1].trim());
                     break;
                 }
-                case FILES: {
-                    break;
-                }
                 case CONTINENTS: {
                     index = loadContinentsFromFile(index, lines);
                     break;
@@ -506,6 +502,7 @@ public final class MapController {
                     index = loadBordersFromFile(index, lines);
                     break;
                 }
+                case FILES:
                 case NONE: {
                     break;
                 }
@@ -658,10 +655,10 @@ public final class MapController {
         for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {
             ArrayList<Country> neighbors = country.getNeighbors();
 
-            String neighborLine = Integer.toString(country.getOrder());
+            StringBuilder neighborLine = new StringBuilder(Integer.toString(country.getOrder()));
 
             for (Country neighbor : neighbors) {
-                neighborLine += " " + neighbor.getOrder();
+                neighborLine.append(" ").append(neighbor.getOrder());
             }
 
             writer.write(neighborLine + "\n");
@@ -750,9 +747,7 @@ public final class MapController {
      * @return is map valid or not
      */
     public boolean isMapValid() {
-        boolean isNotEnoughCountries = isNotEnoughCountries(MINIMUM_AMOUNT_OF_COUNTRIES);
-
-        if (isNotEnoughCountries) {
+        if (isNotEnoughCountries()) {
             return false;
         }
 
@@ -796,15 +791,15 @@ public final class MapController {
             }
         }
 
-        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance().getGameBoardMap()
+        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance()
+            .getGameBoardMap()
                                                                             .getCountries());
 
-        return !isNotEnoughCountries
-               && !isIsolatedCountryExisted
-               && !isEmptyContinentExisted
-               && !isCountryWithNoContinentExisted
-               && isCountriesInContinentConnected
-               && isMapConnected;
+        return !isIsolatedCountryExisted
+            && !isEmptyContinentExisted
+            && !isCountryWithNoContinentExisted
+            && isCountriesInContinentConnected
+            && isMapConnected;
     }
 
     /**

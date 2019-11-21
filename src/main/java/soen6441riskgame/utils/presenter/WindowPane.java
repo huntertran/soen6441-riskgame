@@ -34,11 +34,11 @@ public class WindowPane extends JPanel {
 
     /**
      * Load RobotoMono font
-     * 
+     *
      * @return the loaded font, or null is cannot load the font
      */
     public Font loadFont() {
-        Font font = null;
+        Font font;
         try {
             InputStream fontFile = new BufferedInputStream(new FileInputStream("src\\main\\java\\soen6441riskgame\\resources\\RobotoMono-Regular.ttf"));
             Font localFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
@@ -62,7 +62,7 @@ public class WindowPane extends JPanel {
 
     /**
      * append new text to view
-     * 
+     *
      * @param text the text to append
      */
     public void appendText(final String text) {
@@ -70,12 +70,7 @@ public class WindowPane extends JPanel {
             textArea.append(text);
             textArea.setCaretPosition(textArea.getText().length());
         } else {
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    appendText(text);
-                }
-            });
+            EventQueue.invokeLater(() -> appendText(text));
         }
     }
 }

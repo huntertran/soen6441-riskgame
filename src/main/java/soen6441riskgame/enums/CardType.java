@@ -19,7 +19,7 @@ public enum CardType {
      *
      * @param cardValue value of the type
      */
-    private CardType(int cardValue) {
+    CardType(int cardValue) {
         this.cardValue = cardValue;
     }
 

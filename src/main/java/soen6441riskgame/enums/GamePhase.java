@@ -17,7 +17,7 @@ public enum GamePhase {
      * private constructor
      * @param phase the phase
      */
-    private GamePhase(int phase) {
+    GamePhase(int phase) {
         this.phase = phase;
     }
 

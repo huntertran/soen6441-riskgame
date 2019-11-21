@@ -249,22 +249,14 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
      * @return false if any of two countries is not existed
      */
     public boolean isNeighboringCountries(Country neighborCountry) {
-        int countryOrder = -1;
-        int neighbouringCountryOrder = -1;
-        countryOrder = getOrder();
-        neighbouringCountryOrder = neighborCountry.getOrder();
+        int countryOrder = getOrder();
+        int neighbouringCountryOrder = neighborCountry.getOrder();
 
         int relationshipWithNeighbor = GameBoard.getInstance()
                                                 .getGameBoardMap()
                                                 .getBorders()[countryOrder - 1][neighbouringCountryOrder - 1];
 
-        if (relationshipWithNeighbor == 1
-            && countryOrder != -1
-            && neighbouringCountryOrder != -1) {
-            return true;
-        }
-
-        return false;
+        return relationshipWithNeighbor == 1;
     }
 
     /**

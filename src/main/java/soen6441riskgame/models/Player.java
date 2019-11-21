@@ -130,14 +130,8 @@ public class Player extends Observable implements NameOnlySerializable {
         boolean isChangePhaseAllowed = true;
 
         if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {
-            isChangePhaseAllowed = false;
-
-            if (newPhase != GamePhase.WAITING_TO_TURN
-                || currentPhase != GamePhase.FORTIFICATION) {
-                isChangePhaseAllowed = false;
-            } else {
-                isChangePhaseAllowed = true;
-            }
+            isChangePhaseAllowed = newPhase == GamePhase.WAITING_TO_TURN
+                && currentPhase == GamePhase.FORTIFICATION;
         }
 
         if (newPhase == GamePhase.ATTACK) {
@@ -458,7 +452,7 @@ public class Player extends Observable implements NameOnlySerializable {
                                    + " to "
                                    + toCountry.getName()
                                    + " with "
-                                   + String.valueOf(numberOfArmies)
+                                   + numberOfArmies
                                    + " armies");
     }
 
@@ -511,7 +505,7 @@ public class Player extends Observable implements NameOnlySerializable {
         if (defenderNumDice != 1 && attackerNumDice != 1) {
             int attackerSecondMaxDiceValue = GameHelper.getMax(attackerDiceValues, true);
             int defenderSecondMaxDiceValue = GameHelper.getMax(defenderDiceValues, true);
-            
+
             if (attackerSecondMaxDiceValue > defenderSecondMaxDiceValue) {
                 lostOneArmy(defendingCountry, currentPlayer);
             } else {
@@ -525,18 +519,18 @@ public class Player extends Observable implements NameOnlySerializable {
                                  int defenderNumDice,
                                  int[] attackerDiceValues,
                                  int[] defenderDiceValues) {
-        String printDiceValues = "Attacker: ";
+        StringBuilder printDiceValues = new StringBuilder("Attacker: ");
 
         for (int i = 0; i < attackerNumDice; i++) {
             attackerDiceValues[i] = GameHelper.rollDice();
-            printDiceValues += attackerDiceValues[i] + "    ";
+            printDiceValues.append(attackerDiceValues[i]).append("    ");
         }
-        printDiceValues += "\nDefender: ";
+        printDiceValues.append("\nDefender: ");
         for (int i = 0; i < defenderNumDice; i++) {
             defenderDiceValues[i] = GameHelper.rollDice();
-            printDiceValues += defenderDiceValues[i] + "    ";
+            printDiceValues.append(defenderDiceValues[i]).append("    ");
         }
-        ConsolePrinter.printFormat("%s", printDiceValues);
+        ConsolePrinter.printFormat("%s", printDiceValues.toString());
     }
 
     private void lostOneArmy(Country lostArmyCountry, Player lostArmyPlayer) {

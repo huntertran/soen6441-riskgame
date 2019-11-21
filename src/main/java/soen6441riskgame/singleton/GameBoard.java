@@ -27,7 +27,7 @@ public class GameBoard implements Resettable {
      */
     public GameBoard() {
         initCards();
-    };
+    }
 
     /**
      * create a deck of {@value #NUMBER_OF_CARDS} cards, including 2 wild cards and equal cards for

@@ -24,15 +24,15 @@ public class ModelCommands {
     /***
      * Class Constructor
      *
-     * @param new_args = raw string input of the command line parameters
+     * @param newArgs = raw string input of the command line parameters
      */
-    public ModelCommands(String new_args) {
-        init(new_args);
+    public ModelCommands(String newArgs) {
+        init(newArgs);
     }
 
     private void init(String new_args) {
         // check if arguments provided is not null or empty string.
-        if ((new_args == null) || (new_args == "")) {
+        if ((new_args == null) || (new_args.equals(""))) {
             return;
         }
 
@@ -49,9 +49,9 @@ public class ModelCommands {
         // Split rest of the string parameter except the command using "-"
         String[] paramsArray = temp_args[1].split("-");
 
-        for (int i = 0; i < paramsArray.length; i++) {
+        for (String s : paramsArray) {
             try {
-                populateRegularCommandsOrSubRoutines(paramsArray, paramsArray[i]);
+                populateRegularCommandsOrSubRoutines(paramsArray, s);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid value detected.");
                 continue;
@@ -66,12 +66,12 @@ public class ModelCommands {
         // Split rest of the string parameter except the command using space (" ")
         String[] params = s.split(" ");
 
-        buildSubRoutines(paramsArray, s, params);
+        buildSubRoutines(s, params);
 
-        buildRegularCommands(paramsArray, s, params);
+        buildRegularCommands(paramsArray, params);
     }
 
-    private void buildSubRoutines(String[] paramsArray, String s, String[] params) {
+    private void buildSubRoutines(String s, String[] params) {
         for (int j = 0; j < params.length; j++) {
             // check for null or empty value after split
             if ((params[j] == null) || (params[j].equals(""))) {
@@ -116,7 +116,7 @@ public class ModelCommands {
         }
     }
 
-    private void buildRegularCommands(String[] paramsArray, String s, String[] params) throws Exception {
+    private void buildRegularCommands(String[] paramsArray, String[] params) throws Exception {
         for (int j = 0; j < params.length; j++) {
             // check for null or empty value after split
             if ((params[j] == null) || (params[j].equals(""))) {
@@ -168,7 +168,8 @@ public class ModelCommands {
                         }
                     }
                     // Player does not wish to fortify
-                    else if (params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
+                    else if (params[0] != null
+                        && params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                         regularCommands.add(params[j].toLowerCase());
                         return;
                     }

@@ -3,8 +3,6 @@ package soen6441riskgame.utils;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.List;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.presenter.WindowPane;
@@ -16,7 +14,7 @@ public class ConsolePrinter {
 
     private static boolean isJUnitTest = true;
 
-    /**
+    /*
      * determine if current program is run from a test runner
      */
     static {
@@ -25,7 +23,7 @@ public class ConsolePrinter {
 
     /**
      * is current program run from a test runner
-     * 
+     *
      * @return is current program run from a test runner
      */
     public static boolean isJUnitTest() {
@@ -36,8 +34,7 @@ public class ConsolePrinter {
      * check if current program run from a test runner
      */
     private static void setJUnitTest() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        List<StackTraceElement> list = Arrays.asList(stackTrace);
+        StackTraceElement[] list = Thread.currentThread().getStackTrace();
         for (StackTraceElement element : list) {
             if (element.getClassName().startsWith("org.junit.")) {
                 isJUnitTest = true;
@@ -60,7 +57,7 @@ public class ConsolePrinter {
 
     /**
      * print to custom print stream
-     * 
+     *
      * @param customPrintStream the PrintStream to print
      * @param format            string with format
      * @param args              args in string
@@ -71,7 +68,7 @@ public class ConsolePrinter {
 
     /**
      * print to custom print stream
-     * 
+     *
      * @param customPrintStream the PrintStream to print
      * @param isPrintNewLine    is print new line at then end
      * @param format            string with format
@@ -90,18 +87,21 @@ public class ConsolePrinter {
 
     /**
      * print the array in matrix style, with header
-     * 
+     *
      * @param array   array to print
      * @param headers if header is empty or null, the index will be printed
      */
     public static void print2dArray(int[][] array, String[] headers) {
-        if (headers == null || headers.length == 0) {
-            if (array.length > 0) {
-                headers = new String[array[0].length];
+        if(array.length == 0){
+            System.out.println("Empty array");
+            return;
+        }
 
-                for (int index = 0; index < headers.length; index++) {
-                    headers[index] = "[" + index + "]";
-                }
+        if (headers == null || headers.length == 0) {
+            headers = new String[array[0].length];
+
+            for (int index = 0; index < headers.length; index++) {
+                headers[index] = "[" + index + "]";
             }
         }
 
@@ -124,7 +124,7 @@ public class ConsolePrinter {
 
     /**
      * create a new window for separated output
-     * 
+     *
      * @param title  title of new window
      * @param width  width of new window
      * @param height height of new window

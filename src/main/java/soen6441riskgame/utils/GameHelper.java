@@ -16,15 +16,15 @@ public class GameHelper {
     /**
      * it returns the maximum value and second max value from the array of dice values
      *
-     * @param args[0] dice-values the array of the dice values rolled
-     * @param args[0] second_max if second max is true, then second max value is returned. else only the
+     * @param inputArray dice-values the array of the dice values rolled
+     * @param secondMax secondMax if second max is true, then second max value is returned. else only the
      *                max value is returned.
      *
-     * @return int it returns the maximum value or second max value based on the value of second_max
+     * @return int it returns the maximum value or second max value based on the value of secondMax
      *         flag
      *
      */
-    public static int getMax(int[] inputArray, boolean second_max) {
+    public static int getMax(int[] inputArray, boolean secondMax) {
         int maxValue = inputArray[0];
         int maxIndex = 0;
         for (int i = 1; i < inputArray.length; i++) {
@@ -34,7 +34,7 @@ public class GameHelper {
             }
         }
 
-        if (second_max) {
+        if (secondMax) {
             int secondMaxValue = -1;
             for (int i = 0; i < inputArray.length; i++) {
                 if (inputArray[i] > secondMaxValue && maxIndex != i) {

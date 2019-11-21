@@ -1,6 +1,5 @@
 package soen6441riskgame.utils.presenter;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -26,7 +25,7 @@ public class WindowOutputStream extends OutputStream {
      * @param b character to write
      */
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
         char c = (char) b;
         String value = Character.toString(c);
         buffer.append(value);

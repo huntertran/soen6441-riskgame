@@ -47,8 +47,7 @@ public class GraphChecker {
                 }
             }
 
-            for (int i = 0; i < scopedNeighbors.size(); i++) {
-                Country neighbor = scopedNeighbors.get(i);
+            for (Country neighbor : scopedNeighbors) {
                 if (neighbor != null && !visited.contains(neighbor)) {
                     stack.add(neighbor);
                 }

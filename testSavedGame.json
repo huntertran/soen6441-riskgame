@@ -5,13 +5,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 7,
+      "armyAmount": 24,
       "name": "India",
       "continent": {
         "name": "Asia"
       },
       "conquerer": {
-        "name": "tj"
+        "name": "ben"
       },
       "serializedOrder": 1
     },
@@ -20,13 +20,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 12,
+      "armyAmount": 4,
       "name": "Pakistan",
       "continent": {
         "name": "Asia"
       },
       "conquerer": {
-        "name": "hunter"
+        "name": "tj"
       },
       "serializedOrder": 2
     },
@@ -35,13 +35,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 11,
+      "armyAmount": 6,
       "name": "China",
       "continent": {
         "name": "Asia"
       },
       "conquerer": {
-        "name": "hunter"
+        "name": "ben"
       },
       "serializedOrder": 3
     },
@@ -50,13 +50,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 24,
+      "armyAmount": 11,
       "name": "USA",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "ben"
+        "name": "tj"
       },
       "serializedOrder": 4
     },
@@ -65,7 +65,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 5,
+      "armyAmount": 17,
       "name": "Canada",
       "continent": {
         "name": "America"
@@ -80,13 +80,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 14,
+      "armyAmount": 1,
       "name": "Russia",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "tj"
+        "name": "hunter"
       },
       "serializedOrder": 6
     },
@@ -95,13 +95,13 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 7,
+      "armyAmount": 8,
       "name": "Mexico",
       "continent": {
         "name": "America"
       },
       "conquerer": {
-        "name": "ben"
+        "name": "hunter"
       },
       "serializedOrder": 7
     }
@@ -119,7 +119,7 @@
   "players": [
     {
       "name": "hunter",
-      "unplacedArmies": 10,
+      "unplacedArmies": 12,
       "isPlaying": true,
       "nextPlayer": {
         "name": "ben"
@@ -133,7 +133,7 @@
     },
     {
       "name": "ben",
-      "unplacedArmies": 6,
+      "unplacedArmies": 7,
       "isPlaying": false,
       "nextPlayer": {
         "name": "tj"
@@ -147,7 +147,7 @@
     },
     {
       "name": "tj",
-      "unplacedArmies": 16,
+      "unplacedArmies": 22,
       "isPlaying": false,
       "nextPlayer": {
         "name": "hunter"

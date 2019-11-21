@@ -53,10 +53,6 @@ public class GameBoardMap implements Resettable {
         return continents;
     }
 
-    public String getMapName() {
-        return mapName;
-    }
-
     /**
      * set the name of the map (for saving)
      *
@@ -93,15 +89,6 @@ public class GameBoardMap implements Resettable {
     public void showContinents() {
         for (Continent continent : continents) {
             continent.view();
-        }
-    }
-
-    /**
-     * print all countries
-     */
-    public void showCountries() {
-        for (Country country : countries) {
-            country.view();
         }
     }
 

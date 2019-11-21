@@ -182,7 +182,7 @@ public final class App {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             System.out.println("exception on line " + e.getStackTrace()[0].getLineNumber());
         }
     }
