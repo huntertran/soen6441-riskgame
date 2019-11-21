@@ -69,7 +69,7 @@ public class Player extends Observable implements NameOnlySerializable {
      *
      * @return is player be award card
      */
-    public boolean isPlayerBeAwardCard() {
+    private boolean isPlayerBeAwardCard() {
         return isPlayerBeAwardCard;
     }
 
@@ -159,7 +159,7 @@ public class Player extends Observable implements NameOnlySerializable {
     /**
      * add new card if player conquer at least 1 country during attack phase
      */
-    public void getACardFromDeck() {
+    private void getACardFromDeck() {
         if (isPlayerBeAwardCard()) {
             Card newCard = GameBoard.getInstance().getRandomAvailableCard();
             newCard.setHoldingPlayer(this);
@@ -492,6 +492,39 @@ public class Player extends Observable implements NameOnlySerializable {
         int[] attackerDiceValues = new int[attackerNumDice];
         int[] defenderDiceValues = new int[defenderNumDice];
 
+        printDiceValues(attackerNumDice, defenderNumDice, attackerDiceValues, defenderDiceValues);
+
+        Player currentPlayer = this;
+
+        // now we will check who loses an army
+        int attackerMaxDiceValue = GameHelper.getMax(attackerDiceValues, false);
+        int defenderMaxDiceValue = GameHelper.getMax(defenderDiceValues, false);
+
+        if (attackerMaxDiceValue > defenderMaxDiceValue) {
+            // defending army is lost
+            lostOneArmy(defendingCountry, currentPlayer);
+        } else {
+            // attacking army is lost
+            lostOneArmy(attackingCountry, currentPlayer);
+        }
+
+        if (defenderNumDice != 1 && attackerNumDice != 1) {
+            int attackerSecondMaxDiceValue = GameHelper.getMax(attackerDiceValues, true);
+            int defenderSecondMaxDiceValue = GameHelper.getMax(defenderDiceValues, true);
+            
+            if (attackerSecondMaxDiceValue > defenderSecondMaxDiceValue) {
+                lostOneArmy(defendingCountry, currentPlayer);
+            } else {
+                lostOneArmy(attackingCountry, currentPlayer);
+            }
+        }
+        // attack ends
+    }
+
+    private void printDiceValues(int attackerNumDice,
+                                 int defenderNumDice,
+                                 int[] attackerDiceValues,
+                                 int[] defenderDiceValues) {
         String printDiceValues = "Attacker: ";
 
         for (int i = 0; i < attackerNumDice; i++) {
@@ -504,35 +537,6 @@ public class Player extends Observable implements NameOnlySerializable {
             printDiceValues += defenderDiceValues[i] + "    ";
         }
         ConsolePrinter.printFormat("%s", printDiceValues);
-
-        Player currentPlayer = this;
-
-        // now we will check who loses an army
-        if (defenderNumDice == 1 || attackerNumDice == 1) {
-            if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
-                // defending army is lost
-                lostOneArmy(defendingCountry, currentPlayer);
-            } else {
-                // attacking army is lost
-                lostOneArmy(attackingCountry, currentPlayer);
-            }
-        } else {
-            if (GameHelper.getMax(attackerDiceValues, false) > GameHelper.getMax(defenderDiceValues, false)) {
-                // defending army is lost
-                lostOneArmy(defendingCountry, currentPlayer);
-
-            } else {
-                // attacking army is lost
-                lostOneArmy(attackingCountry, currentPlayer);
-            }
-            if (GameHelper.getMax(attackerDiceValues, true) > GameHelper.getMax(defenderDiceValues, true)) {
-                lostOneArmy(defendingCountry, currentPlayer);
-
-            } else {
-                lostOneArmy(attackingCountry, currentPlayer);
-            }
-        }
-        // attack ends
     }
 
     private void lostOneArmy(Country lostArmyCountry, Player lostArmyPlayer) {
