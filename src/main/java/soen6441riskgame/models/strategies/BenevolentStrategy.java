@@ -9,7 +9,7 @@ import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 
 
-class StrategyBenevolent implements IStrategy {
+public class BenevolentStrategy implements IStrategy {
 
     @Override
     public void execute(GameBoard board, Player p) {

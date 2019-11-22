@@ -10,7 +10,7 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.GameHelper;
 
 
-class StrategyRandom implements IStrategy {
+class RandomStrategy implements IStrategy {
 
     public int getDiceCount(Country atk) {
         int dices = 1;
