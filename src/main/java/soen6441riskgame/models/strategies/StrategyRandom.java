@@ -1,7 +1,10 @@
-package soen6441riskgame.models;
+package soen6441riskgame.models.strategies;
 
 import java.util.ArrayList;
 import soen6441riskgame.App;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.ModelCommands;
+import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.GameHelper;
