@@ -1,10 +1,10 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+
 import soen6441riskgame.App;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
-
 
 class StrategyAggressive implements IStrategy {
 
@@ -39,6 +39,7 @@ class StrategyAggressive implements IStrategy {
         cmds = new ModelCommands(command);
         App.jumpToCommand(cmds);
 
+
         // Attack Phase
         // Find adjacent neighbour countries to attack
         ArrayList<Country> neighbours = strongestPlayerCountry.getNeighbors();
@@ -49,7 +50,7 @@ class StrategyAggressive implements IStrategy {
             int totalNumPlayerArmy = strongestPlayerCountry.getArmyAmount();
             Country country = neighbours.get(i);
 
-            //Attacker all army in strongest country
+            //Attacker lost all army in strongest country
             if(totalNumPlayerArmy <= 1) {
                 flag = true;
                 break;
@@ -85,6 +86,7 @@ class StrategyAggressive implements IStrategy {
         // Command: fortify fromcountry tocountry num
         // get max number of armies to move
         // then move the countries
+
         int maxArmyToMove = strongestPlayerCountry.getArmyAmount() - 1;
 
         int index = attackedCountries.size()-1;
