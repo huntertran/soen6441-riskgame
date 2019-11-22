@@ -2,15 +2,13 @@ package soen6441riskgame.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.JsonAdapter;
 
 import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
-import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
-import soen6441riskgame.models.serializers.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
@@ -20,7 +18,7 @@ import soen6441riskgame.utils.GameHelper;
  *
  * Each player is a node in a linked list
  */
-public class Player extends Observable implements NameOnlySerializable {
+public class Player extends Observable {
     private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
     private static final int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN = 3;
     private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
@@ -34,13 +32,15 @@ public class Player extends Observable implements NameOnlySerializable {
     @Expose
     private boolean isPlaying = false;
 
-    @JsonAdapter(NameOnlyJsonAdapter.class)
-    @Expose
     private Player nextPlayer;
 
-    @JsonAdapter(NameOnlyJsonAdapter.class)
     @Expose
+    private String nextPlayerName;
+
     private Player previousPlayer;
+
+    @Expose
+    private String previousPlayerName;
 
     @Expose
     private GamePhase currentPhase;
@@ -61,6 +61,39 @@ public class Player extends Observable implements NameOnlySerializable {
     public Player(String name) {
         this.name = name;
         this.currentPhase = GamePhase.WAITING_TO_TURN;
+    }
+
+    // /**
+    //  * construct a player object from json serialized player object
+    //  * 
+    //  * @param serializedPlayer the serialized player
+    //  * @param players          list of player
+    //  */
+    // @SuppressWarnings("unchecked")
+    // public Player(Player serializedPlayer, List<Player> players) {
+    //     this.name = serializedPlayer.name;
+    //     this.unplacedArmies = serializedPlayer.unplacedArmies;
+    //     this.isPlaying = serializedPlayer.isPlaying;
+    //     this.currentPhase = serializedPlayer.currentPhase;
+    //     this.currentPhaseActions = (ArrayList<String>) serializedPlayer.currentPhaseActions.clone();
+    // }
+
+    /**
+     * link next and previous players after construct;
+     * @param players list of current players
+     */
+    public void linkNextAndPrevious(List<Player> players) {
+        for (Player player : players) {
+            if (nextPlayerName.equals(player.getName())) {
+                setNextPlayer(player);
+                continue;
+            }
+
+            if (previousPlayerName.equals(player.getName())) {
+                setPreviousPlayer(player);
+                continue;
+            }
+        }
     }
 
     /**
@@ -131,7 +164,7 @@ public class Player extends Observable implements NameOnlySerializable {
 
         if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {
             isChangePhaseAllowed = newPhase == GamePhase.WAITING_TO_TURN
-                && currentPhase == GamePhase.FORTIFICATION;
+                                   && currentPhase == GamePhase.FORTIFICATION;
         }
 
         if (newPhase == GamePhase.ATTACK) {
@@ -238,6 +271,7 @@ public class Player extends Observable implements NameOnlySerializable {
      */
     public void setPreviousPlayer(Player previousPlayer) {
         this.previousPlayer = previousPlayer;
+        this.previousPlayerName = previousPlayer.getName();
 
         if (previousPlayer.getNextPlayer() != this) {
             previousPlayer.setNextPlayer(this);
@@ -260,6 +294,7 @@ public class Player extends Observable implements NameOnlySerializable {
      */
     public void setNextPlayer(Player nextPlayer) {
         this.nextPlayer = nextPlayer;
+        this.nextPlayerName = nextPlayer.getName();
         if (nextPlayer.getPreviousPlayer() != this) {
             nextPlayer.setPreviousPlayer(this);
         }
@@ -454,20 +489,6 @@ public class Player extends Observable implements NameOnlySerializable {
                                    + " with "
                                    + numberOfArmies
                                    + " armies");
-    }
-
-    @Override
-    public String getPropertyName() {
-        return "name";
-    }
-
-    @Override
-    public String getPropertyValue() {
-        if (name == null || name.isEmpty()) {
-            return "";
-        }
-
-        return name;
     }
 
     /**

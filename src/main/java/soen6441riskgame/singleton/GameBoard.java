@@ -83,10 +83,20 @@ public class GameBoard implements Resettable {
 
     /**
      * get cards deck for save load function
+     * 
      * @return card deck
      */
-    public Card[] getCardsForSaveLoad(){
+    public Card[] getCardsForSave() {
         return cards;
+    }
+
+    /**
+     * load cards from saved json
+     * 
+     * @param cards serialized cards to load
+     */
+    public void loadCardFromSave(Card[] cards) {
+        this.cards = cards;
     }
 
     /**

@@ -6,7 +6,6 @@ import java.util.Observable;
 
 import com.google.gson.annotations.Expose;
 
-import soen6441riskgame.models.serializers.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
@@ -14,7 +13,7 @@ import soen6441riskgame.utils.GraphChecker;
 /**
  * Hold continent data
  */
-public class Continent extends Observable implements Viewable, NameOnlySerializable {
+public class Continent extends Observable implements Viewable {
     @Expose
     private String name;
     @Expose
@@ -142,19 +141,5 @@ public class Continent extends Observable implements Viewable, NameOnlySerializa
                                    this.getOrder(),
                                    this.getArmy(),
                                    conquererName);
-    }
-
-    @Override
-    public String getPropertyName() {
-        return "name";
-    }
-
-    @Override
-    public String getPropertyValue() {
-        if (name == null || name.isEmpty()) {
-            return "";
-        }
-
-        return name;
     }
 }

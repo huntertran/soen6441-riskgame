@@ -2,34 +2,41 @@ package soen6441riskgame.models;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.JsonAdapter;
-
-import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
-import soen6441riskgame.models.serializers.NameOnlySerializable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Hold country data
  */
-public class Country extends Observable implements Viewable, NameOnlySerializable {
+public class Country extends Observable implements Viewable {
     @Expose
     private Coordinate coordinate;
     @Expose
     private int armyAmount;
     @Expose
     private String name;
-    @JsonAdapter(NameOnlyJsonAdapter.class)
-    @Expose
+
     private Continent continent;
-    @JsonAdapter(NameOnlyJsonAdapter.class)
-    @Expose
+
     private Player conquerer;
     @Expose
     private int serializedOrder;
+
+    /**
+     * this property is for saving data only
+     */
+    @Expose
+    private String continentName;
+
+    /**
+     * this property is for saving data only
+     */
+    @Expose
+    private String conquererName;
 
     /**
      * constructor
@@ -44,6 +51,43 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
         this.name = name;
         this.coordinate = coordinate;
         this.continent = continent;
+        this.continentName = continent.getName();
+    }
+
+    /**
+     * construct country object from json serialized country
+     * @param serializedCountry the serialized country object
+     * @param continents list of continents in game
+     * @param players list of players in game
+     */
+    public Country(Country serializedCountry, List<Continent> continents, List<Player> players) {
+
+        for (Continent continent : continents) {
+            if (serializedCountry.continentName.equals(continent.getName())) {
+                this.continent = continent;
+                break;
+            }
+        }
+
+        for (Player player : players) {
+            if (serializedCountry.conquererName.equals(player.getName())) {
+                this.conquerer = player;
+                break;
+            }
+        }
+
+        this.name = serializedCountry.name;
+        this.coordinate = serializedCountry.coordinate;
+        this.armyAmount = serializedCountry.armyAmount;
+    }
+
+    /**
+     * get serialized order of country. This method is only used for save and load game data
+     * 
+     * @return serialized order
+     */
+    public int getSerializedOrder() {
+        return this.serializedOrder;
     }
 
     /**
@@ -71,6 +115,7 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
 
         if (conquerer != this.conquerer) {
             this.conquerer = conquerer;
+            this.conquererName = conquerer.getName();
             setChanged();
             notifyObservers();
         }
@@ -310,15 +355,6 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
                                    conquererName);
     }
 
-    // /**
-    // * print this country content
-    // *
-    // * @param indent number of indentation before print
-    // */
-    // public void view(int indent) {
-    // view(GameBoard.getInstance().standardPrintStream, indent);
-    // }
-
     public void view(PrintStream printStream, int indent) {
         this.viewWithoutNeighbors(indent);
 
@@ -328,19 +364,5 @@ public class Country extends Observable implements Viewable, NameOnlySerializabl
         for (Country country : this.getNeighbors()) {
             country.viewWithoutNeighbors(indent + 2);
         }
-    }
-
-    @Override
-    public String getPropertyName() {
-        return "name";
-    }
-
-    @Override
-    public String getPropertyValue() {
-        if (name == null || name.isEmpty()) {
-            return "";
-        }
-
-        return name;
     }
 }

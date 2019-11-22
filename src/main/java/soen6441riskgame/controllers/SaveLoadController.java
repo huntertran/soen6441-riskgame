@@ -11,9 +11,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Continent;
-import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
-import soen6441riskgame.models.serializers.NameOnlySerializable;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
 import soen6441riskgame.models.serializers.SerializableGame;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
@@ -35,7 +36,7 @@ public class SaveLoadController {
                                                                                                .getGameBoardPlayer()
                                                                                                .getPlayers())
                                                                           .setCards(GameBoard.getInstance()
-                                                                                             .getCardsForSaveLoad())
+                                                                                             .getCardsForSave())
                                                                           .build();
 
         String jsonToSave = serializableGame.serialize();
@@ -50,22 +51,25 @@ public class SaveLoadController {
         return isSaved;
     }
 
-    public SerializableGame deserialize(JsonReader reader) {
+    public void deserialize(JsonReader reader) {
         GameBoard.getInstance().reset();
-        Gson gson = new GsonBuilder().registerTypeAdapter(NameOnlySerializable.class, new NameOnlyJsonAdapter())
-                                     .create();
+        Gson gson = new GsonBuilder().create();
 
         JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
 
-        List<Continent> continents = Arrays.asList(gson.fromJson(jsonObject.get("continents"),Continent[].class));
+        List<Continent> continents = Arrays.asList(gson.fromJson(jsonObject.get("continents"), Continent[].class));
+        List<Country> countries = Arrays.asList(gson.fromJson(jsonObject.get("countries"), Country[].class));
+        List<Player> players = Arrays.asList(gson.fromJson(jsonObject.get("players"), Player[].class));
+        Card[] cards = gson.fromJson(jsonObject.get("cards"), Card[].class);
+        int[][] borders = gson.fromJson(jsonObject.get("borders"), int[][].class);
 
-        SerializableGame serializableGame = new SerializableGame.Builder()
-                                                                .setContinents(continents)
-                                                                .build();
-
-        ConsolePrinter.printFormat(jsonObject.toString());
-
-        return serializableGame;
+        SerializableGame.Builder builder = new SerializableGame.Builder()
+                                                                         .setContinents(continents)
+                                                                         .setCountries(countries)
+                                                                         .setPlayers(players)
+                                                                         .setBorders(borders)
+                                                                         .setCards(cards);
+        builder.reconstructGame();
     }
 
     public boolean loadGame(String savedGameFilePath) {
@@ -73,7 +77,7 @@ public class SaveLoadController {
 
         try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath))) {
             ConsolePrinter.printFormat("Reading from saved game");
-            SerializableGame serializableGame = deserialize(reader);
+            deserialize(reader);
             isLoaded = true;
         } catch (Exception e) {
             ConsolePrinter.printFormat("Error reading saved game: %s", e.getMessage());
