@@ -12,6 +12,9 @@
         "atmost",
         "attackmove",
         "cobertura",
+        "countryname",
+        "countrynamefrom",
+        "countynameto",
         "createmap",
         "currentplayer",
         "doclet",
@@ -42,6 +45,7 @@
         "smallmap",
         "submodule",
         "submodules",
+        "tocountry",
         "validatemap",
         "yura"
     ],

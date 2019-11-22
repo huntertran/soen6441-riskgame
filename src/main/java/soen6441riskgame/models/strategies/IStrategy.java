@@ -4,5 +4,5 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 
 public interface IStrategy {
-    public void execute(GameBoard board, Player p);
+    void execute(GameBoard board, Player p);
 }

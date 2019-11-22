@@ -18,11 +18,11 @@ public class AggressiveStrategy implements IStrategy {
         int maxPlayerArmy = 0;
         int tempArmy = 0;
 
-        // Find the strongest Country from conqured country list
+        // Find the strongest Country from conquered country list
         for (Country country : conquered) {
             tempArmy = country.getArmyAmount();
 
-            if(tempArmy >= maxPlayerArmy) {
+            if (tempArmy >= maxPlayerArmy) {
                 strongestPlayerCountry = country;
                 maxPlayerArmy = tempArmy;
             }
@@ -30,7 +30,7 @@ public class AggressiveStrategy implements IStrategy {
 
         ModelCommands cmds;
         String command;
-        
+
         // Reinforce Phase
         // get number of army to place.
         // reinforce countryname num
@@ -42,19 +42,18 @@ public class AggressiveStrategy implements IStrategy {
         cmds = new ModelCommands(command);
         App.jumpToCommand(cmds);
 
-
         // Attack Phase
-        // Find adjacent neighbour countries to attack
+        // Find adjacent neighbor countries to attack
         ArrayList<Country> neighbours = strongestPlayerCountry.getNeighbors();
         ArrayList<Country> attackedCountries = new ArrayList<>();
 
         boolean flag = false;
-        for(int i = 0; i < neighbours.size() || flag == true; i++) {
+        for (int i = 0; i < neighbours.size() || flag == true; i++) {
             int totalNumPlayerArmy = strongestPlayerCountry.getArmyAmount();
             Country country = neighbours.get(i);
 
-            //Attacker lost all army in strongest country
-            if(totalNumPlayerArmy <= 1) {
+            // Attacker lost all army in strongest country
+            if (totalNumPlayerArmy <= 1) {
                 flag = true;
                 break;
             }
@@ -92,7 +91,7 @@ public class AggressiveStrategy implements IStrategy {
 
         int maxArmyToMove = strongestPlayerCountry.getArmyAmount() - 1;
 
-        int index = attackedCountries.size()-1;
+        int index = attackedCountries.size() - 1;
         Country reinforceCountry = attackedCountries.get(index);
 
         command = GameCommands.REINFORCE.toString();

@@ -9,8 +9,7 @@ import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.GameHelper;
 
-
-class RandomStrategy implements IStrategy {
+public class RandomStrategy implements IStrategy {
 
     public int getDiceCount(Country atk) {
         int dices = 1;
@@ -26,7 +25,6 @@ class RandomStrategy implements IStrategy {
         return dices;
     }
 
-
     @Override
     public void execute(GameBoard board, Player p) {
         ArrayList<Country> conquered = p.getConqueredCountries();
@@ -36,7 +34,7 @@ class RandomStrategy implements IStrategy {
 
         ModelCommands cmds;
         String command;
-        
+
         // Reinforce Phase
         // get number of army to place.
         // reinforce countryname num
@@ -48,40 +46,37 @@ class RandomStrategy implements IStrategy {
         cmds = new ModelCommands(command);
         App.jumpToCommand(cmds);
 
-        
         // Attack Phase
         int randAtkValue = GameHelper.randomNumberGenerator(0, 5);
         ArrayList<Country> attackingCountryList = GameHelper.filterAttackableCountries(conquered);
 
-        for(int i = 0; i < randAtkValue; i++) {
+        for (int i = 0; i < randAtkValue; i++) {
             randIndex = GameHelper.randomNumberGenerator(0, (attackingCountryList.size() - 1));
             Country atkCountry = attackingCountryList.get(randIndex);
             ArrayList<Country> neighbours = atkCountry.getNeighbors();
-            int randNeighbourIndex = GameHelper.randomNumberGenerator(0, neighbours.size());
-            
+            int randNeighborIndex = GameHelper.randomNumberGenerator(0, neighbours.size());
+
             // Attack
             // Command: attack countrynamefrom countynameto numdice
             command = GameCommands.ATTACK.toString();
             command += GameCommands.SPACE.toString();
             command += atkCountry.getName();
             command += GameCommands.SPACE.toString();
-            command += neighbours.get(randNeighbourIndex).getName();
+            command += neighbours.get(randNeighborIndex).getName();
             command += GameCommands.SPACE.toString();
             command += String.valueOf(getDiceCount(atkCountry));
 
             cmds = new ModelCommands(command);
             App.jumpToCommand(cmds);
         }
-        
-        
+
         // Fortify Phase
         // Command: fortify fromcountry tocountry num
         /*
-            1. get list of conqured countries
-            2. get filterd list of conqured countries to move army from
-            3. generate index of country from filtered list of conqured countries
-            4. generate randArmyMove int (min 1, max = number of army moving from country filtered)
-        */
+         * 1. get list of conquered countries 2. get filtered list of conquered countries to move army from
+         * 3. generate index of country from filtered list of conquered countries 4. generate randArmyMove
+         * int (min 1, max = number of army moving from country filtered)
+         */
         conquered = p.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = GameHelper.filterAttackableCountries(conquered);
 
@@ -90,7 +85,7 @@ class RandomStrategy implements IStrategy {
 
         int randIndexCountryTo = GameHelper.randomNumberGenerator(0, (conquered.size() - 1));
         Country countryTo = conquered.get(randIndexCountryTo);
-        
+
         int randArmyAmountToMove = GameHelper.randomNumberGenerator(1, countryFrom.getArmyAmount());
 
         // Do fortify
