@@ -58,7 +58,7 @@ public class GameControllerTest {
     @AfterEach
     public void after() {
         mapController.resetMap();
-        GameController.attackMoveCmdRequired = false;
+        GameBoard.getInstance().getGameBoardPlaying().attackMoveCmdRequired = false;
     }
 
     /**
