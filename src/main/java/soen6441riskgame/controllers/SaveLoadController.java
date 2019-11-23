@@ -17,6 +17,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.serializers.SerializableGame;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.singleton.GameBoardPlaying;
 import soen6441riskgame.utils.ConsolePrinter;
 
 public class SaveLoadController {
@@ -37,6 +38,8 @@ public class SaveLoadController {
                                                                                                .getPlayers())
                                                                           .setCards(GameBoard.getInstance()
                                                                                              .getCardsForSave())
+                                                                          .setGameBoardPlaying(GameBoard.getInstance()
+                                                                                                        .getGameBoardPlaying())
                                                                           .build();
 
         String jsonToSave = serializableGame.serialize();
@@ -62,13 +65,15 @@ public class SaveLoadController {
         List<Player> players = Arrays.asList(gson.fromJson(jsonObject.get("players"), Player[].class));
         Card[] cards = gson.fromJson(jsonObject.get("cards"), Card[].class);
         int[][] borders = gson.fromJson(jsonObject.get("borders"), int[][].class);
+        GameBoardPlaying gameBoardPlaying = gson.fromJson(jsonObject.get("gameBoardPlaying"), GameBoardPlaying.class);
 
         SerializableGame.Builder builder = new SerializableGame.Builder()
                                                                          .setContinents(continents)
                                                                          .setCountries(countries)
                                                                          .setPlayers(players)
                                                                          .setBorders(borders)
-                                                                         .setCards(cards);
+                                                                         .setCards(cards)
+                                                                         .setGameBoardPlaying(gameBoardPlaying);
         builder.reconstructGame();
     }
 

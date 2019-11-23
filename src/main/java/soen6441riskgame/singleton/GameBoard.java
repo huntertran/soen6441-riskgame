@@ -6,6 +6,7 @@ import java.util.Random;
 
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.models.Card;
+import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.views.ExchangeCardView;
 
@@ -108,6 +109,21 @@ public class GameBoard implements Resettable {
                 holdingPlayer.getHoldingCards().add(card);
                 card.setHoldingPlayer(holdingPlayer);
             }
+        }
+    }
+
+    public void loadGameBoardPlaying(GameBoardPlaying serialized) {
+        this.getGameBoardPlaying().setAlloutFlag(serialized.isAlloutFlag());
+        this.getGameBoardPlaying().setAttackMoveCmdRequired(serialized.isAttackMoveCmdRequired());
+        this.getGameBoardPlaying().setAttackerNumDice(serialized.getAttackerNumDice());
+        this.getGameBoardPlaying().setDefenderNumDice(serialized.getDefenderNumDice());
+
+        Country attackingCountry = getGameBoardMap().getCountryFromName(serialized.getAttackingCountryName());
+        Country defendingCountry = getGameBoardMap().getCountryFromName(serialized.getDefendingCountyName());
+
+        if (attackingCountry != null && defendingCountry != null) {
+            this.getGameBoardPlaying().setAttackingCountry(attackingCountry);
+            this.getGameBoardPlaying().setDefendingCountry(defendingCountry);
         }
     }
 

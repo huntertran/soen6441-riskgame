@@ -1,5 +1,7 @@
 package soen6441riskgame.singleton;
 
+import com.google.gson.annotations.Expose;
+
 import soen6441riskgame.models.Country;
 
 public class GameBoardPlaying implements Resettable {
@@ -7,37 +9,155 @@ public class GameBoardPlaying implements Resettable {
     /**
      * The number of dice for attacker
      */
-    public int attackerNumDice = 0;
+    @Expose
+    private int attackerNumDice = 0;
+
     /**
      * The number of dice for defender
      */
-    public int defenderNumDice = 0;
+    @Expose
+    private int defenderNumDice = 0;
+
     /**
      * The country attacking country
      */
-    public Country attackingCountry = null;
+    private Country attackingCountry = null;
+
+    /**
+     * the name for save load function
+     */
+    @Expose
+    private String attackingCountryName;
+
     /**
      * The country defending country
      */
-    public Country defendingCountry = null;
+    private Country defendingCountry = null;
+
+    /**
+     * the name for save load function
+     */
+    @Expose
+    private String defendingCountyName;
+
     /**
      * The all out
      */
-    public boolean alloutFlag = false;
+    @Expose
+    private boolean alloutFlag = false;
+
     /**
      * The attack move cmd required
      */
-    public boolean attackMoveCmdRequired = false;
+    @Expose
+    private boolean attackMoveCmdRequired = false;
+
+    /**
+     * The number of dice for attacker
+     */
+    public int getAttackerNumDice() {
+        return attackerNumDice;
+    }
+
+    /**
+     * set attacker number of dice
+     *
+     * @param attackerNumDice attacker number of dice
+     */
+    public void setAttackerNumDice(int attackerNumDice) {
+        this.attackerNumDice = attackerNumDice;
+    }
+
+    /**
+     * The number of dice for defender
+     */
+    public int getDefenderNumDice() {
+        return defenderNumDice;
+    }
+
+    public void setDefenderNumDice(int defenderNumDice) {
+        this.defenderNumDice = defenderNumDice;
+    }
+
+    /**
+     * The country attacking country
+     */
+    public Country getAttackingCountry() {
+        return attackingCountry;
+    }
+
+    public void setAttackingCountry(Country attackingCountry) {
+        this.attackingCountry = attackingCountry;
+        this.attackingCountryName = attackingCountry.getName();
+    }
+
+    /**
+     * The country defending country
+     */
+    public Country getDefendingCountry() {
+        return defendingCountry;
+    }
+
+    /**
+     * set defending country
+     *
+     * @param defendingCountry country defending
+     */
+    public void setDefendingCountry(Country defendingCountry) {
+        this.defendingCountry = defendingCountry;
+        this.defendingCountyName = defendingCountry.getName();
+    }
+
+    /**
+     * The all out
+     */
+    public boolean isAlloutFlag() {
+        return alloutFlag;
+    }
+
+    /**
+     * set allout flag
+     *
+     * @param alloutFlag is allout
+     */
+    public void setAlloutFlag(boolean alloutFlag) {
+        this.alloutFlag = alloutFlag;
+    }
+
+    /**
+     * The attack move cmd required
+     */
+    public boolean isAttackMoveCmdRequired() {
+        return attackMoveCmdRequired;
+    }
+
+    /**
+     * set attack move command required or not
+     *
+     * @param attackMoveCmdRequired attack move command required or not
+     */
+    public void setAttackMoveCmdRequired(boolean attackMoveCmdRequired) {
+        this.attackMoveCmdRequired = attackMoveCmdRequired;
+    }
+
+    public String getAttackingCountryName() {
+        return attackingCountryName;
+    }
+
+    public String getDefendingCountyName() {
+        return defendingCountyName;
+    }
 
     /**
      * it resets the attack variables
      */
     @Override
     public void reset() {
-        defendingCountry = null;
-        attackingCountry = null;
-        attackerNumDice = 0;
-        defenderNumDice = 0;
+        this.defendingCountry = null;
+        this.defendingCountyName = null;
+        this.attackingCountry = null;
+        this.attackingCountryName = null;
+        this.attackerNumDice = 0;
+        this.defenderNumDice = 0;
     }
-
 }

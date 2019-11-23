@@ -12,6 +12,7 @@ import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.singleton.GameBoardPlaying;
 
 public class SerializableGame {
 
@@ -25,6 +26,8 @@ public class SerializableGame {
     private int[][] borders;
     @Expose
     private Card[] cards;
+    @Expose
+    private GameBoardPlaying gameBoardPlaying;
 
     public String serialize() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
@@ -42,6 +45,7 @@ public class SerializableGame {
         private List<Player> players;
         private int[][] borders;
         private Card[] cards;
+        private GameBoardPlaying gameBoardPlaying;
 
         public Builder setContinents(List<Continent> continents) {
             this.continents = continents;
@@ -68,6 +72,11 @@ public class SerializableGame {
             return this;
         }
 
+        public Builder setGameBoardPlaying(GameBoardPlaying gameBoardPlaying){
+            this.gameBoardPlaying = gameBoardPlaying;
+            return this;
+        }
+
         public SerializableGame build() {
             SerializableGame serializableGame = new SerializableGame();
             serializableGame.continents = this.continents;
@@ -75,6 +84,7 @@ public class SerializableGame {
             serializableGame.players = this.players;
             serializableGame.borders = this.borders;
             serializableGame.cards = this.cards;
+            serializableGame.gameBoardPlaying = this.gameBoardPlaying;
             return serializableGame;
         }
 
@@ -120,6 +130,8 @@ public class SerializableGame {
             }
 
             GameBoard.getInstance().loadCardFromSave(cards);
+
+            GameBoard.getInstance().loadGameBoardPlaying(gameBoardPlaying);
         }
     }
 }
