@@ -65,6 +65,7 @@ public class Player extends Observable {
 
     /**
      * link next and previous players after construct;
+     * 
      * @param players list of current players
      */
     public void linkNextAndPrevious(List<Player> players) {
@@ -79,6 +80,13 @@ public class Player extends Observable {
                 continue;
             }
         }
+    }
+
+    /**
+     * re-construct player object
+     */
+    public void reconstruct() {
+        holdingCards = new ArrayList<Card>();
     }
 
     /**

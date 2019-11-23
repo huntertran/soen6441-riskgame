@@ -6,6 +6,7 @@ import java.util.Random;
 
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.models.Card;
+import soen6441riskgame.models.Player;
 import soen6441riskgame.views.ExchangeCardView;
 
 /**
@@ -100,6 +101,14 @@ public class GameBoard implements Resettable {
      */
     public void loadCardFromSave(Card[] cards) {
         this.cards = cards;
+
+        for (Card card : this.cards) {
+            if (card.getHoldingPlayerName() != null) {
+                Player holdingPlayer = getGameBoardPlayer().getPlayerFromName(card.getHoldingPlayerName());
+                holdingPlayer.getHoldingCards().add(card);
+                card.setHoldingPlayer(holdingPlayer);
+            }
+        }
     }
 
     /**

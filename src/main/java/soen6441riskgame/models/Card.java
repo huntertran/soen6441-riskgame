@@ -83,6 +83,15 @@ public class Card implements Viewable {
     }
 
     /**
+     * get the holding player name for reconstruction
+     * 
+     * @return name of the holder
+     */
+    public String getHoldingPlayerName() {
+        return holdingPlayerName;
+    }
+
+    /**
      * print the card content
      */
     @Override

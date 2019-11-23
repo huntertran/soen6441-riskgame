@@ -99,6 +99,7 @@ public class SerializableGame {
                 player.linkNextAndPrevious(GameBoard.getInstance()
                                                     .getGameBoardPlayer()
                                                     .getPlayers());
+                player.reconstruct();
             }
 
             // sort countries
