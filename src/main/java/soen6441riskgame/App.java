@@ -92,10 +92,6 @@ public final class App {
                 case MapEditorCommands.LOADMAP: {
                     try {
                         mapController.loadMap(args.regularCommands.get(0));
-
-                        // if (mapController.isMapValid()) {
-                        // mapController.showMap();
-                        // }
                     } catch (IOException e) {
                         System.out.println("Error: " + e.getClass().getName());
                     }
@@ -116,7 +112,6 @@ public final class App {
                     break;
                 }
                 case GameCommands.PLACEARMY: {
-                    // gameController.startRoundRobinPlayers();
                     gameController.handlePlaceArmyCommand(args.regularCommands.get(0));
                     break;
                 }

@@ -63,21 +63,6 @@ public class Player extends Observable {
         this.currentPhase = GamePhase.WAITING_TO_TURN;
     }
 
-    // /**
-    //  * construct a player object from json serialized player object
-    //  * 
-    //  * @param serializedPlayer the serialized player
-    //  * @param players          list of player
-    //  */
-    // @SuppressWarnings("unchecked")
-    // public Player(Player serializedPlayer, List<Player> players) {
-    //     this.name = serializedPlayer.name;
-    //     this.unplacedArmies = serializedPlayer.unplacedArmies;
-    //     this.isPlaying = serializedPlayer.isPlaying;
-    //     this.currentPhase = serializedPlayer.currentPhase;
-    //     this.currentPhaseActions = (ArrayList<String>) serializedPlayer.currentPhaseActions.clone();
-    // }
-
     /**
      * link next and previous players after construct;
      * @param players list of current players
