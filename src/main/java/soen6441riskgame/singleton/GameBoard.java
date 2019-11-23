@@ -15,8 +15,11 @@ public class GameBoard implements Resettable {
     private static final int NUMBER_OF_CARDS = 56;
 
     private static GameBoard instance = new GameBoard();
+
     private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();
     private GameBoardMap gameBoardMap = new GameBoardMap();
+    private GameBoardPlaying gameBoardPlaying = new GameBoardPlaying();
+
     private ExchangeCardView exchangeCardView = new ExchangeCardView();
     private Card[] cards = new Card[NUMBER_OF_CARDS];
 
@@ -140,10 +143,19 @@ public class GameBoard implements Resettable {
     /**
      * get GameBoardMap instance
      *
-     * @return GameBoardMap instance that Countries and Continents
+     * @return GameBoardMap instance that hold Countries and Continents
      */
     public GameBoardMap getGameBoardMap() {
         return gameBoardMap;
+    }
+
+    /**
+     * get the GameBoardPlaying instance
+     * 
+     * @return GameBoardPlaying instance that hold attacking and defending countries plus playing data
+     */
+    public GameBoardPlaying getGameBoardPlaying() {
+        return gameBoardPlaying;
     }
 
     /**
