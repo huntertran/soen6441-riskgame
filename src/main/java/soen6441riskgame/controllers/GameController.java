@@ -17,6 +17,12 @@ import soen6441riskgame.utils.Parser;
  * Control the game
  */
 public class GameController {
+    /**
+     *
+     */
+    private static final int NUMBER_OF_CARD_IN_ONE_SET = 3;
+    private static final int MAXIMUM_ARMY_IN_ONE_ATTACK = 3;
+    private static final int MINIMUM_ARMY_TO_ATTACK = 2;
     private static final int MINIMUM_NUMBER_OF_PLAYER = 2;
     private static final int MAXIMUM_NUMBER_OF_PLAYER = 6;
 
@@ -522,8 +528,13 @@ public class GameController {
                                     .getGameBoardMap()
                                     .getCountryFromName(args[1]);
 
+        if (!isAttackPreconditionsValid()) {
+            ConsolePrinter.printFormat("Invalid Input");
+            return;
+        }
+
         if (args[2].equals("allout") || args[2].equals("-allout")) {
-            attackerNumDice = Math.min((attackingCountry.getArmyAmount() - 1), 3);
+            attackerNumDice = Math.min((attackingCountry.getArmyAmount() - 1), MAXIMUM_ARMY_IN_ONE_ATTACK);
             alloutFlag = true;
             if (!isAttackValid()) {
                 alloutFlag = false;
@@ -551,7 +562,7 @@ public class GameController {
      */
     private void simulateAttack() {
         while (alloutFlag) {
-            attackerNumDice = Math.min((attackingCountry.getArmyAmount() - 1), 3);
+            attackerNumDice = Math.min((attackingCountry.getArmyAmount() - 1), MAXIMUM_ARMY_IN_ONE_ATTACK);
             int defender_dice = Math.min(defendingCountry.getArmyAmount(), 2);
             if (attackMoveCmdRequired) {
                 alloutFlag = false;
@@ -614,13 +625,11 @@ public class GameController {
             ConsolePrinter.printFormat("You cannot use defend command without attack command.");
             return;
         }
-        // System.out.println(args[0]);
+
         if (!isAttackValid()) {
             ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
             return;
-        }
-
-        else if (defenderNumDice > 2) {
+        } else if (defenderNumDice > 2) {
             ConsolePrinter.printFormat("You can only defend with a maximum of 2 armies at a time");
             return;
         } else if (defenderNumDice > defendingCountry.getArmyAmount()) {
@@ -700,40 +709,61 @@ public class GameController {
     }
 
     /**
-     * it returns whether the attack is valid (true) or not (false)
-     *
-     * @return boolean it checks whether attack is valid or not and returns true or false based on that.
+     * check if attack pre-conditions valid. The conditions are:
+     * 
+     * valid attacking country and defending country
+     * 
+     * attacking country belong to attacker
+     * 
+     * defending country does not belong to attacker
+     * 
+     * attacking country and defending country is neighbor
+     * 
+     * @return is valid or not
      */
-    boolean isAttackValid() {
+    private boolean isAttackPreconditionsValid() {
         Player currentPlayer = getCurrentPlayer(false);
+
         if (attackingCountry == null || defendingCountry == null) {
             ConsolePrinter.printFormat("The countries you have entered is non-existent");
             return false;
         }
 
         // check if attacking country belongs to the current player
-        else if (!attackingCountry.getConquerer().equals(currentPlayer)) {
+        if (!attackingCountry.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s does not belong to %s",
                                        attackingCountry.getName(),
                                        currentPlayer.getName());
             return false;
         }
+
         // check if the defending country does not belong to the current player
-        else if (defendingCountry.getConquerer().equals(currentPlayer)) {
+        if (defendingCountry.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s belongs to %s. You cannot attack your own country.",
                                        defendingCountry.getName(),
                                        currentPlayer.getName());
             return false;
         }
+
         // the countries have to be neighbours
-        else if (!attackingCountry.isNeighboringCountries(defendingCountry)) {
+        if (!attackingCountry.isNeighboringCountries(defendingCountry)) {
             ConsolePrinter.printFormat("The countries %s and %s are not neighbouring countries. You can only attack neighbouring countries.",
                                        attackingCountry.getName(),
                                        defendingCountry.getName());
             return false;
         }
+
+        return true;
+    }
+
+    /**
+     * it returns whether the attack is valid (true) or not (false)
+     *
+     * @return boolean it checks whether attack is valid or not and returns true or false based on that.
+     */
+    boolean isAttackValid() {
         // check if you have more than 2 army in attacking country
-        else if (attackingCountry.getArmyAmount() < 2) {
+        if (attackingCountry.getArmyAmount() < MINIMUM_ARMY_TO_ATTACK) {
             ConsolePrinter.printFormat("The country %s has less than 2 armies. You need at least 2 armies to attack a country.",
                                        attackingCountry.getName());
             return false;
@@ -744,8 +774,9 @@ public class GameController {
             return false;
         }
         // also numdice has to be less than 3
-        else if (attackerNumDice > 3) {
-            ConsolePrinter.printFormat("You can only attack with a maximum of 3 armies at a time");
+        else if (attackerNumDice > MAXIMUM_ARMY_IN_ONE_ATTACK) {
+            ConsolePrinter.printFormat("You can only attack with a maximum of %d armies at a time",
+                                       MAXIMUM_ARMY_IN_ONE_ATTACK);
             return false;
         }
 
@@ -862,14 +893,14 @@ public class GameController {
             return null;
         }
 
-        if (args.length > 3) {
-            ConsolePrinter.printFormat("A set of card only have 3 card");
+        if (args.length > NUMBER_OF_CARD_IN_ONE_SET) {
+            ConsolePrinter.printFormat("A set of card only have %d card", NUMBER_OF_CARD_IN_ONE_SET);
             return null;
         }
 
-        Card[] cards = new Card[3];
+        Card[] cards = new Card[NUMBER_OF_CARD_IN_ONE_SET];
 
-        for (int index = 0; index < 3; index++) {
+        for (int index = 0; index < NUMBER_OF_CARD_IN_ONE_SET; index++) {
             if (Parser.checkValidInputNumber(args[index])) {
                 int cardPosition = Parser.parseWithDefault(args[index], 0);
                 cards[index] = currentPlayer.getHoldingCard(cardPosition);
@@ -887,17 +918,18 @@ public class GameController {
     /**
      * handle exchange card command
      *
-     * @param args 3 number as position of card in a set, -none at the end to not exchange
+     * @param args {NUMBER_OF_CARD_IN_ONE_SET} number as position of card in a set, -none at the end to
+     *             not exchange
      */
     public void exchangeCard(String[] args) {
         Player currentPlayer = getCurrentPlayer();
         int numberOfTradedArmies = 0;
         int tradeTime = 1;
 
-        int paramLeftOver = args.length % 3;
+        int paramLeftOver = args.length % NUMBER_OF_CARD_IN_ONE_SET;
         int size = args.length - paramLeftOver;
 
-        for (int index = 0; index < size; index = index + 3) {
+        for (int index = 0; index < size; index = index + NUMBER_OF_CARD_IN_ONE_SET) {
 
             CardSet cardSet = buildCardSet(new String[] {
                                                           args[index],
