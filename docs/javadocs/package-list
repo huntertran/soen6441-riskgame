@@ -4,6 +4,7 @@ soen6441riskgame.enums
 soen6441riskgame.models
 soen6441riskgame.models.commands
 soen6441riskgame.models.serializers
+soen6441riskgame.models.strategies
 soen6441riskgame.singleton
 soen6441riskgame.utils
 soen6441riskgame.utils.presenter

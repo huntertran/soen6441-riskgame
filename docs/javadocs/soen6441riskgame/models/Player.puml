@@ -11,12 +11,16 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 -int unplacedArmies
 -boolean isPlaying
 -Player nextPlayer
+-String nextPlayerName
 -Player previousPlayer
+-String previousPlayerName
 -GamePhase currentPhase
 -ArrayList<Card> holdingCards
 -ArrayList<String> currentPhaseActions
 -boolean isPlayerBeAwardCard
 +Player(String name)
++void linkNextAndPrevious(List<Player> players)
++void reconstruct()
 +void setPlayerBeAwardCard(boolean isPlayerAwardCard)
 +GamePhase getCurrentPhase()
 +void setCurrentPhase(GamePhase newPhase)
@@ -40,8 +44,6 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 +void calculateReinforcementArmies()
 +void reinforce(Country country,int numberOfArmies)
 +void fortify(Country fromCountry,Country toCountry,int numberOfArmies)
-+String getPropertyName()
-+String getPropertyValue()
 +void attack(Country attackingCountry,Country defendingCountry,int attackerNumDice,int defenderNumDice)
 +void attackMove(Country fromCountry,Country toCountry,int numberOfArmies)
 -boolean isPlayerBeAwardCard()
@@ -103,13 +105,6 @@ soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
 
 
 
-interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] #white {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlySerializable fields
-hide soen6441riskgame.models.serializers.NameOnlySerializable methods
-
-soen6441riskgame.models.Player ..|> soen6441riskgame.models.serializers.NameOnlySerializable
 
 
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
@@ -132,6 +127,38 @@ hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
 hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
 
 soen6441riskgame.models.serializers.SerializableGame.Builder -->  "players *" soen6441riskgame.models.Player
+
+class "<b><size:14>AggressiveStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.models.Player
+
+interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.IStrategy fields
+hide soen6441riskgame.models.strategies.IStrategy methods
+
+soen6441riskgame.models.strategies.IStrategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Player
 
 class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] #white {
 }

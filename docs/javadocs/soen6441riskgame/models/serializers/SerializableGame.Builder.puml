@@ -9,13 +9,16 @@ class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.model
 -List<Player> players
 -int borders
 -Card cards
+-GameBoardPlaying gameBoardPlaying
 +Builder()
 +SerializableGame.Builder setContinents(List<Continent> continents)
 +SerializableGame.Builder setCountries(List<Country> countries)
 +SerializableGame.Builder setPlayers(List<Player> players)
 +SerializableGame.Builder setBorders(int borders)
 +SerializableGame.Builder setCards(Card cards)
++SerializableGame.Builder setGameBoardPlaying(GameBoardPlaying gameBoardPlaying)
 +SerializableGame build()
++void reconstructGame()
 }
 
 
@@ -53,6 +56,14 @@ hide soen6441riskgame.models.Card fields
 hide soen6441riskgame.models.Card methods
 
 soen6441riskgame.models.serializers.SerializableGame.Builder -->  "cards" soen6441riskgame.models.Card
+
+class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlaying  [[../../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlaying fields
+hide soen6441riskgame.singleton.GameBoardPlaying methods
+
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
 
 class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] {
 }

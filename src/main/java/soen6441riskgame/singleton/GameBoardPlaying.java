@@ -54,6 +54,8 @@ public class GameBoardPlaying implements Resettable {
 
     /**
      * The number of dice for attacker
+     * 
+     * @return The number of dice for attacker
      */
     public int getAttackerNumDice() {
         return attackerNumDice;
@@ -70,6 +72,8 @@ public class GameBoardPlaying implements Resettable {
 
     /**
      * The number of dice for defender
+     * 
+     * @return The number of dice for defender
      */
     public int getDefenderNumDice() {
         return defenderNumDice;
@@ -81,6 +85,8 @@ public class GameBoardPlaying implements Resettable {
 
     /**
      * The country attacking country
+     * 
+     * @return The country attacking country
      */
     public Country getAttackingCountry() {
         return attackingCountry;
@@ -93,6 +99,8 @@ public class GameBoardPlaying implements Resettable {
 
     /**
      * The country defending country
+     * 
+     * @return The country defending country
      */
     public Country getDefendingCountry() {
         return defendingCountry;
@@ -110,6 +118,8 @@ public class GameBoardPlaying implements Resettable {
 
     /**
      * The all out
+     * 
+     * @return The all out
      */
     public boolean isAlloutFlag() {
         return alloutFlag;
@@ -126,6 +136,8 @@ public class GameBoardPlaying implements Resettable {
 
     /**
      * The attack move cmd required
+     * 
+     * @return The attack move cmd required
      */
     public boolean isAttackMoveCmdRequired() {
         return attackMoveCmdRequired;
@@ -140,10 +152,20 @@ public class GameBoardPlaying implements Resettable {
         this.attackMoveCmdRequired = attackMoveCmdRequired;
     }
 
+    /**
+     * get attacking country name
+     * 
+     * @return get attacking country name
+     */
     public String getAttackingCountryName() {
         return attackingCountryName;
     }
 
+    /**
+     * get defending country name
+     * 
+     * @return get defending country name
+     */
     public String getDefendingCountyName() {
         return defendingCountyName;
     }

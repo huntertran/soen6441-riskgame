@@ -20,11 +20,10 @@ public class GameHelper {
      * it returns the maximum value and second max value from the array of dice values
      *
      * @param inputArray dice-values the array of the dice values rolled
-     * @param secondMax secondMax if second max is true, then second max value is returned. else only the
-     *                max value is returned.
+     * @param secondMax  secondMax if second max is true, then second max value is returned. else only
+     *                   the max value is returned.
      *
-     * @return int it returns the maximum value or second max value based on the value of secondMax
-     *         flag
+     * @return int it returns the maximum value or second max value based on the value of secondMax flag
      *
      */
     public static int getMax(int[] inputArray, boolean secondMax) {
@@ -53,7 +52,7 @@ public class GameHelper {
     /**
      * A function to generate a random number with minimum and maximum range.
      *
-     * @param min minmum random value generator
+     * @param min minimum random value generator
      * @param max maximum range of random value
      *
      * @return int random value
@@ -67,16 +66,16 @@ public class GameHelper {
     /**
      * A function to filter ArrayList of Countries which has army less than two
      *
-     * @param ArrayList<Country> all country list of a player
+     * @param countries all country list of a player
      *
-     * @return ArrayList<Country> return ArrayList of countries with army count more than one.
+     * @return return ArrayList of countries with army count more than one.
      *
      */
-    public static ArrayList<Country> filterAttackableCountries(ArrayList<Country> lstCountries) {
+    public static ArrayList<Country> filterAttackableCountries(ArrayList<Country> countries) {
         ArrayList<Country> filteredList = new ArrayList<>();
-        
-        for (Country country : lstCountries) {
-            if(country.getArmyAmount() > 1) {
+
+        for (Country country : countries) {
+            if (country.getArmyAmount() > 1) {
                 filteredList.add(country);
             }
         }

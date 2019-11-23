@@ -32,5 +32,13 @@ hide soen6441riskgame.singleton.GameBoardPlayer methods
 
 soen6441riskgame.singleton.GameBoardPlayer ..|> soen6441riskgame.singleton.Resettable
 
+class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlaying  [[../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlaying fields
+hide soen6441riskgame.singleton.GameBoardPlaying methods
+
+soen6441riskgame.singleton.GameBoardPlaying ..|> soen6441riskgame.singleton.Resettable
+
 
 @enduml

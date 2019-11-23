@@ -23,6 +23,12 @@ class "<b><size:14>GameBoardPlayer</b>" as soen6441riskgame.singleton.GameBoardP
 hide soen6441riskgame.singleton.GameBoardPlayer fields
 hide soen6441riskgame.singleton.GameBoardPlayer methods
 
+class "<b><size:14>GameBoardPlaying</b>" as soen6441riskgame.singleton.GameBoardPlaying  [[../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlaying fields
+hide soen6441riskgame.singleton.GameBoardPlaying methods
+
 interface "<b><size:14>Resettable</b>" as soen6441riskgame.singleton.Resettable  [[../../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
 }
 
@@ -32,8 +38,10 @@ hide soen6441riskgame.singleton.Resettable methods
 soen6441riskgame.singleton.GameBoard -->  "instance" soen6441riskgame.singleton.GameBoard
 soen6441riskgame.singleton.GameBoard -->  "gameBoardPlayer" soen6441riskgame.singleton.GameBoardPlayer
 soen6441riskgame.singleton.GameBoard -->  "gameBoardMap" soen6441riskgame.singleton.GameBoardMap
+soen6441riskgame.singleton.GameBoard -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
 soen6441riskgame.singleton.GameBoard ..|> soen6441riskgame.singleton.Resettable
 soen6441riskgame.singleton.GameBoardMap ..|> soen6441riskgame.singleton.Resettable
 soen6441riskgame.singleton.GameBoardPlayer ..|> soen6441riskgame.singleton.Resettable
+soen6441riskgame.singleton.GameBoardPlaying ..|> soen6441riskgame.singleton.Resettable
 
 @enduml

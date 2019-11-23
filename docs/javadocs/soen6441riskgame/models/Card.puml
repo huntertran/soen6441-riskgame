@@ -7,12 +7,14 @@ class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskga
 -CardType cardType
 -boolean isExchanged
 -Player holdingPlayer
+-String holdingPlayerName
 +Card(CardType type)
 +CardType getCardType()
 +boolean isExchanged()
 +void setExchanged(boolean isExchanged)
 +Player getHoldingPlayer()
 +void setHoldingPlayer(Player player)
++String getHoldingPlayerName()
 +void view(PrintStream printStream,int indent)
 }
 

@@ -9,19 +9,11 @@ class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serial
 -List<Player> players
 -int borders
 -Card cards
+-GameBoardPlaying gameBoardPlaying
 +SerializableGame()
 +String serialize()
-+void deserialize(JsonReader reader)
 }
 
-
-class "<b><size:14>SaveLoadController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.SaveLoadController  [[../../../soen6441riskgame/controllers/SaveLoadController.html{soen6441riskgame.controllers.SaveLoadController}]] #white {
-}
-
-hide soen6441riskgame.controllers.SaveLoadController fields
-hide soen6441riskgame.controllers.SaveLoadController methods
-
-soen6441riskgame.controllers.SaveLoadController ..> soen6441riskgame.models.serializers.SerializableGame
 
 
 class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
@@ -58,13 +50,13 @@ hide soen6441riskgame.models.Card methods
 
 soen6441riskgame.models.serializers.SerializableGame -->  "cards" soen6441riskgame.models.Card
 
-class "<b><size:14>JsonReader</b>\n<size:10>com.google.gson.stream" as com.google.gson.stream.JsonReader  #lightgrey {
+class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlaying  [[../../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] #white {
 }
 
-hide com.google.gson.stream.JsonReader fields
-hide com.google.gson.stream.JsonReader methods
+hide soen6441riskgame.singleton.GameBoardPlaying fields
+hide soen6441riskgame.singleton.GameBoardPlaying methods
 
-soen6441riskgame.models.serializers.SerializableGame ..> com.google.gson.stream.JsonReader
+soen6441riskgame.models.serializers.SerializableGame -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
 
 class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] {
 }

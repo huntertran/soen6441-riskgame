@@ -17,8 +17,6 @@ class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441r
 +void view(PrintStream printStream,int indent)
 +void viewWithoutCountry()
 +void viewWithoutCountry(PrintStream printStream)
-+String getPropertyName()
-+String getPropertyValue()
 }
 
 
@@ -48,14 +46,6 @@ hide soen6441riskgame.models.Viewable methods
 
 soen6441riskgame.models.Continent ..|> soen6441riskgame.models.Viewable
 
-interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] #white {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlySerializable fields
-hide soen6441riskgame.models.serializers.NameOnlySerializable methods
-
-soen6441riskgame.models.Continent ..|> soen6441riskgame.models.serializers.NameOnlySerializable
-
 class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
 }
 
@@ -75,14 +65,6 @@ soen6441riskgame.models.Continent ..> java.io.PrintStream
 soen6441riskgame.models.Country -->  "continent" soen6441riskgame.models.Continent
 
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
-
-class "<b><size:14>NameOnlyJsonAdapter</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] #white {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter fields
-hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter methods
-
-soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.Continent
 
 class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
 }

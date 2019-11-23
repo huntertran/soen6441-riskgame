@@ -5,18 +5,6 @@ skinparam linetype ortho
 package soen6441riskgame.models.serializers [[../../../soen6441riskgame/models/serializers/package-summary.html{soen6441riskgame.models.serializers}]] #lightyellow {
 }
 
-class "<b><size:14>NameOnlyJsonAdapter</b>" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter fields
-hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter methods
-
-interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlySerializable fields
-hide soen6441riskgame.models.serializers.NameOnlySerializable methods
-
 class "<b><size:14>SerializableGame</b>" as soen6441riskgame.models.serializers.SerializableGame  [[../../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] {
 }
 
@@ -29,7 +17,6 @@ class "<b><size:14>SerializableGame.Builder</b>" as soen6441riskgame.models.seri
 hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
 hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
 
-soen6441riskgame.models.serializers.NameOnlyJsonAdapter ..> soen6441riskgame.models.serializers.NameOnlySerializable
 soen6441riskgame.models.serializers.SerializableGame.Builder ..> soen6441riskgame.models.serializers.SerializableGame
 
 @enduml

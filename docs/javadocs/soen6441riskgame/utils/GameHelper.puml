@@ -7,8 +7,19 @@ class "<b><size:14>GameHelper</b>\n<size:10>soen6441riskgame.utils" as soen6441r
 +GameHelper()
 {static} +int rollDice()
 {static} +int getMax(int inputArray,boolean secondMax)
+{static} +int randomNumberGenerator(int min,int max)
+{static} +ArrayList<Country> filterAttackableCountries(ArrayList<Country> countries)
 }
 
+
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.utils.GameHelper ..> soen6441riskgame.models.Country
 
 
 @enduml

@@ -1,0 +1,52 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+{abstract} +void execute(GameBoard board,Player p)
+}
+
+
+class "<b><size:14>AggressiveStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+
+class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.models.strategies.IStrategy ..> soen6441riskgame.singleton.GameBoard
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.strategies.IStrategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+soen6441riskgame.models.strategies.RandomStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+
+
+@enduml

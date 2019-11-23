@@ -10,7 +10,11 @@ class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441ris
 -Continent continent
 -Player conquerer
 -int serializedOrder
+-String continentName
+-String conquererName
 +Country(int order,String name,Coordinate coordinate,Continent continent)
++Country(Country serializedCountry,List<Continent> continents,List<Player> players)
++int getSerializedOrder()
 +Player getConquerer()
 +void setConquerer(Player conquerer)
 +Continent getContinent()
@@ -31,20 +35,8 @@ class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441ris
 +void viewWithoutNeighbors(int indent)
 +void viewWithoutNeighbors(PrintStream printStream,int indent)
 +void view(PrintStream printStream,int indent)
-+String getPropertyName()
-+String getPropertyValue()
 }
 
-
-class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] #white {
-}
-
-hide soen6441riskgame.controllers.GameController fields
-hide soen6441riskgame.controllers.GameController methods
-
-soen6441riskgame.controllers.GameController -->  "attackingCountry" soen6441riskgame.models.Country
-
-soen6441riskgame.controllers.GameController -->  "defendingCountry" soen6441riskgame.models.Country
 
 class "<b><size:14>MapController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.MapController  [[../../soen6441riskgame/controllers/MapController.html{soen6441riskgame.controllers.MapController}]] #white {
 }
@@ -89,13 +81,7 @@ hide soen6441riskgame.models.Viewable methods
 
 soen6441riskgame.models.Country ..|> soen6441riskgame.models.Viewable
 
-interface "<b><size:14>NameOnlySerializable</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] #white {
-}
 
-hide soen6441riskgame.models.serializers.NameOnlySerializable fields
-hide soen6441riskgame.models.serializers.NameOnlySerializable methods
-
-soen6441riskgame.models.Country ..|> soen6441riskgame.models.serializers.NameOnlySerializable
 
 
 soen6441riskgame.models.Country ..> soen6441riskgame.models.Country
@@ -126,6 +112,14 @@ hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
 
 soen6441riskgame.models.serializers.SerializableGame.Builder -->  "countries *" soen6441riskgame.models.Country
 
+class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Country
+
 class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] #white {
 }
 
@@ -133,6 +127,24 @@ hide soen6441riskgame.singleton.GameBoardMap fields
 hide soen6441riskgame.singleton.GameBoardMap methods
 
 soen6441riskgame.singleton.GameBoardMap ..> soen6441riskgame.models.Country
+
+class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlaying  [[../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlaying fields
+hide soen6441riskgame.singleton.GameBoardPlaying methods
+
+soen6441riskgame.singleton.GameBoardPlaying -->  "attackingCountry" soen6441riskgame.models.Country
+
+soen6441riskgame.singleton.GameBoardPlaying -->  "defendingCountry" soen6441riskgame.models.Country
+
+class "<b><size:14>GameHelper</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.GameHelper  [[../../soen6441riskgame/utils/GameHelper.html{soen6441riskgame.utils.GameHelper}]] #white {
+}
+
+hide soen6441riskgame.utils.GameHelper fields
+hide soen6441riskgame.utils.GameHelper methods
+
+soen6441riskgame.utils.GameHelper ..> soen6441riskgame.models.Country
 
 class "<b><size:14>GraphChecker</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.GraphChecker  [[../../soen6441riskgame/utils/GraphChecker.html{soen6441riskgame.utils.GraphChecker}]] #white {
 }

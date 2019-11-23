@@ -1,0 +1,37 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] {
++BenevolentStrategy()
++void execute(GameBoard board,Player p)
+}
+
+
+interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.IStrategy fields
+hide soen6441riskgame.models.strategies.IStrategy methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] #white {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.singleton.GameBoard
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.models.Player
+
+
+@enduml

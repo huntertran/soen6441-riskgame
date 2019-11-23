@@ -94,18 +94,6 @@ hide soen6441riskgame.models.commands.MapEditorCommands methods
 package soen6441riskgame.models.serializers [[../../soen6441riskgame/models/serializers/package-summary.html{soen6441riskgame.models.serializers}]] {
 }
 
-class "<b><size:14>NameOnlyJsonAdapter</b>" as soen6441riskgame.models.serializers.NameOnlyJsonAdapter  [[../../soen6441riskgame/models/serializers/NameOnlyJsonAdapter.html{soen6441riskgame.models.serializers.NameOnlyJsonAdapter}]] {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter fields
-hide soen6441riskgame.models.serializers.NameOnlyJsonAdapter methods
-
-interface "<b><size:14>NameOnlySerializable</b>" as soen6441riskgame.models.serializers.NameOnlySerializable  [[../../soen6441riskgame/models/serializers/NameOnlySerializable.html{soen6441riskgame.models.serializers.NameOnlySerializable}]] {
-}
-
-hide soen6441riskgame.models.serializers.NameOnlySerializable fields
-hide soen6441riskgame.models.serializers.NameOnlySerializable methods
-
 class "<b><size:14>SerializableGame</b>" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] {
 }
 
@@ -117,6 +105,33 @@ class "<b><size:14>SerializableGame.Builder</b>" as soen6441riskgame.models.seri
 
 hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
 hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
+
+package soen6441riskgame.models.strategies [[../../soen6441riskgame/models/strategies/package-summary.html{soen6441riskgame.models.strategies}]] {
+}
+
+class "<b><size:14>AggressiveStrategy</b>" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+class "<b><size:14>BenevolentStrategy</b>" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+interface "<b><size:14>IStrategy</b>" as soen6441riskgame.models.strategies.IStrategy  [[../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.IStrategy fields
+hide soen6441riskgame.models.strategies.IStrategy methods
+
+class "<b><size:14>RandomStrategy</b>" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
 
 
 @enduml

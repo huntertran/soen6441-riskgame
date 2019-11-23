@@ -1,0 +1,77 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlaying  [[../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] {
+-int attackerNumDice
+-int defenderNumDice
+-Country attackingCountry
+-String attackingCountryName
+-Country defendingCountry
+-String defendingCountyName
+-boolean alloutFlag
+-boolean attackMoveCmdRequired
++GameBoardPlaying()
++int getAttackerNumDice()
++void setAttackerNumDice(int attackerNumDice)
++int getDefenderNumDice()
++void setDefenderNumDice(int defenderNumDice)
++Country getAttackingCountry()
++void setAttackingCountry(Country attackingCountry)
++Country getDefendingCountry()
++void setDefendingCountry(Country defendingCountry)
++boolean isAlloutFlag()
++void setAlloutFlag(boolean alloutFlag)
++boolean isAttackMoveCmdRequired()
++void setAttackMoveCmdRequired(boolean attackMoveCmdRequired)
++String getAttackingCountryName()
++String getDefendingCountyName()
++void reset()
+}
+
+
+class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame fields
+hide soen6441riskgame.models.serializers.SerializableGame methods
+
+soen6441riskgame.models.serializers.SerializableGame -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
+
+class "<b><size:14>SerializableGame.Builder</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame.Builder  [[../../soen6441riskgame/models/serializers/SerializableGame.Builder.html{soen6441riskgame.models.serializers.SerializableGame.Builder}]] #white {
+}
+
+hide soen6441riskgame.models.serializers.SerializableGame.Builder fields
+hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
+
+soen6441riskgame.models.serializers.SerializableGame.Builder -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
+
+class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoard fields
+hide soen6441riskgame.singleton.GameBoard methods
+
+soen6441riskgame.singleton.GameBoard -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.singleton.GameBoardPlaying -->  "attackingCountry" soen6441riskgame.models.Country
+
+soen6441riskgame.singleton.GameBoardPlaying -->  "defendingCountry" soen6441riskgame.models.Country
+
+interface "<b><size:14>Resettable</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.Resettable  [[../../soen6441riskgame/singleton/Resettable.html{soen6441riskgame.singleton.Resettable}]] {
+}
+
+hide soen6441riskgame.singleton.Resettable fields
+hide soen6441riskgame.singleton.Resettable methods
+
+soen6441riskgame.singleton.GameBoardPlaying ..|> soen6441riskgame.singleton.Resettable
+
+
+@enduml

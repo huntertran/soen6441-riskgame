@@ -4,15 +4,12 @@ skinparam svgLinkTarget _parent
 skinparam linetype ortho
 set namespaceSeparator none
 class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] {
-{static} +Country attackingCountry
-{static} +Country defendingCountry
-{static} ~boolean attackMoveCmdRequired
+{static} -int NUMBER_OF_CARD_IN_ONE_SET
+{static} -int MAXIMUM_ARMY_IN_ONE_ATTACK
+{static} -int MINIMUM_ARMY_TO_ATTACK
 {static} -int MINIMUM_NUMBER_OF_PLAYER
 {static} -int MAXIMUM_NUMBER_OF_PLAYER
 {static} -int MINIMUM_NUMBER_OF_ARMY_ON_COUNTRY
-{static} -int attackerNumDice
-{static} -int defenderNumDice
-{static} -boolean alloutFlag
 +GameController()
 +void handleGamePlayerCommand(String args)
 +boolean isNumberOfPlayerValid()
@@ -39,23 +36,13 @@ class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as
 -void handleFortifyCommand(String args)
 -void simulateAttack()
 -boolean furtherAttackPossible()
--void resetAttack()
 -boolean isGameEnded()
+-boolean isAttackPreconditionsValid()
 -void attackResult()
 -void endAttackPhase()
 -CardSet buildCardSet(String args)
 }
 
-
-class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
-}
-
-hide soen6441riskgame.models.Country fields
-hide soen6441riskgame.models.Country methods
-
-soen6441riskgame.controllers.GameController -->  "attackingCountry" soen6441riskgame.models.Country
-
-soen6441riskgame.controllers.GameController -->  "defendingCountry" soen6441riskgame.models.Country
 
 class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
 }

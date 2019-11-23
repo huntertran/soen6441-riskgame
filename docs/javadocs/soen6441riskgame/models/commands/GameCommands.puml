@@ -18,6 +18,9 @@ class "<b><size:14>GameCommands</b>\n<size:10>soen6441riskgame.models.commands" 
 {static} +String EXIT
 {static} +String ATTACKMOVE
 {static} +String ALLOUT
+{static} +String DASH
+{static} +String SPACE
+{static} +String NOATTACK
 +GameCommands()
 }
 

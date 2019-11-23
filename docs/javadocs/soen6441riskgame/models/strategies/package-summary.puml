@@ -1,0 +1,36 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.models.strategies [[../../../soen6441riskgame/models/strategies/package-summary.html{soen6441riskgame.models.strategies}]] #lightyellow {
+}
+
+class "<b><size:14>AggressiveStrategy</b>" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+class "<b><size:14>BenevolentStrategy</b>" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+interface "<b><size:14>IStrategy</b>" as soen6441riskgame.models.strategies.IStrategy  [[../../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.IStrategy fields
+hide soen6441riskgame.models.strategies.IStrategy methods
+
+class "<b><size:14>RandomStrategy</b>" as soen6441riskgame.models.strategies.RandomStrategy  [[../../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+soen6441riskgame.models.strategies.RandomStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+
+@enduml

@@ -9,21 +9,57 @@ class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen64
 {static} -GameBoard instance
 -GameBoardPlayer gameBoardPlayer
 -GameBoardMap gameBoardMap
+-GameBoardPlaying gameBoardPlaying
 -ExchangeCardView exchangeCardView
 -Card cards
 +GameBoard()
 +void initCards()
 +Card getSpecificCardForTest(CardType cardType)
-+Card getCardsForSaveLoad()
++Card getCardsForSave()
++void loadCardFromSave(Card cards)
++void loadGameBoardPlaying(GameBoardPlaying serialized)
 +Card getRandomAvailableCard()
 +ExchangeCardView getExchangeCardView()
 +GameBoardPlayer getGameBoardPlayer()
 +GameBoardMap getGameBoardMap()
++GameBoardPlaying getGameBoardPlaying()
 {static} +void setTestingInstance(GameBoard newTestingInstance)
 {static} +GameBoard getInstance()
 +void reset()
 }
 
+
+class "<b><size:14>AggressiveStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..> soen6441riskgame.singleton.GameBoard
+
+class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.singleton.GameBoard
+
+interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.IStrategy fields
+hide soen6441riskgame.models.strategies.IStrategy methods
+
+soen6441riskgame.models.strategies.IStrategy ..> soen6441riskgame.singleton.GameBoard
+
+class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.singleton.GameBoard
 
 soen6441riskgame.singleton.GameBoard -->  "instance" soen6441riskgame.singleton.GameBoard
 
@@ -42,6 +78,14 @@ hide soen6441riskgame.singleton.GameBoardMap fields
 hide soen6441riskgame.singleton.GameBoardMap methods
 
 soen6441riskgame.singleton.GameBoard -->  "gameBoardMap" soen6441riskgame.singleton.GameBoardMap
+
+class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlaying  [[../../soen6441riskgame/singleton/GameBoardPlaying.html{soen6441riskgame.singleton.GameBoardPlaying}]] {
+}
+
+hide soen6441riskgame.singleton.GameBoardPlaying fields
+hide soen6441riskgame.singleton.GameBoardPlaying methods
+
+soen6441riskgame.singleton.GameBoard -->  "gameBoardPlaying" soen6441riskgame.singleton.GameBoardPlaying
 
 class "<b><size:14>ExchangeCardView</b>\n<size:10>soen6441riskgame.views" as soen6441riskgame.views.ExchangeCardView  [[../../soen6441riskgame/views/ExchangeCardView.html{soen6441riskgame.views.ExchangeCardView}]] #white {
 }
