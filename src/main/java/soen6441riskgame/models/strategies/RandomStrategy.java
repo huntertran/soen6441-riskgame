@@ -18,11 +18,17 @@ import soen6441riskgame.utils.GameHelper;
  * all following the standard rules for each phase.
  */
 public class RandomStrategy implements Strategy {
-    public int getDiceCount(Country atk) {
+    /**
+     * get count of dice
+     * 
+     * @param attackingCountry attacking country
+     * @return count of dice
+     */
+    public int getDiceCount(Country attackingCountry) {
         int dices = 1;
 
         for (int i = 3; i > 0; i--) {
-            if ((atk.getArmyAmount() - 1) >= i) {
+            if ((attackingCountry.getArmyAmount() - 1) >= i) {
                 dices = i;
                 break;
             }
@@ -31,6 +37,12 @@ public class RandomStrategy implements Strategy {
         return dices;
     }
 
+    /**
+     * get country to reinforce
+     * 
+     * @param player current player
+     * @return the country
+     */
     private Country getCountryToReinforce(Player player) {
         ArrayList<Country> conquered = player.getConqueredCountries();
 
@@ -38,6 +50,12 @@ public class RandomStrategy implements Strategy {
         return conquered.get(randIndex);
     }
 
+    /**
+     * reinforce
+     * 
+     * @param player             current player
+     * @param countryToReinforce country to reinforce
+     */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
         String countryName = countryToReinforce.getName();
@@ -54,6 +72,13 @@ public class RandomStrategy implements Strategy {
 
     }
 
+    /**
+     * attack
+     * 
+     * @param player           current player
+     * @param attackingCountry attack from
+     * @return list of attacked countries
+     */
     @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
 
@@ -85,6 +110,12 @@ public class RandomStrategy implements Strategy {
         return null;
     }
 
+    /**
+     * fortify
+     * 
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
         // Fortify Phase
@@ -100,6 +131,11 @@ public class RandomStrategy implements Strategy {
 
     }
 
+    /**
+     * execute the strategy
+     * 
+     * @param player current player
+     */
     @Override
     public void execute(Player player) {
 

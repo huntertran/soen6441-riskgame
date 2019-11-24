@@ -18,6 +18,12 @@ import soen6441riskgame.models.commands.GameCommands;
  */
 public class BenevolentStrategy implements Strategy {
 
+    /**
+     * get weakest country to reinforce
+     * 
+     * @param player current player
+     * @return the weakest country
+     */
     private Country getWeakestCountryToReinforce(Player player) {
         ArrayList<Country> conquered = player.getConqueredCountries();
         Country weakestPlayerCountry = null;
@@ -37,6 +43,12 @@ public class BenevolentStrategy implements Strategy {
         return weakestPlayerCountry;
     }
 
+    /**
+     * reinforce
+     * 
+     * @param player             current player
+     * @param countryToReinforce country to reinforce
+     */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
         // Reinforce Phase
@@ -50,6 +62,13 @@ public class BenevolentStrategy implements Strategy {
         App.jumpToCommand(new ModelCommands(command));
     }
 
+    /**
+     * attack
+     * 
+     * @param player           current player
+     * @param attackingCountry attack from
+     * @return list of attacked countries
+     */
     @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
         // Attack Phase
@@ -63,21 +82,24 @@ public class BenevolentStrategy implements Strategy {
         return null;
     }
 
+    /**
+     * fortify
+     * 
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
-        // Fortify Phase
-        // Command: fortify fromcountry tocountry num
-        // get max number of armies to move
-        // then move the countries
-
-        // Find the weaker country from conquered country list
-
-        // get the average number of armies
         int averageArmies = fromCountry.getArmyAmount() + toCountry.getArmyAmount() / 2;
         int armyToMove = fromCountry.getArmyAmount() - averageArmies;
         fortify(fromCountry, toCountry, armyToMove);
     }
 
+    /**
+     * execute the strategy
+     * 
+     * @param player current player
+     */
     @Override
     public void execute(Player player) {
         Country weakestPlayerCountry = getWeakestCountryToReinforce(player);

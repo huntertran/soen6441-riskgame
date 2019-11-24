@@ -134,6 +134,11 @@ public class AggressiveStrategy implements Strategy {
         fortify(fromCountry, toCountry, maxArmyToMove);
     }
 
+    /**
+     * execute the strategy
+     * 
+     * @param player current player
+     */
     @Override
     public void execute(Player player) {
         Country strongestPlayerCountry = getStrongestCountryToReinforce(player);

@@ -8,13 +8,42 @@ import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 
+/**
+ * the interface for computer playing strategy
+ */
 public interface Strategy {
+    /**
+     * reinforce
+     * 
+     * @param player             current player
+     * @param countryToReinforce country to reinforce
+     */
     void reinforce(Player player, Country countryToReinforce);
 
+    /**
+     * attack
+     * 
+     * @param player           current player
+     * @param attackingCountry attack from
+     * @return list of attacked countries
+     */
     ArrayList<Country> attack(Player player, Country attackingCountry);
 
+    /**
+     * fortify
+     * 
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
     void fortify(Country fromCountry, Country toCountry);
 
+    /**
+     * default fortify
+     * 
+     * @param fromCountry  from country
+     * @param toCountry    to country
+     * @param armiesAmount number of armies
+     */
     default void fortify(Country fromCountry, Country toCountry, int armiesAmount) {
         String command = GameCommands.FORTIFY;
         command += GameCommands.SPACE;
@@ -27,6 +56,9 @@ public interface Strategy {
         App.jumpToCommand(new ModelCommands(command));
     }
 
+    /**
+     * call fortify none to give turn to next player
+     */
     default void fortifyNone() {
         App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY
                                             + GameCommands.SPACE
@@ -34,5 +66,10 @@ public interface Strategy {
                                             + GameCommands.NONE));
     }
 
+    /**
+     * execute the strategy
+     * 
+     * @param player current player
+     */
     void execute(Player player);
 }
