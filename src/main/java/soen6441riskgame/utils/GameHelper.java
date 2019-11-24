@@ -1,6 +1,8 @@
 package soen6441riskgame.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.Random;
 
 import soen6441riskgame.models.Country;
@@ -27,26 +29,25 @@ public class GameHelper {
      *
      */
     public static int getMax(int[] inputArray, boolean secondMax) {
-        int maxValue = inputArray[0];
-        int maxIndex = 0;
-        for (int i = 1; i < inputArray.length; i++) {
-            if (inputArray[i] > maxValue) {
-                maxValue = inputArray[i];
-                maxIndex = i;
-            }
+        if (inputArray == null || inputArray.length == 0) {
+            return 0;
         }
+
+        IntSummaryStatistics stat = Arrays.stream(inputArray).summaryStatistics();
+        int max = stat.getMax();
 
         if (secondMax) {
-            int secondMaxValue = -1;
-            for (int i = 0; i < inputArray.length; i++) {
-                if (inputArray[i] > secondMaxValue && maxIndex != i) {
-                    secondMaxValue = inputArray[i];
+            int secondMaxValue = inputArray[0];
+            for (int value : inputArray) {
+                if (value < max && value >= secondMaxValue) {
+                    secondMaxValue = value;
                 }
             }
-            maxValue = secondMaxValue;
-        }
 
-        return maxValue;
+            return secondMaxValue;
+        } else {
+            return max;
+        }
     }
 
     /**
