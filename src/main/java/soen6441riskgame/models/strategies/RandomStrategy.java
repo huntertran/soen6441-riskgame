@@ -9,7 +9,7 @@ import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.GameHelper;
 
-public class RandomStrategy implements IStrategy {
+public class RandomStrategy implements Strategy {
 
     public int getDiceCount(Country atk) {
         int dices = 1;

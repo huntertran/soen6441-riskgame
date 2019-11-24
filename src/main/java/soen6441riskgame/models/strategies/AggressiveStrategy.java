@@ -9,47 +9,51 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
 
-public class AggressiveStrategy implements IStrategy {
+/**
+ * focuses on attack
+ *
+ * 1. reinforces its strongest country
+ *
+ * 2. always attack with it until it cannot attack anymore
+ *
+ * 3. fortifies in order to maximize aggregation of forces in one country).
+ */
+public class AggressiveStrategy implements Strategy {
 
-    @Override
-    public void execute(GameBoard board, Player p) {
-        ArrayList<Country> conquered = p.getConqueredCountries();
-        Country strongestPlayerCountry = null;
-        int maxPlayerArmy = 0;
-        int tempArmy = 0;
+    /**
+     * Reinforce Phase
+     *
+     * get number of army to place.
+     *
+     * <code>reinforce countryname num</code>
+     *
+     * @param player             the player
+     * @param countryToReinforce the country to reinforce
+     */
+    public void reinforce(Player player, Country countryToReinforce) {
+        String command = GameCommands.REINFORCE;
+        command += GameCommands.SPACE;
+        command += countryToReinforce.getName();
+        command += GameCommands.SPACE;
+        command += String.valueOf(player.getUnplacedArmies());
 
-        // Find the strongest Country from conquered country list
-        for (Country country : conquered) {
-            tempArmy = country.getArmyAmount();
+        App.jumpToCommand(new ModelCommands(command));
+    }
 
-            if (tempArmy >= maxPlayerArmy) {
-                strongestPlayerCountry = country;
-                maxPlayerArmy = tempArmy;
-            }
-        }
-
-        ModelCommands cmds;
-        String command;
-
-        // Reinforce Phase
-        // get number of army to place.
-        // reinforce countryname num
-        command = GameCommands.REINFORCE.toString();
-        command += GameCommands.SPACE.toString();
-        command += strongestPlayerCountry.getName();
-        command += GameCommands.SPACE.toString();
-        command += String.valueOf(p.getUnplacedArmies());
-        cmds = new ModelCommands(command);
-        App.jumpToCommand(cmds);
-
-        // Attack Phase
-        // Find adjacent neighbor countries to attack
-        ArrayList<Country> neighbours = strongestPlayerCountry.getNeighbors();
+    /**
+     * Attack Phase
+     *
+     * @param player           the player
+     * @param attackingCountry the attacking country
+     * @return the attacked countries
+     */
+    public ArrayList<Country> attack(Player player, Country attackingCountry) {
+        ArrayList<Country> neighbours = attackingCountry.getNeighbors();
         ArrayList<Country> attackedCountries = new ArrayList<>();
 
         boolean flag = false;
-        for (int i = 0; i < neighbours.size() || flag == true; i++) {
-            int totalNumPlayerArmy = strongestPlayerCountry.getArmyAmount();
+        for (int i = 0; i < neighbours.size() || flag; i++) {
+            int totalNumPlayerArmy = attackingCountry.getArmyAmount();
             Country country = neighbours.get(i);
 
             // Attacker lost all army in strongest country
@@ -58,52 +62,98 @@ public class AggressiveStrategy implements IStrategy {
                 break;
             }
             // Attacker lost the strongest country
-            else if (strongestPlayerCountry.getConquerer() == p) {
+            else if (attackingCountry.getConquerer() == player) {
                 flag = true;
                 break;
             }
             // Attacker won the country
-            else if (country.getConquerer() == p) {
+            else if (country.getConquerer() == player) {
                 flag = true;
                 break;
             }
             // Continue to attack neighbours
             else {
-                command = GameCommands.ATTACK.toString();
-                command += GameCommands.SPACE.toString();
-                command += strongestPlayerCountry.getName();
-                command += GameCommands.SPACE.toString();
+                String command = GameCommands.ATTACK;
+                command += GameCommands.SPACE;
+                command += attackingCountry.getName();
+                command += GameCommands.SPACE;
                 command += country.getName();
-                command += GameCommands.SPACE.toString();
-                command += GameCommands.DASH.toString();
-                command += GameCommands.ALLOUT.toString();
-                cmds = new ModelCommands(command);
-                App.jumpToCommand(cmds);
+                command += GameCommands.SPACE;
+                command += GameCommands.DASH;
+                command += GameCommands.ALLOUT;
+                App.jumpToCommand(new ModelCommands(command));
 
                 attackedCountries.add(country);
             }
         }
 
-        // Fortify Phase
-        // Command: fortify fromcountry tocountry num
-        // get max number of armies to move
-        // then move the countries
+        return attackedCountries;
+    }
 
-        int maxArmyToMove = strongestPlayerCountry.getArmyAmount() - 1;
+    /**
+     * Fortify Phase
+     *
+     * Command:
+     *
+     * <code>fortify fromcountry tocountry num</code>
+     *
+     * get max number of armies to move then
+     *
+     * move the countries
+     *
+     * @param attackingCountry  the attacking country
+     * @param attackedCountries the country that attacked
+     */
+    public void fortify(Country attackingCountry, ArrayList<Country> attackedCountries) {
+        int maxArmyToMove = attackingCountry.getArmyAmount() - 1;
 
         int index = attackedCountries.size() - 1;
         Country reinforceCountry = attackedCountries.get(index);
 
-        command = GameCommands.REINFORCE.toString();
-        command += GameCommands.SPACE.toString();
-        command += strongestPlayerCountry.getName();
-        command += GameCommands.SPACE.toString();
+        String command = GameCommands.FORTIFY;
+        command += GameCommands.SPACE;
+        command += attackingCountry.getName();
+        command += GameCommands.SPACE;
         command += reinforceCountry.getName();
-        command += GameCommands.SPACE.toString();
+        command += GameCommands.SPACE;
         command += String.valueOf(maxArmyToMove);
 
-        cmds = new ModelCommands(command);
-        App.jumpToCommand(cmds);
+        App.jumpToCommand(new ModelCommands(command));
+    }
+
+    @Override
+    public void execute(GameBoard board, Player player) {
+        Country strongestPlayerCountry = getStrongestCountryToReinforce(player);
+
+        reinforce(player, strongestPlayerCountry);
+
+        ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
+
+        fortify(strongestPlayerCountry, attackedCountries);
+    }
+
+    /**
+     * get the strongest country to reinforce
+     *
+     * @param player the player
+     * @return the strongest country
+     */
+    private Country getStrongestCountryToReinforce(Player player) {
+        Country strongestPlayerCountry = null;
+        int maxPlayerArmy = 0;
+
+        ArrayList<Country> conqueredCountries = player.getConqueredCountries();
+
+        for (Country country : conqueredCountries) {
+            int tempArmy = country.getArmyAmount();
+
+            if (tempArmy >= maxPlayerArmy) {
+                strongestPlayerCountry = country;
+                maxPlayerArmy = tempArmy;
+            }
+        }
+
+        return strongestPlayerCountry;
     }
 
 }
