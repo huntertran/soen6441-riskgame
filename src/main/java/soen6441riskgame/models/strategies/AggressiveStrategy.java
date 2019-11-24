@@ -7,7 +7,6 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
-import soen6441riskgame.singleton.GameBoard;
 
 /**
  * focuses on attack
@@ -30,6 +29,7 @@ public class AggressiveStrategy implements Strategy {
      * @param player             the player
      * @param countryToReinforce the country to reinforce
      */
+    @Override
     public void reinforce(Player player, Country countryToReinforce) {
         String command = GameCommands.REINFORCE;
         command += GameCommands.SPACE;
@@ -47,6 +47,7 @@ public class AggressiveStrategy implements Strategy {
      * @param attackingCountry the attacking country
      * @return the attacked countries
      */
+    @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
         ArrayList<Country> neighbours = attackingCountry.getNeighbors();
         ArrayList<Country> attackedCountries = new ArrayList<>();
@@ -101,20 +102,18 @@ public class AggressiveStrategy implements Strategy {
      *
      * move the countries
      *
-     * @param attackingCountry  the attacking country
+     * @param fromCountry       the attacking country
      * @param attackedCountries the country that attacked
      */
-    public void fortify(Country attackingCountry, ArrayList<Country> attackedCountries) {
-        int maxArmyToMove = attackingCountry.getArmyAmount() - 1;
-
-        int index = attackedCountries.size() - 1;
-        Country reinforceCountry = attackedCountries.get(index);
+    @Override
+    public void fortify(Country fromCountry, Country toCountry) {
+        int maxArmyToMove = fromCountry.getArmyAmount() - 1;
 
         String command = GameCommands.FORTIFY;
         command += GameCommands.SPACE;
-        command += attackingCountry.getName();
+        command += fromCountry.getName();
         command += GameCommands.SPACE;
-        command += reinforceCountry.getName();
+        command += toCountry.getName();
         command += GameCommands.SPACE;
         command += String.valueOf(maxArmyToMove);
 
@@ -122,14 +121,17 @@ public class AggressiveStrategy implements Strategy {
     }
 
     @Override
-    public void execute(GameBoard board, Player player) {
+    public void execute(Player player) {
         Country strongestPlayerCountry = getStrongestCountryToReinforce(player);
 
         reinforce(player, strongestPlayerCountry);
 
         ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
 
-        fortify(strongestPlayerCountry, attackedCountries);
+        int index = attackedCountries.size() - 1;
+        Country fortifyToCountry = attackedCountries.get(index);
+
+        fortify(strongestPlayerCountry, fortifyToCountry);
     }
 
     /**
