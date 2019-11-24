@@ -75,16 +75,7 @@ public class BenevolentStrategy implements Strategy {
         // get the average number of armies
         int averageArmies = fromCountry.getArmyAmount() + toCountry.getArmyAmount() / 2;
         int armyToMove = fromCountry.getArmyAmount() - averageArmies;
-
-        String command = GameCommands.REINFORCE;
-        command += GameCommands.SPACE;
-        command += fromCountry.getName();
-        command += GameCommands.SPACE;
-        command += toCountry.getName();
-        command += GameCommands.SPACE;
-        command += String.valueOf(armyToMove);
-
-        App.jumpToCommand(new ModelCommands(command));
+        fortify(fromCountry, toCountry, armyToMove);
     }
 
     @Override
@@ -109,7 +100,10 @@ public class BenevolentStrategy implements Strategy {
             }
         }
 
-        fortify(weakestPlayerCountry, weakerPlayerCountry);
-
+        if (weakerPlayerCountry != null) {
+            fortify(weakestPlayerCountry, weakerPlayerCountry);
+        } else {
+            fortifyNone();
+        }
     }
 }

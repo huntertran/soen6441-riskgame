@@ -131,16 +131,7 @@ public class AggressiveStrategy implements Strategy {
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
         int maxArmyToMove = fromCountry.getArmyAmount() - 1;
-
-        String command = GameCommands.FORTIFY;
-        command += GameCommands.SPACE;
-        command += fromCountry.getName();
-        command += GameCommands.SPACE;
-        command += toCountry.getName();
-        command += GameCommands.SPACE;
-        command += String.valueOf(maxArmyToMove);
-
-        App.jumpToCommand(new ModelCommands(command));
+        fortify(fromCountry, toCountry, maxArmyToMove);
     }
 
     @Override

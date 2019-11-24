@@ -96,17 +96,7 @@ public class RandomStrategy implements Strategy {
          */
 
         int randArmyAmountToMove = GameHelper.randomNumberGenerator(1, fromCountry.getArmyAmount());
-
-        // Do fortify
-        String command = GameCommands.FORTIFY;
-        command += GameCommands.SPACE;
-        command += fromCountry.getName();
-        command += GameCommands.SPACE;
-        command += toCountry.getName();
-        command += GameCommands.SPACE;
-        command += String.valueOf(randArmyAmountToMove);
-
-        App.jumpToCommand(new ModelCommands(command));
+        fortify(fromCountry, toCountry, randArmyAmountToMove);
 
     }
 
