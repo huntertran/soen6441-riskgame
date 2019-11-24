@@ -8,12 +8,6 @@ import soen6441riskgame.models.Player;
 public class CheaterStrategy implements Strategy {
 
     @Override
-    public void execute(Player p) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void reinforce(Player player, Country countryToReinforce) {
         // TODO Auto-generated method stub
 
@@ -27,6 +21,12 @@ public class CheaterStrategy implements Strategy {
 
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void execute(Player p) {
         // TODO Auto-generated method stub
 
     }

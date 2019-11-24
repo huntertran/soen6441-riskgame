@@ -18,6 +18,29 @@ import soen6441riskgame.models.commands.GameCommands;
  * 3. fortifies in order to maximize aggregation of forces in one country).
  */
 public class AggressiveStrategy implements Strategy {
+    /**
+     * get the strongest country to reinforce
+     *
+     * @param player the player
+     * @return the strongest country
+     */
+    private Country getStrongestCountryToReinforce(Player player) {
+        Country strongestPlayerCountry = null;
+        int maxPlayerArmy = 0;
+
+        ArrayList<Country> conqueredCountries = player.getConqueredCountries();
+
+        for (Country country : conqueredCountries) {
+            int tempArmy = country.getArmyAmount();
+
+            if (tempArmy >= maxPlayerArmy) {
+                strongestPlayerCountry = country;
+                maxPlayerArmy = tempArmy;
+            }
+        }
+
+        return strongestPlayerCountry;
+    }
 
     /**
      * Reinforce Phase
@@ -102,8 +125,8 @@ public class AggressiveStrategy implements Strategy {
      *
      * move the countries
      *
-     * @param fromCountry       the attacking country
-     * @param attackedCountries the country that attacked
+     * @param fromCountry the attacking country
+     * @param toCountry   the country that attacked
      */
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
@@ -132,30 +155,6 @@ public class AggressiveStrategy implements Strategy {
         Country fortifyToCountry = attackedCountries.get(index);
 
         fortify(strongestPlayerCountry, fortifyToCountry);
-    }
-
-    /**
-     * get the strongest country to reinforce
-     *
-     * @param player the player
-     * @return the strongest country
-     */
-    private Country getStrongestCountryToReinforce(Player player) {
-        Country strongestPlayerCountry = null;
-        int maxPlayerArmy = 0;
-
-        ArrayList<Country> conqueredCountries = player.getConqueredCountries();
-
-        for (Country country : conqueredCountries) {
-            int tempArmy = country.getArmyAmount();
-
-            if (tempArmy >= maxPlayerArmy) {
-                strongestPlayerCountry = country;
-                maxPlayerArmy = tempArmy;
-            }
-        }
-
-        return strongestPlayerCountry;
     }
 
 }
