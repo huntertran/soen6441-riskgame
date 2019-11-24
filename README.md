@@ -121,6 +121,8 @@ The project using MVC Pattern, which is stand for Model-View-Controller
 
 More about applying MVC in Java applications can be found here: [MVC article on Codeproject](https://www.codeproject.com/Articles/879896/Programming-in-Java-using-the-MVC-architecture)
 
+For a more details MVC pattern, please look in [this part](https://github.com/huntertran/soen6441-riskgame/wiki/System-Architectural#2-model-view-controller) of wiki.
+
 ## 5.2. JDK version and tools
 <a id="markdown-jdk-version-and-tools" name="jdk-version-and-tools"></a>
 
