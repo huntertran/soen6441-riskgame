@@ -39,6 +39,9 @@ public final class GameCommands {
     public static final String SPACE = " ";
     public static final String NOATTACK = "noattack";
 
+    public static final String SAVEGAME = "savegame";
+    public static final String LOADGAME = "loadgame";
+
     public static final String TOURNAMENT = "tournament";
     public static final String TOURNAMENT_MAP_LIST = "-M";
     public static final String TOURNAMENT_PLAYER_STRATEGY_LIST = "-P";

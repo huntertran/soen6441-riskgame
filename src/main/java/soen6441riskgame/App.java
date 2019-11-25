@@ -7,6 +7,7 @@ import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
+import soen6441riskgame.controllers.SaveLoadController;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.ModelCommandsPair;
 
@@ -171,8 +172,18 @@ public final class App {
                     gameController.showCurrentPlayer();
                     break;
                 }
-                case GameCommands.TOURNAMENT:{
-                    
+                case GameCommands.SAVEGAME: {
+                    SaveLoadController saveLoadController = new SaveLoadController();
+                    saveLoadController.saveGame(args.regularCommands.get(0));
+                    break;
+                }
+                case GameCommands.LOADGAME: {
+                    SaveLoadController saveLoadController = new SaveLoadController();
+                    saveLoadController.loadGame(args.regularCommands.get(0));
+                    break;
+                }
+                case GameCommands.TOURNAMENT: {
+                    break;
                 }
                 default: {
                     System.out.println("Command not exist!");

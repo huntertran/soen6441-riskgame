@@ -44,7 +44,7 @@ public class SaveLoadController {
 
         String jsonToSave = serializableGame.serialize();
 
-        try (FileWriter writer = new FileWriter(saveGameFilePath)) {
+        try (FileWriter writer = new FileWriter(saveGameFilePath + ".json")) {
             writer.write(jsonToSave);
             isSaved = true;
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class SaveLoadController {
     public boolean loadGame(String savedGameFilePath) {
         boolean isLoaded = false;
 
-        try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath))) {
+        try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath + ".json"))) {
             ConsolePrinter.printFormat("Reading from saved game");
             deserialize(reader);
             isLoaded = true;

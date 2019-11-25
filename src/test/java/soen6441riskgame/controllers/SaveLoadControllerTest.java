@@ -50,7 +50,7 @@ public class SaveLoadControllerTest {
             currentPlayer.getHoldingCards().add(newCard);
         }
 
-        return "testSavedGame.json";
+        return "testSavedGame";
     }
 
     @Test
