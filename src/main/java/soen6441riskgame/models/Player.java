@@ -9,6 +9,7 @@ import com.google.gson.annotations.Expose;
 
 import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
+import soen6441riskgame.models.strategies.Strategy;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
@@ -53,6 +54,8 @@ public class Player extends Observable {
     @Expose
     private boolean isPlayerBeAwardCard = false;
 
+    private Strategy strategy;
+
     /**
      * constructor
      *
@@ -61,6 +64,22 @@ public class Player extends Observable {
     public Player(String name) {
         this.name = name;
         this.currentPhase = GamePhase.WAITING_TO_TURN;
+    }
+
+    /**
+     * get player's strategy set by tournament mode
+     * @return player's strategy set by tournament mode
+     */
+    public Strategy getStrategy() {
+        return strategy;
+    }
+
+    /**
+     * set player's strategy for tournament mode
+     * @param strategy player's strategy for tournament mode
+     */
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
     }
 
     /**

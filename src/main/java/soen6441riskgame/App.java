@@ -171,6 +171,9 @@ public final class App {
                     gameController.showCurrentPlayer();
                     break;
                 }
+                case GameCommands.TOURNAMENT:{
+                    
+                }
                 default: {
                     System.out.println("Command not exist!");
                     break;
