@@ -5,9 +5,11 @@ import java.util.Scanner;
 
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
+import soen6441riskgame.models.commands.TournamentCommands;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.controllers.SaveLoadController;
+import soen6441riskgame.controllers.TournamentController;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.ModelCommandsPair;
 
@@ -182,7 +184,9 @@ public final class App {
                     saveLoadController.loadGame(args.regularCommands.get(0));
                     break;
                 }
-                case GameCommands.TOURNAMENT: {
+                case TournamentCommands.TOURNAMENT: {
+                    TournamentController tournamentController = new TournamentController(gameController, mapController);
+                    tournamentController.enterTournament(args.regularCommands);
                     break;
                 }
                 default: {

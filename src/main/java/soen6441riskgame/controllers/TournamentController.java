@@ -1,11 +1,14 @@
 package soen6441riskgame.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Boundary;
-import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.models.commands.TournamentCommands;
 import soen6441riskgame.models.strategies.Strategy;
+import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.GameHelper;
 import soen6441riskgame.utils.Parser;
 
@@ -79,39 +82,67 @@ public class TournamentController {
     private int numberOfGame;
     private int maxNumberOfTurn;
 
+    private GameController gameController;
+    private MapController mapController;
+
+    public TournamentController(GameController gameController, MapController mapController) {
+        this.gameController = gameController;
+        this.mapController = mapController;
+    }
+
     /**
      * because of ModelCommands logic, this function have to do extra work to take the correct argument
      * for each parameter
      *
      * @param args tournament's parameters
      */
-    public void enterTournament(String[] args) {
-        parseTournamentParameters(args);
+    public void enterTournament(List<String> args) {
+        String[] parameters = new String[args.size()];
+        parameters = args.toArray(parameters);
+        parseTournamentParameters(parameters);
 
         if (isTournamentValid()) {
-            // TODO: enter tournament
+            for (int gameIndex = 0; gameIndex < numberOfGame; gameIndex++) {
+                for (String map : maps) {
+                    for (Strategy strategy : strategies) {
+                        try {
+                            simulateGamePlay(map, strategy);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    private void simulateGamePlay(String map, Strategy strategy) throws IOException {
+        // TODO: simulate game play
+        gameController = new GameController();
+        mapController = new MapController();
+        GameBoard.getInstance().reset();
+        mapController.loadMap(map);
     }
 
     private void parseTournamentParameters(String[] args) {
         for (int index = 0; index < args.length; index = index + 2) {
             switch (args[index]) {
-                case GameCommands.TOURNAMENT_MAP_LIST: {
+                case TournamentCommands.TOURNAMENT_MAP_LIST: {
                     maps = args[index + 1].split(",");
                     break;
                 }
-                case GameCommands.TOURNAMENT_PLAYER_STRATEGY_LIST: {
+                case TournamentCommands.TOURNAMENT_PLAYER_STRATEGY_LIST: {
                     String[] playerStrategies = args[index + 1].split(",");
                     ArrayList<Strategy> parsedStrategies = parsePlayerStrategies(playerStrategies);
                     strategies = new Strategy[parsedStrategies.size()];
                     strategies = parsedStrategies.toArray(strategies);
                     break;
                 }
-                case GameCommands.TOURNAMENT_NUMBER_OF_GAME: {
+                case TournamentCommands.TOURNAMENT_NUMBER_OF_GAME: {
                     numberOfGame = Parser.parseWithDefault(args[index + 1], 0);
                     break;
                 }
-                case GameCommands.TOURNAMENT_MAX_NUMBER_OF_TURN: {
+                case TournamentCommands.TOURNAMENT_MAX_NUMBER_OF_TURN: {
                     maxNumberOfTurn = Parser.parseWithDefault(args[index + 1], 0);
                     break;
                 }
