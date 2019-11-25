@@ -3,6 +3,7 @@ package soen6441riskgame.models.strategies;
 import java.util.ArrayList;
 
 import soen6441riskgame.App;
+import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
@@ -18,6 +19,16 @@ import soen6441riskgame.models.commands.GameCommands;
  * 3. fortifies in order to maximize aggregation of forces in one country).
  */
 public class AggressiveStrategy implements Strategy {
+    /**
+     * get strategy name
+     * 
+     * @return the name of the strategy as enum
+     */
+    @Override
+    public StrategyName getName() {
+        return StrategyName.AGGRESSIVE;
+    }
+
     /**
      * get the strongest country to reinforce
      *
@@ -152,5 +163,4 @@ public class AggressiveStrategy implements Strategy {
 
         fortify(strongestPlayerCountry, fortifyToCountry);
     }
-
 }

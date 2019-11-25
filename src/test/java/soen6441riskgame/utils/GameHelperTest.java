@@ -7,6 +7,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import soen6441riskgame.helpers.IntArrayConverter;
+import soen6441riskgame.helpers.StringArrayConverter;
 
 public class GameHelperTest {
     @ParameterizedTest
@@ -24,5 +25,18 @@ public class GameHelperTest {
 
         // assert
         assertEquals(expectedResult, actualResult);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "map1;map2;map3,3",
+                 "map1;map2;map1,2",
+                 ",0"
+    })
+    public void countDistinct(@ConvertWith(StringArrayConverter.class) String[] inputArray,
+                              int expectedDistinctValue) {
+        int actualDistinctValue = GameHelper.countDistinct(inputArray);
+
+        assertEquals(expectedDistinctValue, actualDistinctValue);
     }
 }

@@ -2,6 +2,7 @@ package soen6441riskgame.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.Random;
 
@@ -82,5 +83,13 @@ public class GameHelper {
         }
 
         return filteredList;
+    }
+
+    public static <T> int countDistinct(T[] array) {
+        // add all the elements to the HashSet
+        HashSet<T> hashSet = new HashSet<T>(Arrays.asList(array));
+
+        // return the size of hash set as it consists of all Unique elements
+        return hashSet.size();
     }
 }

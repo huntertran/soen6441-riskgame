@@ -3,6 +3,7 @@ package soen6441riskgame.models.strategies;
 import java.util.ArrayList;
 
 import soen6441riskgame.App;
+import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
@@ -12,6 +13,13 @@ import soen6441riskgame.models.commands.GameCommands;
  * the interface for computer playing strategy
  */
 public interface Strategy {
+    /**
+     * get strategy name
+     * 
+     * @return the name of the strategy as enum
+     */
+    StrategyName getName();
+
     /**
      * reinforce
      * 

@@ -2,6 +2,7 @@ package soen6441riskgame.models.strategies;
 
 import java.util.ArrayList;
 import soen6441riskgame.App;
+import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
@@ -17,6 +18,15 @@ import soen6441riskgame.models.commands.GameCommands;
  * 3. fortifies in order to move armies to weaker countries
  */
 public class BenevolentStrategy implements Strategy {
+    /**
+     * get strategy name
+     * 
+     * @return the name of the strategy as enum
+     */
+    @Override
+    public StrategyName getName() {
+        return StrategyName.BENEVOLENT;
+    }
 
     /**
      * get weakest country to reinforce
