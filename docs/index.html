@@ -2,18 +2,31 @@
     <title>RISK DOMINATION GAME</title>
     <link rel="stylesheet"
         href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
-    <link rel="stylesheet"
-        href="./site.css"/>
+    <link rel="stylesheet" href="./site.css" />
 </head>
 
 <body>
     <h1>SOEN 6441 - ADVANCED PROGRAMMING PRACTICES</h1>
     <h2>RISK DOMINATION GAME</h2>
 
-    <a class="mdc-button mdc-button--raised" href="./javadocs/">Javadocs</a>
-    <a class="mdc-button mdc-button--raised" href="./testcoverage/">Test coverage</a>
-
-    <br/>
+    <a class="mdc-button mdc-button--raised" href="./javadocs/">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Javadocs</span>
+    </a>
+    <a class="mdc-button mdc-button--raised" href="./testcoverage/">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Test coverage</span>
+    </a>
+    <a class="mdc-button mdc-button--raised" href="https://github.com/huntertran/soen6441-riskgame/wiki"
+        target="_blank">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Wiki</span>
+    </a>
+    <a class="mdc-button mdc-button--raised" href="https://github.com/huntertran/soen6441-riskgame/" target="_blank">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Source Code</span>
+    </a>
+    <br />
 
     <table>
         <thead>
@@ -55,8 +68,10 @@
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <!-- Instantiate single textfield component rendered in the document -->
     <script>
-        mdc.textField.MDCTextField.attachTo(
-            document.querySelector(".mdc-text-field")
-        );
+        mdc.autoInit();
+        const MDCRipple = mdc.ripple.MDCRipple;
+        const buttonRipples = [].map.call(document.querySelectorAll('.mdc-button'), function (el) {
+            return new MDCRipple(el);
+        });
     </script>
 </body>
