@@ -20,7 +20,17 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.singleton.GameBoardPlaying;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * Controller for Save / Load the game
+ */
 public class SaveLoadController {
+    /**
+     * Save the game, using builder pattern
+     * 
+     * @param saveGameFilePath file name to save. No file extension needed. The default save file is
+     *                         .json
+     * @return true if save successful
+     */
     public boolean saveGame(String saveGameFilePath) {
         boolean isSaved = false;
 
@@ -54,7 +64,12 @@ public class SaveLoadController {
         return isSaved;
     }
 
-    public void deserialize(JsonReader reader) {
+    /**
+     * deserialize json to game objects
+     * 
+     * @param reader the json reader that hold data
+     */
+    private void deserialize(JsonReader reader) {
         GameBoard.getInstance().reset();
         Gson gson = new GsonBuilder().create();
 
@@ -77,6 +92,12 @@ public class SaveLoadController {
         builder.reconstructGame();
     }
 
+    /**
+     * load the game from json file. No extension needed.
+     * 
+     * @param savedGameFilePath file of saved game.
+     * @return true if load successful
+     */
     public boolean loadGame(String savedGameFilePath) {
         boolean isLoaded = false;
 

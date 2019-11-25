@@ -15,7 +15,6 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.singleton.GameBoardPlaying;
 
 public class SerializableGame {
-
     @Expose
     private List<Country> countries;
     @Expose
@@ -29,6 +28,11 @@ public class SerializableGame {
     @Expose
     private GameBoardPlaying gameBoardPlaying;
 
+    /**
+     * serialize game objects
+     * 
+     * @return json string
+     */
     public String serialize() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
                                      .serializeNulls()
@@ -39,6 +43,9 @@ public class SerializableGame {
         return jsonString;
     }
 
+    /**
+     * Builder pattern for serialize the game
+     */
     public static class Builder {
         private List<Country> countries;
         private List<Continent> continents;
@@ -47,36 +54,69 @@ public class SerializableGame {
         private Card[] cards;
         private GameBoardPlaying gameBoardPlaying;
 
+        /**
+         * set continents for save
+         * @param continents continents for save
+         * @return builder object
+         */
         public Builder setContinents(List<Continent> continents) {
             this.continents = continents;
             return this;
         }
 
+        /**
+         * set countries for save
+         * @param countries countries for save
+         * @return builder object
+         */
         public Builder setCountries(List<Country> countries) {
             this.countries = countries;
             return this;
         }
 
+        /**
+         * set players for save
+         * @param players players for save
+         * @return builder object
+         */
         public Builder setPlayers(List<Player> players) {
             this.players = players;
             return this;
         }
 
+        /**
+         * set borders for save
+         * @param borders borders for save
+         * @return builder object
+         */
         public Builder setBorders(int[][] borders) {
             this.borders = borders;
             return this;
         }
 
+        /**
+         * set cards for save
+         * @param cards cards for save
+         * @return builder object
+         */
         public Builder setCards(Card[] cards) {
             this.cards = cards;
             return this;
         }
 
-        public Builder setGameBoardPlaying(GameBoardPlaying gameBoardPlaying){
+        /**
+         * set playing data
+         * @param gameBoardPlaying playing data
+         * @return builder object
+         */
+        public Builder setGameBoardPlaying(GameBoardPlaying gameBoardPlaying) {
             this.gameBoardPlaying = gameBoardPlaying;
             return this;
         }
 
+        /**
+         * build object in specific order
+         */
         public SerializableGame build() {
             SerializableGame serializableGame = new SerializableGame();
             serializableGame.continents = this.continents;
@@ -88,6 +128,9 @@ public class SerializableGame {
             return serializableGame;
         }
 
+        /**
+         * reconstruct game in specific order
+         */
         public void reconstructGame() {
             GameBoard.getInstance().reset();
 
