@@ -21,9 +21,8 @@ import soen6441riskgame.utils.ConsolePrinter;
  *
  */
 public class PlayersWorldDominationView extends SeparatedView implements Observer {
-
     public PlayersWorldDominationView() {
-        super("Players World Domination View");
+        super("Players World Domination");
     }
 
     /**

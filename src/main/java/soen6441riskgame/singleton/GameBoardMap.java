@@ -63,6 +63,15 @@ public class GameBoardMap implements Resettable {
     }
 
     /**
+     * get map name
+     * 
+     * @return map name
+     */
+    public String getMapName() {
+        return mapName;
+    }
+
+    /**
      * get the list of Country objects
      *
      * @return list of Country objects
