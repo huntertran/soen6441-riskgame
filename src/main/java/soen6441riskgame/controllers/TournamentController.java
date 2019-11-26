@@ -127,7 +127,7 @@ public class TournamentController {
         Player currentPlayer = gameController.getCurrentPlayer();
 
         for (int turnPlayed = 0; turnPlayed < maxNumberOfTurn; turnPlayed++) {
-            currentPlayer.getStrategy().execute(currentPlayer);
+            currentPlayer.getStrategy().playTurn(currentPlayer);
             currentPlayer = gameController.getCurrentPlayer();
         }
 

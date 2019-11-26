@@ -151,7 +151,7 @@ public class AggressiveStrategy implements Strategy {
      * @param player current player
      */
     @Override
-    public void execute(Player player) {
+    public void playTurn(Player player) {
         Country strongestPlayerCountry = getStrongestCountryToReinforce(player);
 
         reinforce(player, strongestPlayerCountry);

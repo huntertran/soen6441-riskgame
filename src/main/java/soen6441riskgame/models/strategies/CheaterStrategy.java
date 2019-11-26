@@ -96,7 +96,7 @@ public class CheaterStrategy implements Strategy {
      * @param player current player
      */
     @Override
-    public void execute(Player player) {
+    public void playTurn(Player player) {
         reinforce(player, null);
         attack(player, null);
 

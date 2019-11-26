@@ -36,7 +36,7 @@ public class HumanStrategy implements Strategy {
     }
 
     @Override
-    public void execute(Player player) {
+    public void playTurn(Player player) {
         // TODO Auto-generated method stub
 
     }

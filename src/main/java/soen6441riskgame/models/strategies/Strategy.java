@@ -75,9 +75,9 @@ public interface Strategy {
     }
 
     /**
-     * execute the strategy
+     * play the player's turn with the strategy
      * 
      * @param player current player
      */
-    void execute(Player player);
+    void playTurn(Player player);
 }
