@@ -8,6 +8,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.singleton.GameBoard;
 
 /**
  * focuses on attack
@@ -99,6 +100,8 @@ public class AggressiveStrategy implements Strategy {
             // after attack with allout
             if (defendingCountry.getConquerer() == player) {
                 // player conquered the defending country
+                int armyToMove = GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice();
+                attackMove(armyToMove);
                 attackedCountries.add(defendingCountry);
             }
             if (attackingCountry.getConquerer() != player) {
@@ -106,6 +109,8 @@ public class AggressiveStrategy implements Strategy {
                 break;
             }
         }
+
+        attackEnd();
 
         return attackedCountries;
     }

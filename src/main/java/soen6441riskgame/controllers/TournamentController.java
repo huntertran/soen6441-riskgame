@@ -16,6 +16,7 @@ import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.models.commands.TournamentCommands;
 import soen6441riskgame.models.strategies.Strategy;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
 import soen6441riskgame.utils.Parser;
 
@@ -82,7 +83,8 @@ public class TournamentController {
     public static final Boundary mapBoundary = new Boundary(1, 6);
     public static final Boundary strategyBoundary = new Boundary(2, 4);
     public static final Boundary numberOfGameBoundary = new Boundary(1, 5);
-    public static final Boundary maxNumberOfTurnBoundary = new Boundary(10, 50);
+    // TODO: change back to 50 after test
+    public static final Boundary maxNumberOfTurnBoundary = new Boundary(10, 500);
 
     private Strategy[] strategies;
     private String[] maps;
@@ -124,6 +126,8 @@ public class TournamentController {
                 results.put(String.valueOf(gameIndex), gameIndexResults);
             }
         }
+
+        ConsolePrinter.printFormat(results.toString());
     }
 
     private Player simulateGamePlay(String map) throws IOException {

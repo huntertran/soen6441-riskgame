@@ -37,16 +37,17 @@ public class BenevolentStrategy implements Strategy {
     private Country getWeakestCountryToReinforce(Player player) {
         ArrayList<Country> conquered = player.getConqueredCountries();
         Country weakestPlayerCountry = null;
-        int minPlayerArmy = 0;
-        int tempArmy;
 
-        // Find the weakest country from conquered country list
+        if (conquered == null || conquered.size() == 0) {
+            return null;
+        }
+
+        int weakestNumberOfArmy = conquered.get(0).getArmyAmount();
+
         for (Country country : conquered) {
-            tempArmy = country.getArmyAmount();
-
-            if (tempArmy <= minPlayerArmy) {
+            if (country.getArmyAmount() <= weakestNumberOfArmy) {
                 weakestPlayerCountry = country;
-                minPlayerArmy = tempArmy;
+                weakestNumberOfArmy = country.getArmyAmount();
             }
         }
 
@@ -73,22 +74,15 @@ public class BenevolentStrategy implements Strategy {
     }
 
     /**
-     * attack
+     * never attack
      * 
      * @param player           current player
      * @param attackingCountry attack from
-     * @return list of attacked countries
+     * @return null
      */
     @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
-        // Attack Phase
-        // Find adjacent neighbours countries to attack
-        String command = GameCommands.ATTACK;
-        command += GameCommands.SPACE;
-        command += GameCommands.DASH;
-        command += GameCommands.NOATTACK;
-        App.jumpToCommand(new ModelCommands(command));
-
+        attackEnd();
         return null;
     }
 
@@ -118,21 +112,9 @@ public class BenevolentStrategy implements Strategy {
 
         attack(player, null);
 
-        ArrayList<Country> conqueredCountries = player.getConqueredCountries();
+        Country weakerPlayerCountry = getWeakestCountryToReinforce(player);
 
-        Country weakerPlayerCountry = null;
-        int weakerPlayerArmy = 0;
-
-        for (Country country : conqueredCountries) {
-            int tempArmy = country.getArmyAmount();
-
-            if (tempArmy <= weakerPlayerArmy) {
-                weakerPlayerCountry = country;
-                weakerPlayerArmy = tempArmy;
-            }
-        }
-
-        if (weakerPlayerCountry != null) {
+        if (weakerPlayerCountry != null && weakerPlayerCountry != weakestPlayerCountry) {
             fortify(weakestPlayerCountry, weakerPlayerCountry);
         } else {
             fortifyNone();

@@ -49,6 +49,13 @@ public interface Strategy {
         App.jumpToCommand(new ModelCommands(command));
     }
 
+    default void attackMove(int army) {
+        String command = GameCommands.ATTACKMOVE;
+        command += GameCommands.SPACE;
+        command += army;
+        App.jumpToCommand(new ModelCommands(command));
+    }
+
     default void attackEnd() {
         App.jumpToCommand(new ModelCommands(GameCommands.ATTACK
                                             + GameCommands.SPACE
