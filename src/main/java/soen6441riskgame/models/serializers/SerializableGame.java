@@ -56,6 +56,7 @@ public class SerializableGame {
 
         /**
          * set continents for save
+         * 
          * @param continents continents for save
          * @return builder object
          */
@@ -66,6 +67,7 @@ public class SerializableGame {
 
         /**
          * set countries for save
+         * 
          * @param countries countries for save
          * @return builder object
          */
@@ -76,6 +78,7 @@ public class SerializableGame {
 
         /**
          * set players for save
+         * 
          * @param players players for save
          * @return builder object
          */
@@ -86,6 +89,7 @@ public class SerializableGame {
 
         /**
          * set borders for save
+         * 
          * @param borders borders for save
          * @return builder object
          */
@@ -96,6 +100,7 @@ public class SerializableGame {
 
         /**
          * set cards for save
+         * 
          * @param cards cards for save
          * @return builder object
          */
@@ -106,6 +111,7 @@ public class SerializableGame {
 
         /**
          * set playing data
+         * 
          * @param gameBoardPlaying playing data
          * @return builder object
          */
@@ -116,6 +122,8 @@ public class SerializableGame {
 
         /**
          * build object in specific order
+         * 
+         * @return SerializableGame that hold all the data
          */
         public SerializableGame build() {
             SerializableGame serializableGame = new SerializableGame();

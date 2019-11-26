@@ -46,7 +46,7 @@ import soen6441riskgame.utils.Parser;
  *
  * D: 30
  *
- * <table>
+ * <table summary="sample result">
  * <tr>
  * <th></th>
  * <th>Game 1</th>
