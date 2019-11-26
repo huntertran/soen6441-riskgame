@@ -1,0 +1,62 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>TournamentController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.TournamentController  [[../../soen6441riskgame/controllers/TournamentController.html{soen6441riskgame.controllers.TournamentController}]] {
+{static} +Boundary mapBoundary
+{static} +Boundary strategyBoundary
+{static} +Boundary numberOfGameBoundary
+{static} +Boundary maxNumberOfTurnBoundary
+-Strategy strategies
+-String maps
+-int numberOfGame
+-int maxNumberOfTurn
+-GameController gameController
++TournamentController()
++void enterTournament(List<String> args)
+-Player simulateGamePlay(String map)
+-void initializePlayers()
+-void parseTournamentParameters(String args)
+-ArrayList<Strategy> parsePlayerStrategies(String playerStrategies)
+-boolean isMapsValid()
+-boolean isStrategiesValid()
+-boolean isTournamentValid()
+}
+
+
+class "<b><size:14>Boundary</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Boundary  [[../../soen6441riskgame/models/Boundary.html{soen6441riskgame.models.Boundary}]] #white {
+}
+
+hide soen6441riskgame.models.Boundary fields
+hide soen6441riskgame.models.Boundary methods
+
+soen6441riskgame.controllers.TournamentController -->  "mapBoundary" soen6441riskgame.models.Boundary
+
+soen6441riskgame.controllers.TournamentController -->  "strategyBoundary" soen6441riskgame.models.Boundary
+
+soen6441riskgame.controllers.TournamentController -->  "numberOfGameBoundary" soen6441riskgame.models.Boundary
+
+soen6441riskgame.controllers.TournamentController -->  "maxNumberOfTurnBoundary" soen6441riskgame.models.Boundary
+
+interface "<b><size:14>Strategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.Strategy  [[../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.Strategy fields
+hide soen6441riskgame.models.strategies.Strategy methods
+
+soen6441riskgame.controllers.TournamentController -->  "strategies" soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.GameController  [[../../soen6441riskgame/controllers/GameController.html{soen6441riskgame.controllers.GameController}]] {
+}
+
+hide soen6441riskgame.controllers.GameController fields
+hide soen6441riskgame.controllers.GameController methods
+
+soen6441riskgame.controllers.TournamentController -->  "gameController" soen6441riskgame.controllers.GameController
+
+
+
+
+
+@enduml

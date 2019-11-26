@@ -5,25 +5,30 @@ skinparam linetype ortho
 set namespaceSeparator none
 class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] {
 +BenevolentStrategy()
-+void execute(GameBoard board,Player p)
++StrategyName getName()
++void reinforce(Player player,Country countryToReinforce)
++ArrayList<Country> attack(Player player,Country attackingCountry)
++void fortify(Country fromCountry,Country toCountry)
++void playTurn(Player player)
+-Country getWeakestCountryToReinforce(Player player)
 }
 
 
-interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+interface "<b><size:14>Strategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.Strategy  [[../../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] {
 }
 
-hide soen6441riskgame.models.strategies.IStrategy fields
-hide soen6441riskgame.models.strategies.IStrategy methods
+hide soen6441riskgame.models.strategies.Strategy fields
+hide soen6441riskgame.models.strategies.Strategy methods
 
-soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.Strategy
 
-class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoard  [[../../../soen6441riskgame/singleton/GameBoard.html{soen6441riskgame.singleton.GameBoard}]] #white {
+enum "<b><size:14>StrategyName</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.StrategyName  [[../../../soen6441riskgame/enums/StrategyName.html{soen6441riskgame.enums.StrategyName}]] #white {
 }
 
-hide soen6441riskgame.singleton.GameBoard fields
-hide soen6441riskgame.singleton.GameBoard methods
+hide soen6441riskgame.enums.StrategyName fields
+hide soen6441riskgame.enums.StrategyName methods
 
-soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.singleton.GameBoard
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.enums.StrategyName
 
 class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
 }
@@ -32,6 +37,15 @@ hide soen6441riskgame.models.Player fields
 hide soen6441riskgame.models.Player methods
 
 soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.models.Country
+
 
 
 @enduml

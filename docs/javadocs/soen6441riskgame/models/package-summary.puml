@@ -5,6 +5,12 @@ skinparam linetype ortho
 package soen6441riskgame.models [[../../soen6441riskgame/models/package-summary.html{soen6441riskgame.models}]] #lightyellow {
 }
 
+class "<b><size:14>Boundary</b>" as soen6441riskgame.models.Boundary  [[../../soen6441riskgame/models/Boundary.html{soen6441riskgame.models.Boundary}]] {
+}
+
+hide soen6441riskgame.models.Boundary fields
+hide soen6441riskgame.models.Boundary methods
+
 class "<b><size:14>Card</b>" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
 }
 
@@ -91,6 +97,12 @@ class "<b><size:14>MapEditorCommands</b>" as soen6441riskgame.models.commands.Ma
 hide soen6441riskgame.models.commands.MapEditorCommands fields
 hide soen6441riskgame.models.commands.MapEditorCommands methods
 
+class "<b><size:14>TournamentCommands</b>" as soen6441riskgame.models.commands.TournamentCommands  [[../../soen6441riskgame/models/commands/TournamentCommands.html{soen6441riskgame.models.commands.TournamentCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.TournamentCommands fields
+hide soen6441riskgame.models.commands.TournamentCommands methods
+
 package soen6441riskgame.models.serializers [[../../soen6441riskgame/models/serializers/package-summary.html{soen6441riskgame.models.serializers}]] {
 }
 
@@ -121,17 +133,29 @@ class "<b><size:14>BenevolentStrategy</b>" as soen6441riskgame.models.strategies
 hide soen6441riskgame.models.strategies.BenevolentStrategy fields
 hide soen6441riskgame.models.strategies.BenevolentStrategy methods
 
-interface "<b><size:14>IStrategy</b>" as soen6441riskgame.models.strategies.IStrategy  [[../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+class "<b><size:14>CheaterStrategy</b>" as soen6441riskgame.models.strategies.CheaterStrategy  [[../../soen6441riskgame/models/strategies/CheaterStrategy.html{soen6441riskgame.models.strategies.CheaterStrategy}]] {
 }
 
-hide soen6441riskgame.models.strategies.IStrategy fields
-hide soen6441riskgame.models.strategies.IStrategy methods
+hide soen6441riskgame.models.strategies.CheaterStrategy fields
+hide soen6441riskgame.models.strategies.CheaterStrategy methods
+
+class "<b><size:14>HumanStrategy</b>" as soen6441riskgame.models.strategies.HumanStrategy  [[../../soen6441riskgame/models/strategies/HumanStrategy.html{soen6441riskgame.models.strategies.HumanStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.HumanStrategy fields
+hide soen6441riskgame.models.strategies.HumanStrategy methods
 
 class "<b><size:14>RandomStrategy</b>" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
 }
 
 hide soen6441riskgame.models.strategies.RandomStrategy fields
 hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+interface "<b><size:14>Strategy</b>" as soen6441riskgame.models.strategies.Strategy  [[../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.Strategy fields
+hide soen6441riskgame.models.strategies.Strategy methods
 
 
 @enduml

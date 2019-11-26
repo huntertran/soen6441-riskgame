@@ -32,6 +32,12 @@ class "<b><size:14>SaveLoadController</b>" as soen6441riskgame.controllers.SaveL
 hide soen6441riskgame.controllers.SaveLoadController fields
 hide soen6441riskgame.controllers.SaveLoadController methods
 
+class "<b><size:14>TournamentController</b>" as soen6441riskgame.controllers.TournamentController  [[../soen6441riskgame/controllers/TournamentController.html{soen6441riskgame.controllers.TournamentController}]] {
+}
+
+hide soen6441riskgame.controllers.TournamentController fields
+hide soen6441riskgame.controllers.TournamentController methods
+
 package soen6441riskgame.enums [[../soen6441riskgame/enums/package-summary.html{soen6441riskgame.enums}]] {
 }
 
@@ -65,8 +71,20 @@ enum "<b><size:14>MapPart</b>" as soen6441riskgame.enums.MapPart  [[../soen6441r
 hide soen6441riskgame.enums.MapPart fields
 hide soen6441riskgame.enums.MapPart methods
 
+enum "<b><size:14>StrategyName</b>" as soen6441riskgame.enums.StrategyName  [[../soen6441riskgame/enums/StrategyName.html{soen6441riskgame.enums.StrategyName}]] {
+}
+
+hide soen6441riskgame.enums.StrategyName fields
+hide soen6441riskgame.enums.StrategyName methods
+
 package soen6441riskgame.models [[../soen6441riskgame/models/package-summary.html{soen6441riskgame.models}]] {
 }
+
+class "<b><size:14>Boundary</b>" as soen6441riskgame.models.Boundary  [[../soen6441riskgame/models/Boundary.html{soen6441riskgame.models.Boundary}]] {
+}
+
+hide soen6441riskgame.models.Boundary fields
+hide soen6441riskgame.models.Boundary methods
 
 class "<b><size:14>Card</b>" as soen6441riskgame.models.Card  [[../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
 }

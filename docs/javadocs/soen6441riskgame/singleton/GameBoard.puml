@@ -29,38 +29,6 @@ class "<b><size:14>GameBoard</b>\n<size:10>soen6441riskgame.singleton" as soen64
 }
 
 
-class "<b><size:14>AggressiveStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] #white {
-}
-
-hide soen6441riskgame.models.strategies.AggressiveStrategy fields
-hide soen6441riskgame.models.strategies.AggressiveStrategy methods
-
-soen6441riskgame.models.strategies.AggressiveStrategy ..> soen6441riskgame.singleton.GameBoard
-
-class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] #white {
-}
-
-hide soen6441riskgame.models.strategies.BenevolentStrategy fields
-hide soen6441riskgame.models.strategies.BenevolentStrategy methods
-
-soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.singleton.GameBoard
-
-interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] #white {
-}
-
-hide soen6441riskgame.models.strategies.IStrategy fields
-hide soen6441riskgame.models.strategies.IStrategy methods
-
-soen6441riskgame.models.strategies.IStrategy ..> soen6441riskgame.singleton.GameBoard
-
-class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] #white {
-}
-
-hide soen6441riskgame.models.strategies.RandomStrategy fields
-hide soen6441riskgame.models.strategies.RandomStrategy methods
-
-soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.singleton.GameBoard
-
 soen6441riskgame.singleton.GameBoard -->  "instance" soen6441riskgame.singleton.GameBoard
 
 class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] {

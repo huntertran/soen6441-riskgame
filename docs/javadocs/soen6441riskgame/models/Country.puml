@@ -112,6 +112,38 @@ hide soen6441riskgame.models.serializers.SerializableGame.Builder methods
 
 soen6441riskgame.models.serializers.SerializableGame.Builder -->  "countries *" soen6441riskgame.models.Country
 
+class "<b><size:14>AggressiveStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..> soen6441riskgame.models.Country
+
+class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.models.Country
+
+class "<b><size:14>CheaterStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.CheaterStrategy  [[../../soen6441riskgame/models/strategies/CheaterStrategy.html{soen6441riskgame.models.strategies.CheaterStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.CheaterStrategy fields
+hide soen6441riskgame.models.strategies.CheaterStrategy methods
+
+soen6441riskgame.models.strategies.CheaterStrategy ..> soen6441riskgame.models.Country
+
+class "<b><size:14>HumanStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.HumanStrategy  [[../../soen6441riskgame/models/strategies/HumanStrategy.html{soen6441riskgame.models.strategies.HumanStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.HumanStrategy fields
+hide soen6441riskgame.models.strategies.HumanStrategy methods
+
+soen6441riskgame.models.strategies.HumanStrategy ..> soen6441riskgame.models.Country
+
 class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] #white {
 }
 
@@ -119,6 +151,14 @@ hide soen6441riskgame.models.strategies.RandomStrategy fields
 hide soen6441riskgame.models.strategies.RandomStrategy methods
 
 soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Country
+
+interface "<b><size:14>Strategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.Strategy  [[../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.Strategy fields
+hide soen6441riskgame.models.strategies.Strategy methods
+
+soen6441riskgame.models.strategies.Strategy ..> soen6441riskgame.models.Country
 
 class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardMap  [[../../soen6441riskgame/singleton/GameBoardMap.html{soen6441riskgame.singleton.GameBoardMap}]] #white {
 }

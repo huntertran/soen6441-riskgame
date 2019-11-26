@@ -1,0 +1,31 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>Boundary</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Boundary  [[../../soen6441riskgame/models/Boundary.html{soen6441riskgame.models.Boundary}]] {
+-int lower
+-int upper
++Boundary(int lower,int upper)
++boolean isInBoundary(int value,boolean isExclusive)
+-boolean isInBoundaryExclusive(int value)
+-boolean isInBoundary(int value)
+}
+
+
+class "<b><size:14>TournamentController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.TournamentController  [[../../soen6441riskgame/controllers/TournamentController.html{soen6441riskgame.controllers.TournamentController}]] #white {
+}
+
+hide soen6441riskgame.controllers.TournamentController fields
+hide soen6441riskgame.controllers.TournamentController methods
+
+soen6441riskgame.controllers.TournamentController -->  "mapBoundary" soen6441riskgame.models.Boundary
+
+soen6441riskgame.controllers.TournamentController -->  "strategyBoundary" soen6441riskgame.models.Boundary
+
+soen6441riskgame.controllers.TournamentController -->  "numberOfGameBoundary" soen6441riskgame.models.Boundary
+
+soen6441riskgame.controllers.TournamentController -->  "maxNumberOfTurnBoundary" soen6441riskgame.models.Boundary
+
+
+@enduml

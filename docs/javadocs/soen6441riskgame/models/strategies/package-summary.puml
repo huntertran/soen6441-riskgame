@@ -17,11 +17,17 @@ class "<b><size:14>BenevolentStrategy</b>" as soen6441riskgame.models.strategies
 hide soen6441riskgame.models.strategies.BenevolentStrategy fields
 hide soen6441riskgame.models.strategies.BenevolentStrategy methods
 
-interface "<b><size:14>IStrategy</b>" as soen6441riskgame.models.strategies.IStrategy  [[../../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] {
+class "<b><size:14>CheaterStrategy</b>" as soen6441riskgame.models.strategies.CheaterStrategy  [[../../../soen6441riskgame/models/strategies/CheaterStrategy.html{soen6441riskgame.models.strategies.CheaterStrategy}]] {
 }
 
-hide soen6441riskgame.models.strategies.IStrategy fields
-hide soen6441riskgame.models.strategies.IStrategy methods
+hide soen6441riskgame.models.strategies.CheaterStrategy fields
+hide soen6441riskgame.models.strategies.CheaterStrategy methods
+
+class "<b><size:14>HumanStrategy</b>" as soen6441riskgame.models.strategies.HumanStrategy  [[../../../soen6441riskgame/models/strategies/HumanStrategy.html{soen6441riskgame.models.strategies.HumanStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.HumanStrategy fields
+hide soen6441riskgame.models.strategies.HumanStrategy methods
 
 class "<b><size:14>RandomStrategy</b>" as soen6441riskgame.models.strategies.RandomStrategy  [[../../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
 }
@@ -29,8 +35,16 @@ class "<b><size:14>RandomStrategy</b>" as soen6441riskgame.models.strategies.Ran
 hide soen6441riskgame.models.strategies.RandomStrategy fields
 hide soen6441riskgame.models.strategies.RandomStrategy methods
 
-soen6441riskgame.models.strategies.AggressiveStrategy ..|> soen6441riskgame.models.strategies.IStrategy
-soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.IStrategy
-soen6441riskgame.models.strategies.RandomStrategy ..|> soen6441riskgame.models.strategies.IStrategy
+interface "<b><size:14>Strategy</b>" as soen6441riskgame.models.strategies.Strategy  [[../../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.Strategy fields
+hide soen6441riskgame.models.strategies.Strategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..|> soen6441riskgame.models.strategies.Strategy
+soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.Strategy
+soen6441riskgame.models.strategies.CheaterStrategy ..|> soen6441riskgame.models.strategies.Strategy
+soen6441riskgame.models.strategies.HumanStrategy ..|> soen6441riskgame.models.strategies.Strategy
+soen6441riskgame.models.strategies.RandomStrategy ..|> soen6441riskgame.models.strategies.Strategy
 
 @enduml

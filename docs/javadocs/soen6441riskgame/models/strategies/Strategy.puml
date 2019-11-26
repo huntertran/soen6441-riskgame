@@ -1,0 +1,95 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+interface "<b><size:14>Strategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.Strategy  [[../../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] {
+{abstract} +StrategyName getName()
+{abstract} +void reinforce(Player player,Country countryToReinforce)
+{abstract} +ArrayList<Country> attack(Player player,Country attackingCountry)
+{abstract} +void fortify(Country fromCountry,Country toCountry)
++void fortify(Country fromCountry,Country toCountry,int armiesAmount)
++void fortifyNone()
+{abstract} +void playTurn(Player player)
+}
+
+
+class "<b><size:14>TournamentController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.TournamentController  [[../../../soen6441riskgame/controllers/TournamentController.html{soen6441riskgame.controllers.TournamentController}]] #white {
+}
+
+hide soen6441riskgame.controllers.TournamentController fields
+hide soen6441riskgame.controllers.TournamentController methods
+
+soen6441riskgame.controllers.TournamentController -->  "strategies" soen6441riskgame.models.strategies.Strategy
+
+enum "<b><size:14>StrategyName</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.StrategyName  [[../../../soen6441riskgame/enums/StrategyName.html{soen6441riskgame.enums.StrategyName}]] #white {
+}
+
+hide soen6441riskgame.enums.StrategyName fields
+hide soen6441riskgame.enums.StrategyName methods
+
+soen6441riskgame.enums.StrategyName ..> soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.Player -->  "strategy" soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>AggressiveStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.AggressiveStrategy  [[../../../soen6441riskgame/models/strategies/AggressiveStrategy.html{soen6441riskgame.models.strategies.AggressiveStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.AggressiveStrategy fields
+hide soen6441riskgame.models.strategies.AggressiveStrategy methods
+
+soen6441riskgame.models.strategies.AggressiveStrategy ..|> soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>BenevolentStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.BenevolentStrategy  [[../../../soen6441riskgame/models/strategies/BenevolentStrategy.html{soen6441riskgame.models.strategies.BenevolentStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.BenevolentStrategy fields
+hide soen6441riskgame.models.strategies.BenevolentStrategy methods
+
+soen6441riskgame.models.strategies.BenevolentStrategy ..|> soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>CheaterStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.CheaterStrategy  [[../../../soen6441riskgame/models/strategies/CheaterStrategy.html{soen6441riskgame.models.strategies.CheaterStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.CheaterStrategy fields
+hide soen6441riskgame.models.strategies.CheaterStrategy methods
+
+soen6441riskgame.models.strategies.CheaterStrategy ..|> soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>HumanStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.HumanStrategy  [[../../../soen6441riskgame/models/strategies/HumanStrategy.html{soen6441riskgame.models.strategies.HumanStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.HumanStrategy fields
+hide soen6441riskgame.models.strategies.HumanStrategy methods
+
+soen6441riskgame.models.strategies.HumanStrategy ..|> soen6441riskgame.models.strategies.Strategy
+
+class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
+}
+
+hide soen6441riskgame.models.strategies.RandomStrategy fields
+hide soen6441riskgame.models.strategies.RandomStrategy methods
+
+soen6441riskgame.models.strategies.RandomStrategy ..|> soen6441riskgame.models.strategies.Strategy
+
+soen6441riskgame.models.strategies.Strategy ..> soen6441riskgame.enums.StrategyName
+
+soen6441riskgame.models.strategies.Strategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.models.strategies.Strategy ..> soen6441riskgame.models.Country
+
+
+
+@enduml

@@ -18,7 +18,10 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 -ArrayList<Card> holdingCards
 -ArrayList<String> currentPhaseActions
 -boolean isPlayerBeAwardCard
+-Strategy strategy
 +Player(String name)
++Strategy getStrategy()
++void setStrategy(Strategy strategy)
 +void linkNextAndPrevious(List<Player> players)
 +void reconstruct()
 +void setPlayerBeAwardCard(boolean isPlayerAwardCard)
@@ -64,6 +67,7 @@ hide soen6441riskgame.controllers.GameController methods
 
 soen6441riskgame.controllers.GameController ..> soen6441riskgame.models.Player
 
+
 class "<b><size:14>Card</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Card  [[../../soen6441riskgame/models/Card.html{soen6441riskgame.models.Card}]] {
 }
 
@@ -103,6 +107,14 @@ soen6441riskgame.models.Player -->  "currentPhase" soen6441riskgame.enums.GamePh
 
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
 
+
+interface "<b><size:14>Strategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.Strategy  [[../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.Strategy fields
+hide soen6441riskgame.models.strategies.Strategy methods
+
+soen6441riskgame.models.Player -->  "strategy" soen6441riskgame.models.strategies.Strategy
 
 
 
@@ -144,13 +156,21 @@ hide soen6441riskgame.models.strategies.BenevolentStrategy methods
 
 soen6441riskgame.models.strategies.BenevolentStrategy ..> soen6441riskgame.models.Player
 
-interface "<b><size:14>IStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.IStrategy  [[../../soen6441riskgame/models/strategies/IStrategy.html{soen6441riskgame.models.strategies.IStrategy}]] #white {
+class "<b><size:14>CheaterStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.CheaterStrategy  [[../../soen6441riskgame/models/strategies/CheaterStrategy.html{soen6441riskgame.models.strategies.CheaterStrategy}]] #white {
 }
 
-hide soen6441riskgame.models.strategies.IStrategy fields
-hide soen6441riskgame.models.strategies.IStrategy methods
+hide soen6441riskgame.models.strategies.CheaterStrategy fields
+hide soen6441riskgame.models.strategies.CheaterStrategy methods
 
-soen6441riskgame.models.strategies.IStrategy ..> soen6441riskgame.models.Player
+soen6441riskgame.models.strategies.CheaterStrategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>HumanStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.HumanStrategy  [[../../soen6441riskgame/models/strategies/HumanStrategy.html{soen6441riskgame.models.strategies.HumanStrategy}]] #white {
+}
+
+hide soen6441riskgame.models.strategies.HumanStrategy fields
+hide soen6441riskgame.models.strategies.HumanStrategy methods
+
+soen6441riskgame.models.strategies.HumanStrategy ..> soen6441riskgame.models.Player
 
 class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] #white {
 }
@@ -159,6 +179,8 @@ hide soen6441riskgame.models.strategies.RandomStrategy fields
 hide soen6441riskgame.models.strategies.RandomStrategy methods
 
 soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Player
+
+soen6441riskgame.models.strategies.Strategy ..> soen6441riskgame.models.Player
 
 class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as soen6441riskgame.singleton.GameBoardPlayer  [[../../soen6441riskgame/singleton/GameBoardPlayer.html{soen6441riskgame.singleton.GameBoardPlayer}]] #white {
 }

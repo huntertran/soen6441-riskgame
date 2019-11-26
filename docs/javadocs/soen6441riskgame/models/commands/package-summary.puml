@@ -17,5 +17,11 @@ class "<b><size:14>MapEditorCommands</b>" as soen6441riskgame.models.commands.Ma
 hide soen6441riskgame.models.commands.MapEditorCommands fields
 hide soen6441riskgame.models.commands.MapEditorCommands methods
 
+class "<b><size:14>TournamentCommands</b>" as soen6441riskgame.models.commands.TournamentCommands  [[../../../soen6441riskgame/models/commands/TournamentCommands.html{soen6441riskgame.models.commands.TournamentCommands}]] {
+}
+
+hide soen6441riskgame.models.commands.TournamentCommands fields
+hide soen6441riskgame.models.commands.TournamentCommands methods
+
 
 @enduml

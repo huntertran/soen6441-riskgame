@@ -35,5 +35,11 @@ enum "<b><size:14>MapPart</b>" as soen6441riskgame.enums.MapPart  [[../../soen64
 hide soen6441riskgame.enums.MapPart fields
 hide soen6441riskgame.enums.MapPart methods
 
+enum "<b><size:14>StrategyName</b>" as soen6441riskgame.enums.StrategyName  [[../../soen6441riskgame/enums/StrategyName.html{soen6441riskgame.enums.StrategyName}]] {
+}
+
+hide soen6441riskgame.enums.StrategyName fields
+hide soen6441riskgame.enums.StrategyName methods
+
 
 @enduml

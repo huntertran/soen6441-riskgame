@@ -23,5 +23,12 @@ class "<b><size:14>SaveLoadController</b>" as soen6441riskgame.controllers.SaveL
 hide soen6441riskgame.controllers.SaveLoadController fields
 hide soen6441riskgame.controllers.SaveLoadController methods
 
+class "<b><size:14>TournamentController</b>" as soen6441riskgame.controllers.TournamentController  [[../../soen6441riskgame/controllers/TournamentController.html{soen6441riskgame.controllers.TournamentController}]] {
+}
+
+hide soen6441riskgame.controllers.TournamentController fields
+hide soen6441riskgame.controllers.TournamentController methods
+
+soen6441riskgame.controllers.TournamentController -->  "gameController" soen6441riskgame.controllers.GameController
 
 @enduml

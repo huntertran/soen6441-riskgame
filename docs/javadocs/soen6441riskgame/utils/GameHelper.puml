@@ -9,6 +9,7 @@ class "<b><size:14>GameHelper</b>\n<size:10>soen6441riskgame.utils" as soen6441r
 {static} +int getMax(int inputArray,boolean secondMax)
 {static} +int randomNumberGenerator(int min,int max)
 {static} +ArrayList<Country> filterAttackableCountries(ArrayList<Country> countries)
+{static} +int countDistinct(Object array)
 }
 
 
@@ -20,6 +21,14 @@ hide soen6441riskgame.models.Country fields
 hide soen6441riskgame.models.Country methods
 
 soen6441riskgame.utils.GameHelper ..> soen6441riskgame.models.Country
+
+class "<b><size:14>Object</b>\n<size:10>java.lang" as java.lang.Object  #lightgrey {
+}
+
+hide java.lang.Object fields
+hide java.lang.Object methods
+
+soen6441riskgame.utils.GameHelper ..> java.lang.Object
 
 
 @enduml

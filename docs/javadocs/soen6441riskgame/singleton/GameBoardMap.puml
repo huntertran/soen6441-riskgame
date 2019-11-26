@@ -15,6 +15,7 @@ class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soe
 +void setBorders(int graph)
 +ArrayList<Continent> getContinents()
 +void setMapName(String mapName)
++String getMapName()
 +ArrayList<Country> getCountries()
 +void reset()
 +void showContinents()

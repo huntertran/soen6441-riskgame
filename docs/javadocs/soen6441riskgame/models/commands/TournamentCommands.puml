@@ -1,0 +1,17 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>TournamentCommands</b>\n<size:10>soen6441riskgame.models.commands" as soen6441riskgame.models.commands.TournamentCommands  [[../../../soen6441riskgame/models/commands/TournamentCommands.html{soen6441riskgame.models.commands.TournamentCommands}]] {
+{static} +String TOURNAMENT
+{static} +String TOURNAMENT_MAP_LIST
+{static} +String TOURNAMENT_PLAYER_STRATEGY_LIST
+{static} +String TOURNAMENT_NUMBER_OF_GAME
+{static} +String TOURNAMENT_MAX_NUMBER_OF_TURN
++TournamentCommands()
+}
+
+
+
+@enduml
