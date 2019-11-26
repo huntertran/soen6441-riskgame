@@ -723,8 +723,14 @@ public class GameController {
                     GameBoard.getInstance()
                              .getGameBoardPlaying()
                              .setAttackMoveCmdRequired(false);
-                    ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
-                }
+                    if(furtherAttackPossible()) {
+                        ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
+                    }
+                    else {
+                        ConsolePrinter.printFormat("No other attack is possible from any country.");
+                        endAttackPhase();
+                    }
+                    }
 
             } else {
                 ConsolePrinter.printFormat("Invalid Input");
@@ -995,7 +1001,6 @@ public class GameController {
 
         if (!isGameEnded()
             && !furtherAttackPossible()
-            && !isGameEnded()
             && !GameBoard.getInstance().getGameBoardPlaying()
                          .isAttackMoveCmdRequired()) {
             if (GameBoard.getInstance()
