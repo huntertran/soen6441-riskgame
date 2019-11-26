@@ -86,39 +86,24 @@ public class AggressiveStrategy implements Strategy {
         ArrayList<Country> neighbours = attackingCountry.getNeighbors();
         ArrayList<Country> attackedCountries = new ArrayList<>();
 
-        boolean flag = false;
-        for (int i = 0; i < neighbours.size() || flag; i++) {
-            int totalNumPlayerArmy = attackingCountry.getArmyAmount();
-            Country country = neighbours.get(i);
+        for (int i = 0; i < neighbours.size(); i++) {
+            // int attackingCountryArmyAmount = attackingCountry.getArmyAmount();
+            Country defendingCountry = neighbours.get(i);
 
-            // Attacker lost all army in strongest country
-            if (totalNumPlayerArmy <= 1) {
-                flag = true;
-                break;
+            if (defendingCountry.getConquerer() == player) {
+                continue;
             }
-            // Attacker lost the strongest country
-            else if (attackingCountry.getConquerer() == player) {
-                flag = true;
-                break;
-            }
-            // Attacker won the country
-            else if (country.getConquerer() == player) {
-                flag = true;
-                break;
-            }
-            // Continue to attack neighbours
-            else {
-                String command = GameCommands.ATTACK;
-                command += GameCommands.SPACE;
-                command += attackingCountry.getName();
-                command += GameCommands.SPACE;
-                command += country.getName();
-                command += GameCommands.SPACE;
-                command += GameCommands.DASH;
-                command += GameCommands.ALLOUT;
-                App.jumpToCommand(new ModelCommands(command));
 
-                attackedCountries.add(country);
+            attack(attackingCountry, defendingCountry);
+
+            // after attack with allout
+            if (defendingCountry.getConquerer() == player) {
+                // player conquered the defending country
+                attackedCountries.add(defendingCountry);
+            }
+            if (attackingCountry.getConquerer() != player) {
+                // player lost the attacking country
+                break;
             }
         }
 
@@ -158,9 +143,13 @@ public class AggressiveStrategy implements Strategy {
 
         ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
 
-        int index = attackedCountries.size() - 1;
-        Country fortifyToCountry = attackedCountries.get(index);
+        if (attackedCountries.size() != 0) {
+            int index = attackedCountries.size() - 1;
+            Country fortifyToCountry = attackedCountries.get(index);
 
-        fortify(strongestPlayerCountry, fortifyToCountry);
+            fortify(strongestPlayerCountry, fortifyToCountry);
+        } else {
+            fortifyNone();
+        }
     }
 }

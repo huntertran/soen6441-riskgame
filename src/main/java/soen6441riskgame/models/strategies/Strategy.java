@@ -37,6 +37,25 @@ public interface Strategy {
      */
     ArrayList<Country> attack(Player player, Country attackingCountry);
 
+    default void attack(Country attackingCountry, Country defendingCountry) {
+        String command = GameCommands.ATTACK;
+        command += GameCommands.SPACE;
+        command += attackingCountry.getName();
+        command += GameCommands.SPACE;
+        command += defendingCountry.getName();
+        command += GameCommands.SPACE;
+        command += GameCommands.DASH;
+        command += GameCommands.ALLOUT;
+        App.jumpToCommand(new ModelCommands(command));
+    }
+
+    default void attackEnd() {
+        App.jumpToCommand(new ModelCommands(GameCommands.ATTACK
+                                            + GameCommands.SPACE
+                                            + GameCommands.DASH
+                                            + GameCommands.NOATTACK));
+    }
+
     /**
      * fortify
      * 
