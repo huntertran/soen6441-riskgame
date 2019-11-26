@@ -31,6 +31,10 @@ public class Continent extends Observable implements Viewable {
         this.army = army;
     }
 
+    public void initializeCountries(){
+        this.countries = new ArrayList<>();
+    }
+
     /**
      * get the continent order from list, start with 1
      *

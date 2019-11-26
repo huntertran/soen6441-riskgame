@@ -143,11 +143,14 @@ public class SerializableGame {
             GameBoard.getInstance().reset();
 
             for (Continent continent : continents) {
+                continent.initializeCountries();
                 GameBoard.getInstance()
                          .getGameBoardMap()
                          .getContinents()
                          .add(continent);
             }
+
+            GameBoard.getInstance().getGameBoardMap().setBorders(borders);
 
             for (Player player : players) {
                 GameBoard.getInstance()
@@ -180,7 +183,7 @@ public class SerializableGame {
                          .add(linkedCountry);
 
                 for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
-                    if (country.getContinent().getName() == continent.getName()) {
+                    if (linkedCountry.getContinent().getName() == continent.getName()) {
                         continent.getCountries().add(linkedCountry);
                     }
                 }
