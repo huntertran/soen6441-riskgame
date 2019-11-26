@@ -208,5 +208,6 @@ public class GameBoard implements Resettable {
     public void reset() {
         gameBoardMap.reset();
         gameBoardPlayer.reset();
+        gameBoardPlaying.reset();
     }
 }

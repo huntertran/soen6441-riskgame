@@ -29,6 +29,7 @@ public interface Viewable {
      */
     default void view() {
         view(GameBoard.getInstance().standardPrintStream, 0);
+        System.out.println(GameBoard.getInstance().standardPrintStream.toString());
     }
 
     default void view(int indent) {

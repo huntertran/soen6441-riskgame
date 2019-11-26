@@ -178,6 +178,12 @@ public class SerializableGame {
                          .getGameBoardMap()
                          .getCountries()
                          .add(linkedCountry);
+
+                for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
+                    if (country.getContinent().getName() == continent.getName()) {
+                        continent.getCountries().add(linkedCountry);
+                    }
+                }
             }
 
             GameBoard.getInstance().loadCardFromSave(cards);
