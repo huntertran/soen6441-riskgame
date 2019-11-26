@@ -537,7 +537,7 @@ public class GameControllerTest {
         }
 
         GamePlayActionsTestHelper.fortify(
-            armiesToMove,
+                                          armiesToMove,
                                           fromCountry,
                                           toCountry);
 

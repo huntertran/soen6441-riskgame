@@ -133,6 +133,7 @@ public final class App {
                 }
                 case GameCommands.EXCHANGECARDS: {
                     gameController.exchangeCard(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    break;
                 }
                 case GameCommands.ATTACK: {
                     boolean isAttackEntered = gameController.enterAttackPhase();

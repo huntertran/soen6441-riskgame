@@ -79,7 +79,9 @@ public class Card implements Viewable {
      */
     public void setHoldingPlayer(Player player) {
         holdingPlayer = player;
-        holdingPlayerName = player.getName();
+        if (player != null) {
+            holdingPlayerName = player.getName();
+        }
     }
 
     /**
