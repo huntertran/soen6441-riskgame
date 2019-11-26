@@ -2,6 +2,7 @@ package soen6441riskgame.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import soen6441riskgame.App;
@@ -90,6 +91,8 @@ public class TournamentController {
 
     private GameController gameController;
 
+    private HashMap<String, HashMap<String, String>> results = new HashMap<>();
+
     /**
      * because of ModelCommands logic, this function have to do extra work to take the correct argument
      * for each parameter
@@ -104,13 +107,21 @@ public class TournamentController {
         if (isTournamentValid()) {
             gameController = new GameController();
             for (int gameIndex = 0; gameIndex < numberOfGame; gameIndex++) {
+                HashMap<String, String> gameIndexResults = new HashMap<>();
                 for (String map : maps) {
                     try {
-                        simulateGamePlay(map);
+                        Player winner = simulateGamePlay(map);
+                        if (winner == null) {
+                            gameIndexResults.put(map, "DRAW");
+                        } else {
+                            gameIndexResults.put(map, winner.getName());
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+
+                results.put(String.valueOf(gameIndex), gameIndexResults);
             }
         }
     }
@@ -220,7 +231,7 @@ public class TournamentController {
         }
 
         if (strategyBoundary.isInBoundary(strategies.length, true)) {
-            return GameHelper.countDistinct(strategyNames) == maps.length;
+            return GameHelper.countDistinct(strategyNames) == strategies.length;
         }
 
         return false;
