@@ -1,12 +1,9 @@
 package soen6441riskgame.utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.Random;
-
-import soen6441riskgame.models.Country;
 
 public class GameHelper {
     /**
@@ -63,26 +60,6 @@ public class GameHelper {
     public static int randomNumberGenerator(int min, int max) {
         Random random = new Random();
         return random.nextInt((max - min) + 1) + min;
-    }
-
-    /**
-     * A function to filter ArrayList of Countries which has army less than two
-     *
-     * @param countries all country list of a player
-     *
-     * @return return ArrayList of countries with army count more than one.
-     *
-     */
-    public static ArrayList<Country> filterAttackableCountries(ArrayList<Country> countries) {
-        ArrayList<Country> filteredList = new ArrayList<>();
-
-        for (Country country : countries) {
-            if (country.getArmyAmount() > 1) {
-                filteredList.add(country);
-            }
-        }
-
-        return filteredList;
     }
 
     public static <T> int countDistinct(T[] array) {

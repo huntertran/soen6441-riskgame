@@ -1,6 +1,5 @@
 package soen6441riskgame.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,15 +110,11 @@ public class TournamentController {
             for (int gameIndex = 0; gameIndex < numberOfGame; gameIndex++) {
                 HashMap<String, String> gameIndexResults = new HashMap<>();
                 for (String map : maps) {
-                    try {
-                        Player winner = simulateGamePlay(map);
-                        if (winner == null) {
-                            gameIndexResults.put(map, "DRAW");
-                        } else {
-                            gameIndexResults.put(map, winner.getName());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    Player winner = simulateGamePlay(map);
+                    if (winner == null) {
+                        gameIndexResults.put(map, "DRAW");
+                    } else {
+                        gameIndexResults.put(map, winner.getName());
                     }
                 }
 
@@ -130,7 +125,7 @@ public class TournamentController {
         ConsolePrinter.printFormat(results.toString());
     }
 
-    private Player simulateGamePlay(String map) throws IOException {
+    private Player simulateGamePlay(String map) {
         GameBoard.getInstance().reset();
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + map));
 

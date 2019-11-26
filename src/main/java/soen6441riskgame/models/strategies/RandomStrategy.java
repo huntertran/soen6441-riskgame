@@ -73,7 +73,7 @@ public class RandomStrategy implements Strategy {
     }
 
     /**
-     * attack
+     * attacks a random number of times a random country
      * 
      * @param player           current player
      * @param attackingCountry attack from
@@ -81,39 +81,40 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
+        ArrayList<Country> neighbours = attackingCountry.getNeighbors();
+        Country defendingCountry = null;
+        ArrayList<Country> defendableCountries = new ArrayList<>();
+        ArrayList<Country> attackedCountries = new ArrayList<>();
+        Random random = new Random();
 
-        ArrayList<Country> conquered = player.getConqueredCountries();
+        for (Country country : neighbours) {
+            if (country.getConquerer() != player) {
+                defendableCountries.add(country);
+            }
+        }
 
-        // Attack Phase
-        int randomAttackValue = GameHelper.randomNumberGenerator(1, 5);
-        ArrayList<Country> attackingCountryList = GameHelper.filterAttackableCountries(conquered);
+        if (defendableCountries.size() > 0) {
+            defendingCountry = defendableCountries.get(random.nextInt(defendableCountries.size()));
+        }
 
-        for (int i = 0; i < randomAttackValue; i++) {
-            int randIndex = GameHelper.randomNumberGenerator(0, (attackingCountryList.size() - 1));
-            Country attackCountry = attackingCountryList.get(randIndex);
-            ArrayList<Country> neighbours = attackCountry.getNeighbors();
-            int randNeighborIndex = GameHelper.randomNumberGenerator(0, neighbours.size());
-
-            Country defendingCountry = neighbours.get(randNeighborIndex);
-
-            attack(attackCountry, defendingCountry, 0);
+        if (defendingCountry != null) {
+            attack(attackingCountry, defendingCountry, 0);
 
             // after attack with allout
             if (defendingCountry.getConquerer() == player) {
                 // player conquered the defending country
                 int armyToMove = GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice();
                 attackMove(armyToMove);
+                attackedCountries.add(defendingCountry);
             }
 
-            if (attackCountry.getConquerer() != player) {
-                // player lost the attacking country
-                break;
-            }
+            // if (attackingCountry.getConquerer() != player) {
+            //     // player lost the attacking country
+            //     break;
+            // }
         }
 
-        attackEnd();
-
-        return null;
+        return attackedCountries;
     }
 
     /**
@@ -138,7 +139,11 @@ public class RandomStrategy implements Strategy {
     }
 
     /**
-     * execute the strategy
+     * 1. reinforces random a random country
+     *
+     * 2. attacks a random number of times a random country
+     *
+     * 3. and fortifies a random country
      * 
      * @param player current player
      */
@@ -153,8 +158,17 @@ public class RandomStrategy implements Strategy {
             reinforce(player, randomCountry);
         }
 
+        ArrayList<Country> attackingCountries = filterAttackableCountries(player.getConqueredCountries());
+        if (attackingCountries.size() > 0) {
+            int attackTime = random.nextInt(attackingCountries.size());
+            Country attackingCountry = attackingCountries.get(0);
+            for (int index = 0; index < attackTime; index++) {
+                attack(player, attackingCountry);
+            }
+        }
+
         ArrayList<Country> conquered = player.getConqueredCountries();
-        ArrayList<Country> moveArmyFrom = GameHelper.filterAttackableCountries(conquered);
+        ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
 
         attack(player, null);
 
@@ -165,5 +179,25 @@ public class RandomStrategy implements Strategy {
         Country countryTo = conquered.get(randIndexCountryTo);
 
         fortify(countryFrom, countryTo);
+    }
+
+    /**
+     * A function to filter ArrayList of Countries which has army less than two
+     *
+     * @param countries all country list of a player
+     *
+     * @return return ArrayList of countries with army count more than one.
+     *
+     */
+    private ArrayList<Country> filterAttackableCountries(ArrayList<Country> countries) {
+        ArrayList<Country> filteredList = new ArrayList<>();
+
+        for (Country country : countries) {
+            if (country.getArmyAmount() > 1) {
+                filteredList.add(country);
+            }
+        }
+
+        return filteredList;
     }
 }
