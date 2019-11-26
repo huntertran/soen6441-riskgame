@@ -185,7 +185,7 @@ public final class App {
                     break;
                 }
                 case TournamentCommands.TOURNAMENT: {
-                    TournamentController tournamentController = new TournamentController(gameController, mapController);
+                    TournamentController tournamentController = new TournamentController();
                     tournamentController.enterTournament(args.regularCommands);
                     break;
                 }
