@@ -1,12 +1,12 @@
 package soen6441riskgame.models.strategies;
 
 import java.util.ArrayList;
-import soen6441riskgame.App;
+import java.util.Random;
+
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
-import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
-import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.GameHelper;
 
 /**
@@ -69,18 +69,7 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
-        String countryName = countryToReinforce.getName();
-
-        // Reinforce Phase
-        // get number of army to place.
-        // reinforce countryname num
-        String command = GameCommands.REINFORCE;
-        command += GameCommands.SPACE;
-        command += countryName;
-        command += GameCommands.SPACE;
-        command += String.valueOf(player.getUnplacedArmies());
-        App.jumpToCommand(new ModelCommands(command));
-
+        reinforce(countryToReinforce, player.getUnplacedArmies());
     }
 
     /**
@@ -96,27 +85,33 @@ public class RandomStrategy implements Strategy {
         ArrayList<Country> conquered = player.getConqueredCountries();
 
         // Attack Phase
-        int randomAttackValue = GameHelper.randomNumberGenerator(0, 5);
+        int randomAttackValue = GameHelper.randomNumberGenerator(1, 5);
         ArrayList<Country> attackingCountryList = GameHelper.filterAttackableCountries(conquered);
 
         for (int i = 0; i < randomAttackValue; i++) {
             int randIndex = GameHelper.randomNumberGenerator(0, (attackingCountryList.size() - 1));
-            Country atkCountry = attackingCountryList.get(randIndex);
-            ArrayList<Country> neighbours = atkCountry.getNeighbors();
+            Country attackCountry = attackingCountryList.get(randIndex);
+            ArrayList<Country> neighbours = attackCountry.getNeighbors();
             int randNeighborIndex = GameHelper.randomNumberGenerator(0, neighbours.size());
 
-            // Attack
-            // Command: attack fromcountry tocountry numdice
-            String command = GameCommands.ATTACK;
-            command += GameCommands.SPACE;
-            command += atkCountry.getName();
-            command += GameCommands.SPACE;
-            command += neighbours.get(randNeighborIndex).getName();
-            command += GameCommands.SPACE;
-            command += String.valueOf(getDiceCount(atkCountry));
+            Country defendingCountry = neighbours.get(randNeighborIndex);
 
-            App.jumpToCommand(new ModelCommands(command));
+            attack(attackCountry, defendingCountry, 0);
+
+            // after attack with allout
+            if (defendingCountry.getConquerer() == player) {
+                // player conquered the defending country
+                int armyToMove = GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice();
+                attackMove(armyToMove);
+            }
+
+            if (attackCountry.getConquerer() != player) {
+                // player lost the attacking country
+                break;
+            }
         }
+
+        attackEnd();
 
         return null;
     }
@@ -150,12 +145,18 @@ public class RandomStrategy implements Strategy {
     @Override
     public void playTurn(Player player) {
 
-        Country randomCountry = getCountryToReinforce(player);
+        Random random = new Random();
+        int reinforceTime = random.nextInt(player.getConqueredCountries().size());
 
-        reinforce(player, randomCountry);
+        for (int index = 0; index < reinforceTime; index++) {
+            Country randomCountry = getCountryToReinforce(player);
+            reinforce(player, randomCountry);
+        }
 
         ArrayList<Country> conquered = player.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = GameHelper.filterAttackableCountries(conquered);
+
+        attack(player, null);
 
         int randIndexCountryFrom = GameHelper.randomNumberGenerator(0, (moveArmyFrom.size() - 1));
         Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);

@@ -28,6 +28,15 @@ public interface Strategy {
      */
     void reinforce(Player player, Country countryToReinforce);
 
+    default void reinforce(Country countryToReinforce, int numberOfArmies) {
+        String command = GameCommands.REINFORCE;
+        command += GameCommands.SPACE;
+        command += countryToReinforce.getName();
+        command += GameCommands.SPACE;
+        command += String.valueOf(numberOfArmies);
+        App.jumpToCommand(new ModelCommands(command));
+    }
+
     /**
      * attack
      * 
@@ -37,15 +46,21 @@ public interface Strategy {
      */
     ArrayList<Country> attack(Player player, Country attackingCountry);
 
-    default void attack(Country attackingCountry, Country defendingCountry) {
+    default void attack(Country attackingCountry, Country defendingCountry, int numberOfDice) {
         String command = GameCommands.ATTACK;
         command += GameCommands.SPACE;
         command += attackingCountry.getName();
         command += GameCommands.SPACE;
         command += defendingCountry.getName();
         command += GameCommands.SPACE;
-        command += GameCommands.DASH;
-        command += GameCommands.ALLOUT;
+
+        if (numberOfDice == 0) {
+            command += GameCommands.DASH;
+            command += GameCommands.ALLOUT;
+        } else {
+            command += String.valueOf(numberOfDice);
+        }
+
         App.jumpToCommand(new ModelCommands(command));
     }
 

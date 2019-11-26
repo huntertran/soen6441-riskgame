@@ -95,7 +95,7 @@ public class AggressiveStrategy implements Strategy {
                 continue;
             }
 
-            attack(attackingCountry, defendingCountry);
+            attack(attackingCountry, defendingCountry, 0);
 
             // after attack with allout
             if (defendingCountry.getConquerer() == player) {
