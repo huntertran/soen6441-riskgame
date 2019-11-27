@@ -496,7 +496,9 @@ public class GameController {
                                                                                    .getGameBoardMap()
                                                                                    .getCountryFromName(args[1]));
 
-        if (!isAttackPreconditionsValid()) {
+        if (!isAttackPreconditionsValid(
+                                        GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                                        GameBoard.getInstance().getGameBoardPlaying().getDefendingCountry())) {
             ConsolePrinter.printFormat("Invalid Input");
             return;
         }
@@ -785,62 +787,40 @@ public class GameController {
      * attacking country and defending country is neighbor
      *
      * @return is valid or not
+     * @param attackingCountry
+     * @param defendingCountry
      */
-    private boolean isAttackPreconditionsValid() {
+    private boolean isAttackPreconditionsValid(Country attackingCountry, Country defendingCountry) {
         Player currentPlayer = getCurrentPlayer(false);
 
-        if (GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .getAttackingCountry() == null
-            || GameBoard.getInstance()
-                        .getGameBoardPlaying()
-                        .getDefendingCountry() == null) {
+        if (attackingCountry == null
+            || defendingCountry == null) {
             ConsolePrinter.printFormat("The countries you have entered is non-existent");
             return false;
         }
 
         // check if attacking country belongs to the current player
-        if (!GameBoard.getInstance()
-                      .getGameBoardPlaying()
-                      .getAttackingCountry()
-                      .getConquerer()
-                      .equals(currentPlayer)) {
+        if (!attackingCountry.getConquerer()
+                             .equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s does not belong to %s",
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackingCountry()
-                                                .getName(),
+                                       attackingCountry.getName(),
                                        currentPlayer.getName());
             return false;
         }
 
         // check if the defending country does not belong to the current player
-        if (GameBoard.getInstance().getGameBoardPlaying().getDefendingCountry().getConquerer().equals(currentPlayer)) {
+        if (defendingCountry.getConquerer().equals(currentPlayer)) {
             ConsolePrinter.printFormat("The country %s belongs to %s. You cannot attack your own country.",
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getDefendingCountry()
-                                                .getName(),
+                                       defendingCountry.getName(),
                                        currentPlayer.getName());
             return false;
         }
 
         // the countries have to be neighbours
-        if (!GameBoard.getInstance()
-                      .getGameBoardPlaying()
-                      .getAttackingCountry()
-                      .isNeighboringCountries(GameBoard.getInstance()
-                                                       .getGameBoardPlaying()
-                                                       .getDefendingCountry())) {
+        if (!attackingCountry.isNeighboringCountries(defendingCountry)) {
             ConsolePrinter.printFormat("The countries %s and %s are not neighbouring countries. You can only attack neighbouring countries.",
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackingCountry()
-                                                .getName(),
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getDefendingCountry()
-                                                .getName());
+                                       attackingCountry.getName(),
+                                       defendingCountry.getName());
             return false;
         }
 
