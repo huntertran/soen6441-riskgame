@@ -32,8 +32,7 @@ public class GameController {
     /**
      * handle <code>gameplayer</code> command
      *
-     * @param args [0] -add/-remove
-     * @param args [1] player name
+     * @param args [0] -add/-remove - [1] player name
      */
     public void handleGamePlayerCommand(String[] args) {
         if (args.length == 0) {
@@ -535,9 +534,6 @@ public class GameController {
                                gameBoardPlaying.isAlloutFlag())) {
             }
         }
-        /*
-         * if (!furtherAttackPossible() && !attackMoveCmdRequired) { endAttackPhase(); }
-         */
     }
 
     /**
@@ -752,8 +748,8 @@ public class GameController {
      * attacking country and defending country is neighbor
      *
      * @return is valid or not
-     * @param attackingCountry
-     * @param defendingCountry
+     * @param attackingCountry attacking country
+     * @param defendingCountry defending country
      */
     private boolean isAttackPreconditionsValid(Country attackingCountry, Country defendingCountry) {
         Player currentPlayer = getCurrentPlayer(false);
@@ -793,13 +789,14 @@ public class GameController {
     }
 
     /**
+     * 
      * it returns whether the attack is valid (true) or not (false)
      *
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
-     * @param attackingCountry
-     * @param attackerNumDice
-     * @param defenderNumDice
-     * @param alloutFlag
+     * @param attackingCountry attacking country
+     * @param attackerNumDice attacker number of dice
+     * @param defenderNumDice defender number of dice
+     * @param alloutFlag is all out
      */
     boolean isAttackValid(Country attackingCountry,
                           int attackerNumDice,
