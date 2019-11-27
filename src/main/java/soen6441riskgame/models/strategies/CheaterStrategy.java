@@ -1,19 +1,16 @@
 package soen6441riskgame.models.strategies;
 
-import java.util.ArrayList;
-
-import soen6441riskgame.App;
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
-import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
-import soen6441riskgame.models.commands.GameCommands;
+
+import java.util.ArrayList;
 
 /**
  * reinforce() method doubles the number of armies on all its countries
- * 
+ *
  * attack() method automatically conquers all the neighbors of all its countries
- * 
+ *
  * fortify() method doubles the number of armies on its countries that have neighbors that belong to
  * other players.
  */
@@ -21,7 +18,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * get strategy name
-     * 
+     *
      * @return the name of the strategy as enum
      */
     @Override
@@ -31,7 +28,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * reinforce
-     * 
+     *
      * @param player             current player
      * @param countryToReinforce country to reinforce
      */
@@ -48,7 +45,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * attack
-     * 
+     *
      * @param player           current player
      * @param attackingCountry attack from
      * @return list of attacked countries
@@ -71,7 +68,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * fortify
-     * 
+     *
      * @param fromCountry from country
      * @param toCountry   to country
      */
@@ -85,7 +82,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * execute the strategy
-     * 
+     *
      * @param player current player
      */
     @Override
@@ -105,7 +102,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * choose the first country belong to player from list of neighbors
-     * 
+     *
      * @param player    current player
      * @param toCountry origin country
      * @return to country
@@ -124,7 +121,7 @@ public class CheaterStrategy implements Strategy {
 
     /**
      * get all the countries that need to be fortified
-     * 
+     *
      * @param player current player
      * @return all the countries that need to be fortified
      */

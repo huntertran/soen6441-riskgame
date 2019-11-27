@@ -1,14 +1,11 @@
 package soen6441riskgame.models.strategies;
 
-import java.util.ArrayList;
-
-import soen6441riskgame.App;
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
-import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
-import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.singleton.GameBoard;
+
+import java.util.ArrayList;
 
 /**
  * focuses on attack
@@ -22,7 +19,7 @@ import soen6441riskgame.singleton.GameBoard;
 public class AggressiveStrategy implements Strategy {
     /**
      * get strategy name
-     * 
+     *
      * @return the name of the strategy as enum
      */
     @Override
@@ -131,7 +128,7 @@ public class AggressiveStrategy implements Strategy {
 
     /**
      * execute the strategy
-     * 
+     *
      * @param player current player
      */
     @Override
