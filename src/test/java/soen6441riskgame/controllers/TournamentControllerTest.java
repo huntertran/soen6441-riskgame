@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class TournamentControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {
-                             "-M smallmap,newsmallmap -P Aggressive,Benevolent,Random, -G 2 -D 40"
+                             "-M smallmap -P Aggressive,Benevolent,Random, -G 1 -D 40"
     })
     public void enterTournamentTest(String command) {
         // setup

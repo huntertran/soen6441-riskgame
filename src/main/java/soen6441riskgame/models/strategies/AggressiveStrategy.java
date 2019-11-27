@@ -144,8 +144,8 @@ public class AggressiveStrategy implements Strategy {
             Country fortifyToCountry = attackedCountries.get(index);
 
             fortify(strongestPlayerCountry, fortifyToCountry);
-        } else {
-            fortifyNone();
         }
+
+        fortifyNone();
     }
 }

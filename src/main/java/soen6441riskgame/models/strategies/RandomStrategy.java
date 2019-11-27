@@ -166,6 +166,8 @@ public class RandomStrategy implements Strategy {
             }
         }
 
+        attackEnd();
+
         ArrayList<Country> conquered = player.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
 
