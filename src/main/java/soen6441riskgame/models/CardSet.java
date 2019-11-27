@@ -77,7 +77,7 @@ public class CardSet {
      *
      * @return is set valid
      */
-    private boolean isSetValid() {
+    public boolean isSetValid() {
         int cardValue = 0;
         for (Card card : cards) {
             if (card == null) {

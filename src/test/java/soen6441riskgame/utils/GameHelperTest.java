@@ -1,14 +1,16 @@
 package soen6441riskgame.utils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import soen6441riskgame.helpers.IntArrayConverter;
 import soen6441riskgame.helpers.StringArrayConverter;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameHelperTest {
     @ParameterizedTest
@@ -52,5 +54,26 @@ public class GameHelperTest {
 
         assertTrue(result <= max);
         assertTrue(result >= min);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "1;2;3;4;5;6,3,6",
+                 "1,1,1"
+    })
+    public void getRandomElementsTest(@ConvertWith(IntArrayConverter.class) int[] list,
+                                      int numberOfItemToPick,
+                                      int expectedSizeAfterPick) {
+        ArrayList<Integer> originalList = new ArrayList<>();
+        for (Integer item : list) {
+            originalList.add(item);
+        }
+
+        ArrayList<Integer> picked = GameHelper.getRandomElements(originalList, numberOfItemToPick);
+        for (Integer item : picked) {
+            assertTrue(originalList.contains(item));
+        }
+
+        assertEquals(expectedSizeAfterPick, originalList.size());
     }
 }

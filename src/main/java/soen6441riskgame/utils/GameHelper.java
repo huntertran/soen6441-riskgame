@@ -1,8 +1,11 @@
 package soen6441riskgame.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class GameHelper {
@@ -64,11 +67,56 @@ public class GameHelper {
 
     /**
      * generate random int from that 1 <= result <= max
+     * 
      * @param max max included
      * @return 1 <= result <= max
      */
     public static int nextRandomInt(int max) {
         return nextRandomIntInRange(1, max);
+    }
+
+    // Function select an element base on index and return
+    // an element
+    @SuppressWarnings("unchecked")
+    public static ArrayList<Integer> getRandomElements(ArrayList<Integer> list, int totalItems) {
+        Random random = new Random();
+        ArrayList<Integer> originalList = (ArrayList<Integer>) list.clone();
+        ArrayList<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < totalItems; i++) {
+            int randomIndex = random.nextInt(originalList.size());
+
+            result.add(originalList.get(randomIndex));
+
+            originalList.remove(randomIndex);
+        }
+
+        return result;
+    }
+
+    /*
+     * Get the all the keys associated with given Value V from map
+     */
+    public static <K, V> List<K> getAllKeysForValue(Map<K, V> maps, V value) {
+        List<K> listOfKeys = null;
+
+        // Check if Map contains the given value
+        if (maps.containsValue(value)) {
+            // Create an Empty List
+            listOfKeys = new ArrayList<>();
+
+            // Iterate over each entry of map using entrySet
+            for (Map.Entry<K, V> entry : maps.entrySet()) {
+                // Check if value matches with given value
+                if (entry.getValue().equals(value)) {
+                    // Store the key from entry to the list
+                    listOfKeys.add(entry.getKey());
+                }
+            }
+        }
+
+        // Return the list of keys whose value matches with given value.
+        return listOfKeys;
     }
 
     public static <T> int countDistinct(T[] array) {

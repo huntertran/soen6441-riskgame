@@ -8,6 +8,8 @@ import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Boundary;
+import soen6441riskgame.models.Card;
+import soen6441riskgame.models.CardSet;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
@@ -250,5 +252,45 @@ public class TournamentController {
                && isStrategiesValid()
                && numberOfGameBoundary.isInBoundary(numberOfGame, true)
                && maxNumberOfTurnBoundary.isInBoundary(maxNumberOfTurn, true);
+    }
+
+    public ArrayList<CardSet> buildValidCardSets(Player player) {
+        ArrayList<CardSet> cardSets = new ArrayList<>();
+
+        ArrayList<Card> cards = player.getHoldingCards();
+
+        if (cards.size() < 3) {
+            return cardSets;
+        }
+
+        HashMap<Card, Boolean> cardsInSet = new HashMap<>();
+        for (Card card : cards) {
+            cardsInSet.put(card, false);
+        }
+
+        ArrayList<Card> notPicked = (ArrayList<Card>) GameHelper.getAllKeysForValue(cardsInSet, false);
+
+        while (notPicked.size() >= 5) {
+            ArrayList<Integer> cardIndexes = new ArrayList<>();
+            for (int cardIndex = 0; cardIndex < notPicked.size(); cardIndex++) {
+                cardIndexes.add(cardIndex);
+            }
+
+            // randomly pick 3 card with index
+            ArrayList<Integer> picked = GameHelper.getRandomElements(cardIndexes, 3);
+            CardSet cardSet = new CardSet(cards.get(picked.get(0)),
+                                          cards.get(picked.get(1)),
+                                          cards.get(picked.get(2)));
+            if (cardSet.isSetValid()) {
+                cardSets.add(cardSet);
+                for (int cardIndex : picked) {
+                    cardsInSet.put(cards.get(cardIndex), true);
+                }
+            }
+
+            notPicked = (ArrayList<Card>) GameHelper.getAllKeysForValue(cardsInSet, false);
+        }
+
+        return cardSets;
     }
 }
