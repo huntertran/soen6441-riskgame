@@ -135,7 +135,6 @@ public class RandomStrategy implements Strategy {
 
         int randArmyAmountToMove = GameHelper.randomNumberGenerator(1, fromCountry.getArmyAmount());
         fortify(fromCountry, toCountry, randArmyAmountToMove);
-
     }
 
     /**
@@ -170,8 +169,6 @@ public class RandomStrategy implements Strategy {
         ArrayList<Country> conquered = player.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
 
-        attack(player, null);
-
         int randIndexCountryFrom = GameHelper.randomNumberGenerator(0, (moveArmyFrom.size() - 1));
         Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
 
@@ -179,6 +176,7 @@ public class RandomStrategy implements Strategy {
         Country countryTo = conquered.get(randIndexCountryTo);
 
         fortify(countryFrom, countryTo);
+        fortifyNone();
     }
 
     /**
