@@ -248,14 +248,14 @@ public class GameControllerTest {
         int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount();
         // Action
         gameController.handleAttackCommand(new String[] { "Spain", "France", "1" });
-        if (gameController.isAttackValid()) {
+        if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
             gameController.handleDefendCommand(new String[] { "1" });
         }
 
         // Assert
         assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount() != a
                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
-                   || !gameController.isAttackValid());
+                   || !gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag()));
     }
 
     /**
@@ -282,7 +282,7 @@ public class GameControllerTest {
         int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount();
         // Action
         gameController.handleAttackCommand(new String[] { fromCountry, enemyCountry, "3" });
-        if (gameController.isAttackValid()) {
+        if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
             gameController.handleDefendCommand(new String[] { "1" });
         }
 

@@ -509,7 +509,11 @@ public class GameController {
                                                    - 1),
                                                   MAXIMUM_ARMY_IN_ONE_ATTACK));
             GameBoard.getInstance().getGameBoardPlaying().setAlloutFlag(true);
-            if (!isAttackValid()) {
+            if (!isAttackValid(
+                               GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                               GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                               GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                               GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
                 GameBoard.getInstance().getGameBoardPlaying().setAlloutFlag(false);
             } else {
                 GameBoard.getInstance().getGameBoardPlaying().setAlloutFlag(true);
@@ -523,7 +527,11 @@ public class GameController {
                 ConsolePrinter.printFormat("Invalid Input");
             }
             // check if attack is valid
-            if (!isAttackValid()) {
+            if (!isAttackValid(
+                               GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                               GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                               GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                               GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
             }
         }
         /*
@@ -555,7 +563,11 @@ public class GameController {
                 GameBoard.getInstance()
                          .getGameBoardPlaying()
                          .setAlloutFlag(false);
-            } else if (isAttackValid()) {
+            } else if (isAttackValid(
+                                     GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                                     GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                                     GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                                     GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
                 handleDefendCommand(new String[] { Integer.toString(defender_dice) });
             } else {
                 GameBoard.getInstance()
@@ -631,7 +643,11 @@ public class GameController {
             return;
         }
 
-        if (!isAttackValid()) {
+        if (!isAttackValid(
+                           GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                           GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                           GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                           GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
             ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
             return;
         } else if (GameBoard.getInstance()
@@ -835,38 +851,30 @@ public class GameController {
      * it returns whether the attack is valid (true) or not (false)
      *
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
+     * @param attackingCountry
+     * @param attackerNumDice
+     * @param defenderNumDice
+     * @param alloutFlag
      */
-    boolean isAttackValid() {
+    boolean isAttackValid(Country attackingCountry,
+                          int attackerNumDice,
+                          int defenderNumDice,
+                          boolean alloutFlag) {
         // check if you have more than 2 army in attacking country
-        if (GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .getAttackingCountry()
-                     .getArmyAmount() < MINIMUM_ARMY_TO_ATTACK) {
+        if (attackingCountry.getArmyAmount() < MINIMUM_ARMY_TO_ATTACK) {
             ConsolePrinter.printFormat("The country %s has less than 2 armies. You need at least 2 armies to attack a country.",
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackingCountry()
-                                                .getName());
+                                       attackingCountry.getName());
             return false;
         }
         // check if the player has more armies than the numDice. numDice can be at most 3.
-        else if ((GameBoard.getInstance()
-                           .getGameBoardPlaying()
-                           .getAttackingCountry()
-                           .getArmyAmount()
-                  - 1) < GameBoard.getInstance()
-                                  .getGameBoardPlaying()
-                                  .getAttackerNumDice()) {
+        else if ((attackingCountry.getArmyAmount()
+                  - 1) < attackerNumDice) {
             ConsolePrinter.printFormat("The number of armies available to attack are less than %s",
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackerNumDice());
+                                       attackerNumDice);
             return false;
         }
         // also numdice has to be less than 3
-        else if (GameBoard.getInstance()
-                          .getGameBoardPlaying()
-                          .getAttackerNumDice() > MAXIMUM_ARMY_IN_ONE_ATTACK) {
+        else if (attackerNumDice > MAXIMUM_ARMY_IN_ONE_ATTACK) {
             ConsolePrinter.printFormat("You can only attack with a maximum of %d armies at a time",
                                        MAXIMUM_ARMY_IN_ONE_ATTACK);
             return false;
@@ -874,12 +882,8 @@ public class GameController {
 
         // attack execution
         else {
-            if (GameBoard.getInstance()
-                         .getGameBoardPlaying()
-                         .getDefenderNumDice() == 0
-                && !GameBoard.getInstance()
-                             .getGameBoardPlaying()
-                             .isAlloutFlag()) {
+            if (defenderNumDice == 0
+                && !alloutFlag) {
                 ConsolePrinter.printFormat("Enter defend command");
             }
             return true;
@@ -967,7 +971,10 @@ public class GameController {
             if (GameBoard.getInstance()
                          .getGameBoardPlaying()
                          .isAlloutFlag()) {
-                isAttackValid();
+                isAttackValid(attackingCountry,
+                              GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                              GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                              GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag());
             }
 
             ConsolePrinter.printFormat("No other attack is possible from any country.");

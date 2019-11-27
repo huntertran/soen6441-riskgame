@@ -5,7 +5,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 3,
+      "armyAmount": 21,
       "name": "India",
       "serializedOrder": 1,
       "continentName": "Asia",
@@ -16,7 +16,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 26,
+      "armyAmount": 9,
       "name": "Pakistan",
       "serializedOrder": 2,
       "continentName": "Asia",
@@ -27,29 +27,29 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 6,
+      "armyAmount": 11,
       "name": "China",
       "serializedOrder": 3,
       "continentName": "Asia",
-      "conquererName": "ben"
+      "conquererName": "tj"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 20,
+      "armyAmount": 23,
       "name": "USA",
       "serializedOrder": 4,
       "continentName": "America",
-      "conquererName": "hunter"
+      "conquererName": "tj"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 10,
+      "armyAmount": 7,
       "name": "Canada",
       "serializedOrder": 5,
       "continentName": "America",
@@ -60,22 +60,22 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 28,
+      "armyAmount": 9,
       "name": "Russia",
       "serializedOrder": 6,
       "continentName": "America",
-      "conquererName": "tj"
+      "conquererName": "hunter"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 4,
+      "armyAmount": 21,
       "name": "Mexico",
       "serializedOrder": 7,
       "continentName": "America",
-      "conquererName": "tj"
+      "conquererName": "ben"
     }
   ],
   "continents": [
@@ -91,7 +91,7 @@
   "players": [
     {
       "name": "hunter",
-      "unplacedArmies": 5,
+      "unplacedArmies": 1,
       "isPlaying": true,
       "nextPlayerName": "ben",
       "previousPlayerName": "tj",
@@ -101,7 +101,7 @@
     },
     {
       "name": "ben",
-      "unplacedArmies": 5,
+      "unplacedArmies": 7,
       "isPlaying": false,
       "nextPlayerName": "tj",
       "previousPlayerName": "hunter",
@@ -111,7 +111,7 @@
     },
     {
       "name": "tj",
-      "unplacedArmies": 5,
+      "unplacedArmies": 3,
       "isPlaying": false,
       "nextPlayerName": "hunter",
       "previousPlayerName": "ben",
