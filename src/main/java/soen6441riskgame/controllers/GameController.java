@@ -600,16 +600,16 @@ public class GameController {
      *
      */
     public void handleDefendCommand(String[] args) {
+        GameBoardPlaying gameBoardPlaying = GameBoard.getInstance().getGameBoardPlaying();
+        Country defendingCountry = gameBoardPlaying.getDefendingCountry();
+        Country attackingCountry = gameBoardPlaying.getAttackingCountry();
+        int attackerNumDice = gameBoardPlaying.getAttackerNumDice();
 
-        if (GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .isAttackMoveCmdRequired()) {
+        if (gameBoardPlaying.isAttackMoveCmdRequired()) {
             ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s",
                                        getCurrentPlayer(false).getName(),
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getDefendingCountry()
-                                                .getName());
+                                       defendingCountry
+                                                       .getName());
             return;
         }
         if (!Parser.checkValidInputNumber(args[0])) {
@@ -617,56 +617,36 @@ public class GameController {
             return;
         }
 
-        GameBoard.getInstance()
-                 .getGameBoardPlaying()
-                 .setDefenderNumDice(Integer.parseInt(args[0]));
+        gameBoardPlaying.setDefenderNumDice(Integer.parseInt(args[0]));
+        int defenderNumDice = gameBoardPlaying.getDefenderNumDice();
 
-        if (GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .getAttackingCountry() == null
-            || GameBoard.getInstance()
-                        .getGameBoardPlaying()
-                        .getDefendingCountry() == null) {
+        if (attackingCountry == null
+            || defendingCountry == null) {
             ConsolePrinter.printFormat("You cannot use defend command without attack command.");
             return;
         }
 
-        if (!isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
-                           GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
-                           GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
-                           GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
+        if (!isAttackValid(attackingCountry,
+                           attackerNumDice,
+                           defenderNumDice,
+                           gameBoardPlaying.isAlloutFlag())) {
             ConsolePrinter.printFormat("Defend command not allowed as attack is invalid");
             return;
-        } else if (GameBoard.getInstance()
-                            .getGameBoardPlaying()
-                            .getDefenderNumDice() > 2) {
+        } else if (defenderNumDice > 2) {
             ConsolePrinter.printFormat("You can only defend with a maximum of 2 armies at a time");
             return;
-        } else if (GameBoard.getInstance()
-                            .getGameBoardPlaying().getDefenderNumDice() > GameBoard.getInstance()
-                                                                                   .getGameBoardPlaying()
-                                                                                   .getDefendingCountry()
-                                                                                   .getArmyAmount()) {
+        } else if (defenderNumDice > defendingCountry.getArmyAmount()) {
             ConsolePrinter.printFormat("Error. Number of dice rolls should be less than or equal to the number of armies in the defending country but atmost 2.");
             return;
         }
 
         Player currentPlayer = getCurrentPlayer(false);
-        currentPlayer.attack(GameBoard.getInstance()
-                                      .getGameBoardPlaying()
-                                      .getAttackingCountry(),
-                             GameBoard.getInstance()
-                                      .getGameBoardPlaying()
-                                      .getDefendingCountry(),
-                             GameBoard.getInstance()
-                                      .getGameBoardPlaying()
-                                      .getAttackerNumDice(),
-                             GameBoard.getInstance()
-                                      .getGameBoardPlaying()
-                                      .getDefenderNumDice());
+        currentPlayer.attack(attackingCountry,
+                             defendingCountry,
+                             attackerNumDice,
+                             defenderNumDice);
 
-        attackResult(GameBoard.getInstance().getGameBoardPlaying().getDefendingCountry(),
-                     GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry());
+        attackResult(defendingCountry, attackingCountry);
     }
 
     /**
