@@ -66,13 +66,7 @@ public class AggressiveStrategy implements Strategy {
      */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
-        String command = GameCommands.REINFORCE;
-        command += GameCommands.SPACE;
-        command += countryToReinforce.getName();
-        command += GameCommands.SPACE;
-        command += String.valueOf(player.getUnplacedArmies());
-
-        App.jumpToCommand(new ModelCommands(command));
+        reinforce(countryToReinforce, player.getUnplacedArmies());
     }
 
     /**

@@ -42,14 +42,7 @@ public class CheaterStrategy implements Strategy {
         for (Country country : conqueredCountries) {
             int armyToReinforce = country.getArmyAmount();
             player.setUnplacedArmies(armyToReinforce);
-
-            String command = GameCommands.REINFORCE;
-            command += GameCommands.SPACE;
-            command += country.getName();
-            command += GameCommands.SPACE;
-            command += String.valueOf(player.getUnplacedArmies());
-
-            App.jumpToCommand(new ModelCommands(command));
+            reinforce(country, player.getUnplacedArmies());
         }
     }
 
