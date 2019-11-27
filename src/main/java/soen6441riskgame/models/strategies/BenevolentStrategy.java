@@ -106,8 +106,8 @@ public class BenevolentStrategy implements Strategy {
 
         if (weakerPlayerCountry != null && weakerPlayerCountry != weakestPlayerCountry) {
             fortify(weakestPlayerCountry, weakerPlayerCountry);
-        } else {
-            fortifyNone();
         }
+
+        fortifyNone();
     }
 }

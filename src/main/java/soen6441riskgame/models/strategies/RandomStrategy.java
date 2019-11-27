@@ -1,7 +1,6 @@
 package soen6441riskgame.models.strategies;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
@@ -21,7 +20,7 @@ import soen6441riskgame.utils.GameHelper;
 public class RandomStrategy implements Strategy {
     /**
      * get strategy name
-     * 
+     *
      * @return the name of the strategy as enum
      */
     @Override
@@ -31,7 +30,7 @@ public class RandomStrategy implements Strategy {
 
     /**
      * get count of dice
-     * 
+     *
      * @param attackingCountry attacking country
      * @return count of dice
      */
@@ -50,20 +49,20 @@ public class RandomStrategy implements Strategy {
 
     /**
      * get country to reinforce
-     * 
+     *
      * @param player current player
      * @return the country
      */
     private Country getCountryToReinforce(Player player) {
         ArrayList<Country> conquered = player.getConqueredCountries();
 
-        int randIndex = GameHelper.randomNumberGenerator(0, (conquered.size() - 1));
+        int randIndex = GameHelper.nextRandomIntInRange(0, (conquered.size() - 1));
         return conquered.get(randIndex);
     }
 
     /**
      * reinforce
-     * 
+     *
      * @param player             current player
      * @param countryToReinforce country to reinforce
      */
@@ -74,7 +73,7 @@ public class RandomStrategy implements Strategy {
 
     /**
      * attacks a random number of times a random country
-     * 
+     *
      * @param player           current player
      * @param attackingCountry attack from
      * @return list of attacked countries
@@ -85,7 +84,6 @@ public class RandomStrategy implements Strategy {
         Country defendingCountry = null;
         ArrayList<Country> defendableCountries = new ArrayList<>();
         ArrayList<Country> attackedCountries = new ArrayList<>();
-        Random random = new Random();
 
         for (Country country : neighbours) {
             if (country.getConquerer() != player) {
@@ -94,7 +92,8 @@ public class RandomStrategy implements Strategy {
         }
 
         if (defendableCountries.size() > 0) {
-            defendingCountry = defendableCountries.get(random.nextInt(defendableCountries.size()));
+            defendingCountry = defendableCountries.get(GameHelper.nextRandomIntInRange(0,
+                                                                                       defendableCountries.size() - 1));
         }
 
         if (defendingCountry != null) {
@@ -109,8 +108,8 @@ public class RandomStrategy implements Strategy {
             }
 
             // if (attackingCountry.getConquerer() != player) {
-            //     // player lost the attacking country
-            //     break;
+            // // player lost the attacking country
+            // break;
             // }
         }
 
@@ -119,7 +118,7 @@ public class RandomStrategy implements Strategy {
 
     /**
      * fortify
-     * 
+     *
      * @param fromCountry from country
      * @param toCountry   to country
      */
@@ -133,7 +132,7 @@ public class RandomStrategy implements Strategy {
          * int (min 1, max = number of army moving from country filtered)
          */
 
-        int randArmyAmountToMove = GameHelper.randomNumberGenerator(1, fromCountry.getArmyAmount());
+        int randArmyAmountToMove = GameHelper.nextRandomIntInRange(1, fromCountry.getArmyAmount());
         fortify(fromCountry, toCountry, randArmyAmountToMove);
     }
 
@@ -143,23 +142,25 @@ public class RandomStrategy implements Strategy {
      * 2. attacks a random number of times a random country
      *
      * 3. and fortifies a random country
-     * 
+     *
      * @param player current player
      */
     @Override
     public void playTurn(Player player) {
-
-        Random random = new Random();
-        int reinforceTime = random.nextInt(player.getConqueredCountries().size());
+        int reinforceTime = GameHelper.nextRandomInt(player.getConqueredCountries().size());
 
         for (int index = 0; index < reinforceTime; index++) {
             Country randomCountry = getCountryToReinforce(player);
             reinforce(player, randomCountry);
+
+            if (player.getUnplacedArmies() == 0) {
+                break;
+            }
         }
 
         ArrayList<Country> attackingCountries = filterAttackableCountries(player.getConqueredCountries());
         if (attackingCountries.size() > 0) {
-            int attackTime = random.nextInt(attackingCountries.size());
+            int attackTime = GameHelper.nextRandomInt(attackingCountries.size());
             Country attackingCountry = attackingCountries.get(0);
             for (int index = 0; index < attackTime; index++) {
                 attack(player, attackingCountry);
@@ -171,13 +172,16 @@ public class RandomStrategy implements Strategy {
         ArrayList<Country> conquered = player.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
 
-        int randIndexCountryFrom = GameHelper.randomNumberGenerator(0, (moveArmyFrom.size() - 1));
-        Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
+        if (moveArmyFrom.size() > 1 && conquered.size() > 1) {
+            int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));
+            Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
 
-        int randIndexCountryTo = GameHelper.randomNumberGenerator(0, (conquered.size() - 1));
-        Country countryTo = conquered.get(randIndexCountryTo);
+            int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (conquered.size() - 1));
+            Country countryTo = conquered.get(randIndexCountryTo);
 
-        fortify(countryFrom, countryTo);
+            fortify(countryFrom, countryTo);
+        }
+
         fortifyNone();
     }
 

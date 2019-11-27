@@ -1,6 +1,7 @@
 package soen6441riskgame.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -38,5 +39,18 @@ public class GameHelperTest {
         int actualDistinctValue = GameHelper.countDistinct(inputArray);
 
         assertEquals(expectedDistinctValue, actualDistinctValue);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "1,1",
+                 "1,2",
+                 "0,0"
+    })
+    public void randomNumberGeneratorTest(int min, int max) {
+        int result = GameHelper.nextRandomIntInRange(min, max);
+
+        assertTrue(result <= max);
+        assertTrue(result >= min);
     }
 }

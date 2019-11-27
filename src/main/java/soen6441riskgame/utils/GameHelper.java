@@ -57,9 +57,18 @@ public class GameHelper {
      * @return int random value
      *
      */
-    public static int randomNumberGenerator(int min, int max) {
+    public static int nextRandomIntInRange(int min, int max) {
         Random random = new Random();
         return random.nextInt((max - min) + 1) + min;
+    }
+
+    /**
+     * generate random int from that 1 <= result <= max
+     * @param max max included
+     * @return 1 <= result <= max
+     */
+    public static int nextRandomInt(int max) {
+        return nextRandomIntInRange(1, max);
     }
 
     public static <T> int countDistinct(T[] array) {
