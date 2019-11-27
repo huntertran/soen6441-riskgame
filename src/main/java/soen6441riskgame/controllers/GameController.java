@@ -653,52 +653,31 @@ public class GameController {
      *
      */
     public void handleAttackMoveCommand(String[] args) {
-        if (GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .isAttackMoveCmdRequired()) {
+        GameBoardPlaying gameBoardPlaying = GameBoard.getInstance().getGameBoardPlaying();
+        if (gameBoardPlaying.isAttackMoveCmdRequired()) {
             if (Parser.checkValidInputNumber(args[0])) {
                 int army_to_be_moved = Integer.parseInt(args[0]);
-                if (army_to_be_moved < GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackerNumDice()
-                    && GameBoard.getInstance()
-                                .getGameBoardPlaying()
-                                .getAttackingCountry()
-                                .getArmyAmount()
+                Country attackingCountry = gameBoardPlaying.getAttackingCountry();
+                int attackerNumDice = gameBoardPlaying.getAttackerNumDice();
+                if (army_to_be_moved < attackerNumDice
+                    && attackingCountry.getArmyAmount()
                        - 1 > army_to_be_moved) {
                     ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
-                                               GameBoard.getInstance()
-                                                        .getGameBoardPlaying()
-                                                        .getAttackerNumDice());
-                } else if (GameBoard.getInstance()
-                                    .getGameBoardPlaying()
-                                    .getAttackingCountry()
-                                    .getArmyAmount()
+                                               attackerNumDice);
+                } else if (attackingCountry.getArmyAmount()
                            - 1 < army_to_be_moved) {
                     ConsolePrinter.printFormat("You only have %s army available to move. You cannot move more armies than what you have.",
-                                               GameBoard.getInstance()
-                                                        .getGameBoardPlaying()
-                                                        .getAttackerNumDice());
+                                               attackerNumDice);
                 } else {
                     Player currentPlayer = getCurrentPlayer(false);
-                    currentPlayer.attackMove(GameBoard.getInstance()
-                                                      .getGameBoardPlaying()
-                                                      .getAttackingCountry(),
-                                             GameBoard.getInstance()
-                                                      .getGameBoardPlaying()
-                                                      .getDefendingCountry(),
+                    currentPlayer.attackMove(attackingCountry,
+                                             gameBoardPlaying.getDefendingCountry(),
                                              army_to_be_moved);
                     // attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
                     // reinitialize variables to null
-                    GameBoard.getInstance()
-                             .getGameBoardPlaying()
-                             .reset();
-                    GameBoard.getInstance()
-                             .getGameBoardPlaying()
-                             .setAlloutFlag(false);
-                    GameBoard.getInstance()
-                             .getGameBoardPlaying()
-                             .setAttackMoveCmdRequired(false);
+                    gameBoardPlaying.reset();
+                    gameBoardPlaying.setAlloutFlag(false);
+                    gameBoardPlaying.setAttackMoveCmdRequired(false);
                     if (furtherAttackPossible()) {
                         ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
                     } else {
@@ -789,14 +768,14 @@ public class GameController {
     }
 
     /**
-     * 
+     *
      * it returns whether the attack is valid (true) or not (false)
      *
      * @return boolean it checks whether attack is valid or not and returns true or false based on that.
      * @param attackingCountry attacking country
-     * @param attackerNumDice attacker number of dice
-     * @param defenderNumDice defender number of dice
-     * @param alloutFlag is all out
+     * @param attackerNumDice  attacker number of dice
+     * @param defenderNumDice  defender number of dice
+     * @param alloutFlag       is all out
      */
     boolean isAttackValid(Country attackingCountry,
                           int attackerNumDice,
