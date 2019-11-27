@@ -66,12 +66,12 @@ public class ModelCommands {
         // Split rest of the string parameter except the command using space (" ")
         String[] params = s.split(" ");
 
-        buildSubRoutines(s, params);
+        buildSubRoutines(params);
 
         buildRegularCommands(paramsArray, params);
     }
 
-    private void buildSubRoutines(String s, String[] params) {
+    private void buildSubRoutines(String[] params) {
         for (int j = 0; j < params.length; j++) {
             // check for null or empty value after split
             if ((params[j] == null) || (params[j].equals(""))) {
@@ -169,7 +169,7 @@ public class ModelCommands {
                     }
                     // Player does not wish to fortify
                     else if (params[0] != null
-                        && params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
+                             && params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                         regularCommands.add(params[j].toLowerCase());
                         return;
                     }

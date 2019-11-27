@@ -12,7 +12,6 @@ public final class MapEditorCommands {
     public static final String EDITMAP = "editmap";
     public static final String VALIDATEMAP = "validatemap";
     public static final String LOADMAP = "loadmap";
-    public static final String CREATEMAP = "createmap";
     public static final String ADD = "add";
     public static final String REMOVE = "remove";
 }

@@ -29,25 +29,6 @@ public class RandomStrategy implements Strategy {
     }
 
     /**
-     * get count of dice
-     *
-     * @param attackingCountry attacking country
-     * @return count of dice
-     */
-    public int getDiceCount(Country attackingCountry) {
-        int dices = 1;
-
-        for (int i = 3; i > 0; i--) {
-            if ((attackingCountry.getArmyAmount() - 1) >= i) {
-                dices = i;
-                break;
-            }
-        }
-
-        return dices;
-    }
-
-    /**
      * get country to reinforce
      *
      * @param player current player
@@ -106,11 +87,6 @@ public class RandomStrategy implements Strategy {
                 attackMove(armyToMove);
                 attackedCountries.add(defendingCountry);
             }
-
-            // if (attackingCountry.getConquerer() != player) {
-            // // player lost the attacking country
-            // break;
-            // }
         }
 
         return attackedCountries;

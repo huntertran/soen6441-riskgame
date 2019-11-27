@@ -18,7 +18,7 @@ import soen6441riskgame.models.Player;
 public class BenevolentStrategy implements Strategy {
     /**
      * get strategy name
-     * 
+     *
      * @return the name of the strategy as enum
      */
     @Override
@@ -28,7 +28,7 @@ public class BenevolentStrategy implements Strategy {
 
     /**
      * get weakest country to reinforce
-     * 
+     *
      * @param player current player
      * @return the weakest country
      */
@@ -54,7 +54,7 @@ public class BenevolentStrategy implements Strategy {
 
     /**
      * reinforce
-     * 
+     *
      * @param player             current player
      * @param countryToReinforce country to reinforce
      */
@@ -65,7 +65,7 @@ public class BenevolentStrategy implements Strategy {
 
     /**
      * never attack
-     * 
+     *
      * @param player           current player
      * @param attackingCountry attack from
      * @return null
@@ -78,7 +78,7 @@ public class BenevolentStrategy implements Strategy {
 
     /**
      * fortify
-     * 
+     *
      * @param fromCountry from country
      * @param toCountry   to country
      */
@@ -91,7 +91,7 @@ public class BenevolentStrategy implements Strategy {
 
     /**
      * execute the strategy
-     * 
+     *
      * @param player current player
      */
     @Override
@@ -106,7 +106,9 @@ public class BenevolentStrategy implements Strategy {
 
         Country weakerPlayerCountry = getWeakestCountryToReinforce(player);
 
-        if (weakerPlayerCountry != null && weakerPlayerCountry != weakestPlayerCountry) {
+        if (weakerPlayerCountry != null
+            && weakerPlayerCountry != weakestPlayerCountry
+            && weakestPlayerCountry != null) {
             fortify(weakestPlayerCountry, weakerPlayerCountry);
         }
 

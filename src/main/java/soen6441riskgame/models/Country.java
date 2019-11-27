@@ -56,9 +56,10 @@ public class Country extends Observable implements Viewable {
 
     /**
      * construct country object from json serialized country
+     * 
      * @param serializedCountry the serialized country object
-     * @param continents list of continents in game
-     * @param players list of players in game
+     * @param continents        list of continents in game
+     * @param players           list of players in game
      */
     public Country(Country serializedCountry, List<Continent> continents, List<Player> players) {
 
@@ -83,7 +84,7 @@ public class Country extends Observable implements Viewable {
 
     /**
      * get serialized order of country. This method is only used for save and load game data
-     * 
+     *
      * @return serialized order
      */
     public int getSerializedOrder() {
@@ -115,7 +116,9 @@ public class Country extends Observable implements Viewable {
 
         if (conquerer != this.conquerer) {
             this.conquerer = conquerer;
-            this.conquererName = conquerer.getName();
+            if (conquerer != null) {
+                this.conquererName = conquerer.getName();
+            }
             setChanged();
             notifyObservers();
         }

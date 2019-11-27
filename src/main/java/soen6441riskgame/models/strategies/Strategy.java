@@ -16,14 +16,14 @@ import soen6441riskgame.models.commands.GameCommands;
 public interface Strategy {
     /**
      * get strategy name
-     * 
+     *
      * @return the name of the strategy as enum
      */
     StrategyName getName();
 
     /**
      * reinforce
-     * 
+     *
      * @param player             current player
      * @param countryToReinforce country to reinforce
      */
@@ -42,22 +42,22 @@ public interface Strategy {
         if (player.getHoldingCards().size() >= 5) {
             ArrayList<CardSet> cardSets = player.buildValidCardSets();
 
-            String command = GameCommands.EXCHANGECARDS;
-            command += GameCommands.SPACE;
+            StringBuilder command = new StringBuilder(GameCommands.EXCHANGECARDS);
+            command.append(GameCommands.SPACE);
             for (CardSet cardSet : cardSets) {
-                command += cardSet.getCardsIndexForTournament();
-                command += " ";
+                command.append(cardSet.getCardsIndexForTournament());
+                command.append(" ");
             }
 
-            command += " -none";
+            command.append(" -none");
 
-            App.jumpToCommand(new ModelCommands(command));
+            App.jumpToCommand(new ModelCommands(command.toString()));
         }
     }
 
     /**
      * attack
-     * 
+     *
      * @param player           current player
      * @param attackingCountry attack from
      * @return list of attacked countries
@@ -98,7 +98,7 @@ public interface Strategy {
 
     /**
      * fortify
-     * 
+     *
      * @param fromCountry from country
      * @param toCountry   to country
      */
@@ -106,7 +106,7 @@ public interface Strategy {
 
     /**
      * default fortify
-     * 
+     *
      * @param fromCountry  from country
      * @param toCountry    to country
      * @param armiesAmount number of armies
@@ -135,7 +135,7 @@ public interface Strategy {
 
     /**
      * play the player's turn with the strategy
-     * 
+     *
      * @param player current player
      */
     void playTurn(Player player);

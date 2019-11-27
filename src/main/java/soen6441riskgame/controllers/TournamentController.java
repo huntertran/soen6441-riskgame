@@ -82,8 +82,7 @@ public class TournamentController {
     public static final Boundary mapBoundary = new Boundary(1, 6);
     public static final Boundary strategyBoundary = new Boundary(2, 4);
     public static final Boundary numberOfGameBoundary = new Boundary(1, 5);
-    // TODO: change back to 50 after test
-    public static final Boundary maxNumberOfTurnBoundary = new Boundary(10, 500);
+    public static final Boundary maxNumberOfTurnBoundary = new Boundary(10, 50);
 
     private Strategy[] strategies;
     private String[] maps;
@@ -154,12 +153,14 @@ public class TournamentController {
      * init players with strategy
      */
     private void initializePlayers() {
-        String addPlayerCommand = GameCommands.GAMEPLAYER + " ";
+        StringBuilder addPlayerCommand = new StringBuilder(GameCommands.GAMEPLAYER + " ");
         for (Strategy strategy : strategies) {
-            addPlayerCommand += "-add " + strategy.getName().toString() + " ";
+            addPlayerCommand.append("-add ")
+                            .append(strategy.getName().toString())
+                            .append(" ");
         }
 
-        App.jumpToCommand(new ModelCommands(addPlayerCommand));
+        App.jumpToCommand(new ModelCommands(addPlayerCommand.toString()));
 
         for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {
             player.setStrategy(StrategyName.fromString(player.getName()));

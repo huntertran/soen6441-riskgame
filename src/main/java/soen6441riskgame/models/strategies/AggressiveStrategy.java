@@ -78,10 +78,8 @@ public class AggressiveStrategy implements Strategy {
         ArrayList<Country> neighbours = attackingCountry.getNeighbors();
         ArrayList<Country> attackedCountries = new ArrayList<>();
 
-        for (int i = 0; i < neighbours.size(); i++) {
+        for (Country defendingCountry : neighbours) {
             // int attackingCountryArmyAmount = attackingCountry.getArmyAmount();
-            Country defendingCountry = neighbours.get(i);
-
             if (defendingCountry.getConquerer() == player) {
                 continue;
             }
