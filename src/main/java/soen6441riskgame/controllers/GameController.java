@@ -518,11 +518,7 @@ public class GameController {
         } else {
             if (Parser.checkValidInputNumber(args[2])) {
                 // saving the number of dice
-                GameBoard.getInstance().getGameBoardPlaying().setAttackerNumDice(Integer.parseInt(args[2])); // saving
-                                                                                                             // the
-                                                                                                             // number
-                                                                                                             // of
-                                                                                                             // dice
+                GameBoard.getInstance().getGameBoardPlaying().setAttackerNumDice(Integer.parseInt(args[2]));
             } else {
                 ConsolePrinter.printFormat("Invalid Input");
             }
@@ -666,7 +662,8 @@ public class GameController {
                                       .getGameBoardPlaying()
                                       .getDefenderNumDice());
 
-        attackResult();
+        attackResult(GameBoard.getInstance().getGameBoardPlaying().getDefendingCountry(),
+                     GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry());
     }
 
     /**
@@ -723,14 +720,13 @@ public class GameController {
                     GameBoard.getInstance()
                              .getGameBoardPlaying()
                              .setAttackMoveCmdRequired(false);
-                    if(furtherAttackPossible()) {
+                    if (furtherAttackPossible()) {
                         ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
-                    }
-                    else {
+                    } else {
                         ConsolePrinter.printFormat("No other attack is possible from any country.");
                         endAttackPhase();
                     }
-                    }
+                }
 
             } else {
                 ConsolePrinter.printFormat("Invalid Input");
@@ -893,58 +889,29 @@ public class GameController {
     /**
      * it prints the result of the attack.
      */
-    private void attackResult() {
+    private void attackResult(Country defendingCountry, Country attackingCountry) {
         // now check if defender's armies left is 0, set conquerer as attacker
-        if (GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .getDefendingCountry()
-                     .getArmyAmount() == 0) {
+        if (defendingCountry.getArmyAmount() == 0) {
             ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackingCountry()
-                                                .getConquerer()
-                                                .getName(),
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getDefendingCountry()
-                                                .getName(),
-                                       GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getAttackingCountry()
-                                                .getArmyAmount()
-                                                            - 1);
+                                       attackingCountry.getConquerer()
+                                                       .getName(),
+                                       defendingCountry.getName(),
+                                       attackingCountry.getArmyAmount()
+                                                                   - 1);
 
-            GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .getDefendingCountry()
-                     .setConquerer(GameBoard.getInstance()
-                                            .getGameBoardPlaying()
-                                            .getAttackingCountry()
-                                            .getConquerer());
+            defendingCountry.setConquerer(attackingCountry.getConquerer());
 
             // set attacker can be reward a card when attack phase end
-            GameBoard.getInstance()
-                     .getGameBoardPlaying()
-                     .getAttackingCountry()
-                     .getConquerer()
-                     .setPlayerBeAwardCard(true);
+            attackingCountry.getConquerer().setPlayerBeAwardCard(true);
 
             // check if defender has any countries that he has conquered. if not remove him from the game.
-            if (GameBoard.getInstance()
-                         .getGameBoardPlaying()
-                         .getDefendingCountry()
-                         .getConquerer()
-                         .getConqueredCountries()
-                         .isEmpty()) {
+            if (defendingCountry.getConquerer()
+                                .getConqueredCountries()
+                                .isEmpty()) {
                 // remove player
                 GameBoard.getInstance()
                          .getGameBoardPlayer()
-                         .removePlayer(GameBoard.getInstance()
-                                                .getGameBoardPlaying()
-                                                .getDefendingCountry()
-                                                .getConquerer()
-                                                .getName());
+                         .removePlayer(defendingCountry.getConquerer().getName());
             }
 
             // check if player has conquered entire continent
@@ -974,15 +941,9 @@ public class GameController {
             } else {
                 // move armies
                 ConsolePrinter.printFormat("Player %s needs to move armies into your conquered country %s",
-                                           GameBoard.getInstance()
-                                                    .getGameBoardPlaying()
-                                                    .getAttackingCountry()
-                                                    .getConquerer()
-                                                    .getName(),
-                                           GameBoard.getInstance()
-                                                    .getGameBoardPlaying()
-                                                    .getDefendingCountry()
-                                                    .getName());
+                                           attackingCountry.getConquerer()
+                                                           .getName(),
+                                           defendingCountry.getName());
                 GameBoard.getInstance()
                          .getGameBoardPlaying()
                          .setAttackMoveCmdRequired(true);
