@@ -89,11 +89,11 @@ public class CardSet {
         }
 
         return cardValue == allInfantry()
-            || cardValue == allCavalry()
-            || cardValue == allArtillery()
-            || cardValue == allWild()
-            || cardValue == oneOfEach()
-            || cardValue > CardType.Wild.getCardTypeAsInt();
+               || cardValue == allCavalry()
+               || cardValue == allArtillery()
+               || cardValue == allWild()
+               || cardValue == oneOfEach()
+               || cardValue > CardType.Wild.getCardTypeAsInt();
     }
 
     /**
@@ -162,5 +162,22 @@ public class CardSet {
         for (Card card : cards) {
             card.setExchanged(true);
         }
+    }
+
+    public String getCardsIndexForTournament() {
+        String result = "";
+
+        if (isSetValid()) {
+            Player holdingPlayer = cards.get(0).getHoldingPlayer();
+
+            result += holdingPlayer.getHoldingCards().indexOf(cards.get(0));
+            result += " ";
+            result += holdingPlayer.getHoldingCards().indexOf(cards.get(1));
+            result += " ";
+            result += holdingPlayer.getHoldingCards().indexOf(cards.get(2));
+
+        }
+
+        return result;
     }
 }

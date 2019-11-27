@@ -1,6 +1,7 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
@@ -596,5 +597,45 @@ public class Player extends Observable {
      */
     public void attackMove(Country fromCountry, Country toCountry, int numberOfArmies) {
         fromCountry.moveArmies(toCountry, numberOfArmies);
+    }
+
+    public ArrayList<CardSet> buildValidCardSets() {
+        ArrayList<CardSet> cardSets = new ArrayList<>();
+
+        ArrayList<Card> cards = this.getHoldingCards();
+
+        if (cards.size() < 3) {
+            return cardSets;
+        }
+
+        HashMap<Card, Boolean> cardsInSet = new HashMap<>();
+        for (Card card : cards) {
+            cardsInSet.put(card, false);
+        }
+
+        ArrayList<Card> notPicked = (ArrayList<Card>) GameHelper.getAllKeysForValue(cardsInSet, false);
+
+        while (notPicked.size() >= 5) {
+            ArrayList<Integer> cardIndexes = new ArrayList<>();
+            for (int cardIndex = 0; cardIndex < notPicked.size(); cardIndex++) {
+                cardIndexes.add(cardIndex);
+            }
+
+            // randomly pick 3 card with index
+            ArrayList<Integer> picked = GameHelper.getRandomElements(cardIndexes, 3);
+            CardSet cardSet = new CardSet(cards.get(picked.get(0)),
+                                          cards.get(picked.get(1)),
+                                          cards.get(picked.get(2)));
+            if (cardSet.isSetValid()) {
+                cardSets.add(cardSet);
+                for (int cardIndex : picked) {
+                    cardsInSet.put(cards.get(cardIndex), true);
+                }
+            }
+
+            notPicked = (ArrayList<Card>) GameHelper.getAllKeysForValue(cardsInSet, false);
+        }
+
+        return cardSets;
     }
 }

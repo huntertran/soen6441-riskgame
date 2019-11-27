@@ -88,6 +88,9 @@ public class CheaterStrategy implements Strategy {
     @Override
     public void playTurn(Player player) {
         reinforce(player, null);
+
+        exchangeCards(player);
+
         attack(player, null);
 
         // the cheater strategy required re-implementation of fortify command

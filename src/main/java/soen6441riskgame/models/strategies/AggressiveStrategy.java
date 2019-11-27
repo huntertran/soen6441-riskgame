@@ -137,6 +137,8 @@ public class AggressiveStrategy implements Strategy {
 
         reinforce(player, strongestPlayerCountry);
 
+        exchangeCards(player);
+
         ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
 
         if (attackedCountries.size() != 0) {

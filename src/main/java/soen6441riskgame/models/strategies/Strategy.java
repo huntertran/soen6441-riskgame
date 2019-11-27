@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import soen6441riskgame.App;
 import soen6441riskgame.enums.StrategyName;
+import soen6441riskgame.models.CardSet;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
@@ -35,6 +36,23 @@ public interface Strategy {
         command += GameCommands.SPACE;
         command += String.valueOf(numberOfArmies);
         App.jumpToCommand(new ModelCommands(command));
+    }
+
+    default void exchangeCards(Player player) {
+        if (player.getHoldingCards().size() >= 5) {
+            ArrayList<CardSet> cardSets = player.buildValidCardSets();
+
+            String command = GameCommands.EXCHANGECARDS;
+            command += GameCommands.SPACE;
+            for (CardSet cardSet : cardSets) {
+                command += cardSet.getCardsIndexForTournament();
+                command += " ";
+            }
+
+            command += " -none";
+
+            App.jumpToCommand(new ModelCommands(command));
+        }
     }
 
     /**

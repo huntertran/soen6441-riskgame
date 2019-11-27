@@ -100,6 +100,8 @@ public class BenevolentStrategy implements Strategy {
 
         reinforce(player, weakestPlayerCountry);
 
+        exchangeCards(player);
+
         attack(player, null);
 
         Country weakerPlayerCountry = getWeakestCountryToReinforce(player);

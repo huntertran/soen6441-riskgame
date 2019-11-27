@@ -158,6 +158,8 @@ public class RandomStrategy implements Strategy {
             }
         }
 
+        exchangeCards(player);
+
         ArrayList<Country> attackingCountries = filterAttackableCountries(player.getConqueredCountries());
         if (attackingCountries.size() > 0) {
             int attackTime = GameHelper.nextRandomInt(attackingCountries.size());
