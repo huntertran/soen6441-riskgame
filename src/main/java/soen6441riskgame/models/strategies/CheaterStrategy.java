@@ -38,8 +38,8 @@ public class CheaterStrategy implements Strategy {
 
         for (Country country : conqueredCountries) {
             int armyToReinforce = country.getArmyAmount();
-            player.setUnplacedArmies(armyToReinforce);
-            reinforce(country, player.getUnplacedArmies());
+            player.setUnplacedArmies(player.getUnplacedArmies() + armyToReinforce);
+            reinforce(country, armyToReinforce);
         }
     }
 
