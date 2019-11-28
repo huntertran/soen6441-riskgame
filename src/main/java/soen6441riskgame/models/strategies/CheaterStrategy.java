@@ -54,6 +54,10 @@ public class CheaterStrategy implements Strategy {
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
         ArrayList<Country> conqueredCountries = player.getConqueredCountries();
 
+        if(conqueredCountries.size() <= 0) {
+            attackEnd();
+        }
+        
         for (Country country : conqueredCountries) {
             ArrayList<Country> neighbors = country.getNeighbors();
             for (Country neighbor : neighbors) {
@@ -92,15 +96,22 @@ public class CheaterStrategy implements Strategy {
         exchangeCards(player);
 
         attack(player, null);
-
-        // the cheater strategy required re-implementation of fortify command
-        ArrayList<Country> countriesToFortify = getCountriesToFortify(player);
-        for (Country toCountry : countriesToFortify) {
-            Country fromCountry = getFortifyFromCountry(player, toCountry);
-            fortify(fromCountry, toCountry);
+        attackEnd();
+        
+        if( player.isGameEnded() ) {
+            player.setEndOfGamePhase();
         }
-
-        fortifyNone();
+        else {
+        
+            // the cheater strategy required re-implementation of fortify command
+            ArrayList<Country> countriesToFortify = getCountriesToFortify(player);
+            for (Country toCountry : countriesToFortify) {
+                Country fromCountry = getFortifyFromCountry(player, toCountry);
+                fortify(fromCountry, toCountry);
+            }
+    
+            fortifyNone();
+        }
     }
 
     /**
