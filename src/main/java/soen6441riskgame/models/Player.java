@@ -667,4 +667,33 @@ public class Player extends Observable {
 
         return cardSets;
     }
+    
+    /**
+     * it sets the game phase to end of game when a player has won the game
+     */
+    public void setEndOfGamePhase() {
+        ConsolePrinter.printFormat("Congratulations, The player %s has won the game.", this.getName());
+        this.setCurrentPhase(GamePhase.END_OF_GAME);
+    }
+    
+    /**
+     * test if the player has conquered all countries and won the game.
+     * 
+     */
+    public boolean isGameEnded() {
+        // check whether this player has won the game
+       Player currentPlayer = this;
+       boolean gameEnded = true;
+        ArrayList<Country> countries = GameBoard.getInstance()
+                                                .getGameBoardMap()
+                                                .getCountries();
+        for (Country country : countries) {
+            if (country.getConquerer() != currentPlayer) {
+                gameEnded = false;
+                break;
+            }
+        }
+
+        return gameEnded;
+    }
 }
