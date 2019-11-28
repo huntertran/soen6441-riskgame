@@ -98,8 +98,10 @@ public class BenevolentStrategy implements Strategy {
     public void playTurn(Player player) {
         Country weakestPlayerCountry = getWeakestCountryToReinforce(player);
 
-        reinforce(player, weakestPlayerCountry);
-
+        if(weakestPlayerCountry != null) {
+            reinforce(player, weakestPlayerCountry);
+        }
+       
         exchangeCards(player);
 
         attack(player, null);
