@@ -62,7 +62,13 @@ public class GameHelper {
      */
     public static int nextRandomIntInRange(int min, int max) {
         Random random = new Random();
-        return random.nextInt((max - min) + 1) + min;
+        //return random.nextInt((max - min) + 1) + min;
+        System.out.println("min max"+min + "  "+max);
+        if(max == 0)
+            return 0;
+        else if(max == min)
+            return min;
+        return (random.nextInt(max)>=min)? random.nextInt(max) : random.nextInt(max) + min;
     }
 
     /**
