@@ -8,6 +8,7 @@ import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Boundary;
+import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
@@ -136,19 +137,22 @@ public class TournamentController {
         Player currentPlayer = gameController.getCurrentPlayer();
 
         for (int turnPlayed = 0; turnPlayed < maxNumberOfTurn; turnPlayed++) {
+            
             currentPlayer.getStrategy().playTurn(currentPlayer);
+            
+            
+            if (currentPlayer.getCurrentPhase() == GamePhase.END_OF_GAME) {
+                return currentPlayer;
+            }
             currentPlayer = gameController.getCurrentPlayer();
+            
         }
 
-        for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {
-            if (player.getCurrentPhase() == GamePhase.END_OF_GAME) {
-                return player;
-            }
-        }
+        
 
         return null;
     }
-
+    
     /**
      * init players with strategy
      */
