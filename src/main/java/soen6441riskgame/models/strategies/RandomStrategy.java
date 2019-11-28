@@ -49,7 +49,10 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
-        reinforce(countryToReinforce, player.getUnplacedArmies());
+        if(player.getUnplacedArmies() > 0) {
+            int randArmy = GameHelper.nextRandomIntInRange(1, player.getUnplacedArmies());
+            reinforce(countryToReinforce, randArmy);
+        }
     }
 
     /**
@@ -124,7 +127,7 @@ public class RandomStrategy implements Strategy {
     @Override
     public void playTurn(Player player) {
         int reinforceTime = GameHelper.nextRandomInt(player.getConqueredCountries().size());
-
+         
         for (int index = 0; index < reinforceTime; index++) {
             Country randomCountry = getCountryToReinforce(player);
             reinforce(player, randomCountry);
@@ -149,15 +152,25 @@ public class RandomStrategy implements Strategy {
 
         ArrayList<Country> conquered = player.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
-
+        ArrayList<Country> fortifiableCountries = new ArrayList<>();
+        
         if (moveArmyFrom.size() > 1 && conquered.size() > 1) {
             int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));
             Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
 
-            int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (conquered.size() - 1));
-            Country countryTo = conquered.get(randIndexCountryTo);
+            for (Country country : countryFrom.getNeighbors()) {
+                if (country.getConquerer() == player) {
+                    fortifiableCountries.add(country);
+                }
+            }
+            
+            if(fortifiableCountries.size() > 0) {
+                int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (fortifiableCountries.size() - 1));
+                Country countryTo = fortifiableCountries.get(randIndexCountryTo);
 
-            fortify(countryFrom, countryTo);
+                fortify(countryFrom, countryTo);
+            }
+            
         }
 
         fortifyNone();
