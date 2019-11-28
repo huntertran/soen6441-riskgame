@@ -87,9 +87,9 @@ public class CheaterStrategy implements Strategy {
      */
     @Override
     public void playTurn(Player player) {
-        reinforce(player, null);
-
         exchangeCards(player);
+
+        reinforce(player, null);
 
         attack(player, null);
 

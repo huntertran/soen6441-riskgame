@@ -96,13 +96,13 @@ public class BenevolentStrategy implements Strategy {
      */
     @Override
     public void playTurn(Player player) {
+        exchangeCards(player);
+
         Country weakestPlayerCountry = getWeakestCountryToReinforce(player);
 
-        if(weakestPlayerCountry != null) {
+        if (weakestPlayerCountry != null) {
             reinforce(player, weakestPlayerCountry);
         }
-       
-        exchangeCards(player);
 
         attack(player, null);
 

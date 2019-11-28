@@ -127,6 +127,8 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public void playTurn(Player player) {
+        exchangeCards(player);
+
         Country randomCountry = getCountryToReinforce(player);
 
         while (player.getUnplacedArmies() > 0) {
@@ -139,8 +141,6 @@ public class RandomStrategy implements Strategy {
             // call reinforce when unplaced armies = 0 will change phase from REINFORCE to ATTACK
             reinforce(randomCountry, 0);
         }
-
-        exchangeCards(player);
 
         ArrayList<Country> attackingCountries = filterAttackableCountries(player.getConqueredCountries());
         if (attackingCountries.size() > 0) {
