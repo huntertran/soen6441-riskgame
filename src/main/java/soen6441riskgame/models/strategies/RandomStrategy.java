@@ -2,6 +2,7 @@ package soen6441riskgame.models.strategies;
 
 import java.util.ArrayList;
 
+import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.enums.StrategyName;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.Player;
@@ -49,7 +50,7 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
-        if(player.getUnplacedArmies() > 0) {
+        if (player.getUnplacedArmies() > 0) {
             int randArmy = GameHelper.nextRandomIntInRange(1, player.getUnplacedArmies());
             reinforce(countryToReinforce, randArmy);
         }
@@ -126,39 +127,38 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public void playTurn(Player player) {
-        int reinforceTime = 0;
-        if (player.getConqueredCountries().size() > 0) {
-            reinforceTime = GameHelper.nextRandomInt(player.getConqueredCountries().size());
-        
-            if(reinforceTime == 0)
-                reinforceTime = 1;
-        }
-        for (int index = 0; index < reinforceTime; index++) {
-            Country randomCountry = getCountryToReinforce(player);
-            reinforce(player, randomCountry);
+        Country randomCountry = getCountryToReinforce(player);
 
-            if (player.getUnplacedArmies() == 0) {
-                break;
-            }
+        while (player.getUnplacedArmies() > 0) {
+            randomCountry = getCountryToReinforce(player);
+            reinforce(player, randomCountry);
         }
-       
+
+        if (player.getUnplacedArmies() == 0
+            && player.getCurrentPhase() == GamePhase.REINFORCEMENT) {
+            // call reinforce when unplaced armies = 0 will change phase from REINFORCE to ATTACK
+            reinforce(randomCountry, 0);
+        }
+
         exchangeCards(player);
 
         ArrayList<Country> attackingCountries = filterAttackableCountries(player.getConqueredCountries());
         if (attackingCountries.size() > 0) {
             int attackTime = GameHelper.nextRandomInt(attackingCountries.size());
             Country attackingCountry = attackingCountries.get(0);
-            for (int index = 0; index < attackTime; index++) {
+            for (int index = 0; index < attackTime && player.getCurrentPhase() == GamePhase.ATTACK; index++) {
                 attack(player, attackingCountry);
             }
         }
 
-        attackEnd();
+        if (player.getCurrentPhase() == GamePhase.ATTACK) {
+            attackEnd();
+        }
 
         ArrayList<Country> conquered = player.getConqueredCountries();
         ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
         ArrayList<Country> fortifiableCountries = new ArrayList<>();
-        
+
         if (moveArmyFrom.size() > 1 && conquered.size() > 1) {
             int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));
             Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
@@ -168,14 +168,14 @@ public class RandomStrategy implements Strategy {
                     fortifiableCountries.add(country);
                 }
             }
-            
-            if(fortifiableCountries.size() > 0) {
+
+            if (fortifiableCountries.size() > 0) {
                 int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (fortifiableCountries.size() - 1));
                 Country countryTo = fortifiableCountries.get(randIndexCountryTo);
 
                 fortify(countryFrom, countryTo);
             }
-            
+
         }
 
         fortifyNone();
