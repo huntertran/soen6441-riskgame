@@ -187,6 +187,10 @@ public class Player extends Observable {
 
                 isChangePhaseAllowed = false;
             }
+            //check if unplaced armies == 0 , then just skip the reinforcement phase
+            else if(this.getUnplacedArmies() == 0) {
+                isChangePhaseAllowed = true;
+            }
         }
 
         if (newPhase == GamePhase.END_OF_GAME && currentPhase == GamePhase.ATTACK) {
