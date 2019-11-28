@@ -131,13 +131,13 @@ public class AggressiveStrategy implements Strategy {
      */
     @Override
     public void playTurn(Player player) {
+        exchangeCards(player);
+
         Country strongestPlayerCountry = getStrongestCountryToReinforce(player);
 
-        if(strongestPlayerCountry != null) {
+        if (strongestPlayerCountry != null) {
             reinforce(player, strongestPlayerCountry);
         }
-        
-        exchangeCards(player);
 
         ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
 
