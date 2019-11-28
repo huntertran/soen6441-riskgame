@@ -17,7 +17,8 @@ public class TournamentControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-                             "-M smallmap -P Aggressive,Benevolent,Random, -G 1 -D 40"
+                             "-M smallmap -P Aggressive,Benevolent,Random, -G 1 -D 40",
+                             "-M smallmap -P Benevolent,Aggressive -G 2 -D 50"
     })
     public void enterTournamentTest(String command) {
         // setup
