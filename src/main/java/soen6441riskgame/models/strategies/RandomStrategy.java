@@ -127,7 +127,10 @@ public class RandomStrategy implements Strategy {
     @Override
     public void playTurn(Player player) {
         int reinforceTime = GameHelper.nextRandomInt(player.getConqueredCountries().size());
-         
+        
+        if(reinforceTime == 0)
+            reinforceTime = 1;
+        
         for (int index = 0; index < reinforceTime; index++) {
             Country randomCountry = getCountryToReinforce(player);
             reinforce(player, randomCountry);
