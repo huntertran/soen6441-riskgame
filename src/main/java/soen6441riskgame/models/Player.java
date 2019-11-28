@@ -1,12 +1,10 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
-
 import com.google.gson.annotations.Expose;
 
 import soen6441riskgame.enums.ChangedProperty;
@@ -15,7 +13,6 @@ import soen6441riskgame.models.strategies.Strategy;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
-import soen6441riskgame.views.PhaseView;
 
 /**
  * Hold player data
@@ -648,8 +645,9 @@ public class Player extends Observable {
 
         while (notPicked.size() >= 5) {
             ArrayList<Integer> cardIndexes = new ArrayList<>();
-            for (int cardIndex = 0; cardIndex < notPicked.size(); cardIndex++) {
-                cardIndexes.add(cardIndex);
+
+            for (Card card : notPicked) {
+                cardIndexes.add(cards.indexOf(card));
             }
 
             // randomly pick 3 card with index
