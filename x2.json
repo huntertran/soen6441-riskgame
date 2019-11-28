@@ -1,0 +1,470 @@
+{
+  "countries": [
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 6,
+      "name": "India",
+      "serializedOrder": 1,
+      "continentName": "Asia",
+      "conquererName": "p1"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 1,
+      "name": "Pakistan",
+      "serializedOrder": 2,
+      "continentName": "Asia",
+      "conquererName": "p1"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 1,
+      "name": "China",
+      "serializedOrder": 3,
+      "continentName": "Asia",
+      "conquererName": "p2"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 1,
+      "name": "USA",
+      "serializedOrder": 4,
+      "continentName": "America",
+      "conquererName": "p1"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 1,
+      "name": "Canada",
+      "serializedOrder": 5,
+      "continentName": "America",
+      "conquererName": "p1"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 1,
+      "name": "Russia",
+      "serializedOrder": 6,
+      "continentName": "America",
+      "conquererName": "p2"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 1,
+      "name": "Mexico",
+      "serializedOrder": 7,
+      "continentName": "America",
+      "conquererName": "p2"
+    }
+  ],
+  "continents": [
+    {
+      "name": "Asia",
+      "army": 3
+    },
+    {
+      "name": "America",
+      "army": 4
+    }
+  ],
+  "players": [
+    {
+      "name": "p1",
+      "unplacedArmies": 38,
+      "isPlaying": true,
+      "nextPlayerName": "p2",
+      "previousPlayerName": "p2",
+      "currentPhase": "REINFORCEMENT",
+      "currentPhaseActions": [
+        "Reinforce: India with 5"
+      ],
+      "isPlayerBeAwardCard": false
+    },
+    {
+      "name": "p2",
+      "unplacedArmies": 40,
+      "isPlaying": false,
+      "nextPlayerName": "p1",
+      "previousPlayerName": "p1",
+      "currentPhase": "WAITING_TO_TURN",
+      "currentPhaseActions": [],
+      "isPlayerBeAwardCard": false
+    }
+  ],
+  "borders": [
+    [
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      0
+    ]
+  ],
+  "cards": [
+    {
+      "cardType": "Wild",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Wild",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Infantry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Cavalry",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    },
+    {
+      "cardType": "Artillery",
+      "isExchanged": false,
+      "holdingPlayerName": null
+    }
+  ],
+  "gameBoardPlaying": {
+    "attackerNumDice": 0,
+    "defenderNumDice": 0,
+    "attackingCountryName": null,
+    "defendingCountyName": null,
+    "alloutFlag": false,
+    "attackMoveCmdRequired": false
+  }
+}
