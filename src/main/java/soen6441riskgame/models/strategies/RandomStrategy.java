@@ -154,31 +154,37 @@ public class RandomStrategy implements Strategy {
         if (player.getCurrentPhase() == GamePhase.ATTACK) {
             attackEnd();
         }
-
-        ArrayList<Country> conquered = player.getConqueredCountries();
-        ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
-        ArrayList<Country> fortifiableCountries = new ArrayList<>();
-
-        if (moveArmyFrom.size() > 1 && conquered.size() > 1) {
-            int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));
-            Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
-
-            for (Country country : countryFrom.getNeighbors()) {
-                if (country.getConquerer() == player) {
-                    fortifiableCountries.add(country);
-                }
-            }
-
-            if (fortifiableCountries.size() > 0) {
-                int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (fortifiableCountries.size() - 1));
-                Country countryTo = fortifiableCountries.get(randIndexCountryTo);
-
-                fortify(countryFrom, countryTo);
-            }
-
+        
+        if( player.isGameEnded() ) {
+            player.setEndOfGamePhase();
         }
+        else {
 
-        fortifyNone();
+            ArrayList<Country> conquered = player.getConqueredCountries();
+            ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
+            ArrayList<Country> fortifiableCountries = new ArrayList<>();
+    
+            if (moveArmyFrom.size() > 1 && conquered.size() > 1) {
+                int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));
+                Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
+    
+                for (Country country : countryFrom.getNeighbors()) {
+                    if (country.getConquerer() == player) {
+                        fortifiableCountries.add(country);
+                    }
+                }
+    
+                if (fortifiableCountries.size() > 0) {
+                    int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (fortifiableCountries.size() - 1));
+                    Country countryTo = fortifiableCountries.get(randIndexCountryTo);
+    
+                    fortify(countryFrom, countryTo);
+                }
+    
+            }
+    
+            fortifyNone();
+        }
     }
 
     /**

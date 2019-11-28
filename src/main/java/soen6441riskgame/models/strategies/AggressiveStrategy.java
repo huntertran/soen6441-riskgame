@@ -140,14 +140,20 @@ public class AggressiveStrategy implements Strategy {
         }
 
         ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
-
-        if (attackedCountries.size() != 0) {
-            int index = attackedCountries.size() - 1;
-            Country fortifyToCountry = attackedCountries.get(index);
-
-            fortify(strongestPlayerCountry, fortifyToCountry);
+        
+        if( player.isGameEnded() ) {
+            player.setEndOfGamePhase();
         }
+        else {
 
-        fortifyNone();
+            if (attackedCountries.size() != 0) {
+                int index = attackedCountries.size() - 1;
+                Country fortifyToCountry = attackedCountries.get(index);
+    
+                fortify(strongestPlayerCountry, fortifyToCountry);
+            }
+    
+            fortifyNone();
+        }
     }
 }

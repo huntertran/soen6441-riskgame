@@ -105,15 +105,21 @@ public class BenevolentStrategy implements Strategy {
         }
 
         attack(player, null);
-
-        Country weakerPlayerCountry = getWeakestCountryToReinforce(player);
-
-        if (weakerPlayerCountry != null
-            && weakerPlayerCountry != weakestPlayerCountry
-            && weakestPlayerCountry != null) {
-            fortify(weakestPlayerCountry, weakerPlayerCountry);
+        
+        if( player.isGameEnded() ) {
+            player.setEndOfGamePhase();
         }
+        else {
 
-        fortifyNone();
+            Country weakerPlayerCountry = getWeakestCountryToReinforce(player);
+    
+            if (weakerPlayerCountry != null
+                && weakerPlayerCountry != weakestPlayerCountry
+                && weakestPlayerCountry != null) {
+                fortify(weakestPlayerCountry, weakerPlayerCountry);
+            }
+    
+            fortifyNone();
+        }
     }
 }
