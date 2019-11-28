@@ -152,13 +152,14 @@ public class SerializableGame {
             GameBoard.getInstance().getGameBoardMap().setBorders(borders);
 
             for (Player player : players) {
+                Player linkedPlayer = new Player(player);
                 GameBoard.getInstance()
                          .getGameBoardPlayer()
                          .getPlayers()
-                         .add(player);
+                         .add(linkedPlayer);
             }
 
-            for (Player player : players) {
+            for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {
                 player.linkNextAndPrevious(GameBoard.getInstance()
                                                     .getGameBoardPlayer()
                                                     .getPlayers());
@@ -176,6 +177,9 @@ public class SerializableGame {
                                                     GameBoard.getInstance()
                                                              .getGameBoardPlayer()
                                                              .getPlayers());
+
+                linkedCountry.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());
+
                 GameBoard.getInstance()
                          .getGameBoardMap()
                          .getCountries()

@@ -2,6 +2,7 @@ package soen6441riskgame.controllers;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -101,13 +102,26 @@ public class SaveLoadController {
     public boolean loadGame(String savedGameFilePath) {
         boolean isLoaded = false;
 
-        try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath + ".json"))) {
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader(savedGameFilePath + ".json"));
+        } catch (IOException e) {
+            ConsolePrinter.printFormat("Error reading saved game: %s", e.getMessage());
+        }
+
+        if (reader != null) {
             ConsolePrinter.printFormat("Reading from saved game");
             deserialize(reader);
             isLoaded = true;
-        } catch (Exception e) {
-            ConsolePrinter.printFormat("Error reading saved game: %s", e.getMessage());
         }
+
+        // try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath + ".json"))) {
+        // ConsolePrinter.printFormat("Reading from saved game");
+        // deserialize(reader);
+        // isLoaded = true;
+        // } catch (IOException e) {
+        // ConsolePrinter.printFormat("Error reading saved game: %s", e.getMessage());
+        // }
 
         return isLoaded;
     }

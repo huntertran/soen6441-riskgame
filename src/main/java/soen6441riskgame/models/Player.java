@@ -1,6 +1,7 @@
 package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,7 @@ import soen6441riskgame.models.strategies.Strategy;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
+import soen6441riskgame.views.PhaseView;
 
 /**
  * Hold player data
@@ -68,7 +70,25 @@ public class Player extends Observable {
     }
 
     /**
+     * copy constructor
+     * 
+     * @param serializedPlayer serialized player
+     */
+    @SuppressWarnings("unchecked")
+    public Player(Player serializedPlayer) {
+        this.name = serializedPlayer.name;
+        this.unplacedArmies = serializedPlayer.unplacedArmies;
+        this.isPlaying = serializedPlayer.isPlaying;
+        this.nextPlayerName = serializedPlayer.nextPlayerName;
+        this.previousPlayerName = serializedPlayer.previousPlayerName;
+        this.currentPhase = serializedPlayer.currentPhase;
+        this.currentPhaseActions = (ArrayList<String>) serializedPlayer.currentPhaseActions.clone();
+        this.isPlayerBeAwardCard = serializedPlayer.isPlayerBeAwardCard;
+    }
+
+    /**
      * get player's strategy set by tournament mode
+     * 
      * @return player's strategy set by tournament mode
      */
     public Strategy getStrategy() {
@@ -77,6 +97,7 @@ public class Player extends Observable {
 
     /**
      * set player's strategy for tournament mode
+     * 
      * @param strategy player's strategy for tournament mode
      */
     public void setStrategy(Strategy strategy) {
@@ -107,6 +128,12 @@ public class Player extends Observable {
      */
     public void reconstruct() {
         holdingCards = new ArrayList<Card>();
+
+        this.addObserver(GameBoard.getInstance().getGameBoardPlayer().getPhaseView());
+
+        if (currentPhase == GamePhase.REINFORCEMENT) {
+            this.addObserver(GameBoard.getInstance().getExchangeCardView());
+        }
     }
 
     /**
@@ -187,8 +214,8 @@ public class Player extends Observable {
 
                 isChangePhaseAllowed = false;
             }
-            //check if unplaced armies == 0 , then just skip the reinforcement phase
-            else if(this.getUnplacedArmies() == 0) {
+            // check if unplaced armies == 0 , then just skip the reinforcement phase
+            else if (this.getUnplacedArmies() == 0) {
                 isChangePhaseAllowed = true;
             }
         }

@@ -87,6 +87,15 @@ public class GameBoardPlayer implements Resettable {
     }
 
     /**
+     * get the Phase View
+     * 
+     * @return Phase View
+     */
+    public PhaseView getPhaseView() {
+        return phaseView;
+    }
+
+    /**
      * reset player list
      */
     @Override
