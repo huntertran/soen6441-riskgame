@@ -84,7 +84,7 @@ public class BenevolentStrategy implements Strategy {
      */
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
-        int averageArmies = fromCountry.getArmyAmount() + toCountry.getArmyAmount() / 2;
+        int averageArmies = (fromCountry.getArmyAmount() + toCountry.getArmyAmount()) / 2;
         int armyToMove = fromCountry.getArmyAmount() - averageArmies;
         fortify(fromCountry, toCountry, armyToMove);
     }
