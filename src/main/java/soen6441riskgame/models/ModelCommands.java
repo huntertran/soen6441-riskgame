@@ -47,7 +47,13 @@ public class ModelCommands {
         }
 
         // Split rest of the string parameter except the command using "-"
-        String[] paramsArray = temp_args[1].split("-");
+        String[] paramsArray;
+        if(this.cmd.equalsIgnoreCase("tournament")) {
+            paramsArray = temp_args[1].split(" ");
+        }
+        else {
+            paramsArray = temp_args[1].split("-");
+        }
 
         for (String s : paramsArray) {
             try {
