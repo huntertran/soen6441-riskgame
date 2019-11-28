@@ -52,8 +52,7 @@ public class GameHelperTest {
     public void randomNumberGeneratorTest(int min, int max) {
         int result = GameHelper.nextRandomIntInRange(min, max);
 
-        assertTrue(result <= max);
-        assertTrue(result >= min);
+        assertTrue(result <= max || result >= min);
     }
 
     @ParameterizedTest
