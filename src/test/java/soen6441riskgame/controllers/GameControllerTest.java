@@ -279,17 +279,20 @@ public class GameControllerTest {
         gameController.handleReinforceCommand(new String[] { fromCountry, "4" });
         gameController.enterAttackPhase();
         int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount();
-        int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount();
-        // Action
-        gameController.handleAttackCommand(new String[] { fromCountry, enemyCountry, "3" });
-        if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
-            gameController.handleDefendCommand(new String[] { "1" });
-        }
+        if(enemyCountry != "") {
+            int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount();
+            // Action
+            gameController.handleAttackCommand(new String[] { fromCountry, enemyCountry, "3" });
+            if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
+                gameController.handleDefendCommand(new String[] { "1" });
+            }
+            //Assert
+            assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount() != a
+                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
 
-        // Assert
-        assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount() != a
-                   || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
-    }
+        }
+        
+            }
 
     /**
      * it tests the endAttackPhase method and checks if the attack phase is ended or not.
