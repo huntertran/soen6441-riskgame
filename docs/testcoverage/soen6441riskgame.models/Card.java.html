@@ -3,10 +3,8 @@
 import java.io.PrintStream;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.JsonAdapter;
 
 import soen6441riskgame.enums.CardType;
-import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
@@ -16,21 +14,25 @@ public class Card implements Viewable {
     @Expose
     private CardType cardType;
 
-<span class="fc" id="L19">    @Expose</span>
-    private boolean isExchanged = false;
-
-<span class="fc" id="L22">    @JsonAdapter(NameOnlyJsonAdapter.class)</span>
     @Expose
-    private Player holdingPlayer = null;
+<span class="fc" id="L18">    private boolean isExchanged = false;</span>
+
+<span class="fc" id="L20">    private Player holdingPlayer = null;</span>
+
+    /**
+     * this property is for saving data only
+     */
+    @Expose
+    private String holdingPlayerName;
 
     /**
      * constructor
      *
      * @param type type of card
      */
-<span class="fc" id="L31">    public Card(CardType type) {</span>
-<span class="fc" id="L32">        cardType = type;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L33">    public Card(CardType type) {</span>
+<span class="fc" id="L34">        cardType = type;</span>
+<span class="fc" id="L35">    }</span>
 
     /**
      * get the type of card
@@ -38,7 +40,7 @@ public class Card implements Viewable {
      * @return card type
      */
     public CardType getCardType() {
-<span class="fc" id="L41">        return cardType;</span>
+<span class="fc" id="L43">        return cardType;</span>
     }
 
     /**
@@ -48,7 +50,7 @@ public class Card implements Viewable {
      * @return is card exchanged for armies
      */
     public boolean isExchanged() {
-<span class="fc" id="L51">        return isExchanged;</span>
+<span class="fc" id="L53">        return isExchanged;</span>
     }
 
     /**
@@ -58,8 +60,8 @@ public class Card implements Viewable {
      * @param isExchanged the value to set
      */
     public void setExchanged(boolean isExchanged) {
-<span class="fc" id="L61">        this.isExchanged = isExchanged;</span>
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L63">        this.isExchanged = isExchanged;</span>
+<span class="fc" id="L64">    }</span>
 
     /**
      * get the player that holding this card
@@ -67,7 +69,7 @@ public class Card implements Viewable {
      * @return player object
      */
     public Player getHoldingPlayer() {
-<span class="fc" id="L70">        return holdingPlayer;</span>
+<span class="fc" id="L72">        return holdingPlayer;</span>
     }
 
     /**
@@ -76,18 +78,30 @@ public class Card implements Viewable {
      * @param player player who took this card
      */
     public void setHoldingPlayer(Player player) {
-<span class="fc" id="L79">        holdingPlayer = player;</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L81">        holdingPlayer = player;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (player != null) {</span>
+<span class="fc" id="L83">            holdingPlayerName = player.getName();</span>
+        }
+<span class="fc" id="L85">    }</span>
+
+    /**
+     * get the holding player name for reconstruction
+     * 
+     * @return name of the holder
+     */
+    public String getHoldingPlayerName() {
+<span class="fc" id="L93">        return holdingPlayerName;</span>
+    }
 
     /**
      * print the card content
      */
     @Override
     public void view(PrintStream printStream, int indent) {
-<span class="fc" id="L87">        this.printIndent(printStream, indent);</span>
-<span class="fc" id="L88">        ConsolePrinter.printFormat(printStream,</span>
-                                   &quot;Card type: %s&quot;,
-<span class="fc" id="L90">                                   cardType.toString());</span>
-<span class="fc" id="L91">    }</span>
+<span class="fc" id="L101">        this.printIndent(printStream, indent);</span>
+<span class="fc" id="L102">        ConsolePrinter.printFormat(printStream,</span>
+<span class="fc" id="L103">                                   &quot;Card type: %s&quot;,</span>
+<span class="fc" id="L104">                                   cardType.toString());</span>
+<span class="fc" id="L105">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

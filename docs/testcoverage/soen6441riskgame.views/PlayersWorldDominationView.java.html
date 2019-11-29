@@ -21,42 +21,41 @@ import soen6441riskgame.utils.ConsolePrinter;
  *
  */
 public class PlayersWorldDominationView extends SeparatedView implements Observer {
-
     public PlayersWorldDominationView() {
-<span class="fc" id="L26">        super(&quot;Players World Domination View&quot;);</span>
-<span class="fc" id="L27">    }</span>
+<span class="fc" id="L25">        super(&quot;Players World Domination&quot;);</span>
+<span class="fc" id="L26">    }</span>
 
     /**
      * update the view when property changed
      */
     @Override
     public void update(Observable o, Object arg) {
-<span class="fc" id="L34">        clearView();</span>
+<span class="fc" id="L33">        clearView();</span>
 
-<span class="fc" id="L36">        ArrayList&lt;Player&gt; players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();</span>
+<span class="fc" id="L35">        ArrayList&lt;Player&gt; players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();</span>
 
-<span class="fc" id="L38">        int totalNumberOfCountries = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
+<span class="fc" id="L37">        int totalNumberOfCountries = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
 
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (Player player : players) {</span>
-<span class="fc" id="L41">            double percentConquered = (player.getConqueredCountries().size() * 100) / totalNumberOfCountries;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (Player player : players) {</span>
+<span class="fc" id="L40">            double percentConquered = (player.getConqueredCountries().size() * 100) / totalNumberOfCountries;</span>
 
-<span class="fc" id="L43">            ConsolePrinter.printFormat(printStream,</span>
-                                       &quot;Player %s conquered %.2f percent of the world, having %d armies&quot;,
-<span class="fc" id="L45">                                       player.getName(),</span>
-<span class="fc" id="L46">                                       percentConquered,</span>
-<span class="fc" id="L47">                                       player.getTotalArmies());</span>
+<span class="fc" id="L42">            ConsolePrinter.printFormat(printStream,</span>
+<span class="fc" id="L43">                                       &quot;Player %s conquered %.2f percent of the world, having %d armies&quot;,</span>
+<span class="fc" id="L44">                                       player.getName(),</span>
+<span class="fc" id="L45">                                       percentConquered,</span>
+<span class="fc" id="L46">                                       player.getTotalArmies());</span>
 
-<span class="fc" id="L49">            ArrayList&lt;Continent&gt; conqueredContinents = player.getConqueredContinents();</span>
-<span class="fc" id="L50">            ConsolePrinter.printFormat(printStream,</span>
-                                       &quot;Conquered continents: %d&quot;,
-<span class="fc" id="L52">                                       conqueredContinents.size());</span>
+<span class="fc" id="L48">            ArrayList&lt;Continent&gt; conqueredContinents = player.getConqueredContinents();</span>
+<span class="fc" id="L49">            ConsolePrinter.printFormat(printStream,</span>
+<span class="fc" id="L50">                                       &quot;Conquered continents: %d&quot;,</span>
+<span class="fc" id="L51">                                       conqueredContinents.size());</span>
 
-<span class="fc bfc" id="L54" title="All 2 branches covered.">            for (Continent continent : conqueredContinents) {</span>
-<span class="fc" id="L55">                ConsolePrinter.printFormat(printStream,</span>
-                                           &quot;    %s&quot;,
-<span class="fc" id="L57">                                           continent.getName());</span>
-<span class="fc" id="L58">            }</span>
-<span class="fc" id="L59">        }</span>
-<span class="fc" id="L60">    }</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            for (Continent continent : conqueredContinents) {</span>
+<span class="fc" id="L54">                ConsolePrinter.printFormat(printStream,</span>
+<span class="fc" id="L55">                                           &quot;    %s&quot;,</span>
+<span class="fc" id="L56">                                           continent.getName());</span>
+            }
+        }
+<span class="fc" id="L59">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

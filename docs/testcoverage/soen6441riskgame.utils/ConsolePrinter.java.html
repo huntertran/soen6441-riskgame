@@ -14,12 +14,15 @@ import soen6441riskgame.utils.presenter.WindowPane;
 
 <span class="fc" id="L15">    private static boolean isJUnitTest = true;</span>
 
+<span class="fc" id="L17">    private static boolean isDebug = false;</span>
+
     /*
      * determine if current program is run from a test runner
      */
     static {
-<span class="fc" id="L21">        setJUnitTest();</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L23">        setJUnitTest();</span>
+<span class="fc" id="L24">        setIsDebug();</span>
+<span class="fc" id="L25">    }</span>
 
     /**
      * is current program run from a test runner
@@ -27,23 +30,33 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * @return is current program run from a test runner
      */
     public static boolean isJUnitTest() {
-<span class="fc" id="L30">        return isJUnitTest;</span>
+<span class="fc" id="L33">        return isJUnitTest;</span>
     }
 
     /**
      * check if current program run from a test runner
      */
     private static void setJUnitTest() {
-<span class="fc" id="L37">        StackTraceElement[] list = Thread.currentThread().getStackTrace();</span>
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        for (StackTraceElement element : list) {</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">            if (element.getClassName().startsWith(&quot;org.junit.&quot;)) {</span>
-<span class="fc" id="L40">                isJUnitTest = true;</span>
-<span class="fc" id="L41">                return;</span>
+<span class="fc" id="L40">        StackTraceElement[] list = Thread.currentThread().getStackTrace();</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        for (StackTraceElement element : list) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (element.getClassName().startsWith(&quot;org.junit.&quot;)) {</span>
+<span class="fc" id="L43">                isJUnitTest = true;</span>
+<span class="fc" id="L44">                return;</span>
             }
         }
 
-<span class="nc" id="L45">        isJUnitTest = false;</span>
-<span class="nc" id="L46">    }</span>
+<span class="nc" id="L48">        isJUnitTest = false;</span>
+<span class="nc" id="L49">    }</span>
+
+    /**
+     * check if is debug or not
+     */
+    private static void setIsDebug() {
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean()</span>
+<span class="fc" id="L56">                                                        .getInputArguments()</span>
+<span class="fc" id="L57">                                                        .toString()</span>
+<span class="fc" id="L58">                                                        .indexOf(&quot;-Xdebug&quot;) == 1;</span>
+<span class="fc" id="L59">    }</span>
 
     /**
      * print the string with format and args replaced, end with a line break
@@ -52,8 +65,8 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * @param args   args in string
      */
     public static void printFormat(String format, Object... args) {
-<span class="fc" id="L55">        printFormat(GameBoard.getInstance().standardPrintStream, format, args);</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L68">        printFormat(GameBoard.getInstance().standardPrintStream, format, args);</span>
+<span class="fc" id="L69">    }</span>
 
     /**
      * print to custom print stream
@@ -63,8 +76,8 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * @param args              args in string
      */
     public static void printFormat(PrintStream customPrintStream, String format, Object... args) {
-<span class="fc" id="L66">        printFormat(customPrintStream, true, format, args);</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L79">        printFormat(customPrintStream, true, format, args);</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * print to custom print stream
@@ -78,12 +91,15 @@ import soen6441riskgame.utils.presenter.WindowPane;
                                    boolean isPrintNewLine,
                                    String format,
                                    Object... args) {
-<span class="fc" id="L81">        customPrintStream.format(format, args);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (isPrintNewLine) {</span>
-<span class="fc" id="L83">            customPrintStream.println();</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">        if (isJUnitTest &amp;&amp; !isDebug) {</span>
+<span class="fc" id="L95">            return;</span>
         }
 
-<span class="fc" id="L86">    }</span>
+<span class="nc" id="L98">        customPrintStream.format(format, args);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (isPrintNewLine) {</span>
+<span class="nc" id="L100">            customPrintStream.println();</span>
+        }
+<span class="nc" id="L102">    }</span>
 
     /**
      * print the array in matrix style, with header
@@ -92,35 +108,37 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * @param headers if header is empty or null, the index will be printed
      */
     public static void print2dArray(int[][] array, String[] headers) {
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if(array.length == 0){</span>
-<span class="nc" id="L96">            System.out.println(&quot;Empty array&quot;);</span>
-<span class="nc" id="L97">            return;</span>
+<span class="fc" id="L111">        PrintStream standardPrintStream = GameBoard.getInstance().standardPrintStream;</span>
+
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (array.length == 0) {</span>
+<span class="nc" id="L114">            printFormat(standardPrintStream, &quot;Empty array&quot;);</span>
+<span class="nc" id="L115">            return;</span>
         }
 
-<span class="pc bpc" id="L100" title="2 of 4 branches missed.">        if (headers == null || headers.length == 0) {</span>
-<span class="nc" id="L101">            headers = new String[array[0].length];</span>
+<span class="pc bpc" id="L118" title="2 of 4 branches missed.">        if (headers == null || headers.length == 0) {</span>
+<span class="nc" id="L119">            headers = new String[array[0].length];</span>
 
-<span class="nc bnc" id="L103" title="All 2 branches missed.">            for (int index = 0; index &lt; headers.length; index++) {</span>
-<span class="nc" id="L104">                headers[index] = &quot;[&quot; + index + &quot;]&quot;;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">            for (int index = 0; index &lt; headers.length; index++) {</span>
+<span class="nc" id="L122">                headers[index] = &quot;[&quot; + index + &quot;]&quot;;</span>
             }
         }
 
-<span class="fc" id="L108">        System.out.print(&quot;\t&quot;);</span>
+<span class="fc" id="L126">        printFormat(standardPrintStream, false, &quot;\t&quot;);</span>
 
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (String header : headers) {</span>
-<span class="fc" id="L111">            System.out.print(header + &quot;\t&quot;);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for (String header : headers) {</span>
+<span class="fc" id="L129">            printFormat(standardPrintStream, false, header + &quot;\t&quot;);</span>
         }
 
-<span class="fc" id="L114">        System.out.println();</span>
+<span class="fc" id="L132">        printFormat(standardPrintStream, &quot;&quot;);</span>
 
-<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (int row = 0; row &lt; array.length; row++) {</span>
-<span class="fc" id="L117">            System.out.print(headers[row] + &quot;\t&quot;);</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (int col = 0; col &lt; array[row].length; col++) {</span>
-<span class="fc" id="L119">                System.out.print(array[row][col] + &quot;\t&quot;);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for (int row = 0; row &lt; array.length; row++) {</span>
+<span class="fc" id="L135">            printFormat(standardPrintStream, false, headers[row] + &quot;\t&quot;);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            for (int col = 0; col &lt; array[row].length; col++) {</span>
+<span class="fc" id="L137">                printFormat(standardPrintStream, false, array[row][col] + &quot;\t&quot;);</span>
             }
-<span class="fc" id="L121">            System.out.println();</span>
+<span class="fc" id="L139">            printFormat(standardPrintStream, &quot;&quot;);</span>
         }
-<span class="fc" id="L123">    }</span>
+<span class="fc" id="L141">    }</span>
 
     /**
      * create a new window for separated output
@@ -131,16 +149,16 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * @return the new window
      */
     public static WindowPane createWindowPane(String title, int width, int height) {
-<span class="nc" id="L134">        WindowPane windowPane = new WindowPane();</span>
-<span class="nc" id="L135">        JFrame frame = new JFrame();</span>
-<span class="nc" id="L136">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
-<span class="nc" id="L137">        frame.setLayout(new BorderLayout());</span>
-<span class="nc" id="L138">        frame.add(windowPane);</span>
-<span class="nc" id="L139">        frame.setSize(width, height);</span>
-<span class="nc" id="L140">        frame.setLocationRelativeTo(null);</span>
-<span class="nc" id="L141">        frame.setVisible(true);</span>
-<span class="nc" id="L142">        frame.setTitle(title);</span>
-<span class="nc" id="L143">        return windowPane;</span>
+<span class="nc" id="L152">        WindowPane windowPane = new WindowPane();</span>
+<span class="nc" id="L153">        JFrame frame = new JFrame();</span>
+<span class="nc" id="L154">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L155">        frame.setLayout(new BorderLayout());</span>
+<span class="nc" id="L156">        frame.add(windowPane);</span>
+<span class="nc" id="L157">        frame.setSize(width, height);</span>
+<span class="nc" id="L158">        frame.setLocationRelativeTo(null);</span>
+<span class="nc" id="L159">        frame.setVisible(true);</span>
+<span class="nc" id="L160">        frame.setTitle(title);</span>
+<span class="nc" id="L161">        return windowPane;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

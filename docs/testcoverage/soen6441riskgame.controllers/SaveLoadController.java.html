@@ -2,6 +2,7 @@
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,75 +12,118 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import soen6441riskgame.models.Card;
 import soen6441riskgame.models.Continent;
-import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
-import soen6441riskgame.models.serializers.NameOnlySerializable;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
 import soen6441riskgame.models.serializers.SerializableGame;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.singleton.GameBoardPlaying;
 import soen6441riskgame.utils.ConsolePrinter;
 
-<span class="fc" id="L21">public class SaveLoadController {</span>
+/**
+ * Controller for Save / Load the game
+ */
+<span class="fc" id="L27">public class SaveLoadController {</span>
+    /**
+     * Save the game, using builder pattern
+     * 
+     * @param saveGameFilePath file name to save. No file extension needed. The default save file is
+     *                         .json
+     * @return true if save successful
+     */
     public boolean saveGame(String saveGameFilePath) {
-<span class="fc" id="L23">        boolean isSaved = false;</span>
+<span class="fc" id="L36">        boolean isSaved = false;</span>
 
-<span class="fc" id="L25">        SerializableGame serializableGame = new SerializableGame.Builder().setCountries(GameBoard.getInstance()</span>
-<span class="fc" id="L26">                                                                                                 .getGameBoardMap()</span>
-<span class="fc" id="L27">                                                                                                 .getCountries())</span>
-<span class="fc" id="L28">                                                                          .setContinents(GameBoard.getInstance()</span>
-<span class="fc" id="L29">                                                                                                  .getGameBoardMap()</span>
-<span class="fc" id="L30">                                                                                                  .getContinents())</span>
-<span class="fc" id="L31">                                                                          .setBorders(GameBoard.getInstance()</span>
-<span class="fc" id="L32">                                                                                               .getGameBoardMap()</span>
-<span class="fc" id="L33">                                                                                               .getBorders())</span>
-<span class="fc" id="L34">                                                                          .setPlayers(GameBoard.getInstance()</span>
-<span class="fc" id="L35">                                                                                               .getGameBoardPlayer()</span>
-<span class="fc" id="L36">                                                                                               .getPlayers())</span>
-<span class="fc" id="L37">                                                                          .setCards(GameBoard.getInstance()</span>
-<span class="fc" id="L38">                                                                                             .getCardsForSaveLoad())</span>
-<span class="fc" id="L39">                                                                          .build();</span>
+<span class="fc" id="L38">        SerializableGame serializableGame = new SerializableGame.Builder().setCountries(GameBoard.getInstance()</span>
+<span class="fc" id="L39">                                                                                                 .getGameBoardMap()</span>
+<span class="fc" id="L40">                                                                                                 .getCountries())</span>
+<span class="fc" id="L41">                                                                          .setContinents(GameBoard.getInstance()</span>
+<span class="fc" id="L42">                                                                                                  .getGameBoardMap()</span>
+<span class="fc" id="L43">                                                                                                  .getContinents())</span>
+<span class="fc" id="L44">                                                                          .setBorders(GameBoard.getInstance()</span>
+<span class="fc" id="L45">                                                                                               .getGameBoardMap()</span>
+<span class="fc" id="L46">                                                                                               .getBorders())</span>
+<span class="fc" id="L47">                                                                          .setPlayers(GameBoard.getInstance()</span>
+<span class="fc" id="L48">                                                                                               .getGameBoardPlayer()</span>
+<span class="fc" id="L49">                                                                                               .getPlayers())</span>
+<span class="fc" id="L50">                                                                          .setCards(GameBoard.getInstance()</span>
+<span class="fc" id="L51">                                                                                             .getCardsForSave())</span>
+<span class="fc" id="L52">                                                                          .setGameBoardPlaying(GameBoard.getInstance()</span>
+<span class="fc" id="L53">                                                                                                        .getGameBoardPlaying())</span>
+<span class="fc" id="L54">                                                                          .build();</span>
 
-<span class="fc" id="L41">        String jsonToSave = serializableGame.serialize();</span>
+<span class="fc" id="L56">        String jsonToSave = serializableGame.serialize();</span>
 
-<span class="fc" id="L43">        try (FileWriter writer = new FileWriter(saveGameFilePath)) {</span>
-<span class="fc" id="L44">            writer.write(jsonToSave);</span>
-<span class="fc" id="L45">            isSaved = true;</span>
-<span class="nc" id="L46">        } catch (Exception e) {</span>
-<span class="nc" id="L47">            ConsolePrinter.printFormat(&quot;Cannot create file to save&quot;);</span>
-<span class="fc" id="L48">        }</span>
+<span class="fc" id="L58">        try (FileWriter writer = new FileWriter(saveGameFilePath + &quot;.json&quot;)) {</span>
+<span class="fc" id="L59">            writer.write(jsonToSave);</span>
+<span class="fc" id="L60">            isSaved = true;</span>
+<span class="nc" id="L61">        } catch (Exception e) {</span>
+<span class="nc" id="L62">            ConsolePrinter.printFormat(&quot;Cannot create file to save&quot;);</span>
+        }
 
-<span class="fc" id="L50">        return isSaved;</span>
+<span class="fc" id="L65">        return isSaved;</span>
     }
 
-    public SerializableGame deserialize(JsonReader reader) {
-<span class="fc" id="L54">        GameBoard.getInstance().reset();</span>
-<span class="fc" id="L55">        Gson gson = new GsonBuilder().registerTypeAdapter(NameOnlySerializable.class, new NameOnlyJsonAdapter())</span>
-<span class="fc" id="L56">                                     .create();</span>
+    /**
+     * deserialize json to game objects
+     * 
+     * @param reader the json reader that hold data
+     */
+    private void deserialize(JsonReader reader) {
+<span class="fc" id="L74">        GameBoard.getInstance().reset();</span>
+<span class="fc" id="L75">        Gson gson = new GsonBuilder().create();</span>
 
-<span class="fc" id="L58">        JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();</span>
+<span class="fc" id="L77">        JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();</span>
 
-<span class="fc" id="L60">        List&lt;Continent&gt; continents = Arrays.asList(gson.fromJson(jsonObject.get(&quot;continents&quot;),Continent[].class));</span>
+<span class="fc" id="L79">        List&lt;Continent&gt; continents = Arrays.asList(gson.fromJson(jsonObject.get(&quot;continents&quot;), Continent[].class));</span>
+<span class="fc" id="L80">        List&lt;Country&gt; countries = Arrays.asList(gson.fromJson(jsonObject.get(&quot;countries&quot;), Country[].class));</span>
+<span class="fc" id="L81">        List&lt;Player&gt; players = Arrays.asList(gson.fromJson(jsonObject.get(&quot;players&quot;), Player[].class));</span>
+<span class="fc" id="L82">        Card[] cards = gson.fromJson(jsonObject.get(&quot;cards&quot;), Card[].class);</span>
+<span class="fc" id="L83">        int[][] borders = gson.fromJson(jsonObject.get(&quot;borders&quot;), int[][].class);</span>
+<span class="fc" id="L84">        GameBoardPlaying gameBoardPlaying = gson.fromJson(jsonObject.get(&quot;gameBoardPlaying&quot;), GameBoardPlaying.class);</span>
 
-<span class="fc" id="L62">        SerializableGame serializableGame = new SerializableGame.Builder()</span>
-<span class="fc" id="L63">                                                                .setContinents(continents)</span>
-<span class="fc" id="L64">                                                                .build();</span>
+<span class="fc" id="L86">        SerializableGame.Builder builder = new SerializableGame.Builder()</span>
+<span class="fc" id="L87">                                                                         .setContinents(continents)</span>
+<span class="fc" id="L88">                                                                         .setCountries(countries)</span>
+<span class="fc" id="L89">                                                                         .setPlayers(players)</span>
+<span class="fc" id="L90">                                                                         .setBorders(borders)</span>
+<span class="fc" id="L91">                                                                         .setCards(cards)</span>
+<span class="fc" id="L92">                                                                         .setGameBoardPlaying(gameBoardPlaying);</span>
+<span class="fc" id="L93">        builder.reconstructGame();</span>
+<span class="fc" id="L94">    }</span>
 
-<span class="fc" id="L66">        ConsolePrinter.printFormat(jsonObject.toString());</span>
-
-<span class="fc" id="L68">        return serializableGame;</span>
-    }
-
+    /**
+     * load the game from json file. No extension needed.
+     * 
+     * @param savedGameFilePath file of saved game.
+     * @return true if load successful
+     */
     public boolean loadGame(String savedGameFilePath) {
-<span class="fc" id="L72">        boolean isLoaded = false;</span>
+<span class="fc" id="L103">        boolean isLoaded = false;</span>
 
-<span class="fc" id="L74">        try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath))) {</span>
-<span class="fc" id="L75">            ConsolePrinter.printFormat(&quot;Reading from saved game&quot;);</span>
-<span class="fc" id="L76">            SerializableGame serializableGame = deserialize(reader);</span>
-<span class="fc" id="L77">            isLoaded = true;</span>
-<span class="nc" id="L78">        } catch (Exception e) {</span>
-<span class="nc" id="L79">            ConsolePrinter.printFormat(&quot;Error reading saved game: %s&quot;, e.getMessage());</span>
-<span class="fc" id="L80">        }</span>
+<span class="fc" id="L105">        JsonReader reader = null;</span>
+        try {
+<span class="fc" id="L107">            reader = new JsonReader(new FileReader(savedGameFilePath + &quot;.json&quot;));</span>
+<span class="pc" id="L108">        } catch (IOException e) {</span>
+<span class="nc" id="L109">            ConsolePrinter.printFormat(&quot;Error reading saved game: %s&quot;, e.getMessage());</span>
+        }
 
-<span class="fc" id="L82">        return isLoaded;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (reader != null) {</span>
+<span class="fc" id="L113">            ConsolePrinter.printFormat(&quot;Reading from saved game&quot;);</span>
+<span class="fc" id="L114">            deserialize(reader);</span>
+<span class="fc" id="L115">            isLoaded = true;</span>
+        }
+
+        // try (JsonReader reader = new JsonReader(new FileReader(savedGameFilePath + &quot;.json&quot;))) {
+        // ConsolePrinter.printFormat(&quot;Reading from saved game&quot;);
+        // deserialize(reader);
+        // isLoaded = true;
+        // } catch (IOException e) {
+        // ConsolePrinter.printFormat(&quot;Error reading saved game: %s&quot;, e.getMessage());
+        // }
+
+<span class="fc" id="L126">        return isLoaded;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HumanStrategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models.strategies</a> &gt; <span class="el_source">HumanStrategy.java</span></div><h1>HumanStrategy.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models.strategies;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import soen6441riskgame.App;
+import soen6441riskgame.enums.GamePhase;
+import soen6441riskgame.enums.StrategyName;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.ModelCommands;
+import soen6441riskgame.models.Player;
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
+
+<span class="nc" id="L15">public class HumanStrategy implements Strategy {</span>
+    /**
+     * get strategy name
+     * 
+     * @return the name of the strategy as enum
+     */
+    @Override
+    public StrategyName getName() {
+<span class="nc" id="L23">        return StrategyName.HUMAN;</span>
+    }
+
+    /**
+     * do nothing
+     * 
+     * @param player             this method should not be call in Human Strategy
+     * @param countryToReinforce this method should not be call in Human Strategy
+     */
+    @Override
+    public void reinforce(Player player, Country countryToReinforce) {
+<span class="nc" id="L34">        return;</span>
+    }
+
+    /**
+     * do nothing
+     * 
+     * @param player           this method should not be call in Human Strategy
+     * @param attackingCountry this method should not be call in Human Strategy
+     */
+    @Override
+    public ArrayList&lt;Country&gt; attack(Player player, Country attackingCountry) {
+<span class="nc" id="L45">        return null;</span>
+    }
+
+    /**
+     * do nothing
+     * 
+     * @param fromCountry this method should not be call in Human Strategy
+     * @param toCountry   this method should not be call in Human Strategy
+     */
+    @Override
+    public void fortify(Country fromCountry, Country toCountry) {
+<span class="nc" id="L56">        return;</span>
+    }
+
+    /**
+     * Allow the human player to play the game
+     * 
+     * @param player human player
+     */
+    @Override
+    public void playTurn(Player player) {
+<span class="nc" id="L66">        ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,</span>
+<span class="nc" id="L67">                                   &quot;HUMAN PLAYER TURN&quot;);</span>
+<span class="nc" id="L68">        Scanner scanner = new Scanner(System.in);</span>
+
+<span class="nc bnc" id="L70" title="All 4 branches missed.">        while (player.isPlaying() &amp;&amp; player.getCurrentPhase() != GamePhase.END_OF_GAME) {</span>
+<span class="nc" id="L71">            String command = scanner.nextLine();</span>
+<span class="nc" id="L72">            ModelCommands cmds = new ModelCommands(command);</span>
+<span class="nc" id="L73">            App.jumpToCommand(cmds);</span>
+<span class="nc" id="L74">            ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,</span>
+<span class="nc" id="L75">                                       &quot;ENTER YOUR ACTION: &quot;);</span>
+<span class="nc" id="L76">            command = scanner.nextLine();</span>
+        }
+
+<span class="nc" id="L79">        scanner.close();</span>
+<span class="nc" id="L80">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

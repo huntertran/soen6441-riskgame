@@ -1,50 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils</a> &gt; <span class="el_source">GameHelper.java</span></div><h1>GameHelper.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
-<span class="nc" id="L5">public class GameHelper {</span>
+/**
+ * helper methods for playing the game in both normal and tournament mode
+ */
+<span class="nc" id="L14">public class GameHelper {</span>
     /**
      * it executes the dice roll.
      *
      * @return int it returns the random number from 1 to 6 on the dice.
      */
     public static int rollDice() {
-<span class="fc" id="L12">        Random random = new Random();</span>
-<span class="fc" id="L13">        return random.nextInt(6) + 1;</span>
+<span class="fc" id="L21">        Random random = new Random();</span>
+<span class="fc" id="L22">        return random.nextInt(6) + 1;</span>
     }
 
     /**
      * it returns the maximum value and second max value from the array of dice values
      *
      * @param inputArray dice-values the array of the dice values rolled
-     * @param secondMax secondMax if second max is true, then second max value is returned. else only the
-     *                max value is returned.
+     * @param secondMax  secondMax if second max is true, then second max value is returned. else only
+     *                   the max value is returned.
      *
-     * @return int it returns the maximum value or second max value based on the value of secondMax
-     *         flag
+     * @return int it returns the maximum value or second max value based on the value of secondMax flag
      *
      */
     public static int getMax(int[] inputArray, boolean secondMax) {
-<span class="fc" id="L28">        int maxValue = inputArray[0];</span>
-<span class="fc" id="L29">        int maxIndex = 0;</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (int i = 1; i &lt; inputArray.length; i++) {</span>
-<span class="fc bfc" id="L31" title="All 2 branches covered.">            if (inputArray[i] &gt; maxValue) {</span>
-<span class="fc" id="L32">                maxValue = inputArray[i];</span>
-<span class="fc" id="L33">                maxIndex = i;</span>
-            }
+<span class="pc bpc" id="L36" title="1 of 4 branches missed.">        if (inputArray == null || inputArray.length == 0) {</span>
+<span class="fc" id="L37">            return 0;</span>
         }
 
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (secondMax) {</span>
-<span class="nc" id="L38">            int secondMaxValue = -1;</span>
-<span class="nc bnc" id="L39" title="All 2 branches missed.">            for (int i = 0; i &lt; inputArray.length; i++) {</span>
-<span class="nc bnc" id="L40" title="All 4 branches missed.">                if (inputArray[i] &gt; secondMaxValue &amp;&amp; maxIndex != i) {</span>
-<span class="nc" id="L41">                    secondMaxValue = inputArray[i];</span>
+<span class="fc" id="L40">        IntSummaryStatistics stat = Arrays.stream(inputArray).summaryStatistics();</span>
+<span class="fc" id="L41">        int max = stat.getMax();</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (secondMax) {</span>
+<span class="fc" id="L44">            int secondMaxValue = inputArray[0];</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            for (int value : inputArray) {</span>
+<span class="fc bfc" id="L46" title="All 4 branches covered.">                if (value &lt; max &amp;&amp; value &gt;= secondMaxValue) {</span>
+<span class="fc" id="L47">                    secondMaxValue = value;</span>
                 }
             }
-<span class="nc" id="L44">            maxValue = secondMaxValue;</span>
+
+<span class="fc" id="L51">            return secondMaxValue;</span>
+        } else {
+<span class="fc" id="L53">            return max;</span>
+        }
+    }
+
+    /**
+     * generate random int from that between the min and max range [exclusive]
+     *
+     * @param min minimum random value generator
+     * @param max maximum range of random value
+     *
+     * @return between the min and max range [exclusive]
+     *
+     */
+    public static int nextRandomIntInRange(int min, int max) {
+<span class="fc" id="L67">        Random random = new Random();</span>
+<span class="fc" id="L68">        return random.nextInt((max - min) + 1) + min;</span>
+        // int x = random.nextInt(max);
+        // if (max == min) {
+        // return min;
+        // }
+
+        // return (x &gt;= min) ? x : x + min;
+    }
+
+    /**
+     * generate random int from that between the 1 and max range [exclusive]
+     * 
+     * @param max max included
+     * @return between the 1 and max range [exclusive]
+     */
+    public static int nextRandomInt(int max) {
+<span class="fc" id="L84">        return nextRandomIntInRange(1, max);</span>
+    }
+
+    /**
+     * select random elements in a list
+     * 
+     * @param list       the original list
+     * @param totalItems number of item to select
+     * @return selected elements
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static ArrayList&lt;Integer&gt; getRandomElements(ArrayList&lt;Integer&gt; list, int totalItems) {
+<span class="fc" id="L96">        Random random = new Random();</span>
+<span class="fc" id="L97">        ArrayList&lt;Integer&gt; originalList = (ArrayList&lt;Integer&gt;) list.clone();</span>
+<span class="fc" id="L98">        ArrayList&lt;Integer&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (int i = 0; i &lt; totalItems; i++) {</span>
+<span class="fc" id="L101">            int randomIndex = random.nextInt(originalList.size());</span>
+
+<span class="fc" id="L103">            result.add(originalList.get(randomIndex));</span>
+
+<span class="fc" id="L105">            originalList.remove(randomIndex);</span>
         }
 
-<span class="fc" id="L47">        return maxValue;</span>
+<span class="fc" id="L108">        return result;</span>
+    }
+
+    /**
+     * Get the all the keys associated with given Value V from map
+     * 
+     * @param &lt;K&gt;   Key type
+     * @param &lt;V&gt;   Value type
+     * @param maps  HashMap
+     * @param value value to compare
+     * @return all the keys associated with given Value V from map
+     */
+    public static &lt;K, V&gt; List&lt;K&gt; getAllKeysForValue(Map&lt;K, V&gt; maps, V value) {
+<span class="fc" id="L121">        List&lt;K&gt; listOfKeys = null;</span>
+
+        // Check if Map contains the given value
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (maps.containsValue(value)) {</span>
+            // Create an Empty List
+<span class="fc" id="L126">            listOfKeys = new ArrayList&lt;&gt;();</span>
+
+            // Iterate over each entry of map using entrySet
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            for (Map.Entry&lt;K, V&gt; entry : maps.entrySet()) {</span>
+                // Check if value matches with given value
+<span class="fc bfc" id="L131" title="All 2 branches covered.">                if (entry.getValue().equals(value)) {</span>
+                    // Store the key from entry to the list
+<span class="fc" id="L133">                    listOfKeys.add(entry.getKey());</span>
+                }
+            }
+        }
+
+        // Return the list of keys whose value matches with given value.
+<span class="fc" id="L139">        return listOfKeys;</span>
+    }
+
+    /**
+     * count distinct item in an array
+     * 
+     * @param &lt;T&gt;   array type
+     * @param array array to count
+     * @return number of different item
+     */
+    public static &lt;T&gt; int countDistinct(T[] array) {
+        // add all the elements to the HashSet
+<span class="fc" id="L151">        HashSet&lt;T&gt; hashSet = new HashSet&lt;T&gt;(Arrays.asList(array));</span>
+
+        // return the size of hash set as it consists of all Unique elements
+<span class="fc" id="L154">        return hashSet.size();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

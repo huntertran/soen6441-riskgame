@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AggressiveStrategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models.strategies</a> &gt; <span class="el_source">AggressiveStrategy.java</span></div><h1>AggressiveStrategy.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models.strategies;
+
+import soen6441riskgame.enums.StrategyName;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
+import soen6441riskgame.singleton.GameBoard;
+
+import java.util.ArrayList;
+
+/**
+ * focuses on attack
+ *
+ * 1. reinforces its strongest country
+ *
+ * 2. always attack with it until it cannot attack anymore
+ *
+ * 3. fortifies in order to maximize aggregation of forces in one country).
+ */
+<span class="fc" id="L19">public class AggressiveStrategy implements Strategy {</span>
+    /**
+     * get strategy name
+     *
+     * @return the name of the strategy as enum
+     */
+    @Override
+    public StrategyName getName() {
+<span class="fc" id="L27">        return StrategyName.AGGRESSIVE;</span>
+    }
+
+    /**
+     * get the strongest country to reinforce
+     *
+     * @param player the player
+     * @return the strongest country
+     */
+    private Country getStrongestCountryToReinforce(Player player) {
+<span class="fc" id="L37">        Country strongestPlayerCountry = null;</span>
+<span class="fc" id="L38">        int maxPlayerArmy = 0;</span>
+
+<span class="fc" id="L40">        ArrayList&lt;Country&gt; conqueredCountries = player.getConqueredCountries();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (Country country : conqueredCountries) {</span>
+<span class="fc" id="L43">            int tempArmy = country.getArmyAmount();</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            if (tempArmy &gt;= maxPlayerArmy) {</span>
+<span class="fc" id="L46">                strongestPlayerCountry = country;</span>
+<span class="fc" id="L47">                maxPlayerArmy = tempArmy;</span>
+            }
+        }
+
+<span class="fc" id="L51">        return strongestPlayerCountry;</span>
+    }
+
+    /**
+     * Reinforce Phase
+     *
+     * get number of army to place.
+     *
+     * &lt;code&gt;reinforce countryname num&lt;/code&gt;
+     *
+     * @param player             the player
+     * @param countryToReinforce the country to reinforce
+     */
+    @Override
+    public void reinforce(Player player, Country countryToReinforce) {
+<span class="fc" id="L66">        reinforce(countryToReinforce, player.getUnplacedArmies());</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Attack Phase
+     *
+     * @param player           the player
+     * @param attackingCountry the attacking country
+     * @return the attacked countries
+     */
+    @Override
+    public ArrayList&lt;Country&gt; attack(Player player, Country attackingCountry) {
+<span class="fc" id="L78">        ArrayList&lt;Country&gt; neighbours = attackingCountry.getNeighbors();</span>
+<span class="fc" id="L79">        ArrayList&lt;Country&gt; attackedCountries = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (Country defendingCountry : neighbours) {</span>
+            // int attackingCountryArmyAmount = attackingCountry.getArmyAmount();
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (defendingCountry.getConquerer() == player) {</span>
+<span class="fc" id="L84">                continue;</span>
+            }
+
+<span class="fc" id="L87">            attack(attackingCountry, defendingCountry, 0);</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (player.isGameEnded()) {</span>
+                // because right after attack, if player win, the attack move command will invalid
+<span class="nc" id="L91">                return attackedCountries;</span>
+            }
+
+            // after attack with allout
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if (defendingCountry.getConquerer() == player) {</span>
+                // player conquered the defending country
+<span class="fc" id="L97">                int armyToMove = GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice();</span>
+<span class="fc" id="L98">                attackMove(armyToMove);</span>
+<span class="fc" id="L99">                attackedCountries.add(defendingCountry);</span>
+            }
+
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            if (!player.furtherAttackPossible()) {</span>
+<span class="fc" id="L103">                return attackedCountries;</span>
+            }
+        }
+
+<span class="fc" id="L107">        attackEnd();</span>
+
+<span class="fc" id="L109">        return attackedCountries;</span>
+    }
+
+    /**
+     * Fortify Phase
+     *
+     * Command:
+     *
+     * &lt;code&gt;fortify fromcountry tocountry num&lt;/code&gt;
+     *
+     * get max number of armies to move then
+     *
+     * move the countries
+     *
+     * @param fromCountry the attacking country
+     * @param toCountry   the country that attacked
+     */
+    @Override
+    public void fortify(Country fromCountry, Country toCountry) {
+<span class="fc" id="L128">        int maxArmyToMove = fromCountry.getArmyAmount() - 1;</span>
+<span class="fc" id="L129">        fortify(fromCountry, toCountry, maxArmyToMove);</span>
+<span class="fc" id="L130">    }</span>
+
+    /**
+     * execute the strategy
+     *
+     * @param player current player
+     */
+    @Override
+    public void playTurn(Player player) {
+<span class="fc" id="L139">        exchangeCards(player);</span>
+
+<span class="fc" id="L141">        Country strongestPlayerCountry = getStrongestCountryToReinforce(player);</span>
+
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (strongestPlayerCountry != null) {</span>
+<span class="fc" id="L144">            reinforce(player, strongestPlayerCountry);</span>
+        }
+
+<span class="fc" id="L147">        ArrayList&lt;Country&gt; attackedCountries = attack(player, strongestPlayerCountry);</span>
+
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (player.isGameEnded()) {</span>
+<span class="nc" id="L150">            player.setEndOfGamePhase();</span>
+<span class="nc" id="L151">        } else {</span>
+
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            if (attackedCountries.size() != 0) {</span>
+<span class="fc" id="L154">                int index = attackedCountries.size() - 1;</span>
+<span class="fc" id="L155">                Country fortifyToCountry = attackedCountries.get(index);</span>
+
+<span class="fc" id="L157">                fortify(strongestPlayerCountry, fortifyToCountry);</span>
+            }
+
+<span class="fc" id="L160">            fortifyNone();</span>
+        }
+<span class="fc" id="L162">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

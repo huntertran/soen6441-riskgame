@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BenevolentStrategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models.strategies</a> &gt; <span class="el_source">BenevolentStrategy.java</span></div><h1>BenevolentStrategy.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models.strategies;
+
+import java.util.ArrayList;
+
+import soen6441riskgame.enums.StrategyName;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
+
+/**
+ * focuses on protecting its weak countries
+ *
+ * 1. reinforces its weakest countries
+ *
+ * 2. never attacks
+ *
+ * 3. fortifies in order to move armies to weaker countries
+ */
+<span class="fc" id="L18">public class BenevolentStrategy implements Strategy {</span>
+    /**
+     * get strategy name
+     *
+     * @return the name of the strategy as enum
+     */
+    @Override
+    public StrategyName getName() {
+<span class="fc" id="L26">        return StrategyName.BENEVOLENT;</span>
+    }
+
+    /**
+     * get weakest country to reinforce
+     *
+     * @param player current player
+     * @return the weakest country
+     */
+    private Country getWeakestCountryToReinforce(Player player) {
+<span class="fc" id="L36">        ArrayList&lt;Country&gt; conquered = player.getConqueredCountries();</span>
+<span class="fc" id="L37">        Country weakestPlayerCountry = null;</span>
+
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">        if (conquered == null || conquered.size() == 0) {</span>
+<span class="nc" id="L40">            return null;</span>
+        }
+
+<span class="fc" id="L43">        int weakestNumberOfArmy = conquered.get(0).getArmyAmount();</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (Country country : conquered) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (country.getArmyAmount() &lt;= weakestNumberOfArmy) {</span>
+<span class="fc" id="L47">                weakestPlayerCountry = country;</span>
+<span class="fc" id="L48">                weakestNumberOfArmy = country.getArmyAmount();</span>
+            }
+        }
+
+<span class="fc" id="L52">        return weakestPlayerCountry;</span>
+    }
+
+    /**
+     * reinforce
+     *
+     * @param player             current player
+     * @param countryToReinforce country to reinforce
+     */
+    @Override
+    public void reinforce(Player player, Country countryToReinforce) {
+<span class="fc" id="L63">        reinforce(countryToReinforce, player.getUnplacedArmies());</span>
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * never attack
+     *
+     * @param player           current player
+     * @param attackingCountry attack from
+     * @return null
+     */
+    @Override
+    public ArrayList&lt;Country&gt; attack(Player player, Country attackingCountry) {
+<span class="nc" id="L75">        return null;</span>
+    }
+
+    /**
+     * fortify
+     *
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
+    @Override
+    public void fortify(Country fromCountry, Country toCountry) {
+<span class="fc" id="L86">        int averageArmies = (fromCountry.getArmyAmount() + toCountry.getArmyAmount()) / 2;</span>
+<span class="fc" id="L87">        int armyToMove = fromCountry.getArmyAmount() - averageArmies;</span>
+<span class="fc" id="L88">        fortify(fromCountry, toCountry, armyToMove);</span>
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * execute the strategy
+     *
+     * @param player current player
+     */
+    @Override
+    public void playTurn(Player player) {
+<span class="fc" id="L98">        exchangeCards(player);</span>
+
+<span class="fc" id="L100">        Country weakestPlayerCountry = getWeakestCountryToReinforce(player);</span>
+
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (weakestPlayerCountry != null) {</span>
+<span class="fc" id="L103">            reinforce(player, weakestPlayerCountry);</span>
+        }
+
+<span class="fc" id="L106">        attackEnd();</span>
+
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (player.isGameEnded()) {</span>
+<span class="nc" id="L109">            player.setEndOfGamePhase();</span>
+<span class="nc" id="L110">        } else {</span>
+
+<span class="fc" id="L112">            Country weakerPlayerCountry = getWeakestCountryToReinforce(player);</span>
+
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (weakerPlayerCountry != null</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                &amp;&amp; weakerPlayerCountry != weakestPlayerCountry</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                &amp;&amp; weakestPlayerCountry != null) {</span>
+<span class="fc" id="L117">                fortify(weakestPlayerCountry, weakerPlayerCountry);</span>
+            }
+
+<span class="fc" id="L120">            fortifyNone();</span>
+        }
+<span class="fc" id="L122">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

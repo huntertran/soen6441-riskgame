@@ -32,8 +32,8 @@ public class PhaseView extends SeparatedView implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 <span class="fc" id="L34">        ChangedProperty property = (ChangedProperty) arg;</span>
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (property != ChangedProperty.GAME_PHASE) {</span>
-<span class="nc" id="L36">            return;</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (property != ChangedProperty.GAME_PHASE) {</span>
+<span class="fc" id="L36">            return;</span>
         }
 
 <span class="fc" id="L39">        clearView();</span>
@@ -42,10 +42,10 @@ public class PhaseView extends SeparatedView implements Observer {
 
 <span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (player != null) {</span>
 <span class="fc" id="L44">            ConsolePrinter.printFormat(printStream,</span>
-                                       &quot;Current phase: %s&quot;,
+<span class="fc" id="L45">                                       &quot;Current phase: %s&quot;,</span>
 <span class="fc" id="L46">                                       player.getCurrentPhase());</span>
 <span class="fc" id="L47">            ConsolePrinter.printFormat(printStream,</span>
-                                       &quot;Current player: %s&quot;,
+<span class="fc" id="L48">                                       &quot;Current player: %s&quot;,</span>
 <span class="fc" id="L49">                                       player.getName());</span>
 
 <span class="fc bfc" id="L51" title="All 2 branches covered.">            if (!player.getCurrentPhaseActions().isEmpty()) {</span>
@@ -53,9 +53,9 @@ public class PhaseView extends SeparatedView implements Observer {
 
 <span class="fc bfc" id="L54" title="All 2 branches covered.">                for (String action : player.getCurrentPhaseActions()) {</span>
 <span class="fc" id="L55">                    ConsolePrinter.printFormat(printStream,</span>
-                                               &quot;    %s&quot;,
-                                               action);
-<span class="fc" id="L58">                }</span>
+<span class="fc" id="L56">                                               &quot;    %s&quot;,</span>
+<span class="fc" id="L57">                                               action);</span>
+                }
             }
         }
 <span class="fc" id="L61">    }</span>

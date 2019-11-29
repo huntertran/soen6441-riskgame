@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
-
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.JsonAdapter;
 
 import soen6441riskgame.enums.ChangedProperty;
 import soen6441riskgame.enums.GamePhase;
-import soen6441riskgame.models.serializers.NameOnlyJsonAdapter;
-import soen6441riskgame.models.serializers.NameOnlySerializable;
+import soen6441riskgame.models.strategies.Strategy;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GameHelper;
@@ -20,7 +19,7 @@ import soen6441riskgame.utils.GameHelper;
  *
  * Each player is a node in a linked list
  */
-public class Player extends Observable implements NameOnlySerializable {
+public class Player extends Observable {
     private static final int MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE = 5;
     private static final int LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN = 3;
     private static final int INIT_ARMY_DIVIDE_FRACTION = 3;
@@ -31,37 +30,108 @@ public class Player extends Observable implements NameOnlySerializable {
     @Expose
     private int unplacedArmies;
 
-<span class="fc" id="L34">    @Expose</span>
-    private boolean isPlaying = false;
-
-    @JsonAdapter(NameOnlyJsonAdapter.class)
     @Expose
+<span class="fc" id="L34">    private boolean isPlaying = false;</span>
+
     private Player nextPlayer;
 
-    @JsonAdapter(NameOnlyJsonAdapter.class)
     @Expose
+    private String nextPlayerName;
+
     private Player previousPlayer;
+
+    @Expose
+    private String previousPlayerName;
 
     @Expose
     private GamePhase currentPhase;
 
-<span class="fc" id="L48">    private ArrayList&lt;Card&gt; holdingCards = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L49">    private ArrayList&lt;Card&gt; holdingCards = new ArrayList&lt;Card&gt;();</span>
 
-<span class="fc" id="L50">    @Expose</span>
-    private ArrayList&lt;String&gt; currentPhaseActions = new ArrayList&lt;String&gt;();
+    @Expose
+<span class="fc" id="L52">    private ArrayList&lt;String&gt; currentPhaseActions = new ArrayList&lt;String&gt;();</span>
 
-<span class="fc" id="L53">    @Expose</span>
-    private boolean isPlayerBeAwardCard = false;
+    @Expose
+<span class="fc" id="L55">    private boolean isPlayerBeAwardCard = false;</span>
+
+    private Strategy strategy;
 
     /**
      * constructor
      *
      * @param name player's name
      */
-<span class="fc" id="L61">    public Player(String name) {</span>
-<span class="fc" id="L62">        this.name = name;</span>
-<span class="fc" id="L63">        this.currentPhase = GamePhase.WAITING_TO_TURN;</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L64">    public Player(String name) {</span>
+<span class="fc" id="L65">        this.name = name;</span>
+<span class="fc" id="L66">        this.currentPhase = GamePhase.WAITING_TO_TURN;</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * copy constructor
+     * 
+     * @param serializedPlayer serialized player
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L75">    public Player(Player serializedPlayer) {</span>
+<span class="fc" id="L76">        this.name = serializedPlayer.name;</span>
+<span class="fc" id="L77">        this.unplacedArmies = serializedPlayer.unplacedArmies;</span>
+<span class="fc" id="L78">        this.isPlaying = serializedPlayer.isPlaying;</span>
+<span class="fc" id="L79">        this.nextPlayerName = serializedPlayer.nextPlayerName;</span>
+<span class="fc" id="L80">        this.previousPlayerName = serializedPlayer.previousPlayerName;</span>
+<span class="fc" id="L81">        this.currentPhase = serializedPlayer.currentPhase;</span>
+<span class="fc" id="L82">        this.currentPhaseActions = (ArrayList&lt;String&gt;) serializedPlayer.currentPhaseActions.clone();</span>
+<span class="fc" id="L83">        this.isPlayerBeAwardCard = serializedPlayer.isPlayerBeAwardCard;</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * get player's strategy set by tournament mode
+     * 
+     * @return player's strategy set by tournament mode
+     */
+    public Strategy getStrategy() {
+<span class="fc" id="L92">        return strategy;</span>
+    }
+
+    /**
+     * set player's strategy for tournament mode
+     * 
+     * @param strategy player's strategy for tournament mode
+     */
+    public void setStrategy(Strategy strategy) {
+<span class="fc" id="L101">        this.strategy = strategy;</span>
+<span class="fc" id="L102">    }</span>
+
+    /**
+     * link next and previous players after construct;
+     * 
+     * @param players list of current players
+     */
+    public void linkNextAndPrevious(List&lt;Player&gt; players) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (Player player : players) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (nextPlayerName.equals(player.getName())) {</span>
+<span class="fc" id="L112">                setNextPlayer(player);</span>
+<span class="fc" id="L113">                continue;</span>
+            }
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if (previousPlayerName.equals(player.getName())) {</span>
+<span class="fc" id="L117">                setPreviousPlayer(player);</span>
+                continue;
+            }
+        }
+<span class="fc" id="L121">    }</span>
+
+    /**
+     * re-construct player object
+     */
+    public void reconstruct() {
+<span class="fc" id="L127">        holdingCards = new ArrayList&lt;Card&gt;();</span>
+
+<span class="fc" id="L129">        this.addObserver(GameBoard.getInstance().getGameBoardPlayer().getPhaseView());</span>
+
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (currentPhase == GamePhase.REINFORCEMENT) {</span>
+<span class="nc" id="L132">            this.addObserver(GameBoard.getInstance().getExchangeCardView());</span>
+        }
+<span class="fc" id="L134">    }</span>
 
     /**
      * check if this player have conquered at least 1 country in the attack phase, therefore, be award a
@@ -70,7 +140,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return is player be award card
      */
     private boolean isPlayerBeAwardCard() {
-<span class="fc" id="L73">        return isPlayerBeAwardCard;</span>
+<span class="fc" id="L143">        return isPlayerBeAwardCard;</span>
     }
 
     /**
@@ -80,8 +150,8 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param isPlayerAwardCard set the mark
      */
     public void setPlayerBeAwardCard(boolean isPlayerAwardCard) {
-<span class="fc" id="L83">        this.isPlayerBeAwardCard = isPlayerAwardCard;</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L153">        this.isPlayerBeAwardCard = isPlayerAwardCard;</span>
+<span class="fc" id="L154">    }</span>
 
     /**
      * get player's current phase
@@ -89,7 +159,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return game phase of the player
      */
     public GamePhase getCurrentPhase() {
-<span class="fc" id="L92">        return currentPhase;</span>
+<span class="fc" id="L162">        return currentPhase;</span>
     }
 
     /**
@@ -98,71 +168,79 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param newPhase the phase to set
      */
     public void setCurrentPhase(GamePhase newPhase) {
-<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (currentPhase != newPhase) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (currentPhase != newPhase) {</span>
 
-<span class="fc" id="L103">            boolean isChangePhaseAllowed = isChangePhaseAllowed(newPhase);</span>
+<span class="fc" id="L173">            boolean isChangePhaseAllowed = isChangePhaseAllowed(newPhase);</span>
 
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (isChangePhaseAllowed) {</span>
-<span class="fc" id="L106">                currentPhase = newPhase;</span>
-<span class="fc" id="L107">                currentPhaseActions.clear();</span>
-<span class="fc" id="L108">                setChanged();</span>
-<span class="fc" id="L109">                notifyObservers(ChangedProperty.GAME_PHASE);</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (isChangePhaseAllowed) {</span>
+<span class="fc" id="L176">                currentPhase = newPhase;</span>
+<span class="fc" id="L177">                currentPhaseActions.clear();</span>
+<span class="fc" id="L178">                setChanged();</span>
+<span class="fc" id="L179">                notifyObservers(ChangedProperty.GAME_PHASE);</span>
 
-<span class="fc bfc" id="L111" title="All 2 branches covered.">                if (newPhase == GamePhase.REINFORCEMENT) {</span>
-<span class="fc" id="L112">                    this.addObserver(GameBoard.getInstance().getExchangeCardView());</span>
-                } else {
-<span class="fc" id="L114">                    this.deleteObserver(GameBoard.getInstance().getExchangeCardView());</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                if (newPhase == GamePhase.REINFORCEMENT) {</span>
+<span class="fc" id="L182">                    this.addObserver(GameBoard.getInstance().getExchangeCardView());</span>
+<span class="fc" id="L183">                } else {</span>
+<span class="fc" id="L184">                    this.deleteObserver(GameBoard.getInstance().getExchangeCardView());</span>
                 }
 
-<span class="fc bfc" id="L117" title="All 2 branches covered.">                if (newPhase == GamePhase.FORTIFICATION) {</span>
-<span class="fc" id="L118">                    getACardFromDeck();</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">                if (newPhase == GamePhase.FORTIFICATION) {</span>
+<span class="fc" id="L188">                    getACardFromDeck();</span>
                 }
-            } else {
-<span class="nc" id="L121">                ConsolePrinter.printFormat(&quot;Player %s cannot change from phase %s to phase %s&quot;,</span>
-<span class="nc" id="L122">                                           getName(),</span>
-<span class="nc" id="L123">                                           currentPhase.toString(),</span>
-<span class="nc" id="L124">                                           newPhase.toString());</span>
+<span class="fc" id="L190">            } else {</span>
+<span class="nc" id="L191">                ConsolePrinter.printFormat(&quot;Player %s cannot change from phase %s to phase %s&quot;,</span>
+<span class="nc" id="L192">                                           getName(),</span>
+<span class="nc" id="L193">                                           currentPhase.toString(),</span>
+<span class="nc" id="L194">                                           newPhase.toString());</span>
             }
         }
-<span class="fc" id="L127">    }</span>
+<span class="fc" id="L197">    }</span>
 
     private boolean isChangePhaseAllowed(GamePhase newPhase) {
-<span class="fc" id="L130">        boolean isChangePhaseAllowed = true;</span>
+<span class="fc" id="L200">        boolean isChangePhaseAllowed = true;</span>
 
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {</span>
-<span class="nc bnc" id="L133" title="All 4 branches missed.">            isChangePhaseAllowed = newPhase == GamePhase.WAITING_TO_TURN</span>
-                &amp;&amp; currentPhase == GamePhase.FORTIFICATION;
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if ((newPhase.getGamePhaseAsInt() - currentPhase.getGamePhaseAsInt()) != 1) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">            isChangePhaseAllowed = newPhase == GamePhase.WAITING_TO_TURN</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">                                   &amp;&amp; currentPhase == GamePhase.FORTIFICATION;</span>
         }
 
-<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (newPhase == GamePhase.ATTACK) {</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">            if (holdingCards.size() &gt;= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {</span>
-<span class="nc" id="L139">                ConsolePrinter.printFormat(&quot;You have more than %d cards. Must exchange before attacking.&quot;,</span>
-<span class="nc" id="L140">                                           MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (newPhase == GamePhase.ATTACK) {</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">            if (holdingCards.size() &gt;= MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE) {</span>
+<span class="nc" id="L209">                ConsolePrinter.printFormat(&quot;You have more than %d cards. Must exchange before attacking.&quot;,</span>
+<span class="nc" id="L210">                                           MAX_NUMBER_OF_CARD_TO_FORCE_EXCHANGE);</span>
 
-<span class="nc" id="L142">                isChangePhaseAllowed = false;</span>
+<span class="nc" id="L212">                isChangePhaseAllowed = false;</span>
+<span class="nc" id="L213">            }</span>
+            // check if unplaced armies == 0 , then just skip the reinforcement phase
+<span class="fc bfc" id="L215" title="All 2 branches covered.">            else if (this.getUnplacedArmies() == 0) {</span>
+<span class="fc" id="L216">                isChangePhaseAllowed = true;</span>
             }
         }
 
-<span class="pc bpc" id="L146" title="1 of 4 branches missed.">        if (newPhase == GamePhase.END_OF_GAME &amp;&amp; currentPhase == GamePhase.ATTACK) {</span>
-<span class="nc" id="L147">            isChangePhaseAllowed = true;</span>
+<span class="pc bpc" id="L220" title="1 of 4 branches missed.">        if (newPhase == GamePhase.END_OF_GAME &amp;&amp; currentPhase == GamePhase.ATTACK) {</span>
+<span class="nc" id="L221">            isChangePhaseAllowed = true;</span>
         }
 
-<span class="fc" id="L150">        return isChangePhaseAllowed;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        if (newPhase == GamePhase.LOST) {</span>
+<span class="fc" id="L225">            isChangePhaseAllowed = true;</span>
+        }
+
+<span class="fc" id="L228">        return isChangePhaseAllowed;</span>
     }
 
     /**
      * add new card if player conquer at least 1 country during attack phase
      */
     private void getACardFromDeck() {
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (isPlayerBeAwardCard()) {</span>
-<span class="nc" id="L158">            Card newCard = GameBoard.getInstance().getRandomAvailableCard();</span>
-<span class="nc" id="L159">            newCard.setHoldingPlayer(this);</span>
-<span class="nc" id="L160">            holdingCards.add(newCard);</span>
-<span class="nc" id="L161">            setPlayerBeAwardCard(false);</span>
-<span class="nc" id="L162">            setChanged();</span>
-<span class="nc" id="L163">            notifyObservers(ChangedProperty.CARD);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (isPlayerBeAwardCard()) {</span>
+<span class="fc" id="L236">            Card newCard = GameBoard.getInstance().getRandomAvailableCard();</span>
+<span class="fc" id="L237">            newCard.setHoldingPlayer(this);</span>
+<span class="fc" id="L238">            holdingCards.add(newCard);</span>
+<span class="fc" id="L239">            setPlayerBeAwardCard(false);</span>
+<span class="fc" id="L240">            setChanged();</span>
+<span class="fc" id="L241">            notifyObservers(ChangedProperty.CARD);</span>
         }
-<span class="fc" id="L165">    }</span>
+<span class="fc" id="L243">    }</span>
 
     /**
      * get player's list of cards
@@ -170,7 +248,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return player's list of cards
      */
     public ArrayList&lt;Card&gt; getHoldingCards() {
-<span class="fc" id="L173">        return holdingCards;</span>
+<span class="fc" id="L251">        return holdingCards;</span>
     }
 
     /**
@@ -180,11 +258,11 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return null if position not exist
      */
     public Card getHoldingCard(int position) {
-<span class="pc bpc" id="L183" title="2 of 4 branches missed.">        if (position &gt; holdingCards.size() || position &lt;= 0) {</span>
-<span class="nc" id="L184">            ConsolePrinter.printFormat(&quot;You only have %d card&quot;, holdingCards.size());</span>
-<span class="nc" id="L185">            return null;</span>
+<span class="pc bpc" id="L261" title="2 of 4 branches missed.">        if (position &gt; holdingCards.size() || position &lt;= 0) {</span>
+<span class="nc" id="L262">            ConsolePrinter.printFormat(&quot;You only have %d card&quot;, holdingCards.size());</span>
+<span class="nc" id="L263">            return null;</span>
         } else {
-<span class="fc" id="L187">            return holdingCards.get(position - 1);</span>
+<span class="fc" id="L265">            return holdingCards.get(position - 1);</span>
         }
     }
 
@@ -192,15 +270,15 @@ public class Player extends Observable implements NameOnlySerializable {
      * return all the exchanged cards that player is holding
      */
     public void removeExchangedCards() {
-<span class="fc bfc" id="L195" title="All 2 branches covered.">        for (Iterator&lt;Card&gt; cardList = holdingCards.listIterator(); cardList.hasNext();) {</span>
-<span class="fc" id="L196">            Card card = cardList.next();</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">            if (card.isExchanged()) {</span>
-<span class="fc" id="L198">                card.setExchanged(false);</span>
-<span class="fc" id="L199">                card.setHoldingPlayer(null);</span>
-<span class="fc" id="L200">                cardList.remove();</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        for (Iterator&lt;Card&gt; cardList = holdingCards.listIterator(); cardList.hasNext();) {</span>
+<span class="fc" id="L274">            Card card = cardList.next();</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">            if (card.isExchanged()) {</span>
+<span class="fc" id="L276">                card.setExchanged(false);</span>
+<span class="fc" id="L277">                card.setHoldingPlayer(null);</span>
+<span class="fc" id="L278">                cardList.remove();</span>
             }
-<span class="fc" id="L202">        }</span>
-<span class="fc" id="L203">    }</span>
+        }
+<span class="fc" id="L281">    }</span>
 
     /**
      * get the list of action for current phase
@@ -208,7 +286,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return list of action for current phase
      */
     public ArrayList&lt;String&gt; getCurrentPhaseActions() {
-<span class="fc" id="L211">        return currentPhaseActions;</span>
+<span class="fc" id="L289">        return currentPhaseActions;</span>
     }
 
     /**
@@ -217,10 +295,10 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param action the action string
      */
     public void addCurrentPhaseAction(String action) {
-<span class="fc" id="L220">        currentPhaseActions.add(action);</span>
-<span class="fc" id="L221">        setChanged();</span>
-<span class="fc" id="L222">        notifyObservers(ChangedProperty.GAME_PHASE);</span>
-<span class="fc" id="L223">    }</span>
+<span class="fc" id="L298">        currentPhaseActions.add(action);</span>
+<span class="fc" id="L299">        setChanged();</span>
+<span class="fc" id="L300">        notifyObservers(ChangedProperty.GAME_PHASE);</span>
+<span class="fc" id="L301">    }</span>
 
     /**
      * get previous player on the linked list
@@ -228,7 +306,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return previous player
      */
     public Player getPreviousPlayer() {
-<span class="fc" id="L231">        return previousPlayer;</span>
+<span class="fc" id="L309">        return previousPlayer;</span>
     }
 
     /**
@@ -237,12 +315,13 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param previousPlayer the player object
      */
     public void setPreviousPlayer(Player previousPlayer) {
-<span class="fc" id="L240">        this.previousPlayer = previousPlayer;</span>
+<span class="fc" id="L318">        this.previousPlayer = previousPlayer;</span>
+<span class="fc" id="L319">        this.previousPlayerName = previousPlayer.getName();</span>
 
-<span class="fc bfc" id="L242" title="All 2 branches covered.">        if (previousPlayer.getNextPlayer() != this) {</span>
-<span class="fc" id="L243">            previousPlayer.setNextPlayer(this);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        if (previousPlayer.getNextPlayer() != this) {</span>
+<span class="fc" id="L322">            previousPlayer.setNextPlayer(this);</span>
         }
-<span class="fc" id="L245">    }</span>
+<span class="fc" id="L324">    }</span>
 
     /**
      * get next player on the linked list
@@ -250,7 +329,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return next player on the linked list
      */
     public Player getNextPlayer() {
-<span class="fc" id="L253">        return nextPlayer;</span>
+<span class="fc" id="L332">        return nextPlayer;</span>
     }
 
     /**
@@ -259,11 +338,12 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param nextPlayer the player object
      */
     public void setNextPlayer(Player nextPlayer) {
-<span class="fc" id="L262">        this.nextPlayer = nextPlayer;</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        if (nextPlayer.getPreviousPlayer() != this) {</span>
-<span class="fc" id="L264">            nextPlayer.setPreviousPlayer(this);</span>
+<span class="fc" id="L341">        this.nextPlayer = nextPlayer;</span>
+<span class="fc" id="L342">        this.nextPlayerName = nextPlayer.getName();</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">        if (nextPlayer.getPreviousPlayer() != this) {</span>
+<span class="fc" id="L344">            nextPlayer.setPreviousPlayer(this);</span>
         }
-<span class="fc" id="L266">    }</span>
+<span class="fc" id="L346">    }</span>
 
     /**
      * get player name
@@ -271,7 +351,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return player name
      */
     public String getName() {
-<span class="fc" id="L274">        return name;</span>
+<span class="fc" id="L354">        return name;</span>
     }
 
     /**
@@ -280,16 +360,16 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return total armies
      */
     public int getTotalArmies() {
-<span class="fc" id="L283">        int totalArmies = 0;</span>
+<span class="fc" id="L363">        int totalArmies = 0;</span>
 
-<span class="fc" id="L285">        ArrayList&lt;Country&gt; conqueredCountries = getConqueredCountries();</span>
-<span class="fc bfc" id="L286" title="All 2 branches covered.">        for (Country country : conqueredCountries) {</span>
-<span class="fc" id="L287">            totalArmies += country.getArmyAmount();</span>
-<span class="fc" id="L288">        }</span>
+<span class="fc" id="L365">        ArrayList&lt;Country&gt; conqueredCountries = getConqueredCountries();</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        for (Country country : conqueredCountries) {</span>
+<span class="fc" id="L367">            totalArmies += country.getArmyAmount();</span>
+        }
 
-<span class="fc" id="L290">        totalArmies += getUnplacedArmies();</span>
+<span class="fc" id="L370">        totalArmies += getUnplacedArmies();</span>
 
-<span class="fc" id="L292">        return totalArmies;</span>
+<span class="fc" id="L372">        return totalArmies;</span>
     }
 
     /**
@@ -298,17 +378,17 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return list of conquered continents
      */
     public ArrayList&lt;Continent&gt; getConqueredContinents() {
-<span class="fc" id="L301">        ArrayList&lt;Continent&gt; conquered = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L381">        ArrayList&lt;Continent&gt; conquered = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L303" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">            if (continent != null) {</span>
-<span class="fc bfc" id="L305" title="All 2 branches covered.">                if (this.equals(continent.getConquerer())) {</span>
-<span class="fc" id="L306">                    conquered.add(continent);</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
+<span class="pc bpc" id="L384" title="1 of 2 branches missed.">            if (continent != null) {</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">                if (this.equals(continent.getConquerer())) {</span>
+<span class="fc" id="L386">                    conquered.add(continent);</span>
                 }
             }
-<span class="fc" id="L309">        }</span>
+        }
 
-<span class="fc" id="L311">        return conquered;</span>
+<span class="fc" id="L391">        return conquered;</span>
     }
 
     /**
@@ -317,17 +397,17 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return empty list if no country
      */
     public ArrayList&lt;Country&gt; getConqueredCountries() {
-<span class="fc" id="L320">        ArrayList&lt;Country&gt; conquered = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L400">        ArrayList&lt;Country&gt; conquered = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L322" title="All 2 branches covered.">        for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {</span>
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">            if (country != null) {</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">                if (this.equals(country.getConquerer())) {</span>
-<span class="fc" id="L325">                    conquered.add(country);</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">        for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">            if (country != null) {</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">                if (this.equals(country.getConquerer())) {</span>
+<span class="fc" id="L405">                    conquered.add(country);</span>
                 }
             }
-<span class="fc" id="L328">        }</span>
+        }
 
-<span class="fc" id="L330">        return conquered;</span>
+<span class="fc" id="L410">        return conquered;</span>
     }
 
     /**
@@ -336,7 +416,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return is this player is still in the game
      */
     public boolean isPlaying() {
-<span class="fc" id="L339">        return isPlaying;</span>
+<span class="fc" id="L419">        return isPlaying;</span>
     }
 
     /**
@@ -345,8 +425,8 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param isPlaying is this player is till in the game
      */
     public void setPlaying(boolean isPlaying) {
-<span class="fc" id="L348">        this.isPlaying = isPlaying;</span>
-<span class="fc" id="L349">    }</span>
+<span class="fc" id="L428">        this.isPlaying = isPlaying;</span>
+<span class="fc" id="L429">    }</span>
 
     /**
      * get player unplaced armies
@@ -354,7 +434,7 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return player unplaced armies
      */
     public int getUnplacedArmies() {
-<span class="fc" id="L357">        return unplacedArmies;</span>
+<span class="fc" id="L437">        return unplacedArmies;</span>
     }
 
     /**
@@ -363,8 +443,8 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param unplacedArmies the number of armies
      */
     public void setUnplacedArmies(int unplacedArmies) {
-<span class="fc" id="L366">        this.unplacedArmies = unplacedArmies;</span>
-<span class="fc" id="L367">    }</span>
+<span class="fc" id="L446">        this.unplacedArmies = unplacedArmies;</span>
+<span class="fc" id="L447">    }</span>
 
     /**
      * REINFORCEMENT PHASE get the number of armies player will get for reinforcement phase for all the
@@ -373,8 +453,8 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return the number of armies. Minimum number of armies are #{@value #INIT_ARMY_DIVIDE_FRACTION}
      */
     private int getArmiesFromAllConqueredCountries() {
-<span class="fc" id="L376">        ArrayList&lt;Country&gt; conqueredCountries = getConqueredCountries();</span>
-<span class="fc" id="L377">        return Math.round(conqueredCountries.size() / INIT_ARMY_DIVIDE_FRACTION);</span>
+<span class="fc" id="L456">        ArrayList&lt;Country&gt; conqueredCountries = getConqueredCountries();</span>
+<span class="fc" id="L457">        return Math.round(conqueredCountries.size() / INIT_ARMY_DIVIDE_FRACTION);</span>
     }
 
     /**
@@ -383,38 +463,38 @@ public class Player extends Observable implements NameOnlySerializable {
      * @return the number of armies. 0 if user don't own any continent.
      */
     private int getArmiesFromConqueredContinents() {
-<span class="fc" id="L386">        int armiesFromConqueredContinents = 0;</span>
+<span class="fc" id="L466">        int armiesFromConqueredContinents = 0;</span>
 
-<span class="fc bfc" id="L388" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
-<span class="fc bfc" id="L389" title="All 2 branches covered.">            if (this.equals(continent.getConquerer())) {</span>
-<span class="fc" id="L390">                armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">            if (this.equals(continent.getConquerer())) {</span>
+<span class="fc" id="L470">                armiesFromConqueredContinents = armiesFromConqueredContinents + continent.getArmy();</span>
             }
-<span class="fc" id="L392">        }</span>
+        }
 
-<span class="fc" id="L394">        return armiesFromConqueredContinents;</span>
+<span class="fc" id="L474">        return armiesFromConqueredContinents;</span>
     }
 
     /**
      * REINFORCEMENT PHASE calculate the number of armies a player will have for his reinforcement phase
      */
     public void calculateReinforcementArmies() {
-<span class="fc bfc" id="L401" title="All 2 branches covered.">        if (this.getCurrentPhase() != GamePhase.REINFORCEMENT) {</span>
-<span class="fc" id="L402">            ConsolePrinter.printFormat(&quot;Cannot get new army for player %s on $%s phase&quot;,</span>
-<span class="fc" id="L403">                                       this.getName(),</span>
-<span class="fc" id="L404">                                       this.getCurrentPhase().toString());</span>
-<span class="fc" id="L405">            return;</span>
+<span class="fc bfc" id="L481" title="All 2 branches covered.">        if (this.getCurrentPhase() != GamePhase.REINFORCEMENT) {</span>
+<span class="fc" id="L482">            ConsolePrinter.printFormat(&quot;Cannot get new army for player %s on $%s phase&quot;,</span>
+<span class="fc" id="L483">                                       this.getName(),</span>
+<span class="fc" id="L484">                                       this.getCurrentPhase().toString());</span>
+<span class="fc" id="L485">            return;</span>
         }
 
-<span class="fc" id="L408">        int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries();</span>
-<span class="fc" id="L409">        int armiesFromConqueredContinents = getArmiesFromConqueredContinents();</span>
+<span class="fc" id="L488">        int armiesFromAllConqueredCountries = getArmiesFromAllConqueredCountries();</span>
+<span class="fc" id="L489">        int armiesFromConqueredContinents = getArmiesFromConqueredContinents();</span>
 
-<span class="pc bpc" id="L411" title="1 of 2 branches missed.">        if (armiesFromAllConqueredCountries &lt; LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN) {</span>
-<span class="nc" id="L412">            armiesFromAllConqueredCountries = LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN;</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">        if (armiesFromAllConqueredCountries &lt; LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN) {</span>
+<span class="fc" id="L492">            armiesFromAllConqueredCountries = LEAST_NUMBER_OF_ARMIES_INIT_IN_TURN;</span>
         }
 
-<span class="fc" id="L415">        int newUnplacedArmies = getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;</span>
-<span class="fc" id="L416">        setUnplacedArmies(newUnplacedArmies);</span>
-<span class="fc" id="L417">    }</span>
+<span class="fc" id="L495">        int newUnplacedArmies = getUnplacedArmies() + armiesFromAllConqueredCountries + armiesFromConqueredContinents;</span>
+<span class="fc" id="L496">        setUnplacedArmies(newUnplacedArmies);</span>
+<span class="fc" id="L497">    }</span>
 
     /**
      * do the reinforcement
@@ -423,20 +503,20 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param numberOfArmies armies to reinforce
      */
     public void reinforce(Country country, int numberOfArmies) {
-<span class="pc bpc" id="L426" title="1 of 2 branches missed.">        if (!country.isCountryBelongToPlayer(this)) {</span>
-<span class="nc" id="L427">            return;</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">        if (!country.isCountryBelongToPlayer(this)) {</span>
+<span class="nc" id="L507">            return;</span>
         }
 
-<span class="pc bpc" id="L430" title="1 of 2 branches missed.">        if (this.getUnplacedArmies() != 0) {</span>
-<span class="fc" id="L431">            country.receiveArmiesFromUnPlacedArmies(numberOfArmies);</span>
-<span class="fc" id="L432">            this.addCurrentPhaseAction(&quot;Reinforce: &quot; + country.getName() + &quot; with &quot; + numberOfArmies);</span>
+<span class="pc bpc" id="L510" title="1 of 2 branches missed.">        if (this.getUnplacedArmies() != 0) {</span>
+<span class="fc" id="L511">            country.receiveArmiesFromUnPlacedArmies(numberOfArmies);</span>
+<span class="fc" id="L512">            this.addCurrentPhaseAction(&quot;Reinforce: &quot; + country.getName() + &quot; with &quot; + numberOfArmies);</span>
         }
 
-<span class="fc bfc" id="L435" title="All 2 branches covered.">        if (this.getUnplacedArmies() == 0) {</span>
-<span class="fc" id="L436">            ConsolePrinter.printFormat(&quot;Player %s enter ATTACK phase&quot;, this.getName());</span>
-<span class="fc" id="L437">            this.setCurrentPhase(GamePhase.ATTACK);</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">        if (this.getUnplacedArmies() == 0) {</span>
+<span class="fc" id="L516">            ConsolePrinter.printFormat(&quot;Player %s enter ATTACK phase&quot;, this.getName());</span>
+<span class="fc" id="L517">            this.setCurrentPhase(GamePhase.ATTACK);</span>
         }
-<span class="fc" id="L439">    }</span>
+<span class="fc" id="L519">    }</span>
 
     /**
      * do the fortify
@@ -446,29 +526,15 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param numberOfArmies armies to fortify
      */
     public void fortify(Country fromCountry, Country toCountry, int numberOfArmies) {
-<span class="fc" id="L449">        fromCountry.moveArmies(toCountry, numberOfArmies);</span>
-<span class="fc" id="L450">        this.addCurrentPhaseAction(&quot;Fortify: from &quot;</span>
-<span class="fc" id="L451">                                   + fromCountry.getName()</span>
-                                   + &quot; to &quot;
-<span class="fc" id="L453">                                   + toCountry.getName()</span>
-                                   + &quot; with &quot;
-                                   + numberOfArmies
-                                   + &quot; armies&quot;);
-<span class="fc" id="L457">    }</span>
-
-    @Override
-    public String getPropertyName() {
-<span class="fc" id="L461">        return &quot;name&quot;;</span>
-    }
-
-    @Override
-    public String getPropertyValue() {
-<span class="pc bpc" id="L466" title="2 of 4 branches missed.">        if (name == null || name.isEmpty()) {</span>
-<span class="nc" id="L467">            return &quot;&quot;;</span>
-        }
-
-<span class="fc" id="L470">        return name;</span>
-    }
+<span class="fc" id="L529">        fromCountry.moveArmies(toCountry, numberOfArmies);</span>
+<span class="fc" id="L530">        this.addCurrentPhaseAction(&quot;Fortify: from &quot;</span>
+<span class="fc" id="L531">                                   + fromCountry.getName()</span>
+<span class="fc" id="L532">                                   + &quot; to &quot;</span>
+<span class="fc" id="L533">                                   + toCountry.getName()</span>
+<span class="fc" id="L534">                                   + &quot; with &quot;</span>
+<span class="fc" id="L535">                                   + numberOfArmies</span>
+<span class="fc" id="L536">                                   + &quot; armies&quot;);</span>
+<span class="fc" id="L537">    }</span>
 
     /**
      * do the attack
@@ -483,76 +549,76 @@ public class Player extends Observable implements NameOnlySerializable {
                        int attackerNumDice,
                        int defenderNumDice) {
         // attack starts
-<span class="fc" id="L486">        int[] attackerDiceValues = new int[attackerNumDice];</span>
-<span class="fc" id="L487">        int[] defenderDiceValues = new int[defenderNumDice];</span>
+<span class="fc" id="L552">        int[] attackerDiceValues = new int[attackerNumDice];</span>
+<span class="fc" id="L553">        int[] defenderDiceValues = new int[defenderNumDice];</span>
 
-<span class="fc" id="L489">        printDiceValues(attackerNumDice, defenderNumDice, attackerDiceValues, defenderDiceValues);</span>
+<span class="fc" id="L555">        printDiceValues(attackerNumDice, defenderNumDice, attackerDiceValues, defenderDiceValues);</span>
 
-<span class="fc" id="L491">        Player currentPlayer = this;</span>
+<span class="fc" id="L557">        Player currentPlayer = this;</span>
 
         // now we will check who loses an army
-<span class="fc" id="L494">        int attackerMaxDiceValue = GameHelper.getMax(attackerDiceValues, false);</span>
-<span class="fc" id="L495">        int defenderMaxDiceValue = GameHelper.getMax(defenderDiceValues, false);</span>
+<span class="fc" id="L560">        int attackerMaxDiceValue = GameHelper.getMax(attackerDiceValues, false);</span>
+<span class="fc" id="L561">        int defenderMaxDiceValue = GameHelper.getMax(defenderDiceValues, false);</span>
 
-<span class="fc bfc" id="L497" title="All 2 branches covered.">        if (attackerMaxDiceValue &gt; defenderMaxDiceValue) {</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">        if (attackerMaxDiceValue &gt; defenderMaxDiceValue) {</span>
             // defending army is lost
-<span class="fc" id="L499">            lostOneArmy(defendingCountry, currentPlayer);</span>
-        } else {
+<span class="fc" id="L565">            lostOneArmy(defendingCountry, currentPlayer);</span>
+<span class="fc" id="L566">        } else {</span>
             // attacking army is lost
-<span class="fc" id="L502">            lostOneArmy(attackingCountry, currentPlayer);</span>
+<span class="fc" id="L568">            lostOneArmy(attackingCountry, currentPlayer);</span>
         }
 
-<span class="pc bpc" id="L505" title="3 of 4 branches missed.">        if (defenderNumDice != 1 &amp;&amp; attackerNumDice != 1) {</span>
-<span class="nc" id="L506">            int attackerSecondMaxDiceValue = GameHelper.getMax(attackerDiceValues, true);</span>
-<span class="nc" id="L507">            int defenderSecondMaxDiceValue = GameHelper.getMax(defenderDiceValues, true);</span>
+<span class="fc bfc" id="L571" title="All 4 branches covered.">        if (defenderNumDice != 1 &amp;&amp; attackerNumDice != 1) {</span>
+<span class="fc" id="L572">            int attackerSecondMaxDiceValue = GameHelper.getMax(attackerDiceValues, true);</span>
+<span class="fc" id="L573">            int defenderSecondMaxDiceValue = GameHelper.getMax(defenderDiceValues, true);</span>
 
-<span class="nc bnc" id="L509" title="All 2 branches missed.">            if (attackerSecondMaxDiceValue &gt; defenderSecondMaxDiceValue) {</span>
-<span class="nc" id="L510">                lostOneArmy(defendingCountry, currentPlayer);</span>
-            } else {
-<span class="nc" id="L512">                lostOneArmy(attackingCountry, currentPlayer);</span>
+<span class="fc bfc" id="L575" title="All 2 branches covered.">            if (attackerSecondMaxDiceValue &gt; defenderSecondMaxDiceValue) {</span>
+<span class="fc" id="L576">                lostOneArmy(defendingCountry, currentPlayer);</span>
+<span class="fc" id="L577">            } else {</span>
+<span class="fc" id="L578">                lostOneArmy(attackingCountry, currentPlayer);</span>
             }
         }
         // attack ends
-<span class="fc" id="L516">    }</span>
+<span class="fc" id="L582">    }</span>
 
     private void printDiceValues(int attackerNumDice,
                                  int defenderNumDice,
                                  int[] attackerDiceValues,
                                  int[] defenderDiceValues) {
-<span class="fc" id="L522">        StringBuilder printDiceValues = new StringBuilder(&quot;Attacker: &quot;);</span>
+<span class="fc" id="L588">        StringBuilder printDiceValues = new StringBuilder(&quot;Attacker: &quot;);</span>
 
-<span class="fc bfc" id="L524" title="All 2 branches covered.">        for (int i = 0; i &lt; attackerNumDice; i++) {</span>
-<span class="fc" id="L525">            attackerDiceValues[i] = GameHelper.rollDice();</span>
-<span class="fc" id="L526">            printDiceValues.append(attackerDiceValues[i]).append(&quot;    &quot;);</span>
+<span class="fc bfc" id="L590" title="All 2 branches covered.">        for (int i = 0; i &lt; attackerNumDice; i++) {</span>
+<span class="fc" id="L591">            attackerDiceValues[i] = GameHelper.rollDice();</span>
+<span class="fc" id="L592">            printDiceValues.append(attackerDiceValues[i]).append(&quot;    &quot;);</span>
         }
-<span class="fc" id="L528">        printDiceValues.append(&quot;\nDefender: &quot;);</span>
-<span class="fc bfc" id="L529" title="All 2 branches covered.">        for (int i = 0; i &lt; defenderNumDice; i++) {</span>
-<span class="fc" id="L530">            defenderDiceValues[i] = GameHelper.rollDice();</span>
-<span class="fc" id="L531">            printDiceValues.append(defenderDiceValues[i]).append(&quot;    &quot;);</span>
+<span class="fc" id="L594">        printDiceValues.append(&quot;\nDefender: &quot;);</span>
+<span class="fc bfc" id="L595" title="All 2 branches covered.">        for (int i = 0; i &lt; defenderNumDice; i++) {</span>
+<span class="fc" id="L596">            defenderDiceValues[i] = GameHelper.rollDice();</span>
+<span class="fc" id="L597">            printDiceValues.append(defenderDiceValues[i]).append(&quot;    &quot;);</span>
         }
-<span class="fc" id="L533">        ConsolePrinter.printFormat(&quot;%s&quot;, printDiceValues.toString());</span>
-<span class="fc" id="L534">    }</span>
+<span class="fc" id="L599">        ConsolePrinter.printFormat(&quot;%s&quot;, printDiceValues.toString());</span>
+<span class="fc" id="L600">    }</span>
 
     private void lostOneArmy(Country lostArmyCountry, Player lostArmyPlayer) {
-<span class="pc bpc" id="L537" title="1 of 2 branches missed.">        String playerRole = lostArmyPlayer.getCurrentPhase() == GamePhase.ATTACK ? &quot;attacker&quot; : &quot;defender&quot;;</span>
+<span class="pc bpc" id="L603" title="1 of 2 branches missed.">        String playerRole = lostArmyPlayer.getCurrentPhase() == GamePhase.ATTACK ? &quot;attacker&quot; : &quot;defender&quot;;</span>
 
-<span class="fc" id="L539">        lostArmyCountry.setArmyAmount(lostArmyCountry.getArmyAmount() - 1);</span>
-<span class="fc" id="L540">        ConsolePrinter.printFormat(&quot;The %s %s has lost 1 army from %s. %d armies left.&quot;,</span>
-                                   playerRole,
-<span class="fc" id="L542">                                   lostArmyCountry.getConquerer().getName(),</span>
-<span class="fc" id="L543">                                   lostArmyCountry.getName(),</span>
-<span class="fc" id="L544">                                   lostArmyCountry.getArmyAmount());</span>
+<span class="fc" id="L605">        lostArmyCountry.setArmyAmount(lostArmyCountry.getArmyAmount() - 1);</span>
+<span class="fc" id="L606">        ConsolePrinter.printFormat(&quot;The %s %s has lost 1 army from %s. %d armies left.&quot;,</span>
+<span class="fc" id="L607">                                   playerRole,</span>
+<span class="fc" id="L608">                                   lostArmyCountry.getConquerer().getName(),</span>
+<span class="fc" id="L609">                                   lostArmyCountry.getName(),</span>
+<span class="fc" id="L610">                                   lostArmyCountry.getArmyAmount());</span>
 
-<span class="fc" id="L546">        lostArmyPlayer.addCurrentPhaseAction(&quot;Attack: The &quot;</span>
-                                             + playerRole
-                                             + &quot; &quot;
-<span class="fc" id="L549">                                             + lostArmyCountry.getConquerer().getName()</span>
-                                             + &quot; has lost 1 army from &quot;
-<span class="fc" id="L551">                                             + lostArmyCountry.getName()</span>
-                                             + &quot; | &quot;
-<span class="fc" id="L553">                                             + lostArmyCountry.getArmyAmount()</span>
-                                             + &quot; armies left.&quot;);
-<span class="fc" id="L555">    }</span>
+<span class="fc" id="L612">        lostArmyPlayer.addCurrentPhaseAction(&quot;Attack: The &quot;</span>
+<span class="fc" id="L613">                                             + playerRole</span>
+<span class="fc" id="L614">                                             + &quot; &quot;</span>
+<span class="fc" id="L615">                                             + lostArmyCountry.getConquerer().getName()</span>
+<span class="fc" id="L616">                                             + &quot; has lost 1 army from &quot;</span>
+<span class="fc" id="L617">                                             + lostArmyCountry.getName()</span>
+<span class="fc" id="L618">                                             + &quot; | &quot;</span>
+<span class="fc" id="L619">                                             + lostArmyCountry.getArmyAmount()</span>
+<span class="fc" id="L620">                                             + &quot; armies left.&quot;);</span>
+<span class="fc" id="L621">    }</span>
 
     /**
      * do the attack move
@@ -562,7 +628,102 @@ public class Player extends Observable implements NameOnlySerializable {
      * @param numberOfArmies armies to move
      */
     public void attackMove(Country fromCountry, Country toCountry, int numberOfArmies) {
-<span class="nc" id="L565">        fromCountry.moveArmies(toCountry, numberOfArmies);</span>
-<span class="nc" id="L566">    }</span>
+<span class="fc" id="L631">        fromCountry.moveArmies(toCountry, numberOfArmies);</span>
+<span class="fc" id="L632">    }</span>
+
+    public ArrayList&lt;CardSet&gt; buildValidCardSets() {
+<span class="fc" id="L635">        ArrayList&lt;CardSet&gt; cardSets = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L637">        ArrayList&lt;Card&gt; cards = this.getHoldingCards();</span>
+
+<span class="pc bpc" id="L639" title="1 of 2 branches missed.">        if (cards.size() &lt; 3) {</span>
+<span class="nc" id="L640">            return cardSets;</span>
+        }
+
+<span class="fc" id="L643">        HashMap&lt;Card, Boolean&gt; cardsInSet = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L644" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc" id="L645">            cardsInSet.put(card, false);</span>
+        }
+
+<span class="fc" id="L648">        ArrayList&lt;Card&gt; notPicked = (ArrayList&lt;Card&gt;) GameHelper.getAllKeysForValue(cardsInSet, false);</span>
+
+<span class="fc bfc" id="L650" title="All 2 branches covered.">        while (notPicked.size() &gt;= 5) {</span>
+<span class="fc" id="L651">            ArrayList&lt;Integer&gt; cardIndexes = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L653" title="All 2 branches covered.">            for (Card card : notPicked) {</span>
+<span class="fc" id="L654">                cardIndexes.add(cards.indexOf(card));</span>
+            }
+
+            // randomly pick 3 card with index
+<span class="fc" id="L658">            ArrayList&lt;Integer&gt; picked = GameHelper.getRandomElements(cardIndexes, 3);</span>
+<span class="fc" id="L659">            CardSet cardSet = new CardSet(cards.get(picked.get(0)),</span>
+<span class="fc" id="L660">                                          cards.get(picked.get(1)),</span>
+<span class="fc" id="L661">                                          cards.get(picked.get(2)));</span>
+<span class="fc bfc" id="L662" title="All 2 branches covered.">            if (cardSet.isSetValid()) {</span>
+<span class="fc" id="L663">                cardSets.add(cardSet);</span>
+<span class="fc bfc" id="L664" title="All 2 branches covered.">                for (int cardIndex : picked) {</span>
+<span class="fc" id="L665">                    cardsInSet.put(cards.get(cardIndex), true);</span>
+                }
+            }
+
+<span class="fc" id="L669">            notPicked = (ArrayList&lt;Card&gt;) GameHelper.getAllKeysForValue(cardsInSet, false);</span>
+        }
+
+<span class="fc" id="L672">        return cardSets;</span>
+    }
+
+    /**
+     * it sets the game phase to end of game when a player has won the game
+     */
+    public void setEndOfGamePhase() {
+<span class="nc" id="L679">        ConsolePrinter.printFormat(&quot;Congratulations, The player %s has won the game.&quot;, this.getName());</span>
+<span class="nc" id="L680">        this.setCurrentPhase(GamePhase.END_OF_GAME);</span>
+<span class="nc" id="L681">    }</span>
+
+    /**
+     * test if the player has conquered all countries and won the game.
+     * 
+     * @return true if player win
+     */
+    public boolean isGameEnded() {
+        // check whether this player has won the game
+<span class="fc" id="L690">        Player currentPlayer = this;</span>
+<span class="fc" id="L691">        boolean gameEnded = true;</span>
+<span class="fc" id="L692">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance()</span>
+<span class="fc" id="L693">                                                .getGameBoardMap()</span>
+<span class="fc" id="L694">                                                .getCountries();</span>
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">        for (Country country : countries) {</span>
+<span class="fc bfc" id="L696" title="All 2 branches covered.">            if (country.getConquerer() != currentPlayer) {</span>
+<span class="fc" id="L697">                gameEnded = false;</span>
+<span class="fc" id="L698">                break;</span>
+            }
+        }
+
+<span class="fc" id="L702">        return gameEnded;</span>
+    }
+
+    /**
+     * it checks whether further attack is possible.(i.e. if the number of army in a country is greater
+     * than 1 and it has enemy countries as neighbor) If not, it returns false.
+     *
+     * @return boolean if further attack is possible or not
+     *
+     */
+    public boolean furtherAttackPossible() {
+        // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
+<span class="fc" id="L714">        ArrayList&lt;Country&gt; countries = this.getConqueredCountries();</span>
+<span class="fc bfc" id="L715" title="All 2 branches covered.">        for (Country country : countries) {</span>
+<span class="fc bfc" id="L716" title="All 2 branches covered.">            if (country.getArmyAmount() &gt; 1) {</span>
+<span class="fc" id="L717">                ArrayList&lt;Country&gt; neighbours = country.getNeighbors();</span>
+<span class="fc bfc" id="L718" title="All 2 branches covered.">                for (Country neighbouringCountry : neighbours) {</span>
+<span class="fc bfc" id="L719" title="All 2 branches covered.">                    if (neighbouringCountry.getConquerer() != this) {</span>
+<span class="fc" id="L720">                        return true;</span>
+                    }
+                }
+            }
+        }
+
+<span class="fc" id="L726">        return false;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

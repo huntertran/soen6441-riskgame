@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Strategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models.strategies</a> &gt; <span class="el_source">Strategy.java</span></div><h1>Strategy.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models.strategies;
+
+import java.util.ArrayList;
+
+import soen6441riskgame.App;
+import soen6441riskgame.enums.StrategyName;
+import soen6441riskgame.models.CardSet;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.ModelCommands;
+import soen6441riskgame.models.Player;
+import soen6441riskgame.models.commands.GameCommands;
+
+/**
+ * the interface for computer playing strategy
+ */
+public interface Strategy {
+    /**
+     * get strategy name
+     *
+     * @return the name of the strategy as enum
+     */
+    StrategyName getName();
+
+    /**
+     * reinforce
+     *
+     * @param player             current player
+     * @param countryToReinforce country to reinforce
+     */
+    void reinforce(Player player, Country countryToReinforce);
+
+    default void reinforce(Country countryToReinforce, int numberOfArmies) {
+<span class="fc" id="L33">        String command = GameCommands.REINFORCE;</span>
+<span class="fc" id="L34">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L35">        command += countryToReinforce.getName();</span>
+<span class="fc" id="L36">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L37">        command += String.valueOf(numberOfArmies);</span>
+<span class="fc" id="L38">        App.jumpToCommand(new ModelCommands(command));</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * default exchange cards commands
+     * 
+     * @param player player to exchange
+     */
+    default void exchangeCards(Player player) {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (player.getHoldingCards().size() &gt;= 5) {</span>
+<span class="fc" id="L48">            ArrayList&lt;CardSet&gt; cardSets = player.buildValidCardSets();</span>
+
+<span class="fc" id="L50">            StringBuilder command = new StringBuilder(GameCommands.EXCHANGECARDS);</span>
+<span class="fc" id="L51">            command.append(GameCommands.SPACE);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            for (CardSet cardSet : cardSets) {</span>
+<span class="fc" id="L53">                command.append(cardSet.getCardsPositionForTournament());</span>
+<span class="fc" id="L54">                command.append(&quot; &quot;);</span>
+            }
+
+<span class="fc" id="L57">            command.append(&quot; -none&quot;);</span>
+
+<span class="fc" id="L59">            App.jumpToCommand(new ModelCommands(command.toString()));</span>
+        }
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * attack
+     *
+     * @param player           current player
+     * @param attackingCountry attack from
+     * @return list of attacked countries
+     */
+    ArrayList&lt;Country&gt; attack(Player player, Country attackingCountry);
+
+    /**
+     * default attack command
+     * 
+     * @param attackingCountry attacking country
+     * @param defendingCountry defending country
+     * @param numberOfDice     number of dice
+     */
+    default void attack(Country attackingCountry, Country defendingCountry, int numberOfDice) {
+<span class="fc" id="L80">        String command = GameCommands.ATTACK;</span>
+<span class="fc" id="L81">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L82">        command += attackingCountry.getName();</span>
+<span class="fc" id="L83">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L84">        command += defendingCountry.getName();</span>
+<span class="fc" id="L85">        command += GameCommands.SPACE;</span>
+
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (numberOfDice == 0) {</span>
+<span class="fc" id="L88">            command += GameCommands.DASH;</span>
+<span class="fc" id="L89">            command += GameCommands.ALLOUT;</span>
+<span class="fc" id="L90">        } else {</span>
+<span class="nc" id="L91">            command += String.valueOf(numberOfDice);</span>
+        }
+
+<span class="fc" id="L94">        App.jumpToCommand(new ModelCommands(command));</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * default attack move command
+     * 
+     * @param army number of army to move
+     */
+    default void attackMove(int army) {
+<span class="fc" id="L103">        String command = GameCommands.ATTACKMOVE;</span>
+<span class="fc" id="L104">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L105">        command += army;</span>
+<span class="fc" id="L106">        App.jumpToCommand(new ModelCommands(command));</span>
+<span class="fc" id="L107">    }</span>
+
+    default void attackEnd() {
+<span class="fc" id="L110">        App.jumpToCommand(new ModelCommands(GameCommands.ATTACK</span>
+                                            + GameCommands.SPACE
+                                            + GameCommands.DASH
+                                            + GameCommands.NOATTACK));
+<span class="fc" id="L114">    }</span>
+
+    /**
+     * fortify
+     *
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
+    void fortify(Country fromCountry, Country toCountry);
+
+    /**
+     * default fortify
+     *
+     * @param fromCountry  from country
+     * @param toCountry    to country
+     * @param armiesAmount number of armies
+     */
+    default void fortify(Country fromCountry, Country toCountry, int armiesAmount) {
+<span class="fc" id="L132">        String command = GameCommands.FORTIFY;</span>
+<span class="fc" id="L133">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L134">        command += fromCountry.getName();</span>
+<span class="fc" id="L135">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L136">        command += toCountry.getName();</span>
+<span class="fc" id="L137">        command += GameCommands.SPACE;</span>
+<span class="fc" id="L138">        command += String.valueOf(armiesAmount);</span>
+
+<span class="fc" id="L140">        App.jumpToCommand(new ModelCommands(command));</span>
+<span class="fc" id="L141">    }</span>
+
+    /**
+     * call fortify none to give turn to next player
+     */
+    default void fortifyNone() {
+<span class="fc" id="L147">        App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY</span>
+                                            + GameCommands.SPACE
+                                            + GameCommands.DASH
+                                            + GameCommands.NONE));
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * play the player's turn with the strategy
+     *
+     * @param player current player
+     */
+    void playTurn(Player player);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

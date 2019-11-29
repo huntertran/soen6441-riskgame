@@ -45,21 +45,21 @@ import soen6441riskgame.models.Country;
 <span class="fc bfc" id="L45" title="All 2 branches covered.">                if (countries.contains(neighbor)) {</span>
 <span class="fc" id="L46">                    scopedNeighbors.add(neighbor);</span>
                 }
-<span class="fc" id="L48">            }</span>
+            }
 
 <span class="fc bfc" id="L50" title="All 2 branches covered.">            for (Country neighbor : scopedNeighbors) {</span>
 <span class="pc bpc" id="L51" title="1 of 4 branches missed.">                if (neighbor != null &amp;&amp; !visited.contains(neighbor)) {</span>
 <span class="fc" id="L52">                    stack.add(neighbor);</span>
                 }
-<span class="fc" id="L54">            }</span>
-<span class="fc" id="L55">        }</span>
+            }
+        }
 
         // compare visited and countries list
 <span class="fc bfc" id="L58" title="All 2 branches covered.">        for (Country country : countries) {</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">            if (!visited.contains(country)) {</span>
 <span class="fc" id="L60">                return false;</span>
             }
-<span class="fc" id="L62">        }</span>
+        }
 
 <span class="fc" id="L64">        return true;</span>
     }

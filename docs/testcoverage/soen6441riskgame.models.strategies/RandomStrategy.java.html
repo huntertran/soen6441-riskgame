@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RandomStrategy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.models.strategies</a> &gt; <span class="el_source">RandomStrategy.java</span></div><h1>RandomStrategy.java</h1><pre class="source lang-java linenums">package soen6441riskgame.models.strategies;
+
+import java.util.ArrayList;
+
+import soen6441riskgame.enums.GamePhase;
+import soen6441riskgame.enums.StrategyName;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.GameHelper;
+
+/**
+ * 1. reinforces random a random country
+ *
+ * 2. attacks a random number of times a random country
+ *
+ * 3. and fortifies a random country
+ *
+ * all following the standard rules for each phase.
+ */
+<span class="fc" id="L21">public class RandomStrategy implements Strategy {</span>
+    /**
+     * get strategy name
+     *
+     * @return the name of the strategy as enum
+     */
+    @Override
+    public StrategyName getName() {
+<span class="fc" id="L29">        return StrategyName.RANDOM;</span>
+    }
+
+    /**
+     * get country to reinforce
+     *
+     * @param player current player
+     * @return the country
+     */
+    private Country getCountryToReinforce(Player player) {
+<span class="fc" id="L39">        ArrayList&lt;Country&gt; conquered = player.getConqueredCountries();</span>
+
+<span class="fc" id="L41">        int randIndex = GameHelper.nextRandomIntInRange(0, (conquered.size() - 1));</span>
+<span class="fc" id="L42">        return conquered.get(randIndex);</span>
+    }
+
+    /**
+     * reinforce
+     *
+     * @param player             current player
+     * @param countryToReinforce country to reinforce
+     */
+    @Override
+    public void reinforce(Player player, Country countryToReinforce) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (player.getUnplacedArmies() &gt; 0) {</span>
+<span class="fc" id="L54">            int randArmy = GameHelper.nextRandomIntInRange(1, player.getUnplacedArmies());</span>
+<span class="fc" id="L55">            reinforce(countryToReinforce, randArmy);</span>
+        }
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * attacks a random number of times a random country
+     *
+     * @param player           current player
+     * @param attackingCountry attack from
+     * @return list of attacked countries
+     */
+    @Override
+    public ArrayList&lt;Country&gt; attack(Player player, Country attackingCountry) {
+<span class="fc" id="L68">        ArrayList&lt;Country&gt; neighbours = attackingCountry.getNeighbors();</span>
+<span class="fc" id="L69">        Country defendingCountry = null;</span>
+<span class="fc" id="L70">        ArrayList&lt;Country&gt; defendableCountries = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">        ArrayList&lt;Country&gt; attackedCountries = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        for (Country country : neighbours) {</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            if (country.getConquerer() != player) {</span>
+<span class="fc" id="L75">                defendableCountries.add(country);</span>
+            }
+        }
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (defendableCountries.size() &gt; 0) {</span>
+<span class="fc" id="L80">            defendingCountry = defendableCountries.get(GameHelper.nextRandomIntInRange(0,</span>
+<span class="fc" id="L81">                                                                                       defendableCountries.size() - 1));</span>
+        }
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (defendingCountry != null) {</span>
+<span class="fc" id="L85">            attack(attackingCountry, defendingCountry, 0);</span>
+
+            // after attack with allout
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (defendingCountry.getConquerer() == player) {</span>
+                // player conquered the defending country
+<span class="fc" id="L90">                int armyToMove = GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice();</span>
+<span class="fc" id="L91">                attackMove(armyToMove);</span>
+<span class="fc" id="L92">                attackedCountries.add(defendingCountry);</span>
+            }
+        }
+
+<span class="fc" id="L96">        return attackedCountries;</span>
+    }
+
+    /**
+     * fortify
+     *
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
+    @Override
+    public void fortify(Country fromCountry, Country toCountry) {
+        // Fortify Phase
+        // Command: fortify fromcountry tocountry num
+        /*
+         * 1. get list of conquered countries 2. get filtered list of conquered countries to move army from
+         * 3. generate index of country from filtered list of conquered countries 4. generate randArmyMove
+         * int (min 1, max = number of army moving from country filtered)
+         */
+
+<span class="fc" id="L115">        int randArmyAmountToMove = GameHelper.nextRandomIntInRange(1, fromCountry.getArmyAmount());</span>
+<span class="fc" id="L116">        fortify(fromCountry, toCountry, randArmyAmountToMove);</span>
+<span class="fc" id="L117">    }</span>
+
+    /**
+     * 1. reinforces random a random country
+     *
+     * 2. attacks a random number of times a random country
+     *
+     * 3. and fortifies a random country
+     *
+     * @param player current player
+     */
+    @Override
+    public void playTurn(Player player) {
+<span class="fc" id="L130">        exchangeCards(player);</span>
+
+<span class="fc" id="L132">        Country randomCountry = getCountryToReinforce(player);</span>
+
+        // run reinforce once to generate unplaced armies
+<span class="fc" id="L135">        reinforce(randomCountry, 0);</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        while (player.getUnplacedArmies() &gt; 0) {</span>
+<span class="fc" id="L138">            randomCountry = getCountryToReinforce(player);</span>
+<span class="fc" id="L139">            reinforce(player, randomCountry);</span>
+        }
+
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (player.getUnplacedArmies() == 0</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">            &amp;&amp; (player.getCurrentPhase() == GamePhase.REINFORCEMENT</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">                || player.getCurrentPhase() == GamePhase.WAITING_TO_TURN)) {</span>
+            // call reinforce when unplaced armies = 0 will change phase from REINFORCE to ATTACK
+<span class="nc" id="L146">            reinforce(randomCountry, 0);</span>
+        }
+
+<span class="fc" id="L149">        ArrayList&lt;Country&gt; attackingCountries = filterAttackableCountries(player.getConqueredCountries());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (attackingCountries.size() &gt; 0) {</span>
+<span class="fc" id="L151">            int attackTime = GameHelper.nextRandomInt(attackingCountries.size());</span>
+<span class="fc" id="L152">            Country attackingCountry = attackingCountries.get(0);</span>
+<span class="fc bfc" id="L153" title="All 4 branches covered.">            for (int index = 0; index &lt; attackTime &amp;&amp; player.getCurrentPhase() == GamePhase.ATTACK; index++) {</span>
+<span class="fc" id="L154">                attack(player, attackingCountry);</span>
+            }
+        }
+
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (player.getCurrentPhase() == GamePhase.ATTACK) {</span>
+<span class="fc" id="L159">            attackEnd();</span>
+        }
+
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (player.isGameEnded()) {</span>
+<span class="nc" id="L163">            player.setEndOfGamePhase();</span>
+<span class="nc" id="L164">        } else {</span>
+
+<span class="fc" id="L166">            ArrayList&lt;Country&gt; conquered = player.getConqueredCountries();</span>
+<span class="fc" id="L167">            ArrayList&lt;Country&gt; moveArmyFrom = filterAttackableCountries(conquered);</span>
+<span class="fc" id="L168">            ArrayList&lt;Country&gt; fortifiableCountries = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">            if (moveArmyFrom.size() &gt; 1 &amp;&amp; conquered.size() &gt; 1) {</span>
+<span class="fc" id="L171">                int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));</span>
+<span class="fc" id="L172">                Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);</span>
+
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                for (Country country : countryFrom.getNeighbors()) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                    if (country.getConquerer() == player) {</span>
+<span class="fc" id="L176">                        fortifiableCountries.add(country);</span>
+                    }
+                }
+
+<span class="fc bfc" id="L180" title="All 2 branches covered.">                if (fortifiableCountries.size() &gt; 0) {</span>
+<span class="fc" id="L181">                    int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (fortifiableCountries.size() - 1));</span>
+<span class="fc" id="L182">                    Country countryTo = fortifiableCountries.get(randIndexCountryTo);</span>
+
+<span class="fc" id="L184">                    fortify(countryFrom, countryTo);</span>
+                }
+
+            }
+
+<span class="fc" id="L189">            fortifyNone();</span>
+        }
+<span class="fc" id="L191">    }</span>
+
+    /**
+     * A function to filter ArrayList of Countries which has army less than two
+     *
+     * @param countries all country list of a player
+     *
+     * @return return ArrayList of countries with army count more than one.
+     *
+     */
+    private ArrayList&lt;Country&gt; filterAttackableCountries(ArrayList&lt;Country&gt; countries) {
+<span class="fc" id="L202">        ArrayList&lt;Country&gt; filteredList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        for (Country country : countries) {</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">            if (country.getArmyAmount() &gt; 1) {</span>
+<span class="fc" id="L206">                filteredList.add(country);</span>
+            }
+        }
+
+<span class="fc" id="L210">        return filteredList;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

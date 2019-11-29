@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameBoardPlaying.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.singleton</a> &gt; <span class="el_source">GameBoardPlaying.java</span></div><h1>GameBoardPlaying.java</h1><pre class="source lang-java linenums">package soen6441riskgame.singleton;
+
+import com.google.gson.annotations.Expose;
+
+import soen6441riskgame.models.Country;
+
+<span class="fc" id="L7">public class GameBoardPlaying implements Resettable {</span>
+
+    /**
+     * The number of dice for attacker
+     */
+    @Expose
+<span class="fc" id="L13">    private int attackerNumDice = 0;</span>
+
+    /**
+     * The number of dice for defender
+     */
+    @Expose
+<span class="fc" id="L19">    private int defenderNumDice = 0;</span>
+
+    /**
+     * The country attacking country
+     */
+<span class="fc" id="L24">    private Country attackingCountry = null;</span>
+
+    /**
+     * the name for save load function
+     */
+    @Expose
+    private String attackingCountryName;
+
+    /**
+     * The country defending country
+     */
+<span class="fc" id="L35">    private Country defendingCountry = null;</span>
+
+    /**
+     * the name for save load function
+     */
+    @Expose
+    private String defendingCountyName;
+
+    /**
+     * The all out
+     */
+    @Expose
+<span class="fc" id="L47">    private boolean alloutFlag = false;</span>
+
+    /**
+     * The attack move cmd required
+     */
+    @Expose
+<span class="fc" id="L53">    private boolean attackMoveCmdRequired = false;</span>
+
+    /**
+     * The number of dice for attacker
+     * 
+     * @return The number of dice for attacker
+     */
+    public int getAttackerNumDice() {
+<span class="fc" id="L61">        return attackerNumDice;</span>
+    }
+
+    /**
+     * set attacker number of dice
+     *
+     * @param attackerNumDice attacker number of dice
+     */
+    public void setAttackerNumDice(int attackerNumDice) {
+<span class="fc" id="L70">        this.attackerNumDice = attackerNumDice;</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * The number of dice for defender
+     * 
+     * @return The number of dice for defender
+     */
+    public int getDefenderNumDice() {
+<span class="fc" id="L79">        return defenderNumDice;</span>
+    }
+
+    public void setDefenderNumDice(int defenderNumDice) {
+<span class="fc" id="L83">        this.defenderNumDice = defenderNumDice;</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * The country attacking country
+     * 
+     * @return The country attacking country
+     */
+    public Country getAttackingCountry() {
+<span class="fc" id="L92">        return attackingCountry;</span>
+    }
+
+    public void setAttackingCountry(Country attackingCountry) {
+<span class="fc" id="L96">        this.attackingCountry = attackingCountry;</span>
+<span class="fc" id="L97">        this.attackingCountryName = attackingCountry.getName();</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * The country defending country
+     * 
+     * @return The country defending country
+     */
+    public Country getDefendingCountry() {
+<span class="fc" id="L106">        return defendingCountry;</span>
+    }
+
+    /**
+     * set defending country
+     *
+     * @param defendingCountry country defending
+     */
+    public void setDefendingCountry(Country defendingCountry) {
+<span class="fc" id="L115">        this.defendingCountry = defendingCountry;</span>
+<span class="fc" id="L116">        this.defendingCountyName = defendingCountry.getName();</span>
+<span class="fc" id="L117">    }</span>
+
+    /**
+     * The all out
+     * 
+     * @return The all out
+     */
+    public boolean isAlloutFlag() {
+<span class="fc" id="L125">        return alloutFlag;</span>
+    }
+
+    /**
+     * set allout flag
+     *
+     * @param alloutFlag is allout
+     */
+    public void setAlloutFlag(boolean alloutFlag) {
+<span class="fc" id="L134">        this.alloutFlag = alloutFlag;</span>
+<span class="fc" id="L135">    }</span>
+
+    /**
+     * The attack move cmd required
+     * 
+     * @return The attack move cmd required
+     */
+    public boolean isAttackMoveCmdRequired() {
+<span class="fc" id="L143">        return attackMoveCmdRequired;</span>
+    }
+
+    /**
+     * set attack move command required or not
+     *
+     * @param attackMoveCmdRequired attack move command required or not
+     */
+    public void setAttackMoveCmdRequired(boolean attackMoveCmdRequired) {
+<span class="fc" id="L152">        this.attackMoveCmdRequired = attackMoveCmdRequired;</span>
+<span class="fc" id="L153">    }</span>
+
+    /**
+     * get attacking country name
+     * 
+     * @return get attacking country name
+     */
+    public String getAttackingCountryName() {
+<span class="fc" id="L161">        return attackingCountryName;</span>
+    }
+
+    /**
+     * get defending country name
+     * 
+     * @return get defending country name
+     */
+    public String getDefendingCountyName() {
+<span class="fc" id="L170">        return defendingCountyName;</span>
+    }
+
+    /**
+     * it resets the attack variables
+     */
+    @Override
+    public void reset() {
+<span class="fc" id="L178">        this.defendingCountry = null;</span>
+<span class="fc" id="L179">        this.defendingCountyName = null;</span>
+<span class="fc" id="L180">        this.attackingCountry = null;</span>
+<span class="fc" id="L181">        this.attackingCountryName = null;</span>
+<span class="fc" id="L182">        this.attackerNumDice = 0;</span>
+<span class="fc" id="L183">        this.defenderNumDice = 0;</span>
+<span class="fc" id="L184">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

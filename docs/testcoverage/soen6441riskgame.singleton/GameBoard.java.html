@@ -6,6 +6,8 @@ import java.util.Random;
 
 import soen6441riskgame.enums.CardType;
 import soen6441riskgame.models.Card;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.Player;
 import soen6441riskgame.views.ExchangeCardView;
 
 /**
@@ -14,20 +16,23 @@ import soen6441riskgame.views.ExchangeCardView;
 public class GameBoard implements Resettable {
     private static final int NUMBER_OF_CARDS = 56;
 
-<span class="fc" id="L17">    private static GameBoard instance = new GameBoard();</span>
-<span class="fc" id="L18">    private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();</span>
-<span class="fc" id="L19">    private GameBoardMap gameBoardMap = new GameBoardMap();</span>
-<span class="fc" id="L20">    private ExchangeCardView exchangeCardView = new ExchangeCardView();</span>
-<span class="fc" id="L21">    private Card[] cards = new Card[NUMBER_OF_CARDS];</span>
+<span class="fc" id="L19">    private static GameBoard instance = new GameBoard();</span>
 
-<span class="fc" id="L23">    public PrintStream standardPrintStream = System.out;</span>
+<span class="fc" id="L21">    private GameBoardPlayer gameBoardPlayer = new GameBoardPlayer();</span>
+<span class="fc" id="L22">    private GameBoardMap gameBoardMap = new GameBoardMap();</span>
+<span class="fc" id="L23">    private GameBoardPlaying gameBoardPlaying = new GameBoardPlaying();</span>
+
+<span class="fc" id="L25">    private ExchangeCardView exchangeCardView = new ExchangeCardView();</span>
+<span class="fc" id="L26">    private Card[] cards = new Card[NUMBER_OF_CARDS];</span>
+
+<span class="fc" id="L28">    public PrintStream standardPrintStream = System.out;</span>
 
     /**
      * init GameBoard
      */
-<span class="fc" id="L28">    public GameBoard() {</span>
-<span class="fc" id="L29">        initCards();</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L33">    public GameBoard() {</span>
+<span class="fc" id="L34">        initCards();</span>
+<span class="fc" id="L35">    }</span>
 
     /**
      * create a deck of {@value #NUMBER_OF_CARDS} cards, including 2 wild cards and equal cards for
@@ -35,27 +40,27 @@ public class GameBoard implements Resettable {
      */
     public void initCards() {
         // 2 wild card
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (int index = 0; index &lt; 2; index++) {</span>
-<span class="fc" id="L39">            Card card = new Card(CardType.Wild);</span>
-<span class="fc" id="L40">            cards[index] = card;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (int index = 0; index &lt; 2; index++) {</span>
+<span class="fc" id="L44">            Card card = new Card(CardType.Wild);</span>
+<span class="fc" id="L45">            cards[index] = card;</span>
         }
 
         // 18 card for each type
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (int index = 2; index &lt; 20; index++) {</span>
-<span class="fc" id="L45">            Card card = new Card(CardType.Infantry);</span>
-<span class="fc" id="L46">            cards[index] = card;</span>
-        }
-
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (int index = 20; index &lt; 38; index++) {</span>
-<span class="fc" id="L50">            Card card = new Card(CardType.Cavalry);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (int index = 2; index &lt; 20; index++) {</span>
+<span class="fc" id="L50">            Card card = new Card(CardType.Infantry);</span>
 <span class="fc" id="L51">            cards[index] = card;</span>
         }
 
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (int index = 38; index &lt; 56; index++) {</span>
-<span class="fc" id="L55">            Card card = new Card(CardType.Artillery);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (int index = 20; index &lt; 38; index++) {</span>
+<span class="fc" id="L55">            Card card = new Card(CardType.Cavalry);</span>
 <span class="fc" id="L56">            cards[index] = card;</span>
         }
-<span class="fc" id="L58">    }</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (int index = 38; index &lt; 56; index++) {</span>
+<span class="fc" id="L60">            Card card = new Card(CardType.Artillery);</span>
+<span class="fc" id="L61">            cards[index] = card;</span>
+        }
+<span class="fc" id="L63">    }</span>
 
     /**
      * get an specific card from deck for test
@@ -64,30 +69,63 @@ public class GameBoard implements Resettable {
      * @return a card that not hold by any player
      */
     public Card getSpecificCardForTest(CardType cardType) {
-<span class="fc" id="L67">        ArrayList&lt;Card&gt; availableCard = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L72">        ArrayList&lt;Card&gt; availableCard = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Card card : cards) {</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (card.getHoldingPlayer() == null) {</span>
-<span class="fc" id="L71">                availableCard.add(card);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            if (card.getHoldingPlayer() == null) {</span>
+<span class="fc" id="L76">                availableCard.add(card);</span>
             }
         }
 
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        for (Card card : availableCard) {</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (card.getCardType() == cardType) {</span>
-<span class="fc" id="L77">                return card;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        for (Card card : availableCard) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            if (card.getCardType() == cardType) {</span>
+<span class="fc" id="L82">                return card;</span>
             }
-<span class="fc" id="L79">        }</span>
+        }
 
-<span class="nc" id="L81">        return null;</span>
+<span class="nc" id="L86">        return null;</span>
     }
 
     /**
      * get cards deck for save load function
+     * 
      * @return card deck
      */
-    public Card[] getCardsForSaveLoad(){
-<span class="fc" id="L89">        return cards;</span>
+    public Card[] getCardsForSave() {
+<span class="fc" id="L95">        return cards;</span>
     }
+
+    /**
+     * load cards from saved json
+     * 
+     * @param cards serialized cards to load
+     */
+    public void loadCardFromSave(Card[] cards) {
+<span class="fc" id="L104">        this.cards = cards;</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        for (Card card : this.cards) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            if (card.getHoldingPlayerName() != null) {</span>
+<span class="fc" id="L108">                Player holdingPlayer = getGameBoardPlayer().getPlayerFromName(card.getHoldingPlayerName());</span>
+<span class="fc" id="L109">                holdingPlayer.getHoldingCards().add(card);</span>
+<span class="fc" id="L110">                card.setHoldingPlayer(holdingPlayer);</span>
+            }
+        }
+<span class="fc" id="L113">    }</span>
+
+    public void loadGameBoardPlaying(GameBoardPlaying serialized) {
+<span class="fc" id="L116">        this.getGameBoardPlaying().setAlloutFlag(serialized.isAlloutFlag());</span>
+<span class="fc" id="L117">        this.getGameBoardPlaying().setAttackMoveCmdRequired(serialized.isAttackMoveCmdRequired());</span>
+<span class="fc" id="L118">        this.getGameBoardPlaying().setAttackerNumDice(serialized.getAttackerNumDice());</span>
+<span class="fc" id="L119">        this.getGameBoardPlaying().setDefenderNumDice(serialized.getDefenderNumDice());</span>
+
+<span class="fc" id="L121">        Country attackingCountry = getGameBoardMap().getCountryFromName(serialized.getAttackingCountryName());</span>
+<span class="fc" id="L122">        Country defendingCountry = getGameBoardMap().getCountryFromName(serialized.getDefendingCountyName());</span>
+
+<span class="pc bpc" id="L124" title="3 of 4 branches missed.">        if (attackingCountry != null &amp;&amp; defendingCountry != null) {</span>
+<span class="nc" id="L125">            this.getGameBoardPlaying().setAttackingCountry(attackingCountry);</span>
+<span class="nc" id="L126">            this.getGameBoardPlaying().setDefendingCountry(defendingCountry);</span>
+        }
+<span class="fc" id="L128">    }</span>
 
     /**
      * randomly get an available card from deck
@@ -95,18 +133,18 @@ public class GameBoard implements Resettable {
      * @return a card that not hold by any player
      */
     public Card getRandomAvailableCard() {
-<span class="nc" id="L98">        ArrayList&lt;Card&gt; availableCard = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L136">        ArrayList&lt;Card&gt; availableCard = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (Card card : cards) {</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">            if (card.getHoldingPlayer() == null) {</span>
-<span class="nc" id="L102">                availableCard.add(card);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            if (card.getHoldingPlayer() == null) {</span>
+<span class="fc" id="L140">                availableCard.add(card);</span>
             }
         }
 
-<span class="nc" id="L106">        Random random = new Random();</span>
-<span class="nc" id="L107">        int cardIndex = random.nextInt(availableCard.size() - 1) + 1;</span>
+<span class="fc" id="L144">        Random random = new Random();</span>
+<span class="fc" id="L145">        int cardIndex = random.nextInt(availableCard.size() - 1) + 1;</span>
 
-<span class="nc" id="L109">        return availableCard.get(cardIndex);</span>
+<span class="fc" id="L147">        return availableCard.get(cardIndex);</span>
     }
 
     /**
@@ -115,7 +153,7 @@ public class GameBoard implements Resettable {
      * @return the exchange card view observing the cards holding by player in turn
      */
     public ExchangeCardView getExchangeCardView() {
-<span class="fc" id="L118">        return exchangeCardView;</span>
+<span class="fc" id="L156">        return exchangeCardView;</span>
     }
 
     /**
@@ -124,16 +162,25 @@ public class GameBoard implements Resettable {
      * @return GameBoardPlayer instance that hold players
      */
     public GameBoardPlayer getGameBoardPlayer() {
-<span class="fc" id="L127">        return gameBoardPlayer;</span>
+<span class="fc" id="L165">        return gameBoardPlayer;</span>
     }
 
     /**
      * get GameBoardMap instance
      *
-     * @return GameBoardMap instance that Countries and Continents
+     * @return GameBoardMap instance that hold Countries and Continents
      */
     public GameBoardMap getGameBoardMap() {
-<span class="fc" id="L136">        return gameBoardMap;</span>
+<span class="fc" id="L174">        return gameBoardMap;</span>
+    }
+
+    /**
+     * get the GameBoardPlaying instance
+     * 
+     * @return GameBoardPlaying instance that hold attacking and defending countries plus playing data
+     */
+    public GameBoardPlaying getGameBoardPlaying() {
+<span class="fc" id="L183">        return gameBoardPlaying;</span>
     }
 
     /**
@@ -142,8 +189,8 @@ public class GameBoard implements Resettable {
      * @param newTestingInstance new instance of GameBoard
      */
     public static void setTestingInstance(GameBoard newTestingInstance) {
-<span class="fc" id="L145">        instance = newTestingInstance;</span>
-<span class="fc" id="L146">    }</span>
+<span class="fc" id="L192">        instance = newTestingInstance;</span>
+<span class="fc" id="L193">    }</span>
 
     /**
      * get singleton instance of GameBoard
@@ -151,7 +198,7 @@ public class GameBoard implements Resettable {
      * @return GameBoard instance
      */
     public static GameBoard getInstance() {
-<span class="fc" id="L154">        return instance;</span>
+<span class="fc" id="L201">        return instance;</span>
     }
 
     /**
@@ -159,8 +206,9 @@ public class GameBoard implements Resettable {
      */
     @Override
     public void reset() {
-<span class="fc" id="L162">        gameBoardMap.reset();</span>
-<span class="fc" id="L163">        gameBoardPlayer.reset();</span>
-<span class="fc" id="L164">    }</span>
+<span class="fc" id="L209">        gameBoardMap.reset();</span>
+<span class="fc" id="L210">        gameBoardPlayer.reset();</span>
+<span class="fc" id="L211">        gameBoardPlaying.reset();</span>
+<span class="fc" id="L212">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

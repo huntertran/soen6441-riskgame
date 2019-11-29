@@ -50,11 +50,8 @@ public interface Viewable {
      * @param indent number of indent
      */
     default void printIndent(int indent) {
-        // for (int index = 0; index &lt; indent; index++) {
-        // System.out.print(&quot; &quot;);
-        // }
-<span class="nc" id="L56">        printIndent(GameBoard.getInstance().standardPrintStream, indent);</span>
-<span class="nc" id="L57">    }</span>
+<span class="nc" id="L53">        printIndent(GameBoard.getInstance().standardPrintStream, indent);</span>
+<span class="nc" id="L54">    }</span>
 
     /**
      * print the indent with 4 spaces
@@ -63,9 +60,9 @@ public interface Viewable {
      * @param indent      number of indent
      */
     default void printIndent(PrintStream printStream, int indent) {
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        for (int index = 0; index &lt; indent; index++) {</span>
-<span class="fc" id="L67">            printStream.print(&quot;    &quot;);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (int index = 0; index &lt; indent; index++) {</span>
+<span class="fc" id="L64">            printStream.print(&quot;    &quot;);</span>
         }
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L66">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
