@@ -5,44 +5,44 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 17,
+      "armyAmount": 1,
       "name": "India",
       "serializedOrder": 1,
       "continentName": "Asia",
-      "conquererName": "tj"
+      "conquererName": "p2"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 13,
+      "armyAmount": 1,
       "name": "Pakistan",
       "serializedOrder": 2,
       "continentName": "Asia",
-      "conquererName": "ben"
+      "conquererName": "p1"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 16,
+      "armyAmount": 1,
       "name": "China",
       "serializedOrder": 3,
       "continentName": "Asia",
-      "conquererName": "hunter"
+      "conquererName": "p1"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 3,
+      "armyAmount": 1,
       "name": "USA",
       "serializedOrder": 4,
       "continentName": "America",
-      "conquererName": "ben"
+      "conquererName": "p2"
     },
     {
       "coordinate": {
@@ -53,18 +53,18 @@
       "name": "Canada",
       "serializedOrder": 5,
       "continentName": "America",
-      "conquererName": "tj"
+      "conquererName": "p1"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 11,
+      "armyAmount": 1,
       "name": "Russia",
       "serializedOrder": 6,
       "continentName": "America",
-      "conquererName": "hunter"
+      "conquererName": "p1"
     },
     {
       "coordinate": {
@@ -75,7 +75,7 @@
       "name": "Mexico",
       "serializedOrder": 7,
       "continentName": "America",
-      "conquererName": "hunter"
+      "conquererName": "p2"
     }
   ],
   "continents": [
@@ -90,31 +90,21 @@
   ],
   "players": [
     {
-      "name": "hunter",
-      "unplacedArmies": 10,
-      "isPlaying": true,
-      "nextPlayerName": "ben",
-      "previousPlayerName": "tj",
+      "name": "p1",
+      "unplacedArmies": 40,
+      "isPlaying": false,
+      "nextPlayerName": "p2",
+      "previousPlayerName": "p2",
       "currentPhase": "WAITING_TO_TURN",
       "currentPhaseActions": [],
       "isPlayerBeAwardCard": false
     },
     {
-      "name": "ben",
-      "unplacedArmies": 21,
+      "name": "p2",
+      "unplacedArmies": 40,
       "isPlaying": false,
-      "nextPlayerName": "tj",
-      "previousPlayerName": "hunter",
-      "currentPhase": "WAITING_TO_TURN",
-      "currentPhaseActions": [],
-      "isPlayerBeAwardCard": false
-    },
-    {
-      "name": "tj",
-      "unplacedArmies": 19,
-      "isPlaying": false,
-      "nextPlayerName": "hunter",
-      "previousPlayerName": "ben",
+      "nextPlayerName": "p1",
+      "previousPlayerName": "p1",
       "currentPhase": "WAITING_TO_TURN",
       "currentPhaseActions": [],
       "isPlayerBeAwardCard": false
@@ -199,32 +189,32 @@
     {
       "cardType": "Infantry",
       "isExchanged": false,
-      "holdingPlayerName": "hunter"
+      "holdingPlayerName": null
     },
     {
       "cardType": "Infantry",
       "isExchanged": false,
-      "holdingPlayerName": "hunter"
+      "holdingPlayerName": null
     },
     {
       "cardType": "Infantry",
       "isExchanged": false,
-      "holdingPlayerName": "hunter"
+      "holdingPlayerName": null
     },
     {
       "cardType": "Infantry",
       "isExchanged": false,
-      "holdingPlayerName": "hunter"
+      "holdingPlayerName": null
     },
     {
       "cardType": "Infantry",
       "isExchanged": false,
-      "holdingPlayerName": "hunter"
+      "holdingPlayerName": null
     },
     {
       "cardType": "Infantry",
       "isExchanged": false,
-      "holdingPlayerName": "hunter"
+      "holdingPlayerName": null
     },
     {
       "cardType": "Infantry",

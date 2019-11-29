@@ -27,8 +27,7 @@ public class SaveLoadControllerTest {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
 
-        // String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
-        String filePath = "smallmap";
+        String filePath = "./src/test/java/files/maps/domination/smallmap.map";
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + filePath));
 
         saveLoadController = new SaveLoadController();
@@ -50,7 +49,7 @@ public class SaveLoadControllerTest {
             currentPlayer.getHoldingCards().add(newCard);
         }
 
-        return "testSavedGame";
+        return "./src/test/java/files/saved game/testSavedGame";
     }
 
     @Test
