@@ -164,17 +164,17 @@ public class CardSet {
         }
     }
 
-    public String getCardsIndexForTournament() {
+    public String getCardsPositionForTournament() {
         String result = "";
 
         if (isSetValid()) {
             Player holdingPlayer = cards.get(0).getHoldingPlayer();
 
-            result += holdingPlayer.getHoldingCards().indexOf(cards.get(0));
+            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(0)) + 1);
             result += " ";
-            result += holdingPlayer.getHoldingCards().indexOf(cards.get(1));
+            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(1)) + 1);
             result += " ";
-            result += holdingPlayer.getHoldingCards().indexOf(cards.get(2));
+            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(2)) + 1);
 
         }
 

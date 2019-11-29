@@ -221,6 +221,10 @@ public class Player extends Observable {
             isChangePhaseAllowed = true;
         }
 
+        if (newPhase == GamePhase.LOST) {
+            isChangePhaseAllowed = true;
+        }
+
         return isChangePhaseAllowed;
     }
 
@@ -667,7 +671,7 @@ public class Player extends Observable {
 
         return cardSets;
     }
-    
+
     /**
      * it sets the game phase to end of game when a player has won the game
      */
@@ -675,15 +679,15 @@ public class Player extends Observable {
         ConsolePrinter.printFormat("Congratulations, The player %s has won the game.", this.getName());
         this.setCurrentPhase(GamePhase.END_OF_GAME);
     }
-    
+
     /**
      * test if the player has conquered all countries and won the game.
      * 
      */
     public boolean isGameEnded() {
         // check whether this player has won the game
-       Player currentPlayer = this;
-       boolean gameEnded = true;
+        Player currentPlayer = this;
+        boolean gameEnded = true;
         ArrayList<Country> countries = GameBoard.getInstance()
                                                 .getGameBoardMap()
                                                 .getCountries();
@@ -695,5 +699,29 @@ public class Player extends Observable {
         }
 
         return gameEnded;
+    }
+
+    /**
+     * it checks whether further attack is possible.(i.e. if the number of army in a country is greater
+     * than 1 and it has enemy countries as neighbor) If not, it returns false.
+     *
+     * @return boolean if further attack is possible or not
+     *
+     */
+    public boolean furtherAttackPossible() {
+        // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
+        ArrayList<Country> countries = this.getConqueredCountries();
+        for (Country country : countries) {
+            if (country.getArmyAmount() > 1) {
+                ArrayList<Country> neighbours = country.getNeighbors();
+                for (Country neighbouringCountry : neighbours) {
+                    if (neighbouringCountry.getConquerer() != this) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

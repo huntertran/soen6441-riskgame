@@ -258,8 +258,17 @@ public class GameController {
 
         if (currentPlayer != null) {
             currentPlayer.setPlaying(false);
-            currentPlayer.setCurrentPhase(GamePhase.WAITING_TO_TURN);
-            currentPlayer.getNextPlayer().setPlaying(true);
+
+            if (currentPlayer.getCurrentPhase() != GamePhase.LOST) {
+                currentPlayer.setCurrentPhase(GamePhase.WAITING_TO_TURN);
+            }
+
+            for (int index = 0; index < GameBoard.getInstance().getGameBoardPlayer().getPlayers().size(); index++) {
+                if (currentPlayer.getNextPlayer().getCurrentPhase() != GamePhase.LOST) {
+                    currentPlayer.getNextPlayer().setPlaying(true);
+                    break;
+                }
+            }
         }
     }
 
@@ -301,7 +310,7 @@ public class GameController {
         ArrayList<Player> players = GameBoard.getInstance().getGameBoardPlayer().getPlayers();
 
         for (Player player : players) {
-            if (player.isPlaying()) {
+            if (player.isPlaying() && player.getCurrentPhase() != GamePhase.LOST) {
                 currentPlayer = player;
             }
         }
@@ -565,29 +574,31 @@ public class GameController {
         }
     }
 
-    /**
-     * it checks whether further attack is possible.(i.e. if the number of army in a country is greater
-     * than 1 and it has enemy countries as neighbor) If not, it returns false.
-     *
-     * @return boolean if further attack is possible or not
-     *
-     */
-    private boolean furtherAttackPossible() {
-        Player player = getCurrentPlayer(false);
-        // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
-        ArrayList<Country> countries = player.getConqueredCountries();
-        for (Country country : countries) {
-            if (country.getArmyAmount() > 1) {
-                ArrayList<Country> neighbours = country.getNeighbors();
-                for (Country neighbouringCountry : neighbours) {
-                    if (neighbouringCountry.getConquerer() != player) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
+    // /**
+    // * it checks whether further attack is possible.(i.e. if the number of army in a country is
+    // greater
+    // * than 1 and it has enemy countries as neighbor) If not, it returns false.
+    // *
+    // * @return boolean if further attack is possible or not
+    // *
+    // */
+    // private boolean furtherAttackPossible() {
+    // Player player = getCurrentPlayer(false);
+    // // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
+    // ArrayList<Country> countries = player.getConqueredCountries();
+    // for (Country country : countries) {
+    // if (country.getArmyAmount() > 1) {
+    // ArrayList<Country> neighbours = country.getNeighbors();
+    // for (Country neighbouringCountry : neighbours) {
+    // if (neighbouringCountry.getConquerer() != player) {
+    // return true;
+    // }
+    // }
+    // }
+    // }
+
+    // return false;
+    // }
 
     /**
      * it handles the defend command and executes the entire attack and calls the dice roll method.
@@ -678,7 +689,8 @@ public class GameController {
                     gameBoardPlaying.reset();
                     gameBoardPlaying.setAlloutFlag(false);
                     gameBoardPlaying.setAttackMoveCmdRequired(false);
-                    if (furtherAttackPossible()) {
+
+                    if (currentPlayer.furtherAttackPossible()) {
                         ConsolePrinter.printFormat("The attack has ended. You can continue to attack other countries or type attack -noattack to end attack phase.");
                     } else {
                         ConsolePrinter.printFormat("No other attack is possible from any country.");
@@ -816,27 +828,27 @@ public class GameController {
      */
     private void attackResult(Country defendingCountry, Country attackingCountry) {
         // now check if defender's armies left is 0, set conquerer as attacker
+        Player attacker = attackingCountry.getConquerer();
+        Player defender = defendingCountry.getConquerer();
+
         if (defendingCountry.getArmyAmount() == 0) {
             ConsolePrinter.printFormat("The attacker %s has conquered the country %s successfully. He has %s army available to move.",
-                                       attackingCountry.getConquerer()
-                                                       .getName(),
+                                       attacker.getName(),
                                        defendingCountry.getName(),
                                        attackingCountry.getArmyAmount()
                                                                    - 1);
 
-            defendingCountry.setConquerer(attackingCountry.getConquerer());
+            defendingCountry.setConquerer(attacker);
 
             // set attacker can be reward a card when attack phase end
-            attackingCountry.getConquerer().setPlayerBeAwardCard(true);
+            attacker.setPlayerBeAwardCard(true);
 
-            // check if defender has any countries that he has conquered. if not remove him from the game.
-            if (defendingCountry.getConquerer()
-                                .getConqueredCountries()
-                                .isEmpty()) {
-                // remove player
-                GameBoard.getInstance()
-                         .getGameBoardPlayer()
-                         .removePlayer(defendingCountry.getConquerer().getName());
+            // check if defender has any countries that he has conquered. If not, the player lost the game.
+            if (defender.getConqueredCountries().isEmpty()) {
+                defender.setCurrentPhase(GamePhase.LOST);
+                // GameBoard.getInstance()
+                // .getGameBoardPlayer()
+                // .removePlayer(defendingCountry.getConquerer().getName());
             }
 
             // check if player has conquered entire continent
@@ -854,7 +866,7 @@ public class GameController {
             } else {
                 // move armies
                 ConsolePrinter.printFormat("Player %s needs to move armies into your conquered country %s",
-                                           attackingCountry.getConquerer().getName(),
+                                           attacker.getName(),
                                            defendingCountry.getName());
                 GameBoard.getInstance()
                          .getGameBoardPlaying()
@@ -872,8 +884,10 @@ public class GameController {
             }
         }
 
+        Player currentPlayer = getCurrentPlayer(false);
+
         if (!isGameEnded()
-            && !furtherAttackPossible()
+            && !currentPlayer.furtherAttackPossible()
             && !GameBoard.getInstance().getGameBoardPlaying()
                          .isAttackMoveCmdRequired()) {
             if (GameBoard.getInstance()
@@ -927,7 +941,8 @@ public class GameController {
     private CardSet buildCardSet(String[] args) {
         Player currentPlayer = getCurrentPlayer();
 
-        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT) {
+        if (currentPlayer.getCurrentPhase() != GamePhase.REINFORCEMENT
+            && currentPlayer.getCurrentPhase() != GamePhase.WAITING_TO_TURN) {
             ConsolePrinter.printFormat("Cannot exchange cards in %s phase",
                                        currentPlayer.getCurrentPhase().toString());
             return null;

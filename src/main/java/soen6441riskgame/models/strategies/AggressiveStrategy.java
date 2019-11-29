@@ -86,6 +86,11 @@ public class AggressiveStrategy implements Strategy {
 
             attack(attackingCountry, defendingCountry, 0);
 
+            if (player.isGameEnded()) {
+                // because right after attack, if player win, the attack move command will invalid
+                return attackedCountries;
+            }
+
             // after attack with allout
             if (defendingCountry.getConquerer() == player) {
                 // player conquered the defending country
@@ -93,9 +98,9 @@ public class AggressiveStrategy implements Strategy {
                 attackMove(armyToMove);
                 attackedCountries.add(defendingCountry);
             }
-            if (attackingCountry.getConquerer() != player) {
-                // player lost the attacking country
-                break;
+
+            if (!player.furtherAttackPossible()) {
+                return attackedCountries;
             }
         }
 
@@ -140,19 +145,18 @@ public class AggressiveStrategy implements Strategy {
         }
 
         ArrayList<Country> attackedCountries = attack(player, strongestPlayerCountry);
-        
-        if( player.isGameEnded() ) {
+
+        if (player.isGameEnded()) {
             player.setEndOfGamePhase();
-        }
-        else {
+        } else {
 
             if (attackedCountries.size() != 0) {
                 int index = attackedCountries.size() - 1;
                 Country fortifyToCountry = attackedCountries.get(index);
-    
+
                 fortify(strongestPlayerCountry, fortifyToCountry);
             }
-    
+
             fortifyNone();
         }
     }

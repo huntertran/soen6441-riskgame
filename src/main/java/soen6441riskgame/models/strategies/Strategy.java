@@ -45,7 +45,7 @@ public interface Strategy {
             StringBuilder command = new StringBuilder(GameCommands.EXCHANGECARDS);
             command.append(GameCommands.SPACE);
             for (CardSet cardSet : cardSets) {
-                command.append(cardSet.getCardsIndexForTournament());
+                command.append(cardSet.getCardsPositionForTournament());
                 command.append(" ");
             }
 
