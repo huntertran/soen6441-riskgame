@@ -39,7 +39,7 @@ public class MapControllerTest {
     @Test
     public void loadMapTest() throws IOException {
         // Setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
 
         // Action
         mapController.loadMap(filePath);
@@ -316,10 +316,10 @@ public class MapControllerTest {
     @Test
     public void saveMapTest() throws IOException {
         // setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController.loadMap(filePath);
 
-        String savedMapFilePath = "./src/test/java/soen6441riskgame/maps/SavedRiskEurope.map";
+        String savedMapFilePath = "./src/test/java/files/maps/domination/SavedRiskEurope.map";
 
         // action
         try {
@@ -339,7 +339,7 @@ public class MapControllerTest {
     @Test
     public void validateMapNotEnoughCountryTest() throws IOException {
         // setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController.loadMap(filePath);
 
         // action: make the map invalid
@@ -365,7 +365,7 @@ public class MapControllerTest {
     @Test
     public void validateMapIsolatedCountryTest() throws IOException {
         // setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController.loadMap(filePath);
 
         // action: make the map invalid
@@ -386,7 +386,7 @@ public class MapControllerTest {
     @Test
     public void validateMapEmptyContinentTest() throws IOException {
         // setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController.loadMap(filePath);
 
         // action: make the map invalid
@@ -415,7 +415,7 @@ public class MapControllerTest {
     @Test
     public void validateMapNotConnectedContinentTest() throws IOException {
         // setup
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController.loadMap(filePath);
 
         // making the map invalid

@@ -28,7 +28,7 @@ public class GamePlayTest {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
 
-        String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + filePath));
 
         gameController = new GameController();

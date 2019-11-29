@@ -27,7 +27,7 @@ public class SaveLoadControllerTest {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
 
-        // String filePath = "./src/test/java/soen6441riskgame/maps/RiskEurope.map";
+        // String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         String filePath = "smallmap";
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + filePath));
 

@@ -17,9 +17,9 @@ public class TournamentControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-                            "-M smallmap,newsmallmap -P Aggressive,Benevolent,Random -G 4 -D 50",
-                             "-M smallmap -P Aggressive,Benevolent,Random, -G 1 -D 40",
-                            "-M smallmap -P Benevolent,Random -G 1 -D 50"
+                             "-M ./src/test/java/files/maps/domination/smallmap.map,./src/test/java/files/maps/domination/newsmallmap.map -P Aggressive,Benevolent,Random -G 4 -D 50",
+                             "-M ./src/test/java/files/maps/domination/smallmap.map -P Aggressive,Benevolent,Random, -G 1 -D 40",
+                             "-M ./src/test/java/files/maps/domination/smallmap.map -P Benevolent,Random -G 1 -D 50"
     })
     public void enterTournamentTest(String command) {
         // setup
