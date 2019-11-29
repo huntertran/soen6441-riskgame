@@ -38,6 +38,11 @@ public interface Strategy {
         App.jumpToCommand(new ModelCommands(command));
     }
 
+    /**
+     * default exchange cards commands
+     * 
+     * @param player player to exchange
+     */
     default void exchangeCards(Player player) {
         if (player.getHoldingCards().size() >= 5) {
             ArrayList<CardSet> cardSets = player.buildValidCardSets();
@@ -64,6 +69,13 @@ public interface Strategy {
      */
     ArrayList<Country> attack(Player player, Country attackingCountry);
 
+    /**
+     * default attack command
+     * 
+     * @param attackingCountry attacking country
+     * @param defendingCountry defending country
+     * @param numberOfDice     number of dice
+     */
     default void attack(Country attackingCountry, Country defendingCountry, int numberOfDice) {
         String command = GameCommands.ATTACK;
         command += GameCommands.SPACE;
@@ -82,6 +94,11 @@ public interface Strategy {
         App.jumpToCommand(new ModelCommands(command));
     }
 
+    /**
+     * default attack move command
+     * 
+     * @param army number of army to move
+     */
     default void attackMove(int army) {
         String command = GameCommands.ATTACKMOVE;
         command += GameCommands.SPACE;

@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * helper methods for playing the game in both normal and tournament mode
+ */
 public class GameHelper {
     /**
      * it executes the dice roll.
@@ -52,12 +55,12 @@ public class GameHelper {
     }
 
     /**
-     * generate random int from that min <= result <= max
+     * generate random int from that between the min and max range [exclusive]
      *
      * @param min minimum random value generator
      * @param max maximum range of random value
      *
-     * @return int random value
+     * @return between the min and max range [exclusive]
      *
      */
     public static int nextRandomIntInRange(int min, int max) {
@@ -72,17 +75,22 @@ public class GameHelper {
     }
 
     /**
-     * generate random int from that 1 <= result <= max
+     * generate random int from that between the 1 and max range [exclusive]
      * 
      * @param max max included
-     * @return 1 <= result <= max
+     * @return between the 1 and max range [exclusive]
      */
     public static int nextRandomInt(int max) {
         return nextRandomIntInRange(1, max);
     }
 
-    // Function select an element base on index and return
-    // an element
+    /**
+     * select random elements in a list
+     * 
+     * @param list       the original list
+     * @param totalItems number of item to select
+     * @return selected elements
+     */
     @SuppressWarnings("unchecked")
     public static ArrayList<Integer> getRandomElements(ArrayList<Integer> list, int totalItems) {
         Random random = new Random();
@@ -100,8 +108,14 @@ public class GameHelper {
         return result;
     }
 
-    /*
+    /**
      * Get the all the keys associated with given Value V from map
+     * 
+     * @param <K>   Key type
+     * @param <V>   Value type
+     * @param maps  HashMap
+     * @param value value to compare
+     * @return all the keys associated with given Value V from map
      */
     public static <K, V> List<K> getAllKeysForValue(Map<K, V> maps, V value) {
         List<K> listOfKeys = null;
@@ -125,6 +139,13 @@ public class GameHelper {
         return listOfKeys;
     }
 
+    /**
+     * count distinct item in an array
+     * 
+     * @param <T>   array type
+     * @param array array to count
+     * @return number of different item
+     */
     public static <T> int countDistinct(T[] array) {
         // add all the elements to the HashSet
         HashSet<T> hashSet = new HashSet<T>(Arrays.asList(array));

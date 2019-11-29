@@ -683,6 +683,7 @@ public class Player extends Observable {
     /**
      * test if the player has conquered all countries and won the game.
      * 
+     * @return true if player win
      */
     public boolean isGameEnded() {
         // check whether this player has won the game

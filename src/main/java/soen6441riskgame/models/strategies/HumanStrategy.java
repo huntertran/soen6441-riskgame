@@ -23,21 +23,44 @@ public class HumanStrategy implements Strategy {
         return StrategyName.HUMAN;
     }
 
+    /**
+     * do nothing
+     * 
+     * @param player             this method should not be call in Human Strategy
+     * @param countryToReinforce this method should not be call in Human Strategy
+     */
     @Override
     public void reinforce(Player player, Country countryToReinforce) {
         return;
     }
 
+    /**
+     * do nothing
+     * 
+     * @param player           this method should not be call in Human Strategy
+     * @param attackingCountry this method should not be call in Human Strategy
+     */
     @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
         return null;
     }
 
+    /**
+     * do nothing
+     * 
+     * @param fromCountry this method should not be call in Human Strategy
+     * @param toCountry   this method should not be call in Human Strategy
+     */
     @Override
     public void fortify(Country fromCountry, Country toCountry) {
         return;
     }
 
+    /**
+     * Allow the human player to play the game
+     * 
+     * @param player human player
+     */
     @Override
     public void playTurn(Player player) {
         ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,

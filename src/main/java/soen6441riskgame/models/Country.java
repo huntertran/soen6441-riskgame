@@ -358,6 +358,12 @@ public class Country extends Observable implements Viewable {
                                    conquererName);
     }
 
+    /**
+     * print the country info to output
+     * 
+     * @param printStream the print stream to print
+     * @param indent      number of indent to print
+     */
     public void view(PrintStream printStream, int indent) {
         this.viewWithoutNeighbors(indent);
 

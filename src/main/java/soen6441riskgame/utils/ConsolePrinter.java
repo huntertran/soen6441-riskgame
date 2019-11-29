@@ -48,6 +48,9 @@ public class ConsolePrinter {
         isJUnitTest = false;
     }
 
+    /**
+     * check if is debug or not
+     */
     private static void setIsDebug() {
         isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean()
                                                         .getInputArguments()
