@@ -1,9 +1,9 @@
 package soen6441riskgame.controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-
+import de.vandermeer.asciitable.AsciiTable;
 import soen6441riskgame.App;
 import soen6441riskgame.enums.GamePhase;
 import soen6441riskgame.enums.StrategyName;
@@ -91,8 +91,6 @@ public class TournamentController {
 
     private GameController gameController;
 
-    private HashMap<String, HashMap<String, String>> results = new HashMap<>();
-
     /**
      * because of ModelCommands logic, this function have to do extra work to take the correct argument
      * for each parameter
@@ -100,28 +98,51 @@ public class TournamentController {
      * @param args tournament's parameters
      */
     public void enterTournament(List<String> args) {
+
         String[] parameters = new String[args.size()];
         parameters = args.toArray(parameters);
         parseTournamentParameters(parameters);
 
+        String[][] results = new String[numberOfGame][maps.length];
+
         if (isTournamentValid()) {
             gameController = new GameController();
             for (int gameIndex = 0; gameIndex < numberOfGame; gameIndex++) {
-                HashMap<String, String> gameIndexResults = new HashMap<>();
-                for (String map : maps) {
-                    Player winner = simulateGamePlay(map);
+                for (int mapIndex = 0; mapIndex < maps.length; mapIndex++) {
+                    Player winner = simulateGamePlay(maps[mapIndex]);
                     if (winner == null) {
-                        gameIndexResults.put(map, "DRAW");
+                        results[gameIndex][mapIndex] = "DRAW";
                     } else {
-                        gameIndexResults.put(map, winner.getName());
+                        results[gameIndex][mapIndex] = winner.getName();
                     }
                 }
-
-                results.put(String.valueOf(gameIndex), gameIndexResults);
             }
         }
 
-        ConsolePrinter.printFormat(results.toString());
+        ConsolePrinter.printFormat(getGamePlayResultAsTable(results));
+    }
+
+    private String getGamePlayResultAsTable(String[][] results) {
+        AsciiTable table = new AsciiTable();
+
+        ArrayList<String> mapHeaders = new ArrayList<String>(Arrays.asList(maps));
+        mapHeaders.add(0, "");
+
+        table.addRule();
+        table.addRow(mapHeaders);
+
+        int gameIndex = 1;
+        for (String[] row : results) {
+            table.addRule();
+            ArrayList<String> gameResultsWithColumn = new ArrayList<String>(Arrays.asList(row));
+            gameResultsWithColumn.add(0, "Game " + gameIndex);
+            table.addRow(gameResultsWithColumn);
+            gameIndex++;
+        }
+
+        table.addRule();
+
+        return table.render();
     }
 
     private Player simulateGamePlay(String map) {

@@ -17,7 +17,7 @@ public class TournamentControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-                            "-M smallmap -P Cheater,Random -G 1 -D 50",
+                            "-M smallmap,newsmallmap -P Aggressive,Benevolent,Random -G 4 -D 50",
                              "-M smallmap -P Aggressive,Benevolent,Random, -G 1 -D 40",
                             "-M smallmap -P Benevolent,Random -G 1 -D 50"
     })
