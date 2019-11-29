@@ -20,6 +20,7 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 -boolean isPlayerBeAwardCard
 -Strategy strategy
 +Player(String name)
++Player(Player serializedPlayer)
 +Strategy getStrategy()
 +void setStrategy(Strategy strategy)
 +void linkNextAndPrevious(List<Player> players)
@@ -49,6 +50,10 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 +void fortify(Country fromCountry,Country toCountry,int numberOfArmies)
 +void attack(Country attackingCountry,Country defendingCountry,int attackerNumDice,int defenderNumDice)
 +void attackMove(Country fromCountry,Country toCountry,int numberOfArmies)
++ArrayList<CardSet> buildValidCardSets()
++void setEndOfGamePhase()
++boolean isGameEnded()
++boolean furtherAttackPossible()
 -boolean isPlayerBeAwardCard()
 -boolean isChangePhaseAllowed(GamePhase newPhase)
 -void getACardFromDeck()
@@ -123,6 +128,15 @@ soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
 
 
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
+
+
+class "<b><size:14>CardSet</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.CardSet  [[../../soen6441riskgame/models/CardSet.html{soen6441riskgame.models.CardSet}]] {
+}
+
+hide soen6441riskgame.models.CardSet fields
+hide soen6441riskgame.models.CardSet methods
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.CardSet
 
 class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
 }

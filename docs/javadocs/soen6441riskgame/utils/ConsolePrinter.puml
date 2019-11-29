@@ -5,6 +5,7 @@ skinparam linetype ortho
 set namespaceSeparator none
 class "<b><size:14>ConsolePrinter</b>\n<size:10>soen6441riskgame.utils" as soen6441riskgame.utils.ConsolePrinter  [[../../soen6441riskgame/utils/ConsolePrinter.html{soen6441riskgame.utils.ConsolePrinter}]] {
 {static} -boolean isJUnitTest
+{static} -boolean isDebug
 +ConsolePrinter()
 {static} +boolean isJUnitTest()
 {static} +void printFormat(String format,Object args)
@@ -13,6 +14,7 @@ class "<b><size:14>ConsolePrinter</b>\n<size:10>soen6441riskgame.utils" as soen6
 {static} +void print2dArray(int array,String headers)
 {static} +WindowPane createWindowPane(String title,int width,int height)
 {static} -void setJUnitTest()
+{static} -void setIsDebug()
 }
 
 

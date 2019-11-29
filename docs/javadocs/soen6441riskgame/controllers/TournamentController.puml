@@ -15,6 +15,7 @@ class "<b><size:14>TournamentController</b>\n<size:10>soen6441riskgame.controlle
 -GameController gameController
 +TournamentController()
 +void enterTournament(List<String> args)
+-String getGamePlayResultAsTable(String results)
 -Player simulateGamePlay(String map)
 -void initializePlayers()
 -void parseTournamentParameters(String args)

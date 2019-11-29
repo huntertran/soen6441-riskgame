@@ -6,7 +6,12 @@ set namespaceSeparator none
 interface "<b><size:14>Strategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.Strategy  [[../../../soen6441riskgame/models/strategies/Strategy.html{soen6441riskgame.models.strategies.Strategy}]] {
 {abstract} +StrategyName getName()
 {abstract} +void reinforce(Player player,Country countryToReinforce)
++void reinforce(Country countryToReinforce,int numberOfArmies)
++void exchangeCards(Player player)
 {abstract} +ArrayList<Country> attack(Player player,Country attackingCountry)
++void attack(Country attackingCountry,Country defendingCountry,int numberOfDice)
++void attackMove(int army)
++void attackEnd()
 {abstract} +void fortify(Country fromCountry,Country toCountry)
 +void fortify(Country fromCountry,Country toCountry,int armiesAmount)
 +void fortifyNone()

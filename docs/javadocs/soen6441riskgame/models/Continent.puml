@@ -8,6 +8,7 @@ class "<b><size:14>Continent</b>\n<size:10>soen6441riskgame.models" as soen6441r
 -int army
 -ArrayList<Country> countries
 +Continent(String name,int army)
++void initializeCountries()
 +int getOrder()
 +int getArmy()
 +ArrayList<Country> getCountries()

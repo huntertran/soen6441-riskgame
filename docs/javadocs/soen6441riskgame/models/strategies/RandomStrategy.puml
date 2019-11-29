@@ -6,12 +6,12 @@ set namespaceSeparator none
 class "<b><size:14>RandomStrategy</b>\n<size:10>soen6441riskgame.models.strategies" as soen6441riskgame.models.strategies.RandomStrategy  [[../../../soen6441riskgame/models/strategies/RandomStrategy.html{soen6441riskgame.models.strategies.RandomStrategy}]] {
 +RandomStrategy()
 +StrategyName getName()
-+int getDiceCount(Country attackingCountry)
 +void reinforce(Player player,Country countryToReinforce)
 +ArrayList<Country> attack(Player player,Country attackingCountry)
 +void fortify(Country fromCountry,Country toCountry)
 +void playTurn(Player player)
 -Country getCountryToReinforce(Player player)
+-ArrayList<Country> filterAttackableCountries(ArrayList<Country> countries)
 }
 
 
@@ -31,14 +31,6 @@ hide soen6441riskgame.enums.StrategyName methods
 
 soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.enums.StrategyName
 
-class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
-}
-
-hide soen6441riskgame.models.Country fields
-hide soen6441riskgame.models.Country methods
-
-soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Country
-
 class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] #white {
 }
 
@@ -46,6 +38,14 @@ hide soen6441riskgame.models.Player fields
 hide soen6441riskgame.models.Player methods
 
 soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Player
+
+class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] #white {
+}
+
+hide soen6441riskgame.models.Country fields
+hide soen6441riskgame.models.Country methods
+
+soen6441riskgame.models.strategies.RandomStrategy ..> soen6441riskgame.models.Country
 
 
 

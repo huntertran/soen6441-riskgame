@@ -31,6 +31,7 @@ class "<b><size:14>GameBoardPlaying</b>\n<size:10>soen6441riskgame.singleton" as
 }
 
 
+
 class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
 }
 

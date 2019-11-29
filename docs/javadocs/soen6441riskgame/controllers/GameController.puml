@@ -30,15 +30,14 @@ class "<b><size:14>GameController</b>\n<size:10>soen6441riskgame.controllers" as
 +void handleAttackMoveCommand(String args)
 +void exchangeCard(String args)
 ~void turnToNextPlayer()
-~boolean isAttackValid()
+~boolean isAttackValid(Country attackingCountry,int attackerNumDice,int defenderNumDice,boolean alloutFlag)
 ~void setEndOfGamePhase()
 -Player getCurrentPlayer(boolean isShowMessage)
 -void handleFortifyCommand(String args)
--void simulateAttack()
--boolean furtherAttackPossible()
+-void simulateAttack(GameBoardPlaying gameBoardPlaying)
 -boolean isGameEnded()
--boolean isAttackPreconditionsValid()
--void attackResult()
+-boolean isAttackPreconditionsValid(Country attackingCountry,Country defendingCountry)
+-void attackResult(Country defendingCountry,Country attackingCountry)
 -void endAttackPhase()
 -CardSet buildCardSet(String args)
 }
@@ -51,6 +50,8 @@ hide soen6441riskgame.models.Player fields
 hide soen6441riskgame.models.Player methods
 
 soen6441riskgame.controllers.GameController ..> soen6441riskgame.models.Player
+
+
 
 
 class "<b><size:14>TournamentController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.TournamentController  [[../../soen6441riskgame/controllers/TournamentController.html{soen6441riskgame.controllers.TournamentController}]] {

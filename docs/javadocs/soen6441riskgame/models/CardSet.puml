@@ -7,14 +7,15 @@ class "<b><size:14>CardSet</b>\n<size:10>soen6441riskgame.models" as soen6441ris
 -ArrayList<Card> cards
 {static} -int NUMBER_OF_CARD_IN_SET
 +CardSet(Card first,Card second,Card third)
++boolean isSetValid()
 +int getTradeInArmies(int tradeTime)
 +void setCardsExchanged()
++String getCardsPositionForTournament()
 -int allInfantry()
 -int allCavalry()
 -int allArtillery()
 -int allWild()
 -int oneOfEach()
--boolean isSetValid()
 }
 
 
@@ -27,6 +28,14 @@ hide soen6441riskgame.models.Card fields
 hide soen6441riskgame.models.Card methods
 
 soen6441riskgame.models.CardSet ..> soen6441riskgame.models.Card
+
+class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Player  [[../../soen6441riskgame/models/Player.html{soen6441riskgame.models.Player}]] {
+}
+
+hide soen6441riskgame.models.Player fields
+hide soen6441riskgame.models.Player methods
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.CardSet
 
 
 @enduml

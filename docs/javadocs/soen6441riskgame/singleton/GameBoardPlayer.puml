@@ -11,6 +11,7 @@ class "<b><size:14>GameBoardPlayer</b>\n<size:10>soen6441riskgame.singleton" as 
 +Player getPlayerFromName(String name)
 +void addPlayer(String name)
 +void removePlayer(String name)
++PhaseView getPhaseView()
 +void reset()
 }
 
