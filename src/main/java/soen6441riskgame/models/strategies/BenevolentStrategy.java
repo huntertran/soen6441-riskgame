@@ -72,7 +72,6 @@ public class BenevolentStrategy implements Strategy {
      */
     @Override
     public ArrayList<Country> attack(Player player, Country attackingCountry) {
-        attackEnd();
         return null;
     }
 
@@ -104,21 +103,20 @@ public class BenevolentStrategy implements Strategy {
             reinforce(player, weakestPlayerCountry);
         }
 
-        attack(player, null);
-        
-        if( player.isGameEnded() ) {
+        attackEnd();
+
+        if (player.isGameEnded()) {
             player.setEndOfGamePhase();
-        }
-        else {
+        } else {
 
             Country weakerPlayerCountry = getWeakestCountryToReinforce(player);
-    
+
             if (weakerPlayerCountry != null
                 && weakerPlayerCountry != weakestPlayerCountry
                 && weakestPlayerCountry != null) {
                 fortify(weakestPlayerCountry, weakerPlayerCountry);
             }
-    
+
             fortifyNone();
         }
     }

@@ -129,7 +129,12 @@ public class RandomStrategy implements Strategy {
     public void playTurn(Player player) {
         exchangeCards(player);
 
+        System.out.println("test");
+
         Country randomCountry = getCountryToReinforce(player);
+
+        // run reinforce once to generate unplaced armies
+        reinforce(randomCountry, 0);
 
         while (player.getUnplacedArmies() > 0) {
             randomCountry = getCountryToReinforce(player);
@@ -137,7 +142,8 @@ public class RandomStrategy implements Strategy {
         }
 
         if (player.getUnplacedArmies() == 0
-            && player.getCurrentPhase() == GamePhase.REINFORCEMENT) {
+            && (player.getCurrentPhase() == GamePhase.REINFORCEMENT
+                || player.getCurrentPhase() == GamePhase.WAITING_TO_TURN)) {
             // call reinforce when unplaced armies = 0 will change phase from REINFORCE to ATTACK
             reinforce(randomCountry, 0);
         }
@@ -154,35 +160,34 @@ public class RandomStrategy implements Strategy {
         if (player.getCurrentPhase() == GamePhase.ATTACK) {
             attackEnd();
         }
-        
-        if( player.isGameEnded() ) {
+
+        if (player.isGameEnded()) {
             player.setEndOfGamePhase();
-        }
-        else {
+        } else {
 
             ArrayList<Country> conquered = player.getConqueredCountries();
             ArrayList<Country> moveArmyFrom = filterAttackableCountries(conquered);
             ArrayList<Country> fortifiableCountries = new ArrayList<>();
-    
+
             if (moveArmyFrom.size() > 1 && conquered.size() > 1) {
                 int randIndexCountryFrom = GameHelper.nextRandomIntInRange(0, (moveArmyFrom.size() - 1));
                 Country countryFrom = moveArmyFrom.get(randIndexCountryFrom);
-    
+
                 for (Country country : countryFrom.getNeighbors()) {
                     if (country.getConquerer() == player) {
                         fortifiableCountries.add(country);
                     }
                 }
-    
+
                 if (fortifiableCountries.size() > 0) {
                     int randIndexCountryTo = GameHelper.nextRandomIntInRange(0, (fortifiableCountries.size() - 1));
                     Country countryTo = fortifiableCountries.get(randIndexCountryTo);
-    
+
                     fortify(countryFrom, countryTo);
                 }
-    
+
             }
-    
+
             fortifyNone();
         }
     }

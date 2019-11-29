@@ -47,12 +47,13 @@ public class GameHelperTest {
     @CsvSource({
                  "1,1",
                  "1,2",
+                 "1,6",
                  "0,0"
     })
-    public void randomNumberGeneratorTest(int min, int max) {
+    public void nextRandomIntInRangeTest(int min, int max) {
         int result = GameHelper.nextRandomIntInRange(min, max);
 
-        assertTrue(result <= max || result >= min);
+        assertTrue(min <= result && result <= max);
     }
 
     @ParameterizedTest

@@ -52,7 +52,7 @@ public class GameHelper {
     }
 
     /**
-     * A function to generate a random number with minimum and maximum range.
+     * generate random int from that min <= result <= max
      *
      * @param min minimum random value generator
      * @param max maximum range of random value
@@ -62,10 +62,13 @@ public class GameHelper {
      */
     public static int nextRandomIntInRange(int min, int max) {
         Random random = new Random();
-        //return random.nextInt((max - min) + 1) + min;
-        if(max == min)
-            return min;
-        return (random.nextInt(max)>=min)? random.nextInt(max) : random.nextInt(max) + min;
+        return random.nextInt((max - min) + 1) + min;
+        // int x = random.nextInt(max);
+        // if (max == min) {
+        // return min;
+        // }
+
+        // return (x >= min) ? x : x + min;
     }
 
     /**
