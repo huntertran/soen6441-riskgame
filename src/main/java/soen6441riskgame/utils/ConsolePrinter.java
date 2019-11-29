@@ -14,11 +14,14 @@ public class ConsolePrinter {
 
     private static boolean isJUnitTest = true;
 
+    private static boolean isDebug = false;
+
     /*
      * determine if current program is run from a test runner
      */
     static {
         setJUnitTest();
+        setIsDebug();
     }
 
     /**
@@ -43,6 +46,13 @@ public class ConsolePrinter {
         }
 
         isJUnitTest = false;
+    }
+
+    private static void setIsDebug() {
+        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean()
+                                                        .getInputArguments()
+                                                        .toString()
+                                                        .indexOf("-Xdebug") == 1;
     }
 
     /**
@@ -78,11 +88,14 @@ public class ConsolePrinter {
                                    boolean isPrintNewLine,
                                    String format,
                                    Object... args) {
+        if (isJUnitTest && !isDebug) {
+            return;
+        }
+
         customPrintStream.format(format, args);
         if (isPrintNewLine) {
             customPrintStream.println();
         }
-
     }
 
     /**
@@ -92,8 +105,10 @@ public class ConsolePrinter {
      * @param headers if header is empty or null, the index will be printed
      */
     public static void print2dArray(int[][] array, String[] headers) {
-        if(array.length == 0){
-            System.out.println("Empty array");
+        PrintStream standardPrintStream = GameBoard.getInstance().standardPrintStream;
+
+        if (array.length == 0) {
+            printFormat(standardPrintStream, "Empty array");
             return;
         }
 
@@ -105,20 +120,20 @@ public class ConsolePrinter {
             }
         }
 
-        System.out.print("\t");
+        printFormat(standardPrintStream, false, "\t");
 
         for (String header : headers) {
-            System.out.print(header + "\t");
+            printFormat(standardPrintStream, false, header + "\t");
         }
 
-        System.out.println();
+        printFormat(standardPrintStream, "");
 
         for (int row = 0; row < array.length; row++) {
-            System.out.print(headers[row] + "\t");
+            printFormat(standardPrintStream, false, headers[row] + "\t");
             for (int col = 0; col < array[row].length; col++) {
-                System.out.print(array[row][col] + "\t");
+                printFormat(standardPrintStream, false, array[row][col] + "\t");
             }
-            System.out.println();
+            printFormat(standardPrintStream, "");
         }
     }
 

@@ -50,9 +50,6 @@ public interface Viewable {
      * @param indent number of indent
      */
     default void printIndent(int indent) {
-        // for (int index = 0; index < indent; index++) {
-        // System.out.print(" ");
-        // }
         printIndent(GameBoard.getInstance().standardPrintStream, indent);
     }
 

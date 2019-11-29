@@ -129,8 +129,6 @@ public class RandomStrategy implements Strategy {
     public void playTurn(Player player) {
         exchangeCards(player);
 
-        System.out.println("test");
-
         Country randomCountry = getCountryToReinforce(player);
 
         // run reinforce once to generate unplaced armies

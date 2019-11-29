@@ -221,7 +221,7 @@ public class Country extends Observable implements Viewable {
         Player conquerer = this.getConquerer();
 
         if (amount > conquerer.getUnplacedArmies()) {
-            System.out.println("The amount of armies you want to place in this country is bigger than the amount of armies you have");
+            ConsolePrinter.printFormat("The amount of armies you want to place in this country is bigger than the amount of armies you have");
             return;
         }
 
@@ -264,7 +264,7 @@ public class Country extends Observable implements Viewable {
         }
 
         if (armiesToMove > this.getArmyAmount() - 1) {
-            System.out.println("The 'fromcountry' must have at least 1 army after fortification");
+            ConsolePrinter.printFormat("The 'fromcountry' must have at least 1 army after fortification");
             ConsolePrinter.printFormat("You are moving %1$d army from %2$s to %3$s, but %2$s only have %4$d armies left",
                                        armiesToMove,
                                        this.getName(),
@@ -363,7 +363,7 @@ public class Country extends Observable implements Viewable {
 
         this.printIndent(printStream, indent + 1);
 
-        printStream.println("Neighbors:");
+        ConsolePrinter.printFormat("Neighbors:");
         for (Country country : this.getNeighbors()) {
             country.viewWithoutNeighbors(indent + 2);
         }

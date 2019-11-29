@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
 /**
@@ -391,14 +392,14 @@ public class MapControllerTest {
         // action: make the map invalid
         Continent targetContinent = GameBoard.getInstance().getGameBoardMap().getContinents().get(0);
 
-        System.out.println("Before remove countries:");
+        ConsolePrinter.printFormat("Before remove countries:");
         GameBoard.getInstance().getGameBoardMap().printBorders();
 
         while (targetContinent.getCountries().size() > 0) {
             mapController.removeCountry(targetContinent.getCountries().get(0).getName());
         }
 
-        System.out.println("After remove countries:");
+        ConsolePrinter.printFormat("After remove countries:");
         GameBoard.getInstance().getGameBoardMap().printBorders();
 
         // assert

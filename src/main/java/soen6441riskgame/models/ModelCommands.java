@@ -5,6 +5,7 @@ import java.util.List;
 
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
 /**
@@ -59,10 +60,10 @@ public class ModelCommands {
             try {
                 populateRegularCommandsOrSubRoutines(paramsArray, s);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid value detected.");
+                ConsolePrinter.printFormat("Invalid value detected.");
                 continue;
             } catch (Exception e) {
-                System.out.println("Invalid command detected.");
+                ConsolePrinter.printFormat("Invalid command detected.");
                 continue;
             }
         }

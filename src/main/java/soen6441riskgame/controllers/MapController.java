@@ -120,7 +120,7 @@ public final class MapController {
         Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);
 
         if (country == null || neighbor == null) {
-            System.out.println("The country name or neighbor country name is not existed!");
+            ConsolePrinter.printFormat("The country name or neighbor country name is not existed!");
             return;
         }
 
@@ -189,7 +189,7 @@ public final class MapController {
             }
             case INVALID:
             case NONE: {
-                System.out.println("Incorrect command");
+                ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
         }
@@ -214,7 +214,7 @@ public final class MapController {
             }
             case INVALID:
             case NONE: {
-                System.out.println("Incorrect command");
+                ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
         }
@@ -254,7 +254,7 @@ public final class MapController {
             }
             case INVALID:
             case NONE: {
-                System.out.println("Incorrect command");
+                ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
         }
@@ -509,7 +509,7 @@ public final class MapController {
             }
         }
 
-        System.out.println("Map loaded");
+        ConsolePrinter.printFormat("Map loaded");
     }
 
     /**
@@ -519,7 +519,7 @@ public final class MapController {
      * @param continentName name of the continent
      */
     public void removeContinent(String continentName) {
-        System.out.println("Remove continent will remove all country inside that continent");
+        ConsolePrinter.printFormat("Remove continent will remove all country inside that continent");
 
         Continent continentToRemove = getContinentFromName(continentName);
 
@@ -605,7 +605,7 @@ public final class MapController {
         Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);
 
         if (country == null || neighbor == null) {
-            System.out.println("One or both countries is not existed");
+            ConsolePrinter.printFormat("One or both countries is not existed");
             return;
         }
 
@@ -628,7 +628,7 @@ public final class MapController {
      */
     public void saveMap(String fileName) throws IOException {
         if (!isMapValid()) {
-            System.out.println("Invalid map. Map not saved");
+            ConsolePrinter.printFormat("Invalid map. Map not saved");
             return;
         }
 
@@ -761,21 +761,21 @@ public final class MapController {
         boolean isCountryWithNoContinentExisted = countriesWithNoContinent.size() > 0;
 
         if (isIsolatedCountryExisted) {
-            System.out.println("Isolated countries existed:");
+            ConsolePrinter.printFormat("Isolated countries existed:");
             for (Country country : isolatedCountries) {
                 country.view(1);
             }
         }
 
         if (isEmptyContinentExisted) {
-            System.out.println("Empty continent existed:");
+            ConsolePrinter.printFormat("Empty continent existed:");
             for (Continent continent : emptyContinents) {
                 continent.view(1);
             }
         }
 
         if (isCountryWithNoContinentExisted) {
-            System.out.println("Country that not belong to any continent existed:");
+            ConsolePrinter.printFormat("Country that not belong to any continent existed:");
             for (Country country : countriesWithNoContinent) {
                 country.viewWithoutNeighbors(1);
             }
@@ -807,9 +807,9 @@ public final class MapController {
      */
     public void validateMap() {
         if (isMapValid()) {
-            System.out.println("Map valid");
+            ConsolePrinter.printFormat("Map valid");
         } else {
-            System.out.println("Invalid map");
+            ConsolePrinter.printFormat("Invalid map");
         }
     }
 }

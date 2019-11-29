@@ -44,7 +44,7 @@ public class Parser {
             }
             return flag;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid Input. (Cannot be negative, decimal or string)");
+            ConsolePrinter.printFormat("Invalid Input. (Cannot be negative, decimal or string)");
             return false;
         }
     }

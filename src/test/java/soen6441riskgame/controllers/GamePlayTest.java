@@ -10,6 +10,7 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Tests for Game Play.
@@ -49,7 +50,7 @@ public class GamePlayTest {
         Player player = gameController.getCurrentPlayer();
 
         // place army
-        System.out.println("Country to place: " + player.getConqueredCountries().get(0).getName());
+        ConsolePrinter.printFormat("Country to place: " + player.getConqueredCountries().get(0).getName());
 
         Country targetCountry = player.getConqueredCountries().get(0);
 

@@ -36,7 +36,7 @@ public class GameController {
      */
     public void handleGamePlayerCommand(String[] args) {
         if (args.length == 0) {
-            System.out.println("Missing parameter(s)");
+            ConsolePrinter.printFormat("Missing parameter(s)");
             return;
         }
 
@@ -53,7 +53,7 @@ public class GameController {
             }
             case INVALID:
             case NONE: {
-                System.out.println("Incorrect command");
+                ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
         }
@@ -119,7 +119,7 @@ public class GameController {
             unAssignedCountries.remove(countryToAssign);
         }
 
-        System.out.println("All countries are randomly assigned to players");
+        ConsolePrinter.printFormat("All countries are randomly assigned to players");
     }
 
     /**
@@ -186,7 +186,7 @@ public class GameController {
         }
 
         if (!country.getConquerer().isPlaying()) {
-            System.out.println("Country not belong to the current player");
+            ConsolePrinter.printFormat("Country not belong to the current player");
             return;
         }
 
@@ -292,7 +292,9 @@ public class GameController {
 
             int cardPosition = 1;
             for (Card card : player.getHoldingCards()) {
-                System.out.print(cardPosition);
+                ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,
+                                           false,
+                                           String.valueOf(cardPosition));
                 card.view(1);
                 cardPosition++;
             }
@@ -439,7 +441,7 @@ public class GameController {
         int numberOfArmies = Parser.parseWithDefault(args[2], 0);
 
         if (fromCountry == null || toCountry == null) {
-            System.out.println("The country name(s) not existed");
+            ConsolePrinter.printFormat("The country name(s) not existed");
             return;
         }
 

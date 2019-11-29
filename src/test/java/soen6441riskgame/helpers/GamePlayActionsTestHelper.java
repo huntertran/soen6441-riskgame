@@ -8,6 +8,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.utils.ConsolePrinter;
 
 public class GamePlayActionsTestHelper {
     public static void multipleFortify(GameController gameController, int fortifyTimes) {
@@ -62,8 +63,8 @@ public class GamePlayActionsTestHelper {
                                Country toCountry) {
 
         if (fromCountry != null && toCountry != null) {
-            System.out.println("From country: " + fromCountry.getName());
-            System.out.println("To country: " + toCountry.getName());
+            ConsolePrinter.printFormat("From country: " + fromCountry.getName());
+            ConsolePrinter.printFormat("To country: " + toCountry.getName());
 
             String[] fortifyArgs = new String[] { GameCommands.FORTIFY,
                                                   fromCountry.getName(),
