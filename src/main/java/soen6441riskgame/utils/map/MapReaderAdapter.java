@@ -294,8 +294,75 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
 
     @Override
     public int loadCountriesFromConquestFile(int currentLineIndex, List<String> lines) {
-        // TODO Auto-generated method stub
-        return 0;
+        // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
+        // Territory name,x,y,Continent,neighbor1,neighbor1
+        int originalLineIndex = currentLineIndex;
+
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            String currentLine = lines.get(index);
+
+            String[] fragments = currentLine.split(",");
+
+            String countryName = legalizeString(fragments[0]);
+
+            int x = Integer.parseInt(fragments[1]);
+            int y = Integer.parseInt(fragments[2]);
+            Coordinate coordinate = new Coordinate(x, y);
+
+            String continentName = legalizeString(fragments[3]);
+
+            int countryOrder = GameBoard.getInstance()
+                                        .getGameBoardMap()
+                                        .getCountries()
+                                        .size()
+                               + 1;
+
+            int continentOrder = GameBoard.getInstance()
+                                          .getGameBoardMap()
+                                          .getContinentFromName(continentName)
+                                          .getOrder();
+
+            addCountry(countryOrder, countryName, continentOrder, coordinate);
+
+            currentLineIndex = index;
+        }
+
+        // load borders
+        // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
+        // Territory name,x,y,Continent,neighbor1,neighbor1
+
+        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
+        GameBoard.getInstance().getGameBoardMap().setBorders(new int[numberOfCountry][numberOfCountry]);
+
+        for (int index = originalLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            String currentLine = lines.get(index);
+
+            String[] fragments = currentLine.split(",");
+
+            int countryOrder = GameBoard.getInstance()
+                                        .getGameBoardMap()
+                                        .getCountryFromName(legalizeString(fragments[0]))
+                                        .getOrder();
+
+            // neighbors start from fragments[4]
+
+            int[] borderWithCountries = new int[fragments.length - 4];
+
+            for (int neighborIndex = 4; neighborIndex < fragments.length; neighborIndex++) {
+                int neighborOrder = GameBoard.getInstance()
+                                             .getGameBoardMap()
+                                             .getCountryFromName(legalizeString(fragments[neighborIndex]))
+                                             .getOrder();
+
+                borderWithCountries[neighborIndex - 4] = neighborOrder;
+            }
+
+            addBorders(countryOrder, borderWithCountries);
+
+            originalLineIndex = index;
+        }
+
+        return originalLineIndex + 1;
     }
 
     @Override

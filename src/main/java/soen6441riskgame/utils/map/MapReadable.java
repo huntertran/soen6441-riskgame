@@ -88,7 +88,10 @@ public interface MapReadable {
     default boolean isStillInCurrentDataBlock(int currentLineIndex, List<String> lines) {
         if (currentLineIndex < lines.size()) {
             String currentLine = lines.get(currentLineIndex);
-            return !currentLine.equals("") && currentLine.contains(" ");
+            return !currentLine.equals("")
+                   && (currentLine.contains(" ")
+                       || currentLine.contains("=")
+                       || currentLine.contains(","));
         }
 
         return false;
@@ -101,12 +104,12 @@ public interface MapReadable {
      *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
      * @throws IOException exception
      */
-    default List<String> readMapFile(String fileName) throws IOException{
+    default List<String> readMapFile(String fileName) throws IOException {
         Path path = Paths.get(fileName);
 
         List<String> lines = Files.lines(path).collect(Collectors.toList());
         GameBoard.getInstance().reset();
-        
+
         return lines;
     }
 }
