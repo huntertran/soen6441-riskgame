@@ -96,7 +96,7 @@ public final class App {
             }
             case MapEditorCommands.LOADMAP: {
                 try {
-                    mapController.mapReaderAdapter.loadMap(args.regularCommands.get(0));
+                    mapController.loadMap(args.regularCommands.get(0));
                 } catch (IOException e) {
                     ConsolePrinter.printFormat("Error: " + e.getClass().getName());
                 }

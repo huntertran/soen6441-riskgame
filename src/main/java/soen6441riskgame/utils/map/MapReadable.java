@@ -78,13 +78,6 @@ public interface MapReadable {
     }
 
     /**
-     * Reset the map, clear all continents, countries and borders
-     */
-    default void resetMap() {
-        GameBoard.getInstance().reset();
-    }
-
-    /**
      * The map file stores data in blocks. This function check if the current data line is still in a
      * block or not
      *
@@ -112,7 +105,7 @@ public interface MapReadable {
         Path path = Paths.get(fileName);
 
         List<String> lines = Files.lines(path).collect(Collectors.toList());
-        resetMap();
+        GameBoard.getInstance().reset();
         
         return lines;
     }

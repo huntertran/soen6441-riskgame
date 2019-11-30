@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public interface DominationMapReadable {
+public interface DominationMapReadable extends MapReadable {
     void loadMap(String fileName) throws IOException;
 
     int loadMapComponents(List<String> lines, int index);

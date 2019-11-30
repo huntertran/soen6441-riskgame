@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public interface ConquestMapReadable {
+public interface ConquestMapReadable extends MapReadable {
     void loadConquestMap(String fileName) throws IOException;
 
     int loadConquestMapComponents(List<String> lines, int index);
@@ -21,7 +21,7 @@ public interface ConquestMapReadable {
 
     void writeCountriesToConquestFile(FileWriter writer) throws IOException;
 
-    default String legalizeString(String illegalString){
+    default String legalizeString(String illegalString) {
         return illegalString.replace(" ", "_");
     }
 }

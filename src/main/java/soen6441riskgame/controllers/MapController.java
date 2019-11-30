@@ -11,6 +11,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
+import soen6441riskgame.utils.map.DominationMapReadable;
 import soen6441riskgame.utils.map.MapReaderAdapter;
 
 /**
@@ -18,7 +19,15 @@ import soen6441riskgame.utils.map.MapReaderAdapter;
  */
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
-    public MapReaderAdapter mapReaderAdapter = new MapReaderAdapter();
+    private DominationMapReadable dominationMapReader = new MapReaderAdapter();
+
+    public void loadMap(String fileName) throws IOException {
+        dominationMapReader.loadMap(fileName);
+    }
+
+    public void addContinent(String continentName, String continentValue, int... order) {
+        dominationMapReader.addContinent(continentName, continentValue, order);
+    }
 
     /**
      * add new country to an existed continent OR add existing country to an existed continent
@@ -59,7 +68,7 @@ public final class MapController {
             return;
         }
 
-        mapReaderAdapter.addBorders(country.getOrder(), neighbor.getOrder());
+        dominationMapReader.addBorders(country.getOrder(), neighbor.getOrder());
     }
 
     /**
@@ -115,7 +124,7 @@ public final class MapController {
 
         switch (continentCommand) {
             case ADD: {
-                mapReaderAdapter.addContinent(args[1], args[2]);
+                dominationMapReader.addContinent(args[1], args[2]);
                 break;
             }
             case REMOVE: {
@@ -163,7 +172,7 @@ public final class MapController {
      */
     public void editMap(String fileName) throws IOException {
         try {
-            mapReaderAdapter.loadMap(fileName);
+            dominationMapReader.loadMap(fileName);
         } catch (IOException e) {
             // file not existed. Create new map
             saveMap(fileName);
@@ -173,7 +182,7 @@ public final class MapController {
     /**
      * save the map to a file
      *
-     * @param fileName      path to file
+     * @param fileName path to file
      * @throws IOException exception
      */
     public void saveMap(String fileName) throws IOException {
@@ -182,7 +191,7 @@ public final class MapController {
             return;
         }
 
-        mapReaderAdapter.writeMapToFile(fileName);
+        dominationMapReader.writeMapToFile(fileName);
     }
 
     /**

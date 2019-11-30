@@ -46,8 +46,8 @@ public class GameControllerTest {
 
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController = new MapController();
-        mapController.mapReaderAdapter.resetMap();
-        mapController.mapReaderAdapter.loadMap(filePath);
+        GameBoard.getInstance().reset();
+        mapController.loadMap(filePath);
 
         gameController = new GameController();
     }
@@ -57,7 +57,7 @@ public class GameControllerTest {
      */
     @AfterEach
     public void after() {
-        mapController.mapReaderAdapter.resetMap();
+        GameBoard.getInstance().reset();
         GameBoard.getInstance().getGameBoardPlaying().setAttackMoveCmdRequired(false);
     }
 
