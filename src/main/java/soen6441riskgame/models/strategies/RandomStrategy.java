@@ -111,9 +111,11 @@ public class RandomStrategy implements Strategy {
          * 3. generate index of country from filtered list of conquered countries 4. generate randArmyMove
          * int (min 1, max = number of army moving from country filtered)
          */
-
-        int randArmyAmountToMove = GameHelper.nextRandomIntInRange(1, fromCountry.getArmyAmount());
-        fortify(fromCountry, toCountry, randArmyAmountToMove);
+        if(fromCountry.getArmyAmount()-1 > 0) {
+            int randArmyAmountToMove = GameHelper.nextRandomIntInRange(1, fromCountry.getArmyAmount()-1);
+            fortify(fromCountry, toCountry, randArmyAmountToMove);
+        }
+        
     }
 
     /**
