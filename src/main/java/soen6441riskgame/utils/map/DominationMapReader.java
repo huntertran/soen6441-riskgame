@@ -17,7 +17,7 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
-public class DominationMapReader {
+public class DominationMapReader implements DominationMapReadable {
 
     /**
      * load map from file
@@ -122,7 +122,7 @@ public class DominationMapReader {
             int y = Integer.parseInt(fragments[4]);
             Coordinate coordinate = new Coordinate(x, y);
 
-            addCountryFromMapFile(countryOrder, countryName, continentOrder, coordinate);
+            addCountry(countryOrder, countryName, continentOrder, coordinate);
 
             currentLineIndex = index;
         }
@@ -290,10 +290,10 @@ public class DominationMapReader {
      * @param continentOrder the other of the continent that new country belongs to
      * @param coordinate     the position of the country on a visual map (not used)
      */
-    public void addCountryFromMapFile(int order,
-                                      String name,
-                                      int continentOrder,
-                                      Coordinate coordinate) {
+    public void addCountry(int order,
+                           String name,
+                           int continentOrder,
+                           Coordinate coordinate) {
         for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
             if (continent.getOrder() == continentOrder) {
                 Country country = new Country(order, name, coordinate, continent);
