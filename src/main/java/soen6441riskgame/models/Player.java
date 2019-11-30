@@ -178,7 +178,7 @@ public class Player extends Observable {
                 setChanged();
                 notifyObservers(ChangedProperty.GAME_PHASE);
 
-                if (newPhase == GamePhase.REINFORCEMENT) {
+                if (newPhase == GamePhase.REINFORCEMENT || newPhase == GamePhase.WAITING_TO_TURN) {
                     this.addObserver(GameBoard.getInstance().getExchangeCardView());
                 } else {
                     this.deleteObserver(GameBoard.getInstance().getExchangeCardView());
@@ -264,6 +264,30 @@ public class Player extends Observable {
         } else {
             return holdingCards.get(position - 1);
         }
+    }
+
+    public void exchangeCardSets(List<CardSet> cardSets) {
+        int tradeTime = 1;
+        int numberOfTradedArmies = 0;
+
+        setChanged();
+        notifyObservers(ChangedProperty.CARD);
+
+        for (CardSet cardSet : cardSets) {
+            if (cardSet != null) {
+                numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);
+                cardSet.setCardsExchanged();
+                tradeTime++;
+            }
+        }
+
+        int newUnplacedArmies = getUnplacedArmies() + numberOfTradedArmies;
+        setUnplacedArmies(newUnplacedArmies);
+
+        removeExchangedCards();
+
+        setChanged();
+        notifyObservers(ChangedProperty.CARD);
     }
 
     /**

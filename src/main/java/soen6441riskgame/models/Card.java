@@ -81,6 +81,8 @@ public class Card implements Viewable {
         holdingPlayer = player;
         if (player != null) {
             holdingPlayerName = player.getName();
+        } else {
+            holdingPlayerName = null;
         }
     }
 

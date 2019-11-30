@@ -206,6 +206,7 @@ public class GameBoard implements Resettable {
      */
     @Override
     public void reset() {
+        initCards();
         gameBoardMap.reset();
         gameBoardPlayer.reset();
         gameBoardPlaying.reset();

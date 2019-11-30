@@ -117,9 +117,11 @@ public class TournamentController {
                     }
                 }
             }
-        }
 
-        ConsolePrinter.printFormat(getGamePlayResultAsTable(results));
+            ConsolePrinter.printFormat(getGamePlayResultAsTable(results));
+        } else {
+            ConsolePrinter.printFormat("Parameter invalid");
+        }
     }
 
     private String getGamePlayResultAsTable(String[][] results) {

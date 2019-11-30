@@ -980,11 +980,11 @@ public class GameController {
      */
     public void exchangeCard(String[] args) {
         Player currentPlayer = getCurrentPlayer();
-        int numberOfTradedArmies = 0;
-        int tradeTime = 1;
 
         int paramLeftOver = args.length % NUMBER_OF_CARD_IN_ONE_SET;
         int size = args.length - paramLeftOver;
+
+        ArrayList<CardSet> cardSets = new ArrayList<>();
 
         for (int index = 0; index < size; index = index + NUMBER_OF_CARD_IN_ONE_SET) {
 
@@ -994,16 +994,9 @@ public class GameController {
                                                           args[index + 2]
             });
 
-            if (cardSet != null) {
-                numberOfTradedArmies += cardSet.getTradeInArmies(tradeTime);
-                cardSet.setCardsExchanged();
-                tradeTime++;
-            }
+            cardSets.add(cardSet);
         }
 
-        int newUnplacedArmies = currentPlayer.getUnplacedArmies() + numberOfTradedArmies;
-        currentPlayer.setUnplacedArmies(newUnplacedArmies);
-
-        currentPlayer.removeExchangedCards();
+        currentPlayer.exchangeCardSets(cardSets);
     }
 }
