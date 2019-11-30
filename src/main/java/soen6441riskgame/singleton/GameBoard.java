@@ -112,6 +112,11 @@ public class GameBoard implements Resettable {
         }
     }
 
+    /**
+     * load game board playing from serialized data
+     * 
+     * @param serialized serialized data
+     */
     public void loadGameBoardPlaying(GameBoardPlaying serialized) {
         this.getGameBoardPlaying().setAlloutFlag(serialized.isAlloutFlag());
         this.getGameBoardPlaying().setAttackMoveCmdRequired(serialized.isAttackMoveCmdRequired());

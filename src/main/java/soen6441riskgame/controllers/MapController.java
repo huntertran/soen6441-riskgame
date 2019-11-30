@@ -23,6 +23,13 @@ public final class MapController {
     private DominationMapReadable dominationMapReader = new MapReaderAdapter();
     private ConquestMapReadable conquestMapReader = new MapReaderAdapter();
 
+    /**
+     * load the map from file
+     * 
+     * @param fileName          path to file
+     * @param isConquestMapType is this file a 'conquest' map type
+     * @throws IOException if file not found or cannot read
+     */
     public void loadMap(String fileName, boolean isConquestMapType) throws IOException {
         if (isConquestMapType) {
             conquestMapReader.loadConquestMap(fileName);
@@ -31,10 +38,23 @@ public final class MapController {
         }
     }
 
+    /**
+     * load the map from file in domination type
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found or cannot read
+     */
     public void loadMap(String fileName) throws IOException {
         loadMap(fileName, false);
     }
 
+    /**
+     * add continent to game
+     * 
+     * @param continentName  name of the continent
+     * @param continentValue army rewarded to player if he conquered this continent
+     * @param order          order of the continent in the file
+     */
     public void addContinent(String continentName, String continentValue, int... order) {
         dominationMapReader.addContinent(continentName, continentValue, order);
     }

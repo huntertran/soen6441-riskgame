@@ -14,6 +14,9 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.singleton.GameBoardPlaying;
 
+/**
+ * hold data for save - load game
+ */
 public class SerializableGame {
     @Expose
     private List<Country> countries;

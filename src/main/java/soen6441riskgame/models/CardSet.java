@@ -164,6 +164,11 @@ public class CardSet {
         }
     }
 
+    /**
+     * get card position in deck for tournament mode
+     * 
+     * @return card position in deck
+     */
     public String getCardsPositionForTournament() {
         String result = "";
 

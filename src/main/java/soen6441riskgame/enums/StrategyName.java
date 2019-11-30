@@ -7,6 +7,9 @@ import soen6441riskgame.models.strategies.HumanStrategy;
 import soen6441riskgame.models.strategies.RandomStrategy;
 import soen6441riskgame.models.strategies.Strategy;
 
+/**
+ * name of the strategy as enum for easy comparison and parse
+ */
 public enum StrategyName {
                           AGGRESSIVE("aggressive"),
                           BENEVOLENT("benevolent"),

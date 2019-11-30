@@ -31,6 +31,11 @@ public class ModelCommands {
         init(newArgs);
     }
 
+    /**
+     * initialize the param check
+     * 
+     * @param new_args
+     */
     private void init(String new_args) {
         // check if arguments provided is not null or empty string.
         if ((new_args == null) || (new_args.equals(""))) {
@@ -49,10 +54,9 @@ public class ModelCommands {
 
         // Split rest of the string parameter except the command using "-"
         String[] paramsArray;
-        if(this.cmd.equalsIgnoreCase("tournament")) {
+        if (this.cmd.equalsIgnoreCase("tournament")) {
             paramsArray = temp_args[1].split(" ");
-        }
-        else {
+        } else {
             paramsArray = temp_args[1].split("-");
         }
 
@@ -69,6 +73,13 @@ public class ModelCommands {
         }
     }
 
+    /**
+     * create regular commands OR sub routines
+     * 
+     * @param paramsArray param array
+     * @param s           string
+     * @throws Exception if cannot parse params
+     */
     private void populateRegularCommandsOrSubRoutines(String[] paramsArray, String s) throws Exception {
         // Split rest of the string parameter except the command using space (" ")
         String[] params = s.split(" ");
@@ -78,6 +89,11 @@ public class ModelCommands {
         buildRegularCommands(paramsArray, params);
     }
 
+    /**
+     * build sub routines
+     * 
+     * @param params params
+     */
     private void buildSubRoutines(String[] params) {
         for (int j = 0; j < params.length; j++) {
             // check for null or empty value after split
@@ -123,6 +139,13 @@ public class ModelCommands {
         }
     }
 
+    /**
+     * build regular commands
+     * 
+     * @param paramsArray array of params
+     * @param params      the params
+     * @throws Exception if cannot parse param
+     */
     private void buildRegularCommands(String[] paramsArray, String[] params) throws Exception {
         for (int j = 0; j < params.length; j++) {
             // check for null or empty value after split

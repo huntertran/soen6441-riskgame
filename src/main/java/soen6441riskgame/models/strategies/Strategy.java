@@ -29,6 +29,11 @@ public interface Strategy {
      */
     void reinforce(Player player, Country countryToReinforce);
 
+    /**
+     * reinforce a country
+     * @param countryToReinforce country to reinforce
+     * @param numberOfArmies number of army to reinforce
+     */
     default void reinforce(Country countryToReinforce, int numberOfArmies) {
         String command = GameCommands.REINFORCE;
         command += GameCommands.SPACE;
@@ -106,6 +111,9 @@ public interface Strategy {
         App.jumpToCommand(new ModelCommands(command));
     }
 
+    /**
+     * end attack
+     */
     default void attackEnd() {
         App.jumpToCommand(new ModelCommands(GameCommands.ATTACK
                                             + GameCommands.SPACE

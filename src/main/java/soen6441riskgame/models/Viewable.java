@@ -8,14 +8,6 @@ import soen6441riskgame.singleton.GameBoard;
  * indicate an object is printable to console with/without indentation
  */
 public interface Viewable {
-
-    // /**
-    // * view with a number of indent
-    // *
-    // * @param indent number of indent
-    // */
-    // public void view(int indent);
-
     /**
      * view with a number of indent on custom printStream
      *

@@ -13,6 +13,9 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * map reader adapter for both conquest and domination map style
+ */
 public class MapReaderAdapter implements DominationMapReadable, ConquestMapReadable {
     /**
      * load map from file
@@ -31,6 +34,13 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         ConsolePrinter.printFormat("Map loaded");
     }
 
+    /**
+     * load domination map components
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
     @Override
     public int loadMapComponents(List<String> lines, int index) {
         String currentLine = lines.get(index);
@@ -229,6 +239,12 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         writer.write("\n");
     }
 
+    /**
+     * load the conquest map from file
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found or read file error
+     */
     @Override
     public void loadConquestMap(String fileName) throws IOException {
         List<String> lines = readMapFile(fileName);
@@ -239,6 +255,13 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         ConsolePrinter.printFormat("Map loaded");
     }
 
+    /**
+     * load conquest map components
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
     @Override
     public int loadConquestMapComponents(List<String> lines, int index) {
         String currentLine = lines.get(index);
@@ -265,6 +288,13 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         return index;
     }
 
+    /**
+     * load conquest map info
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
     @Override
     public int loadConquestMapInfo(List<String> lines, int currentLineIndex) {
         for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
@@ -274,6 +304,13 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         return currentLineIndex + 1;
     }
 
+    /**
+     * load continents
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
     @Override
     public int loadContinentsFromConquestFile(int currentLineIndex, List<String> lines) {
         int continentOrder = 1;
@@ -292,6 +329,13 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         return currentLineIndex + 1;
     }
 
+    /**
+     * load countries
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
     @Override
     public int loadCountriesFromConquestFile(int currentLineIndex, List<String> lines) {
         // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
@@ -330,6 +374,13 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         return originalLineIndex + 1;
     }
 
+    /**
+     * load border from conquest file
+     * 
+     * @param lines             lines from file
+     * @param originalLineIndex the start index of the territories part
+     * @return line index that end the territories part
+     */
     private int loadBordersFromConquestFile(List<String> lines, int originalLineIndex) {
         // load borders
         // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
@@ -368,6 +419,12 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         return originalLineIndex;
     }
 
+    /**
+     * write map to conquest file
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found
+     */
     @Override
     public void writeMapToConquestFile(String fileName) throws IOException {
         FileWriter writer = new FileWriter(fileName);
@@ -379,6 +436,12 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         writer.close();
     }
 
+    /**
+     * write continents to conquest map file
+     * 
+     * @param writer the file writer
+     * @throws IOException if cannot write to file
+     */
     @Override
     public void writeContinentsToConquestFile(FileWriter writer) throws IOException {
         ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
@@ -391,6 +454,12 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         writer.write("\n");
     }
 
+    /**
+     * write countries to conquest map files
+     * 
+     * @param writer the file writer
+     * @throws IOException if cannot write to file
+     */
     @Override
     public void writeCountriesToConquestFile(FileWriter writer) throws IOException {
         // Cockpit01,658,355,Cockpit,Cockpit02,Territory33

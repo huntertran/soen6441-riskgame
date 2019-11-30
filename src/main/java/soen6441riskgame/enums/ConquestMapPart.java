@@ -1,7 +1,7 @@
 package soen6441riskgame.enums;
 
 /**
- * enums for parts of the map
+ * enums for parts of the conquest map
  */
 public enum ConquestMapPart {
                              MAP("[Map]"),

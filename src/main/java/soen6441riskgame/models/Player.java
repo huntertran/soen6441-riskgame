@@ -196,6 +196,12 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * check if changing phase is allowed
+     * 
+     * @param newPhase the new phase
+     * @return if changing phase is allowed
+     */
     private boolean isChangePhaseAllowed(GamePhase newPhase) {
         boolean isChangePhaseAllowed = true;
 
@@ -266,6 +272,11 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * exchange a list of card set
+     * 
+     * @param cardSets list of card set to exchange
+     */
     public void exchangeCardSets(List<CardSet> cardSets) {
         int tradeTime = 1;
         int numberOfTradedArmies = 0;
@@ -605,6 +616,14 @@ public class Player extends Observable {
         // attack ends
     }
 
+    /**
+     * print dice value
+     * 
+     * @param attackerNumDice    attacker numdice
+     * @param defenderNumDice    defender numdice
+     * @param attackerDiceValues attacker dice values
+     * @param defenderDiceValues defender dice values
+     */
     private void printDiceValues(int attackerNumDice,
                                  int defenderNumDice,
                                  int[] attackerDiceValues,
@@ -623,6 +642,12 @@ public class Player extends Observable {
         ConsolePrinter.printFormat("%s", printDiceValues.toString());
     }
 
+    /**
+     * lost 1 army
+     * 
+     * @param lostArmyCountry country to lost
+     * @param lostArmyPlayer  player to lost
+     */
     private void lostOneArmy(Country lostArmyCountry, Player lostArmyPlayer) {
         String playerRole = lostArmyPlayer.getCurrentPhase() == GamePhase.ATTACK ? "attacker" : "defender";
 
@@ -655,6 +680,10 @@ public class Player extends Observable {
         fromCountry.moveArmies(toCountry, numberOfArmies);
     }
 
+    /**
+     * build a valid card set from holding cards for tournament mode
+     * @return a valid card set
+     */
     public ArrayList<CardSet> buildValidCardSets() {
         ArrayList<CardSet> cardSets = new ArrayList<>();
 

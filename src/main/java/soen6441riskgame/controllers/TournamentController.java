@@ -124,6 +124,12 @@ public class TournamentController {
         }
     }
 
+    /**
+     * convert the game play results to a table-like string
+     * 
+     * @param results game play results
+     * @return printable string
+     */
     private String getGamePlayResultAsTable(String[][] results) {
         AsciiTable table = new AsciiTable();
 
@@ -147,6 +153,12 @@ public class TournamentController {
         return table.render();
     }
 
+    /**
+     * simulate a game play
+     * 
+     * @param map map to play
+     * @return the winner of this game
+     */
     private Player simulateGamePlay(String map) {
         GameBoard.getInstance().reset();
         App.jumpToCommand(new ModelCommands(MapEditorCommands.LOADMAP + " " + map));
@@ -190,6 +202,11 @@ public class TournamentController {
         }
     }
 
+    /**
+     * parse tournament parameters
+     * 
+     * @param args tournament parameters
+     */
     private void parseTournamentParameters(String[] args) {
         for (int index = 0; index < args.length; index = index + 2) {
             switch (args[index]) {
@@ -216,6 +233,12 @@ public class TournamentController {
         }
     }
 
+    /**
+     * parse player's strategies
+     * 
+     * @param playerStrategies player's strategies
+     * @return a list of strategy
+     */
     private ArrayList<Strategy> parsePlayerStrategies(String[] playerStrategies) {
         ArrayList<Strategy> strategies = new ArrayList<Strategy>();
 

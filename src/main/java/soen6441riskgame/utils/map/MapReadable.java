@@ -14,6 +14,9 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
+/**
+ * common interface for both conquest and domination map
+ */
 public interface MapReadable {
     /**
      * adds new continent

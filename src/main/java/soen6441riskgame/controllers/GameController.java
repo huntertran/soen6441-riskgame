@@ -59,6 +59,11 @@ public class GameController {
         }
     }
 
+    /**
+     * check if number of player is valid
+     * 
+     * @return if number of player is valid
+     */
     public boolean isNumberOfPlayerValid() {
         ArrayList<Player> players = GameBoard.getInstance()
                                              .getGameBoardPlayer()
@@ -576,32 +581,6 @@ public class GameController {
         }
     }
 
-    // /**
-    // * it checks whether further attack is possible.(i.e. if the number of army in a country is
-    // greater
-    // * than 1 and it has enemy countries as neighbor) If not, it returns false.
-    // *
-    // * @return boolean if further attack is possible or not
-    // *
-    // */
-    // private boolean furtherAttackPossible() {
-    // Player player = getCurrentPlayer(false);
-    // // attack not possible if not more than 1 army + if no neighbours belonging to other countries.
-    // ArrayList<Country> countries = player.getConqueredCountries();
-    // for (Country country : countries) {
-    // if (country.getArmyAmount() > 1) {
-    // ArrayList<Country> neighbours = country.getNeighbors();
-    // for (Country neighbouringCountry : neighbours) {
-    // if (neighbouringCountry.getConquerer() != player) {
-    // return true;
-    // }
-    // }
-    // }
-    // }
-
-    // return false;
-    // }
-
     /**
      * it handles the defend command and executes the entire attack and calls the dice roll method.
      *
@@ -740,9 +719,11 @@ public class GameController {
      *
      * attacking country and defending country is neighbor
      *
-     * @return is valid or not
+     * 
      * @param attackingCountry attacking country
      * @param defendingCountry defending country
+     * 
+     * @return is valid or not
      */
     private boolean isAttackPreconditionsValid(Country attackingCountry, Country defendingCountry) {
         Player currentPlayer = getCurrentPlayer(false);
@@ -827,6 +808,9 @@ public class GameController {
 
     /**
      * it prints the result of the attack.
+     * 
+     * @param defendingCountry attacking country
+     * @param attackingCountry defending country
      */
     private void attackResult(Country defendingCountry, Country attackingCountry) {
         // now check if defender's armies left is 0, set conquerer as attacker
@@ -937,7 +921,8 @@ public class GameController {
     /**
      * build set a card
      *
-     * @param args 3 number as position of card in a set, -none at the end to not exchange
+     * @param args {@value #NUMBER_OF_CARD_IN_ONE_SET} number as position of card in a set, -none at the
+     *             end to not exchange
      * @return a set of card
      */
     private CardSet buildCardSet(String[] args) {
@@ -975,8 +960,8 @@ public class GameController {
     /**
      * handle exchange card command
      *
-     * @param args {NUMBER_OF_CARD_IN_ONE_SET} number as position of card in a set, -none at the end to
-     *             not exchange
+     * @param args {@value #NUMBER_OF_CARD_IN_ONE_SET} number as position of card in a set, -none at the
+     *             end to not exchange
      */
     public void exchangeCard(String[] args) {
         Player currentPlayer = getCurrentPlayer();
