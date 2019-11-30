@@ -50,172 +50,172 @@ public final class App {
 
         MapController mapController = new MapController();
         GameController gameController = new GameController();
-        // try {
-        switch (command) {
-            case MapEditorCommands.EDITCONTINENT: {
-                for (ModelCommandsPair sub : args.subRoutine) {
-                    mapController.editContinent(sub.toStringArray());
-                }
-                break;
-            }
-            case MapEditorCommands.EDITCOUNTRY: {
-                for (ModelCommandsPair sub : args.subRoutine) {
-                    mapController.editCountry(sub.toStringArray());
-                }
-                break;
-            }
-            case MapEditorCommands.EDITNEIGHBOR: {
-                for (ModelCommandsPair sub : args.subRoutine) {
-                    mapController.editNeighbor(sub.toStringArray());
-                }
-                break;
-            }
-            case MapEditorCommands.SHOWMAP: {
-                mapController.showMap();
-                break;
-            }
-            case MapEditorCommands.SAVEMAP: {
-
-                boolean isConquestMapType = false;
-                if (args.regularCommands.size() > 1) {
-                    if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
-                        isConquestMapType = true;
+        try {
+            switch (command) {
+                case MapEditorCommands.EDITCONTINENT: {
+                    for (ModelCommandsPair sub : args.subRoutine) {
+                        mapController.editContinent(sub.toStringArray());
                     }
+                    break;
                 }
-
-                try {
-                    mapController.saveMap(args.regularCommands.get(0), isConquestMapType);
-                } catch (IOException e) {
-                    ConsolePrinter.printFormat("Error: " + e.getClass().getName());
-                }
-                break;
-            }
-            case MapEditorCommands.EDITMAP: {
-                try {
-                    mapController.editMap(args.regularCommands.get(0));
-                } catch (IOException e) {
-                    ConsolePrinter.printFormat("Error: " + e.getClass().getName());
-                }
-                break;
-            }
-            case MapEditorCommands.VALIDATEMAP: {
-                mapController.validateMap();
-                break;
-            }
-            case MapEditorCommands.LOADMAP: {
-                boolean isConquestMapType = false;
-                if (args.regularCommands.size() > 1) {
-                    if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
-                        isConquestMapType = true;
+                case MapEditorCommands.EDITCOUNTRY: {
+                    for (ModelCommandsPair sub : args.subRoutine) {
+                        mapController.editCountry(sub.toStringArray());
                     }
+                    break;
                 }
-
-                try {
-                    mapController.loadMap(args.regularCommands.get(0), isConquestMapType);
-                } catch (IOException e) {
-                    ConsolePrinter.printFormat("Error: " + e.getClass().getName());
+                case MapEditorCommands.EDITNEIGHBOR: {
+                    for (ModelCommandsPair sub : args.subRoutine) {
+                        mapController.editNeighbor(sub.toStringArray());
+                    }
+                    break;
                 }
-
-                break;
-            }
-            case GameCommands.GAMEPLAYER: {
-                for (ModelCommandsPair sub : args.subRoutine) {
-                    gameController.handleGamePlayerCommand(sub.toStringArray());
+                case MapEditorCommands.SHOWMAP: {
+                    mapController.showMap();
+                    break;
                 }
-                break;
-            }
-            case GameCommands.POPULATECOUNTRIES: {
-                if (gameController.isNumberOfPlayerValid()) {
-                    gameController.populateCountries();
-                    gameController.initPlayersUnplacedArmies();
+                case MapEditorCommands.SAVEMAP: {
+
+                    boolean isConquestMapType = false;
+                    if (args.regularCommands.size() > 1) {
+                        if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
+                            isConquestMapType = true;
+                        }
+                    }
+
+                    try {
+                        mapController.saveMap(args.regularCommands.get(0), isConquestMapType);
+                    } catch (IOException e) {
+                        ConsolePrinter.printFormat("Error: " + e.getClass().getName());
+                    }
+                    break;
                 }
-                break;
-            }
-            case GameCommands.PLACEARMY: {
-                gameController.handlePlaceArmyCommand(args.regularCommands.get(0));
-                break;
-            }
-            case GameCommands.PLACEALL: {
-                gameController.handlePlaceAllCommand();
-                break;
-            }
-            case GameCommands.REINFORCE: {
-                boolean isReinforcementEntered = gameController.enterReinforcement();
-
-                if (isReinforcementEntered) {
-                    gameController.handleReinforceCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                case MapEditorCommands.EDITMAP: {
+                    try {
+                        mapController.editMap(args.regularCommands.get(0));
+                    } catch (IOException e) {
+                        ConsolePrinter.printFormat("Error: " + e.getClass().getName());
+                    }
+                    break;
                 }
-
-                break;
-            }
-            case GameCommands.EXCHANGECARDS: {
-                gameController.exchangeCard(args.regularCommands.toArray(new String[args.regularCommands.size()]));
-                break;
-            }
-            case GameCommands.ATTACK: {
-                boolean isAttackEntered = gameController.enterAttackPhase();
-
-                if (isAttackEntered) {
-                    gameController.handleAttackCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                case MapEditorCommands.VALIDATEMAP: {
+                    mapController.validateMap();
+                    break;
                 }
+                case MapEditorCommands.LOADMAP: {
+                    boolean isConquestMapType = false;
+                    if (args.regularCommands.size() > 1) {
+                        if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
+                            isConquestMapType = true;
+                        }
+                    }
 
-                break;
-            }
-            case GameCommands.DEFEND: {
-                boolean isAttackEntered = gameController.enterAttackPhase();
+                    try {
+                        mapController.loadMap(args.regularCommands.get(0), isConquestMapType);
+                    } catch (IOException e) {
+                        ConsolePrinter.printFormat("Error: " + e.getClass().getName());
+                    }
 
-                if (isAttackEntered) {
-                    gameController.handleDefendCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    break;
                 }
-
-                break;
-            }
-            case GameCommands.ATTACKMOVE: {
-                boolean isAttackEntered = gameController.enterAttackPhase();
-
-                if (isAttackEntered) {
-                    gameController.handleAttackMoveCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                case GameCommands.GAMEPLAYER: {
+                    for (ModelCommandsPair sub : args.subRoutine) {
+                        gameController.handleGamePlayerCommand(sub.toStringArray());
+                    }
+                    break;
                 }
-
-                break;
-            }
-            case GameCommands.FORTIFY: {
-                boolean isFortifyPhase = gameController.enterFortifyPhase();
-
-                if (isFortifyPhase) {
-                    gameController.handleMultipleFortificationCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                case GameCommands.POPULATECOUNTRIES: {
+                    if (gameController.isNumberOfPlayerValid()) {
+                        gameController.populateCountries();
+                        gameController.initPlayersUnplacedArmies();
+                    }
+                    break;
                 }
+                case GameCommands.PLACEARMY: {
+                    gameController.handlePlaceArmyCommand(args.regularCommands.get(0));
+                    break;
+                }
+                case GameCommands.PLACEALL: {
+                    gameController.handlePlaceAllCommand();
+                    break;
+                }
+                case GameCommands.REINFORCE: {
+                    boolean isReinforcementEntered = gameController.enterReinforcement();
 
-                break;
+                    if (isReinforcementEntered) {
+                        gameController.handleReinforceCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    }
+
+                    break;
+                }
+                case GameCommands.EXCHANGECARDS: {
+                    gameController.exchangeCard(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    break;
+                }
+                case GameCommands.ATTACK: {
+                    boolean isAttackEntered = gameController.enterAttackPhase();
+
+                    if (isAttackEntered) {
+                        gameController.handleAttackCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    }
+
+                    break;
+                }
+                case GameCommands.DEFEND: {
+                    boolean isAttackEntered = gameController.enterAttackPhase();
+
+                    if (isAttackEntered) {
+                        gameController.handleDefendCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    }
+
+                    break;
+                }
+                case GameCommands.ATTACKMOVE: {
+                    boolean isAttackEntered = gameController.enterAttackPhase();
+
+                    if (isAttackEntered) {
+                        gameController.handleAttackMoveCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    }
+
+                    break;
+                }
+                case GameCommands.FORTIFY: {
+                    boolean isFortifyPhase = gameController.enterFortifyPhase();
+
+                    if (isFortifyPhase) {
+                        gameController.handleMultipleFortificationCommand(args.regularCommands.toArray(new String[args.regularCommands.size()]));
+                    }
+
+                    break;
+                }
+                case GameCommands.CURRENTPLAYER: {
+                    gameController.showCurrentPlayer();
+                    break;
+                }
+                case GameCommands.SAVEGAME: {
+                    SaveLoadController saveLoadController = new SaveLoadController();
+                    saveLoadController.saveGame(args.regularCommands.get(0));
+                    break;
+                }
+                case GameCommands.LOADGAME: {
+                    SaveLoadController saveLoadController = new SaveLoadController();
+                    saveLoadController.loadGame(args.regularCommands.get(0));
+                    break;
+                }
+                case TournamentCommands.TOURNAMENT: {
+                    TournamentController tournamentController = new TournamentController();
+                    tournamentController.enterTournament(args.regularCommands);
+                    break;
+                }
+                default: {
+                    ConsolePrinter.printFormat("Command not exist!");
+                    break;
+                }
             }
-            case GameCommands.CURRENTPLAYER: {
-                gameController.showCurrentPlayer();
-                break;
-            }
-            case GameCommands.SAVEGAME: {
-                SaveLoadController saveLoadController = new SaveLoadController();
-                saveLoadController.saveGame(args.regularCommands.get(0));
-                break;
-            }
-            case GameCommands.LOADGAME: {
-                SaveLoadController saveLoadController = new SaveLoadController();
-                saveLoadController.loadGame(args.regularCommands.get(0));
-                break;
-            }
-            case TournamentCommands.TOURNAMENT: {
-                TournamentController tournamentController = new TournamentController();
-                tournamentController.enterTournament(args.regularCommands);
-                break;
-            }
-            default: {
-                ConsolePrinter.printFormat("Command not exist!");
-                break;
-            }
+        } catch (Exception e) {
+            ConsolePrinter.printFormat(e.getMessage());
+            // ConsolePrinter.printFormat("exception on line " + e.getStackTrace()[0].getLineNumber());
         }
-        // } catch (Exception e) {
-        // ConsolePrinter.printFormat(e.getMessage());
-        // ConsolePrinter.printFormat("exception on line " + e.getStackTrace()[0].getLineNumber());
-        // }
     }
 
     /**
