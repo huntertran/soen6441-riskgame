@@ -1,0 +1,17 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+enum "<b><size:14>DominationMapPart</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.DominationMapPart  [[../../soen6441riskgame/enums/DominationMapPart.html{soen6441riskgame.enums.DominationMapPart}]] {
+-String part
+-DominationMapPart(String part)
+{static} +DominationMapPart values()
+{static} +DominationMapPart valueOf(String name)
++String getPart()
+{static} +DominationMapPart fromString(String part)
+}
+
+
+
+@enduml

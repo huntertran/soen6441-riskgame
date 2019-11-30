@@ -14,6 +14,7 @@ class "<b><size:14>MapEditorCommands</b>\n<size:10>soen6441riskgame.models.comma
 {static} +String LOADMAP
 {static} +String ADD
 {static} +String REMOVE
+{static} +String CONQUEST_MAP_TYPE
 +MapEditorCommands()
 }
 

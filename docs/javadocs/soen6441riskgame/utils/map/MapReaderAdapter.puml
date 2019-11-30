@@ -1,0 +1,55 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+class "<b><size:14>MapReaderAdapter</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.MapReaderAdapter  [[../../../soen6441riskgame/utils/map/MapReaderAdapter.html{soen6441riskgame.utils.map.MapReaderAdapter}]] {
++MapReaderAdapter()
++void loadMap(String fileName)
++int loadMapComponents(List<String> lines,int index)
++int loadContinentsFromFile(int currentLineIndex,List<String> lines)
++int loadCountriesFromFile(int currentLineIndex,List<String> lines)
++int loadBordersFromFile(int currentLineIndex,List<String> lines)
++void writeMapToFile(String fileName)
++void writeContinentsToFile(FileWriter writer)
++void writeBordersToFile(FileWriter writer)
++void writeCountriesToFile(FileWriter writer)
++void loadConquestMap(String fileName)
++int loadConquestMapComponents(List<String> lines,int index)
++int loadConquestMapInfo(List<String> lines,int currentLineIndex)
++int loadContinentsFromConquestFile(int currentLineIndex,List<String> lines)
++int loadCountriesFromConquestFile(int currentLineIndex,List<String> lines)
++void writeMapToConquestFile(String fileName)
++void writeContinentsToConquestFile(FileWriter writer)
++void writeCountriesToConquestFile(FileWriter writer)
+-int loadBordersFromConquestFile(List<String> lines,int originalLineIndex)
+}
+
+
+interface "<b><size:14>DominationMapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.DominationMapReadable  [[../../../soen6441riskgame/utils/map/DominationMapReadable.html{soen6441riskgame.utils.map.DominationMapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.DominationMapReadable fields
+hide soen6441riskgame.utils.map.DominationMapReadable methods
+
+soen6441riskgame.utils.map.MapReaderAdapter ..|> soen6441riskgame.utils.map.DominationMapReadable
+
+interface "<b><size:14>ConquestMapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.ConquestMapReadable  [[../../../soen6441riskgame/utils/map/ConquestMapReadable.html{soen6441riskgame.utils.map.ConquestMapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.ConquestMapReadable fields
+hide soen6441riskgame.utils.map.ConquestMapReadable methods
+
+soen6441riskgame.utils.map.MapReaderAdapter ..|> soen6441riskgame.utils.map.ConquestMapReadable
+
+
+class "<b><size:14>FileWriter</b>\n<size:10>java.io" as java.io.FileWriter  #lightgrey {
+}
+
+hide java.io.FileWriter fields
+hide java.io.FileWriter methods
+
+soen6441riskgame.utils.map.MapReaderAdapter ..> java.io.FileWriter
+
+
+@enduml

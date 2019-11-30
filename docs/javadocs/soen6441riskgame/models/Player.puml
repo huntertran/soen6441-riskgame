@@ -30,6 +30,7 @@ class "<b><size:14>Player</b>\n<size:10>soen6441riskgame.models" as soen6441risk
 +void setCurrentPhase(GamePhase newPhase)
 +ArrayList<Card> getHoldingCards()
 +Card getHoldingCard(int position)
++void exchangeCardSets(List<CardSet> cardSets)
 +void removeExchangedCards()
 +ArrayList<String> getCurrentPhaseActions()
 +void addCurrentPhaseAction(String action)
@@ -124,12 +125,6 @@ soen6441riskgame.models.Player -->  "strategy" soen6441riskgame.models.strategie
 
 
 
-soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
-
-
-soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
-
-
 class "<b><size:14>CardSet</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.CardSet  [[../../soen6441riskgame/models/CardSet.html{soen6441riskgame.models.CardSet}]] {
 }
 
@@ -137,6 +132,13 @@ hide soen6441riskgame.models.CardSet fields
 hide soen6441riskgame.models.CardSet methods
 
 soen6441riskgame.models.Player ..> soen6441riskgame.models.CardSet
+
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
+
+
+soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
+
 
 class "<b><size:14>SerializableGame</b>\n<size:10>soen6441riskgame.models.serializers" as soen6441riskgame.models.serializers.SerializableGame  [[../../soen6441riskgame/models/serializers/SerializableGame.html{soen6441riskgame.models.serializers.SerializableGame}]] #white {
 }

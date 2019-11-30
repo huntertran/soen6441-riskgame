@@ -1,0 +1,37 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+package soen6441riskgame.utils.map [[../../../soen6441riskgame/utils/map/package-summary.html{soen6441riskgame.utils.map}]] #lightyellow {
+}
+
+interface "<b><size:14>ConquestMapReadable</b>" as soen6441riskgame.utils.map.ConquestMapReadable  [[../../../soen6441riskgame/utils/map/ConquestMapReadable.html{soen6441riskgame.utils.map.ConquestMapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.ConquestMapReadable fields
+hide soen6441riskgame.utils.map.ConquestMapReadable methods
+
+interface "<b><size:14>DominationMapReadable</b>" as soen6441riskgame.utils.map.DominationMapReadable  [[../../../soen6441riskgame/utils/map/DominationMapReadable.html{soen6441riskgame.utils.map.DominationMapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.DominationMapReadable fields
+hide soen6441riskgame.utils.map.DominationMapReadable methods
+
+interface "<b><size:14>MapReadable</b>" as soen6441riskgame.utils.map.MapReadable  [[../../../soen6441riskgame/utils/map/MapReadable.html{soen6441riskgame.utils.map.MapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.MapReadable fields
+hide soen6441riskgame.utils.map.MapReadable methods
+
+class "<b><size:14>MapReaderAdapter</b>" as soen6441riskgame.utils.map.MapReaderAdapter  [[../../../soen6441riskgame/utils/map/MapReaderAdapter.html{soen6441riskgame.utils.map.MapReaderAdapter}]] {
+}
+
+hide soen6441riskgame.utils.map.MapReaderAdapter fields
+hide soen6441riskgame.utils.map.MapReaderAdapter methods
+
+soen6441riskgame.utils.map.ConquestMapReadable --|> soen6441riskgame.utils.map.MapReadable
+soen6441riskgame.utils.map.DominationMapReadable --|> soen6441riskgame.utils.map.MapReadable
+soen6441riskgame.utils.map.MapReaderAdapter ..|> soen6441riskgame.utils.map.DominationMapReadable
+soen6441riskgame.utils.map.MapReaderAdapter ..|> soen6441riskgame.utils.map.ConquestMapReadable
+
+@enduml

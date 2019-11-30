@@ -59,17 +59,23 @@ enum "<b><size:14>CommonCommandArgs</b>" as soen6441riskgame.enums.CommonCommand
 hide soen6441riskgame.enums.CommonCommandArgs fields
 hide soen6441riskgame.enums.CommonCommandArgs methods
 
+enum "<b><size:14>ConquestMapPart</b>" as soen6441riskgame.enums.ConquestMapPart  [[../soen6441riskgame/enums/ConquestMapPart.html{soen6441riskgame.enums.ConquestMapPart}]] {
+}
+
+hide soen6441riskgame.enums.ConquestMapPart fields
+hide soen6441riskgame.enums.ConquestMapPart methods
+
+enum "<b><size:14>DominationMapPart</b>" as soen6441riskgame.enums.DominationMapPart  [[../soen6441riskgame/enums/DominationMapPart.html{soen6441riskgame.enums.DominationMapPart}]] {
+}
+
+hide soen6441riskgame.enums.DominationMapPart fields
+hide soen6441riskgame.enums.DominationMapPart methods
+
 enum "<b><size:14>GamePhase</b>" as soen6441riskgame.enums.GamePhase  [[../soen6441riskgame/enums/GamePhase.html{soen6441riskgame.enums.GamePhase}]] {
 }
 
 hide soen6441riskgame.enums.GamePhase fields
 hide soen6441riskgame.enums.GamePhase methods
-
-enum "<b><size:14>MapPart</b>" as soen6441riskgame.enums.MapPart  [[../soen6441riskgame/enums/MapPart.html{soen6441riskgame.enums.MapPart}]] {
-}
-
-hide soen6441riskgame.enums.MapPart fields
-hide soen6441riskgame.enums.MapPart methods
 
 enum "<b><size:14>StrategyName</b>" as soen6441riskgame.enums.StrategyName  [[../soen6441riskgame/enums/StrategyName.html{soen6441riskgame.enums.StrategyName}]] {
 }

@@ -1,0 +1,53 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+interface "<b><size:14>DominationMapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.DominationMapReadable  [[../../../soen6441riskgame/utils/map/DominationMapReadable.html{soen6441riskgame.utils.map.DominationMapReadable}]] {
+{abstract} +void loadMap(String fileName)
+{abstract} +int loadMapComponents(List<String> lines,int index)
+{abstract} +int loadContinentsFromFile(int currentLineIndex,List<String> lines)
+{abstract} +int loadCountriesFromFile(int currentLineIndex,List<String> lines)
+{abstract} +int loadBordersFromFile(int currentLineIndex,List<String> lines)
+{abstract} +void writeMapToFile(String fileName)
+{abstract} +void writeContinentsToFile(FileWriter writer)
+{abstract} +void writeBordersToFile(FileWriter writer)
+{abstract} +void writeCountriesToFile(FileWriter writer)
+}
+
+
+class "<b><size:14>MapController</b>\n<size:10>soen6441riskgame.controllers" as soen6441riskgame.controllers.MapController  [[../../../soen6441riskgame/controllers/MapController.html{soen6441riskgame.controllers.MapController}]] #white {
+}
+
+hide soen6441riskgame.controllers.MapController fields
+hide soen6441riskgame.controllers.MapController methods
+
+soen6441riskgame.controllers.MapController -->  "dominationMapReader" soen6441riskgame.utils.map.DominationMapReadable
+
+interface "<b><size:14>MapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.MapReadable  [[../../../soen6441riskgame/utils/map/MapReadable.html{soen6441riskgame.utils.map.MapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.MapReadable fields
+hide soen6441riskgame.utils.map.MapReadable methods
+
+soen6441riskgame.utils.map.DominationMapReadable --|> soen6441riskgame.utils.map.MapReadable
+
+
+class "<b><size:14>FileWriter</b>\n<size:10>java.io" as java.io.FileWriter  #lightgrey {
+}
+
+hide java.io.FileWriter fields
+hide java.io.FileWriter methods
+
+soen6441riskgame.utils.map.DominationMapReadable ..> java.io.FileWriter
+
+class "<b><size:14>MapReaderAdapter</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.MapReaderAdapter  [[../../../soen6441riskgame/utils/map/MapReaderAdapter.html{soen6441riskgame.utils.map.MapReaderAdapter}]] {
+}
+
+hide soen6441riskgame.utils.map.MapReaderAdapter fields
+hide soen6441riskgame.utils.map.MapReaderAdapter methods
+
+soen6441riskgame.utils.map.MapReaderAdapter ..|> soen6441riskgame.utils.map.DominationMapReadable
+
+
+@enduml

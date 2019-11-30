@@ -1,0 +1,17 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+enum "<b><size:14>ConquestMapPart</b>\n<size:10>soen6441riskgame.enums" as soen6441riskgame.enums.ConquestMapPart  [[../../soen6441riskgame/enums/ConquestMapPart.html{soen6441riskgame.enums.ConquestMapPart}]] {
+-String part
+-ConquestMapPart(String part)
+{static} +ConquestMapPart values()
+{static} +ConquestMapPart valueOf(String name)
++String getPart()
+{static} +ConquestMapPart fromString(String part)
+}
+
+
+
+@enduml

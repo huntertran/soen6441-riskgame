@@ -1,0 +1,41 @@
+@startuml
+
+skinparam svgLinkTarget _parent
+skinparam linetype ortho
+set namespaceSeparator none
+interface "<b><size:14>MapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.MapReadable  [[../../../soen6441riskgame/utils/map/MapReadable.html{soen6441riskgame.utils.map.MapReadable}]] {
++void addContinent(String continentName,String continentValue,int order)
++void addCountry(int order,String name,int continentOrder,Coordinate coordinate)
++void addBorders(int countryOrder,int borderWithCountries)
++boolean isStillInCurrentDataBlock(int currentLineIndex,List<String> lines)
++List<String> readMapFile(String fileName)
+}
+
+
+interface "<b><size:14>ConquestMapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.ConquestMapReadable  [[../../../soen6441riskgame/utils/map/ConquestMapReadable.html{soen6441riskgame.utils.map.ConquestMapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.ConquestMapReadable fields
+hide soen6441riskgame.utils.map.ConquestMapReadable methods
+
+soen6441riskgame.utils.map.ConquestMapReadable --|> soen6441riskgame.utils.map.MapReadable
+
+interface "<b><size:14>DominationMapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.DominationMapReadable  [[../../../soen6441riskgame/utils/map/DominationMapReadable.html{soen6441riskgame.utils.map.DominationMapReadable}]] {
+}
+
+hide soen6441riskgame.utils.map.DominationMapReadable fields
+hide soen6441riskgame.utils.map.DominationMapReadable methods
+
+soen6441riskgame.utils.map.DominationMapReadable --|> soen6441riskgame.utils.map.MapReadable
+
+class "<b><size:14>Coordinate</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Coordinate  [[../../../soen6441riskgame/models/Coordinate.html{soen6441riskgame.models.Coordinate}]] #white {
+}
+
+hide soen6441riskgame.models.Coordinate fields
+hide soen6441riskgame.models.Coordinate methods
+
+soen6441riskgame.utils.map.MapReadable ..> soen6441riskgame.models.Coordinate
+
+
+
+@enduml

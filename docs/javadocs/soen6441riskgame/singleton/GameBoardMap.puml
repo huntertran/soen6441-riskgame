@@ -20,6 +20,10 @@ class "<b><size:14>GameBoardMap</b>\n<size:10>soen6441riskgame.singleton" as soe
 +void reset()
 +void showContinents()
 +Country getCountryFromName(String countryName)
++boolean isCountryExisted(String countryName)
++Continent getContinentFromName(String continentName)
++boolean isContinentExisted(String continentName)
++void updateCountryContinent(Country country,Continent continent)
 +void printBorders()
 }
 

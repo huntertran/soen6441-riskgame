@@ -12,7 +12,6 @@ class "<b><size:14>Coordinate</b>\n<size:10>soen6441riskgame.models" as soen6441
 }
 
 
-
 class "<b><size:14>Country</b>\n<size:10>soen6441riskgame.models" as soen6441riskgame.models.Country  [[../../soen6441riskgame/models/Country.html{soen6441riskgame.models.Country}]] {
 }
 
@@ -20,6 +19,14 @@ hide soen6441riskgame.models.Country fields
 hide soen6441riskgame.models.Country methods
 
 soen6441riskgame.models.Country -->  "coordinate" soen6441riskgame.models.Coordinate
+
+interface "<b><size:14>MapReadable</b>\n<size:10>soen6441riskgame.utils.map" as soen6441riskgame.utils.map.MapReadable  [[../../soen6441riskgame/utils/map/MapReadable.html{soen6441riskgame.utils.map.MapReadable}]] #white {
+}
+
+hide soen6441riskgame.utils.map.MapReadable fields
+hide soen6441riskgame.utils.map.MapReadable methods
+
+soen6441riskgame.utils.map.MapReadable ..> soen6441riskgame.models.Coordinate
 
 
 @enduml

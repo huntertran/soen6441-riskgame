@@ -291,8 +291,8 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
     /**
      * load conquest map info
      * 
-     * @param lines lines in file
-     * @param index current line
+     * @param lines            lines in file
+     * @param currentLineIndex current line
      * @return end of the current block
      */
     @Override

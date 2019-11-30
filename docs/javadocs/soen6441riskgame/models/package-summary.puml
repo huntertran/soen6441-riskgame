@@ -80,9 +80,9 @@ soen6441riskgame.models.ModelCommands -->  "subRoutine *" soen6441riskgame.model
 soen6441riskgame.models.Player -->  "nextPlayer" soen6441riskgame.models.Player
 soen6441riskgame.models.Player -->  "previousPlayer" soen6441riskgame.models.Player
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Card
+soen6441riskgame.models.Player ..> soen6441riskgame.models.CardSet
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Continent
 soen6441riskgame.models.Player ..> soen6441riskgame.models.Country
-soen6441riskgame.models.Player ..> soen6441riskgame.models.CardSet
 package soen6441riskgame.models.commands [[../../soen6441riskgame/models/commands/package-summary.html{soen6441riskgame.models.commands}]] {
 }
 

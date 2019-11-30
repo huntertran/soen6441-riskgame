@@ -8,21 +8,21 @@ class "<b><size:14>GameCommands</b>\n<size:10>soen6441riskgame.models.commands" 
 {static} +String POPULATECOUNTRIES
 {static} +String PLACEARMY
 {static} +String PLACEALL
+{static} +String EXCHANGECARDS
 {static} +String REINFORCE
 {static} +String ATTACK
 {static} +String DEFEND
-{static} +String FORTIFY
-{static} +String CURRENTPLAYER
-{static} +String EXCHANGECARDS
-{static} +String NONE
-{static} +String EXIT
 {static} +String ATTACKMOVE
 {static} +String ALLOUT
-{static} +String DASH
-{static} +String SPACE
 {static} +String NOATTACK
+{static} +String FORTIFY
 {static} +String SAVEGAME
 {static} +String LOADGAME
+{static} +String CURRENTPLAYER
+{static} +String NONE
+{static} +String DASH
+{static} +String SPACE
+{static} +String EXIT
 +GameCommands()
 }
 
