@@ -11,6 +11,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
+import soen6441riskgame.utils.map.ConquestMapReadable;
 import soen6441riskgame.utils.map.DominationMapReadable;
 import soen6441riskgame.utils.map.MapReaderAdapter;
 
@@ -20,9 +21,18 @@ import soen6441riskgame.utils.map.MapReaderAdapter;
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
     private DominationMapReadable dominationMapReader = new MapReaderAdapter();
+    private ConquestMapReadable conquestMapReader = new MapReaderAdapter();
+
+    public void loadMap(String fileName, boolean isConquestMapType) throws IOException {
+        if (isConquestMapType) {
+            conquestMapReader.loadConquestMap(fileName);
+        } else {
+            dominationMapReader.loadMap(fileName);
+        }
+    }
 
     public void loadMap(String fileName) throws IOException {
-        dominationMapReader.loadMap(fileName);
+        loadMap(fileName, false);
     }
 
     public void addContinent(String continentName, String continentValue, int... order) {
@@ -182,16 +192,31 @@ public final class MapController {
     /**
      * save the map to a file
      *
-     * @param fileName path to file
+     * @param fileName          path to file
+     * @param isConquestMapType true to save map as conquest map type
      * @throws IOException exception
      */
-    public void saveMap(String fileName) throws IOException {
+    public void saveMap(String fileName, boolean isConquestMapType) throws IOException {
         if (!isMapValid()) {
             ConsolePrinter.printFormat("Invalid map. Map not saved");
             return;
         }
 
-        dominationMapReader.writeMapToFile(fileName);
+        if (isConquestMapType) {
+            conquestMapReader.writeMapToConquestFile(fileName);
+        } else {
+            dominationMapReader.writeMapToFile(fileName);
+        }
+    }
+
+    /**
+     * save the map to a file
+     *
+     * @param fileName path to file
+     * @throws IOException exception
+     */
+    public void saveMap(String fileName) throws IOException {
+        saveMap(fileName, false);
     }
 
     /**

@@ -46,11 +46,11 @@ public class MapControllerTest {
 
         // Assertions
         Assertions.assertEquals("North_Africa",
-            GameBoard.getInstance()
-            .getGameBoardMap()
-            .getContinents()
-            .get(0)
-            .getName());
+                                GameBoard.getInstance()
+                                         .getGameBoardMap()
+                                         .getContinents()
+                                         .get(0)
+                                         .getName());
     }
 
     /**
@@ -311,6 +311,7 @@ public class MapControllerTest {
 
     /**
      * it tests the saveMap method and checks whether the map is saved correctly or not.
+     * 
      * @throws IOException if file not found
      */
     @Test
@@ -331,9 +332,10 @@ public class MapControllerTest {
         // assert
         Assertions.assertTrue(true);
     }
-/**
-     * it tests if the map is valid or not by checking if sufficient
-     * number of countries are added.
+
+    /**
+     * it tests if the map is valid or not by checking if sufficient number of countries are added.
+     * 
      * @throws IOException if file not found
      */
     @Test
@@ -360,6 +362,7 @@ public class MapControllerTest {
 
     /**
      * it tests if there is an isolated country on the map, which if true, will make map invalid.
+     * 
      * @throws IOException if file not found
      */
     @Test
@@ -381,6 +384,7 @@ public class MapControllerTest {
 
     /**
      * it tests for the validity of the map by after removal of countries from a continent.
+     * 
      * @throws IOException if file not found
      */
     @Test
