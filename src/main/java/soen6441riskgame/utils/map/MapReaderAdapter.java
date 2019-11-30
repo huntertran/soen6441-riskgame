@@ -323,10 +323,14 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
                                           .getOrder();
 
             addCountry(countryOrder, countryName, continentOrder, coordinate);
-
-            currentLineIndex = index;
         }
 
+        originalLineIndex = loadBordersFromConquestFile(lines, originalLineIndex);
+
+        return originalLineIndex + 1;
+    }
+
+    private int loadBordersFromConquestFile(List<String> lines, int originalLineIndex) {
         // load borders
         // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
         // Territory name,x,y,Continent,neighbor1,neighbor1
@@ -361,8 +365,7 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
 
             originalLineIndex = index;
         }
-
-        return originalLineIndex + 1;
+        return originalLineIndex;
     }
 
     @Override
@@ -379,7 +382,7 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
     @Override
     public void writeContinentsToConquestFile(FileWriter writer) throws IOException {
         ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
-        writer.write(ConquestMapPart.CONTINENTS + "\n");
+        writer.write(ConquestMapPart.CONTINENTS.getPart() + "\n");
 
         for (Continent continent : continents) {
             writer.write(continent.getName() + "=" + continent.getArmy() + "\n");
@@ -390,7 +393,27 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
 
     @Override
     public void writeCountriesToConquestFile(FileWriter writer) throws IOException {
-        // TODO Auto-generated method stub
+        // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
+        ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
+        writer.write(ConquestMapPart.TERRITORIES.getPart() + "\n");
+        for (Country country : countries) {
 
+            String countryData = country.getName() + ","
+                                 + country.getCoordinate().getX() + ","
+                                 + country.getCoordinate().getY() + ","
+                                 + country.getContinent().getName() + ",";
+
+            ArrayList<Country> neighbors = country.getNeighbors();
+
+            for (Country neighbor : neighbors) {
+                countryData += neighbor.getName() + ",";
+            }
+
+            countryData = countryData.substring(0, countryData.length() - 1);
+
+            writer.write(countryData + "\n");
+        }
+
+        writer.write("\n");
     }
 }
