@@ -13,7 +13,7 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
-public class MapReaderAdapter implements DominationMapReadable, ConquestMapReadable, MapReadable {
+public class MapReaderAdapter implements DominationMapReadable, ConquestMapReadable {
     /**
      * load map from file
      *
@@ -179,7 +179,7 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
      */
     public void writeContinentsToFile(FileWriter writer) throws IOException {
         ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
-        writer.write("[continents]\n");
+        writer.write(DominationMapPart.CONTINENTS.getPart() + "\n");
 
         for (Continent continent : continents) {
             writer.write(continent.getName() + " " + continent.getArmy() + "\n");
@@ -195,7 +195,7 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
      * @throws IOException file not found or not exist
      */
     public void writeBordersToFile(FileWriter writer) throws IOException {
-        writer.write("[borders]\n");
+        writer.write(DominationMapPart.BORDERS.getPart() + "\n");
 
         for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {
             ArrayList<Country> neighbors = country.getNeighbors();
@@ -218,7 +218,7 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
      */
     public void writeCountriesToFile(FileWriter writer) throws IOException {
         ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
-        writer.write("[countries]\n");
+        writer.write(DominationMapPart.COUNTRIES.getPart() + "\n");
         for (Country country : countries) {
             writer.write(country.getOrder() + " "
                          + country.getName() + " "
