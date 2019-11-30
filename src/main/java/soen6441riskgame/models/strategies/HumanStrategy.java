@@ -65,13 +65,17 @@ public class HumanStrategy implements Strategy {
     public void playTurn(Player player) {
         ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,
                                    "HUMAN PLAYER TURN");
+        ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,
+                                   false,
+                                   "ENTER YOUR ACTION: ");
         Scanner scanner = new Scanner(System.in);
+        String command = scanner.nextLine();
 
         while (player.isPlaying() && player.getCurrentPhase() != GamePhase.END_OF_GAME) {
-            String command = scanner.nextLine();
             ModelCommands cmds = new ModelCommands(command);
             App.jumpToCommand(cmds);
             ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,
+                                       false,
                                        "ENTER YOUR ACTION: ");
             command = scanner.nextLine();
         }
