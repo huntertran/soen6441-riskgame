@@ -75,14 +75,15 @@ public final class App {
                 break;
             }
             case MapEditorCommands.SAVEMAP: {
-                try {
-                    boolean isConquestMapType = false;
-                    if (args.regularCommands.size() > 1) {
-                        if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
-                            isConquestMapType = true;
-                        }
-                    }
 
+                boolean isConquestMapType = false;
+                if (args.regularCommands.size() > 1) {
+                    if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
+                        isConquestMapType = true;
+                    }
+                }
+
+                try {
                     mapController.saveMap(args.regularCommands.get(0), isConquestMapType);
                 } catch (IOException e) {
                     ConsolePrinter.printFormat("Error: " + e.getClass().getName());
@@ -102,14 +103,14 @@ public final class App {
                 break;
             }
             case MapEditorCommands.LOADMAP: {
-                try {
-                    boolean isConquestMapType = false;
-                    if (args.regularCommands.size() > 1) {
-                        if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
-                            isConquestMapType = true;
-                        }
+                boolean isConquestMapType = false;
+                if (args.regularCommands.size() > 1) {
+                    if (args.regularCommands.get(1).contains(MapEditorCommands.CONQUEST_MAP_TYPE)) {
+                        isConquestMapType = true;
                     }
+                }
 
+                try {
                     mapController.loadMap(args.regularCommands.get(0), isConquestMapType);
                 } catch (IOException e) {
                     ConsolePrinter.printFormat("Error: " + e.getClass().getName());
