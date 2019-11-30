@@ -1,72 +1,24 @@
 package soen6441riskgame.controllers;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import soen6441riskgame.enums.CommonCommandArgs;
-import soen6441riskgame.enums.MapPart;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
-import soen6441riskgame.utils.Parser;
+import soen6441riskgame.utils.map.DominationMapReader;
 
 /**
  * handle the operations to generate, edit and control the map.
  */
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
-
-    /**
-     * add border from country to others country
-     *
-     * @param countryOrder        the location of first country in the border graph
-     * @param borderWithCountries the location of other countries in the border graph
-     */
-    private void addBorders(int countryOrder, int... borderWithCountries) {
-        int[][] graph = GameBoard.getInstance().getGameBoardMap().getBorders();
-        for (int borderWithCountry : borderWithCountries) {
-            graph[countryOrder - 1][borderWithCountry - 1] = 1;
-            graph[borderWithCountry - 1][countryOrder - 1] = 1;
-        }
-    }
-
-    /**
-     * adds new continent
-     *
-     * @param continentName  name of the continent
-     * @param continentValue the amount of army for the new continent
-     * @param order          the continent other in the list (start with 1 as the map file structure
-     *                       indicate)
-     */
-    public void addContinent(String continentName, String continentValue, int... order) {
-        if (!Parser.checkValidInputNumber(continentValue)) {
-            ConsolePrinter.printFormat("Invalid Input");
-        }
-
-        if (!isContinentExisted(continentName)) {
-            GameBoard.getInstance()
-                     .getGameBoardMap()
-                     .getContinents()
-                     .add(new Continent(continentName,
-                                        Integer.parseInt(continentValue)));
-
-            ConsolePrinter.printFormat("New continent added: %s with %s armies",
-                                       continentName,
-                                       continentValue);
-        } else {
-            ConsolePrinter.printFormat("Continent with name %s existed", continentName);
-        }
-    }
+    public DominationMapReader dominationMapReader = new DominationMapReader();
 
     /**
      * add new country to an existed continent OR add existing country to an existed continent
@@ -75,7 +27,7 @@ public final class MapController {
      * @param continentName the existed continent name
      */
     public void addCountry(String countryName, String continentName) {
-        Continent continent = getContinentFromName(continentName);
+        Continent continent = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
 
         if (continent == null) {
@@ -93,23 +45,6 @@ public final class MapController {
     }
 
     /**
-     * add new country from map file
-     *
-     * @param order          the order of country in the list, start with 1
-     * @param name           the country name (no space allowed)
-     * @param continentOrder the other of the continent that new country belongs to
-     * @param coordinate     the position of the country on a visual map (not used)
-     */
-    private void addCountryFromMapFile(int order, String name, int continentOrder, Coordinate coordinate) {
-        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
-            if (continent.getOrder() == continentOrder) {
-                Country country = new Country(order, name, coordinate, continent);
-                updateCountryContinent(country, continent);
-            }
-        }
-    }
-
-    /**
      * connect 2 countries with each other on the borderGraph
      *
      * @param countryName         name of the country
@@ -124,7 +59,7 @@ public final class MapController {
             return;
         }
 
-        addBorders(country.getOrder(), neighbor.getOrder());
+        dominationMapReader.addBorders(country.getOrder(), neighbor.getOrder());
     }
 
     /**
@@ -144,7 +79,7 @@ public final class MapController {
 
         increaseBorder(newBorderSize);
 
-        updateCountryContinent(newCountry, continent);
+        GameBoard.getInstance().getGameBoardMap().updateCountryContinent(newCountry, continent);
 
         ConsolePrinter.printFormat("Country %s is created", countryName);
     }
@@ -180,7 +115,7 @@ public final class MapController {
 
         switch (continentCommand) {
             case ADD: {
-                addContinent(args[1], args[2]);
+                dominationMapReader.addContinent(args[1], args[2]);
                 break;
             }
             case REMOVE: {
@@ -228,11 +163,26 @@ public final class MapController {
      */
     public void editMap(String fileName) throws IOException {
         try {
-            loadMap(fileName);
+            dominationMapReader.loadMap(fileName);
         } catch (IOException e) {
             // file not existed. Create new map
             saveMap(fileName);
         }
+    }
+
+    /**
+     * save the map to a file
+     *
+     * @param fileName      path to file
+     * @throws IOException exception
+     */
+    public void saveMap(String fileName) throws IOException {
+        if (!isMapValid()) {
+            ConsolePrinter.printFormat("Invalid map. Map not saved");
+            return;
+        }
+
+        dominationMapReader.writeMapToFile(fileName);
     }
 
     /**
@@ -258,21 +208,6 @@ public final class MapController {
                 break;
             }
         }
-    }
-
-    /**
-     * get continent object from name
-     *
-     * @param continentName name of the continent
-     * @return null if continent name is not existed in map
-     */
-    public Continent getContinentFromName(String continentName) {
-        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {
-            if (continent.getName().equals(continentName))
-                return continent;
-        }
-
-        return null;
     }
 
     /**
@@ -318,30 +253,6 @@ public final class MapController {
     }
 
     /**
-     * check if continent with the specified name existed in map
-     *
-     * @param continentName name of the continent
-     * @return is continent existed
-     */
-    public boolean isContinentExisted(String continentName) {
-        Continent continent = getContinentFromName(continentName);
-
-        return continent != null;
-    }
-
-    /**
-     * check if country with the specified name existed in map
-     *
-     * @param countryName name of the country
-     * @return true if country existed
-     */
-    public boolean isCountryExisted(String countryName) {
-        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
-
-        return country != null;
-    }
-
-    /**
      * check if the number of country is lower than the minimum amount of country required currently the
      * minimum required is {@MINIMUM_AMOUNT_OF_COUNTRIES}
      *
@@ -354,162 +265,10 @@ public final class MapController {
         if (isNotEnoughCountries) {
             ConsolePrinter.printFormat("Not enough countries. Created: %d - Minimum required: %s",
                                        numberOfCountry,
-                MapController.MINIMUM_AMOUNT_OF_COUNTRIES);
+                                       MapController.MINIMUM_AMOUNT_OF_COUNTRIES);
         }
 
         return isNotEnoughCountries;
-    }
-
-    /**
-     * The map file stores data in blocks. This function check if the current data line is still in a
-     * block or not
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the lines in map file
-     * @return if the current data line is still in a block or not
-     */
-    private boolean isStillInCurrentDataBlock(int currentLineIndex, List<String> lines) {
-        if (currentLineIndex < lines.size()) {
-            String currentLine = lines.get(currentLineIndex);
-            return !currentLine.equals("") && currentLine.contains(" ");
-        }
-
-        return false;
-    }
-
-    /**
-     * Load all border data from map file
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the line in map file
-     * @return the line index that end the border block in map file
-     */
-    private int loadBordersFromFile(int currentLineIndex, List<String> lines) {
-        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();
-        GameBoard.getInstance().getGameBoardMap().setBorders(new int[numberOfCountry][numberOfCountry]);
-
-        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
-            String currentLine = lines.get(index);
-
-            String[] fragments = currentLine.split(" ");
-
-            int countryOrder = Integer.parseInt(fragments[0]);
-
-            int[] borderWithCountries = new int[fragments.length - 1];
-            for (int borderIndex = 0; borderIndex < borderWithCountries.length; borderIndex++) {
-                borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);
-            }
-
-            addBorders(countryOrder, borderWithCountries);
-
-            currentLineIndex = index;
-        }
-
-        return currentLineIndex + 1;
-    }
-
-    /**
-     * Load all continent data from map file
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the line in map file
-     * @return the line index that end the continent block in map file
-     */
-    private int loadContinentsFromFile(int currentLineIndex, List<String> lines) {
-        int continentOrder = 1;
-        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
-            String currentLine = lines.get(index);
-            String[] fragments = currentLine.split(" ");
-            String continentName = fragments[0];
-            int continentArmy = Integer.parseInt(fragments[1]);
-
-            // String continentColor = fragments[2];
-
-            addContinent(continentName, Integer.toString(continentArmy), continentOrder);
-
-            currentLineIndex = index;
-            continentOrder++;
-        }
-
-        return currentLineIndex + 1;
-    }
-
-    /**
-     * Load all country data from map file
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the line in map file
-     * @return the line index that end the country block in map file
-     */
-    private int loadCountriesFromFile(int currentLineIndex, List<String> lines) {
-        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
-            String currentLine = lines.get(index);
-
-            String[] fragments = currentLine.split(" ");
-
-            int countryOrder = Integer.parseInt(fragments[0]);
-            String countryName = fragments[1];
-            int continentOrder = Integer.parseInt(fragments[2]);
-            int x = Integer.parseInt(fragments[3]);
-            int y = Integer.parseInt(fragments[4]);
-            Coordinate coordinate = new Coordinate(x, y);
-
-            addCountryFromMapFile(countryOrder, countryName, continentOrder, coordinate);
-
-            currentLineIndex = index;
-        }
-
-        return currentLineIndex + 1;
-    }
-
-    /**
-     * load map from file
-     *
-     * @param fileName the exact path to map file, end with .map extension for example:
-     *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
-     * @throws IOException exception
-     */
-    public void loadMap(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
-
-        List<String> lines = Files.lines(path).collect(Collectors.toList());
-        resetMap();
-        for (int index = 0; index < lines.size(); index++) {
-            String currentLine = lines.get(index);
-            if (currentLine.startsWith(";")) {
-                continue;
-            }
-
-            String firstWord = currentLine.split(" ")[0];
-            MapPart part = MapPart.fromString(firstWord);
-
-            switch (part) {
-                case NAME: {
-                    GameBoard.getInstance()
-                             .getGameBoardMap()
-                             .setMapName(currentLine.split("name")[1].trim());
-                    break;
-                }
-                case CONTINENTS: {
-                    index = loadContinentsFromFile(index, lines);
-                    break;
-                }
-                case COUNTRIES: {
-                    index = loadCountriesFromFile(index, lines);
-                    break;
-                }
-                case BORDERS: {
-                    index = loadBordersFromFile(index, lines);
-                    break;
-                }
-                case FILES:
-                case NONE: {
-                    break;
-                }
-            }
-        }
-
-        ConsolePrinter.printFormat("Map loaded");
     }
 
     /**
@@ -521,7 +280,7 @@ public final class MapController {
     public void removeContinent(String continentName) {
         ConsolePrinter.printFormat("Remove continent will remove all country inside that continent");
 
-        Continent continentToRemove = getContinentFromName(continentName);
+        Continent continentToRemove = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);
 
         if (continentToRemove != null) {
             String[] countriesToRemove = new String[continentToRemove.getCountries().size()];
@@ -614,111 +373,10 @@ public final class MapController {
     }
 
     /**
-     * Reset the map, clear all continents, countries and borders
-     */
-    public void resetMap() {
-        GameBoard.getInstance().reset();
-    }
-
-    /**
-     * save the map to a file
-     *
-     * @param fileName path to file
-     * @throws IOException exception
-     */
-    public void saveMap(String fileName) throws IOException {
-        if (!isMapValid()) {
-            ConsolePrinter.printFormat("Invalid map. Map not saved");
-            return;
-        }
-
-        FileWriter writer = new FileWriter(fileName);
-
-        writeContinentsToFile(writer);
-
-        writeCountriesToFile(writer);
-
-        writeBordersToFile(writer);
-
-        writer.close();
-    }
-
-    /**
-     * Write borders information to file
-     *
-     * @param writer file writer
-     * @throws IOException file not found or not exist
-     */
-    private void writeBordersToFile(FileWriter writer) throws IOException {
-        writer.write("[borders]\n");
-
-        for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {
-            ArrayList<Country> neighbors = country.getNeighbors();
-
-            StringBuilder neighborLine = new StringBuilder(Integer.toString(country.getOrder()));
-
-            for (Country neighbor : neighbors) {
-                neighborLine.append(" ").append(neighbor.getOrder());
-            }
-
-            writer.write(neighborLine + "\n");
-        }
-    }
-
-    /**
-     * Write countries information to file
-     *
-     * @param writer file writer
-     * @throws IOException file not found or not exist
-     */
-    private void writeCountriesToFile(FileWriter writer) throws IOException {
-        ArrayList<Country> countries = GameBoard.getInstance().getGameBoardMap().getCountries();
-        writer.write("[countries]\n");
-        for (Country country : countries) {
-            writer.write(country.getOrder() + " "
-                         + country.getName() + " "
-                         + country.getContinent().getOrder() + " "
-                         + country.getCoordinate().getX() + " "
-                         + country.getCoordinate().getY() + "\n");
-        }
-        writer.write("\n");
-    }
-
-    /**
-     * Write continent information to file
-     *
-     * @param writer file writer
-     * @throws IOException file not found or not exist
-     */
-    private void writeContinentsToFile(FileWriter writer) throws IOException {
-        ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
-        writer.write("[continents]\n");
-
-        for (Continent continent : continents) {
-            writer.write(continent.getName() + " " + continent.getArmy() + "\n");
-        }
-
-        writer.write("\n");
-    }
-
-    /**
      * Display all continents and it's countries to console
      */
     public void showMap() {
         GameBoard.getInstance().getGameBoardMap().showContinents();
-    }
-
-    /**
-     * add the country to country list in GameMap, and add to continent's country list in GameMap this
-     * function should be remove when Dependency Injection implemented
-     *
-     * @param country   the country object
-     * @param continent the continent object
-     */
-    private void updateCountryContinent(Country country, Continent continent) {
-        country.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());
-        GameBoard.getInstance().getGameBoardMap().getCountries().add(country);
-        continent.getCountries().add(country);
     }
 
     /**
@@ -792,14 +450,14 @@ public final class MapController {
         }
 
         boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance()
-            .getGameBoardMap()
+                                                                            .getGameBoardMap()
                                                                             .getCountries());
 
         return !isIsolatedCountryExisted
-            && !isEmptyContinentExisted
-            && !isCountryWithNoContinentExisted
-            && isCountriesInContinentConnected
-            && isMapConnected;
+               && !isEmptyContinentExisted
+               && !isCountryWithNoContinentExisted
+               && isCountriesInContinentConnected
+               && isMapConnected;
     }
 
     /**

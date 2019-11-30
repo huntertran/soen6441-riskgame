@@ -28,7 +28,7 @@ public class MapControllerTest {
     public void runBeforeEachTestCase() {
         GameBoard testingInstanceGameMap = new GameBoard();
         GameBoard.setTestingInstance(testingInstanceGameMap);
-        mapController.resetMap();
+        mapController.dominationMapReader.resetMap();
     }
 
     /**
@@ -42,7 +42,7 @@ public class MapControllerTest {
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
 
         // Action
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.loadMap(filePath);
 
         // Assertions
         Assertions.assertEquals("North_Africa",
@@ -62,11 +62,11 @@ public class MapControllerTest {
                  "Asia, 14" })
     public void addContinentTest(String continentName, String continentValue) {
         // Action
-        mapController.addContinent(continentName, continentValue);
-        Continent continent = mapController.getContinentFromName(continentName);
+        mapController.dominationMapReader.addContinent(continentName, continentValue);
+        Continent continent = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);
 
         // Assertions
-        Assertions.assertTrue(mapController.isContinentExisted(continentName));
+        Assertions.assertTrue(GameBoard.getInstance().getGameBoardMap().isContinentExisted(continentName));
         Assertions.assertNotNull(continent);
         Assertions.assertEquals(continentValue, Integer.toString(continent.getArmy()));
     }
@@ -83,7 +83,7 @@ public class MapControllerTest {
                                     String country1,
                                     String country2) {
         // Setup
-        mapController.addContinent(continent, continentValue);
+        mapController.dominationMapReader.addContinent(continent, continentValue);
         mapController.addCountry(country1, continent);
         mapController.addCountry(country2, continent);
 
@@ -91,9 +91,9 @@ public class MapControllerTest {
         mapController.removeContinent(continent);
 
         // Assertions
-        Assertions.assertNull(mapController.getContinentFromName(continent));
-        Assertions.assertFalse(mapController.isCountryExisted(country1));
-        Assertions.assertFalse(mapController.isCountryExisted(country2));
+        Assertions.assertNull(GameBoard.getInstance().getGameBoardMap().getContinentFromName(continent));
+        Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country1));
+        Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country2));
     }
 
     /**
@@ -108,15 +108,15 @@ public class MapControllerTest {
                                String country1,
                                String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        mapController.dominationMapReader.addContinent(continent1, continent1_value);
 
         // Action
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
 
         // Assertions
-        Assertions.assertTrue(mapController.isCountryExisted(country1));
-        Assertions.assertTrue(mapController.isCountryExisted(country2));
+        Assertions.assertTrue(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country1));
+        Assertions.assertTrue(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country2));
     }
 
     /**
@@ -131,7 +131,7 @@ public class MapControllerTest {
                                   String country1,
                                   String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        mapController.dominationMapReader.addContinent(continent1, continent1_value);
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
 
@@ -140,8 +140,8 @@ public class MapControllerTest {
         mapController.removeCountry(country2);
 
         // Assertions
-        Assertions.assertFalse(mapController.isCountryExisted(country1));
-        Assertions.assertFalse(mapController.isCountryExisted(country2));
+        Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country1));
+        Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country2));
     }
 
     /**
@@ -155,7 +155,7 @@ public class MapControllerTest {
                                 String country3,
                                 String country4) {
         // Setup
-        mapController.addContinent("Russia", "14");
+        mapController.dominationMapReader.addContinent("Russia", "14");
         mapController.addCountry(country1, "Russia");
         mapController.addCountry(country2, "Russia");
         mapController.addCountry(country3, "Russia");
@@ -191,7 +191,7 @@ public class MapControllerTest {
         mapController.editContinent(arguments);
 
         // Assertions
-        Assertions.assertFalse(mapController.isContinentExisted(continent1));
+        Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isContinentExisted(continent1));
     }
 
     /**
@@ -204,12 +204,12 @@ public class MapControllerTest {
     public void editCountryCommandTest(String arg, String country1, String countryExisted) {
         // Setup
         String continent = "Russia";
-        mapController.addContinent(continent, "11");
+        mapController.dominationMapReader.addContinent(continent, "11");
         boolean isCountryExisted = Parser.parseWithDefault(countryExisted, 0) == 1;
 
         // Action
         mapController.editCountry(new String[] { arg, country1, continent });
-        boolean actualIsCountryExisted = mapController.isCountryExisted(country1);
+        boolean actualIsCountryExisted = GameBoard.getInstance().getGameBoardMap().isCountryExisted(country1);
 
         // Assertions
         Assertions.assertEquals(isCountryExisted, actualIsCountryExisted);
@@ -225,7 +225,7 @@ public class MapControllerTest {
     public void removeCountryCommand(String country) {
         // Setup
         String continent = "Russia";
-        mapController.addContinent(continent, "11");
+        mapController.dominationMapReader.addContinent(continent, "11");
         mapController.addCountry(country, continent);
 
         // Action
@@ -233,7 +233,7 @@ public class MapControllerTest {
         mapController.editCountry(arguments);
 
         // Assertions
-        Assertions.assertFalse(mapController.isCountryExisted(country));
+        Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isCountryExisted(country));
     }
 
     /**
@@ -250,7 +250,7 @@ public class MapControllerTest {
                                    String country4) {
         // Setup
         String continent = "Asia";
-        mapController.addContinent(continent, "14");
+        mapController.dominationMapReader.addContinent(continent, "14");
         mapController.addCountry(country1, continent);
         mapController.addCountry(country2, continent);
         mapController.addCountry(country3, continent);
@@ -291,7 +291,7 @@ public class MapControllerTest {
                                  String neighboringCountry) {
         // Setup
         String continent = "Asia";
-        mapController.addContinent(continent, "14");
+        mapController.dominationMapReader.addContinent(continent, "14");
         mapController.addCountry(country1, continent);
         mapController.addCountry(country2, continent);
 
@@ -317,7 +317,7 @@ public class MapControllerTest {
     public void saveMapTest() throws IOException {
         // setup
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.loadMap(filePath);
 
         String savedMapFilePath = "./src/test/java/files/maps/domination/SavedRiskEurope.map";
 
@@ -340,7 +340,7 @@ public class MapControllerTest {
     public void validateMapNotEnoughCountryTest() throws IOException {
         // setup
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.loadMap(filePath);
 
         // action: make the map invalid
         while (GameBoard.getInstance()
@@ -366,7 +366,7 @@ public class MapControllerTest {
     public void validateMapIsolatedCountryTest() throws IOException {
         // setup
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.loadMap(filePath);
 
         // action: make the map invalid
         Country targetCountry = GameBoard.getInstance().getGameBoardMap().getCountries().get(0);
@@ -387,7 +387,7 @@ public class MapControllerTest {
     public void validateMapEmptyContinentTest() throws IOException {
         // setup
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.loadMap(filePath);
 
         // action: make the map invalid
         Continent targetContinent = GameBoard.getInstance().getGameBoardMap().getContinents().get(0);
@@ -416,7 +416,7 @@ public class MapControllerTest {
     public void validateMapNotConnectedContinentTest() throws IOException {
         // setup
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.loadMap(filePath);
 
         // making the map invalid
         // remove border of Tunisia and Algeria

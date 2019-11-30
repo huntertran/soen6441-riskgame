@@ -118,6 +118,58 @@ public class GameBoardMap implements Resettable {
     }
 
     /**
+     * check if country with the specified name existed in map
+     *
+     * @param countryName name of the country
+     * @return true if country existed
+     */
+    public boolean isCountryExisted(String countryName) {
+        Country country = getCountryFromName(countryName);
+
+        return country != null;
+    }
+
+    /**
+     * get continent object from name
+     *
+     * @param continentName name of the continent
+     * @return null if continent name is not existed in map
+     */
+    public Continent getContinentFromName(String continentName) {
+        for (Continent continent : getContinents()) {
+            if (continent.getName().equals(continentName))
+                return continent;
+        }
+
+        return null;
+    }
+
+    /**
+     * check if continent with the specified name existed in map
+     *
+     * @param continentName name of the continent
+     * @return is continent existed
+     */
+    public boolean isContinentExisted(String continentName) {
+        Continent continent = getContinentFromName(continentName);
+
+        return continent != null;
+    }
+
+    /**
+     * add the country to country list in GameMap, and add to continent's country list in GameMap this
+     * function should be remove when Dependency Injection implemented
+     *
+     * @param country   the country object
+     * @param continent the continent object
+     */
+    public void updateCountryContinent(Country country, Continent continent) {
+        country.addObserver(getPlayersWorldDominationView());
+        getCountries().add(country);
+        continent.getCountries().add(country);
+    }
+
+    /**
      * Print the current border in matrix style
      */
     public void printBorders() {

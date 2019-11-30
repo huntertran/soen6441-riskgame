@@ -46,8 +46,8 @@ public class GameControllerTest {
 
         String filePath = "./src/test/java/files/maps/domination/RiskEurope.map";
         mapController = new MapController();
-        mapController.resetMap();
-        mapController.loadMap(filePath);
+        mapController.dominationMapReader.resetMap();
+        mapController.dominationMapReader.loadMap(filePath);
 
         gameController = new GameController();
     }
@@ -57,7 +57,7 @@ public class GameControllerTest {
      */
     @AfterEach
     public void after() {
-        mapController.resetMap();
+        mapController.dominationMapReader.resetMap();
         GameBoard.getInstance().getGameBoardPlaying().setAttackMoveCmdRequired(false);
     }
 
@@ -291,7 +291,7 @@ public class GameControllerTest {
                     || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
 
         }
-        
+
             }
 
     /**
