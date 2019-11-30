@@ -11,14 +11,14 @@ import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
-import soen6441riskgame.utils.map.DominationMapReader;
+import soen6441riskgame.utils.map.MapReaderAdapter;
 
 /**
  * handle the operations to generate, edit and control the map.
  */
 public final class MapController {
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
-    public DominationMapReader dominationMapReader = new DominationMapReader();
+    public MapReaderAdapter mapReaderAdapter = new MapReaderAdapter();
 
     /**
      * add new country to an existed continent OR add existing country to an existed continent
@@ -59,7 +59,7 @@ public final class MapController {
             return;
         }
 
-        dominationMapReader.addBorders(country.getOrder(), neighbor.getOrder());
+        mapReaderAdapter.addBorders(country.getOrder(), neighbor.getOrder());
     }
 
     /**
@@ -115,7 +115,7 @@ public final class MapController {
 
         switch (continentCommand) {
             case ADD: {
-                dominationMapReader.addContinent(args[1], args[2]);
+                mapReaderAdapter.addContinent(args[1], args[2]);
                 break;
             }
             case REMOVE: {
@@ -163,7 +163,7 @@ public final class MapController {
      */
     public void editMap(String fileName) throws IOException {
         try {
-            dominationMapReader.loadMap(fileName);
+            mapReaderAdapter.loadMap(fileName);
         } catch (IOException e) {
             // file not existed. Create new map
             saveMap(fileName);
@@ -182,7 +182,7 @@ public final class MapController {
             return;
         }
 
-        dominationMapReader.writeMapToFile(fileName);
+        mapReaderAdapter.writeMapToFile(fileName);
     }
 
     /**
