@@ -1,6 +1,11 @@
 package soen6441riskgame.utils.map;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
@@ -94,5 +99,21 @@ public interface MapReadable {
         }
 
         return false;
+    }
+
+    /**
+     * load map from file
+     *
+     * @param fileName the exact path to map file, end with .map extension for example:
+     *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
+     * @throws IOException exception
+     */
+    default List<String> readMapFile(String fileName) throws IOException{
+        Path path = Paths.get(fileName);
+
+        List<String> lines = Files.lines(path).collect(Collectors.toList());
+        resetMap();
+        
+        return lines;
     }
 }

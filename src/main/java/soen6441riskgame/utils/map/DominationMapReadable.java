@@ -7,6 +7,8 @@ import java.util.List;
 public interface DominationMapReadable {
     void loadMap(String fileName) throws IOException;
 
+    int loadMapComponents(List<String> lines, int index);
+
     int loadContinentsFromFile(int currentLineIndex, List<String> lines);
 
     int loadCountriesFromFile(int currentLineIndex, List<String> lines);

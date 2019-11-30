@@ -2,14 +2,11 @@ package soen6441riskgame.utils.map;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import soen6441riskgame.enums.MapPart;
+import soen6441riskgame.enums.ConquestMapPart;
+import soen6441riskgame.enums.DominationMapPart;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
@@ -17,7 +14,6 @@ import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 public class MapReaderAdapter implements DominationMapReadable, ConquestMapReadable, MapReadable {
-
     /**
      * load map from file
      *
@@ -25,47 +21,51 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
      *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
      * @throws IOException exception
      */
+    @Override
     public void loadMap(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
-
-        List<String> lines = Files.lines(path).collect(Collectors.toList());
-        resetMap();
+        List<String> lines = readMapFile(fileName);
         for (int index = 0; index < lines.size(); index++) {
-            String currentLine = lines.get(index);
-            if (currentLine.startsWith(";")) {
-                continue;
-            }
-
-            String firstWord = currentLine.split(" ")[0];
-            MapPart part = MapPart.fromString(firstWord);
-
-            switch (part) {
-                case NAME: {
-                    GameBoard.getInstance()
-                             .getGameBoardMap()
-                             .setMapName(currentLine.split("name")[1].trim());
-                    break;
-                }
-                case CONTINENTS: {
-                    index = loadContinentsFromFile(index, lines);
-                    break;
-                }
-                case COUNTRIES: {
-                    index = loadCountriesFromFile(index, lines);
-                    break;
-                }
-                case BORDERS: {
-                    index = loadBordersFromFile(index, lines);
-                    break;
-                }
-                case FILES:
-                case NONE: {
-                    break;
-                }
-            }
+            index = loadMapComponents(lines, index);
         }
 
         ConsolePrinter.printFormat("Map loaded");
+    }
+
+    @Override
+    public int loadMapComponents(List<String> lines, int index) {
+        String currentLine = lines.get(index);
+        if (currentLine.startsWith(";")) {
+            return index;
+        }
+
+        String firstWord = currentLine.split(" ")[0];
+        DominationMapPart part = DominationMapPart.fromString(firstWord);
+
+        switch (part) {
+            case NAME: {
+                GameBoard.getInstance()
+                         .getGameBoardMap()
+                         .setMapName(currentLine.split("name")[1].trim());
+                break;
+            }
+            case CONTINENTS: {
+                index = loadContinentsFromFile(index, lines);
+                break;
+            }
+            case COUNTRIES: {
+                index = loadCountriesFromFile(index, lines);
+                break;
+            }
+            case BORDERS: {
+                index = loadBordersFromFile(index, lines);
+                break;
+            }
+            case FILES:
+            case NONE: {
+                break;
+            }
+        }
+        return index;
     }
 
     /**
@@ -231,13 +231,65 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
 
     @Override
     public void loadConquestMap(String fileName) throws IOException {
-        // TODO Auto-generated method stub
+        List<String> lines = readMapFile(fileName);
+        for (int index = 0; index < lines.size(); index++) {
+            index = loadConquestMapComponents(lines, index);
+        }
+
+        ConsolePrinter.printFormat("Map loaded");
+    }
+
+    @Override
+    public int loadConquestMapComponents(List<String> lines, int index) {
+        String currentLine = lines.get(index);
+        String firstWord = currentLine.split(" ")[0];
+        ConquestMapPart part = ConquestMapPart.fromString(firstWord);
+
+        switch (part) {
+            case MAP: {
+                index = loadConquestMapInfo(lines, index);
+                break;
+            }
+            case CONTINENTS: {
+                index = loadContinentsFromConquestFile(index, lines);
+                break;
+            }
+            case TERRITORIES: {
+                index = loadCountriesFromConquestFile(index, lines);
+                break;
+            }
+            case NONE: {
+                break;
+            }
+        }
+        return index;
+    }
+
+    @Override
+    public int loadConquestMapInfo(List<String> lines, int currentLineIndex) {
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            currentLineIndex = index;
+        }
+
+        return currentLineIndex + 1;
     }
 
     @Override
     public int loadContinentsFromConquestFile(int currentLineIndex, List<String> lines) {
-        // TODO Auto-generated method stub
-        return 0;
+        int continentOrder = 1;
+        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {
+            String currentLine = lines.get(index);
+            String[] fragments = currentLine.split("=");
+            String continentName = legalizeString(fragments[0]);
+            int continentArmy = Integer.parseInt(fragments[1]);
+
+            addContinent(continentName, Integer.toString(continentArmy), continentOrder);
+
+            currentLineIndex = index;
+            continentOrder++;
+        }
+
+        return currentLineIndex + 1;
     }
 
     @Override
@@ -247,27 +299,26 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
     }
 
     @Override
-    public int loadBordersFromConquestFile(int currentLineIndex, List<String> lines) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
     public void writeMapToConquestFile(String fileName) throws IOException {
-        // TODO Auto-generated method stub
+        FileWriter writer = new FileWriter(fileName);
 
+        writeContinentsToConquestFile(writer);
+
+        writeCountriesToConquestFile(writer);
+
+        writer.close();
     }
 
     @Override
     public void writeContinentsToConquestFile(FileWriter writer) throws IOException {
-        // TODO Auto-generated method stub
+        ArrayList<Continent> continents = GameBoard.getInstance().getGameBoardMap().getContinents();
+        writer.write(ConquestMapPart.CONTINENTS + "\n");
 
-    }
+        for (Continent continent : continents) {
+            writer.write(continent.getName() + "=" + continent.getArmy() + "\n");
+        }
 
-    @Override
-    public void writeBordersToConquestFile(FileWriter writer) throws IOException {
-        // TODO Auto-generated method stub
-
+        writer.write("\n");
     }
 
     @Override
@@ -275,5 +326,4 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
         // TODO Auto-generated method stub
 
     }
-
 }
