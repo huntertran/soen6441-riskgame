@@ -32,20 +32,20 @@ public class ExchangeCardView extends SeparatedView implements Observer {
 
 <span class="fc" id="L33">        ChangedProperty property = (ChangedProperty) arg;</span>
 
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (property != ChangedProperty.CARD) {</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (property != ChangedProperty.CARD) {</span>
 <span class="fc" id="L36">            return;</span>
         }
 
-<span class="nc" id="L39">        Player player = (Player) o;</span>
-<span class="nc" id="L40">        ArrayList&lt;Card&gt; cards = player.getHoldingCards();</span>
+<span class="fc" id="L39">        Player player = (Player) o;</span>
+<span class="fc" id="L40">        ArrayList&lt;Card&gt; cards = player.getHoldingCards();</span>
 
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        for (Card card : cards) {</span>
-<span class="nc" id="L43">            ConsolePrinter.printFormat(printStream,</span>
-<span class="nc" id="L44">                                       false,</span>
-<span class="nc" id="L45">                                       &quot;Position: %d | &quot;,</span>
-<span class="nc" id="L46">                                       cards.indexOf(card) + 1);</span>
-<span class="nc" id="L47">            card.view(printStream, 1);</span>
-        }
-<span class="nc" id="L49">    }</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc" id="L43">            ConsolePrinter.printFormat(printStream,</span>
+                                       false,
+                                       &quot;Position: %d | &quot;,
+<span class="fc" id="L46">                                       cards.indexOf(card) + 1);</span>
+<span class="fc" id="L47">            card.view(printStream, 1);</span>
+<span class="fc" id="L48">        }</span>
+<span class="fc" id="L49">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

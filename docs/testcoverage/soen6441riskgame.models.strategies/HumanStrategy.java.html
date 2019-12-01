@@ -64,19 +64,23 @@ import soen6441riskgame.utils.ConsolePrinter;
     @Override
     public void playTurn(Player player) {
 <span class="nc" id="L66">        ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,</span>
-<span class="nc" id="L67">                                   &quot;HUMAN PLAYER TURN&quot;);</span>
-<span class="nc" id="L68">        Scanner scanner = new Scanner(System.in);</span>
+                                   &quot;HUMAN PLAYER TURN&quot;);
+<span class="nc" id="L68">        ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,</span>
+                                   false,
+                                   &quot;ENTER YOUR ACTION: &quot;);
+<span class="nc" id="L71">        Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L72">        String command = scanner.nextLine();</span>
 
-<span class="nc bnc" id="L70" title="All 4 branches missed.">        while (player.isPlaying() &amp;&amp; player.getCurrentPhase() != GamePhase.END_OF_GAME) {</span>
-<span class="nc" id="L71">            String command = scanner.nextLine();</span>
-<span class="nc" id="L72">            ModelCommands cmds = new ModelCommands(command);</span>
-<span class="nc" id="L73">            App.jumpToCommand(cmds);</span>
-<span class="nc" id="L74">            ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,</span>
-<span class="nc" id="L75">                                       &quot;ENTER YOUR ACTION: &quot;);</span>
-<span class="nc" id="L76">            command = scanner.nextLine();</span>
-        }
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        while (player.isPlaying() &amp;&amp; player.getCurrentPhase() != GamePhase.END_OF_GAME) {</span>
+<span class="nc" id="L75">            ModelCommands cmds = new ModelCommands(command);</span>
+<span class="nc" id="L76">            App.jumpToCommand(cmds);</span>
+<span class="nc" id="L77">            ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,</span>
+                                       false,
+                                       &quot;ENTER YOUR ACTION: &quot;);
+<span class="nc" id="L80">            command = scanner.nextLine();</span>
+<span class="nc" id="L81">        }</span>
 
-<span class="nc" id="L79">        scanner.close();</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L83">        scanner.close();</span>
+<span class="nc" id="L84">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

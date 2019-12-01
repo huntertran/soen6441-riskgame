@@ -60,7 +60,7 @@ import soen6441riskgame.utils.ConsolePrinter;
 <span class="fc" id="L60">            isSaved = true;</span>
 <span class="nc" id="L61">        } catch (Exception e) {</span>
 <span class="nc" id="L62">            ConsolePrinter.printFormat(&quot;Cannot create file to save&quot;);</span>
-        }
+<span class="fc" id="L63">        }</span>
 
 <span class="fc" id="L65">        return isSaved;</span>
     }
@@ -105,9 +105,9 @@ import soen6441riskgame.utils.ConsolePrinter;
 <span class="fc" id="L105">        JsonReader reader = null;</span>
         try {
 <span class="fc" id="L107">            reader = new JsonReader(new FileReader(savedGameFilePath + &quot;.json&quot;));</span>
-<span class="pc" id="L108">        } catch (IOException e) {</span>
+<span class="nc" id="L108">        } catch (IOException e) {</span>
 <span class="nc" id="L109">            ConsolePrinter.printFormat(&quot;Error reading saved game: %s&quot;, e.getMessage());</span>
-        }
+<span class="fc" id="L110">        }</span>
 
 <span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (reader != null) {</span>
 <span class="fc" id="L113">            ConsolePrinter.printFormat(&quot;Reading from saved game&quot;);</span>

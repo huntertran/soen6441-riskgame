@@ -3,32 +3,56 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * a pair of command and params
+ * 
+ * this model only accept a pair of params for each command, which is create a hard code into the
+ * source
+ */
 public class ModelCommandsPair {
     public String param;
     public String value1;
-<span class="fc" id="L9">    public String value2 = &quot;&quot;;</span>
+<span class="fc" id="L15">    public String value2 = &quot;&quot;;</span>
 
-<span class="fc" id="L11">    public ModelCommandsPair(String newParam, String newValue1, String newValue2) {</span>
-<span class="fc" id="L12">        this.param = newParam.trim();</span>
-<span class="fc" id="L13">        this.value1 = newValue1.trim();</span>
-<span class="fc" id="L14">        this.value2 = newValue2.trim();</span>
-<span class="fc" id="L15">    }</span>
+    /**
+     * constructor
+     * 
+     * @param newParam  command
+     * @param newValue1 value 1
+     * @param newValue2 value 2
+     */
+<span class="fc" id="L24">    public ModelCommandsPair(String newParam, String newValue1, String newValue2) {</span>
+<span class="fc" id="L25">        this.param = newParam.trim();</span>
+<span class="fc" id="L26">        this.value1 = newValue1.trim();</span>
+<span class="fc" id="L27">        this.value2 = newValue2.trim();</span>
+<span class="fc" id="L28">    }</span>
 
-<span class="fc" id="L17">    public ModelCommandsPair(String newParam, String newValue1) {</span>
-<span class="fc" id="L18">        this.param = newParam.trim();</span>
-<span class="fc" id="L19">        this.value1 = newValue1.trim();</span>
-<span class="fc" id="L20">    }</span>
+    /**
+     * a second type with only 1 value
+     * 
+     * @param newParam  command
+     * @param newValue1 value 1
+     */
+<span class="fc" id="L36">    public ModelCommandsPair(String newParam, String newValue1) {</span>
+<span class="fc" id="L37">        this.param = newParam.trim();</span>
+<span class="fc" id="L38">        this.value1 = newValue1.trim();</span>
+<span class="fc" id="L39">    }</span>
 
+    /**
+     * convert back to string
+     * 
+     * @return the original string
+     */
     public String[] toStringArray() {
-<span class="fc" id="L23">        List&lt;String&gt; retList = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L24">        retList.add(this.param);</span>
-<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if(!this.value1.isEmpty()) {</span>
-<span class="fc" id="L26">            retList.add(this.value1);</span>
+<span class="fc" id="L47">        List&lt;String&gt; retList = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L48">        retList.add(this.param);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (!this.value1.isEmpty()) {</span>
+<span class="fc" id="L50">            retList.add(this.value1);</span>
         }
-<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if(!this.value2.isEmpty()) {</span>
-<span class="nc" id="L29">            retList.add(this.value2);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (!this.value2.isEmpty()) {</span>
+<span class="nc" id="L53">            retList.add(this.value2);</span>
         }
-<span class="fc" id="L31">        return retList.toArray(new String[retList.size()]);</span>
+<span class="fc" id="L55">        return retList.toArray(new String[retList.size()]);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -1,72 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.controllers</a> &gt; <span class="el_source">MapController.java</span></div><h1>MapController.java</h1><pre class="source lang-java linenums">package soen6441riskgame.controllers;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import soen6441riskgame.enums.CommonCommandArgs;
-import soen6441riskgame.enums.MapPart;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
-import soen6441riskgame.utils.Parser;
+import soen6441riskgame.utils.map.ConquestMapReadable;
+import soen6441riskgame.utils.map.DominationMapReadable;
+import soen6441riskgame.utils.map.MapReaderAdapter;
 
 /**
  * handle the operations to generate, edit and control the map.
  */
-<span class="fc" id="L26">public final class MapController {</span>
+<span class="fc" id="L21">public final class MapController {</span>
     private static final int MINIMUM_AMOUNT_OF_COUNTRIES = 6;
+<span class="fc" id="L23">    private DominationMapReadable dominationMapReader = new MapReaderAdapter();</span>
+<span class="fc" id="L24">    private ConquestMapReadable conquestMapReader = new MapReaderAdapter();</span>
 
     /**
-     * add border from country to others country
-     *
-     * @param countryOrder        the location of first country in the border graph
-     * @param borderWithCountries the location of other countries in the border graph
+     * load the map from file
+     * 
+     * @param fileName          path to file
+     * @param isConquestMapType is this file a 'conquest' map type
+     * @throws IOException if file not found or cannot read
      */
-    private void addBorders(int countryOrder, int... borderWithCountries) {
-<span class="fc" id="L36">        int[][] graph = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        for (int borderWithCountry : borderWithCountries) {</span>
-<span class="fc" id="L38">            graph[countryOrder - 1][borderWithCountry - 1] = 1;</span>
-<span class="fc" id="L39">            graph[borderWithCountry - 1][countryOrder - 1] = 1;</span>
+    public void loadMap(String fileName, boolean isConquestMapType) throws IOException {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (isConquestMapType) {</span>
+<span class="nc" id="L35">            conquestMapReader.loadConquestMap(fileName);</span>
+        } else {
+<span class="fc" id="L37">            dominationMapReader.loadMap(fileName);</span>
         }
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L39">    }</span>
 
     /**
-     * adds new continent
-     *
+     * load the map from file in domination type
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found or cannot read
+     */
+    public void loadMap(String fileName) throws IOException {
+<span class="fc" id="L48">        loadMap(fileName, false);</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * add continent to game
+     * 
      * @param continentName  name of the continent
-     * @param continentValue the amount of army for the new continent
-     * @param order          the continent other in the list (start with 1 as the map file structure
-     *                       indicate)
+     * @param continentValue army rewarded to player if he conquered this continent
+     * @param order          order of the continent in the file
      */
     public void addContinent(String continentName, String continentValue, int... order) {
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (!Parser.checkValidInputNumber(continentValue)) {</span>
-<span class="nc" id="L53">            ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
-        }
-
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (!isContinentExisted(continentName)) {</span>
-<span class="fc" id="L57">            GameBoard.getInstance()</span>
-<span class="fc" id="L58">                     .getGameBoardMap()</span>
-<span class="fc" id="L59">                     .getContinents()</span>
-<span class="fc" id="L60">                     .add(new Continent(continentName,</span>
-<span class="fc" id="L61">                                        Integer.parseInt(continentValue)));</span>
-
-<span class="fc" id="L63">            ConsolePrinter.printFormat(&quot;New continent added: %s with %s armies&quot;,</span>
-<span class="fc" id="L64">                                       continentName,</span>
-<span class="fc" id="L65">                                       continentValue);</span>
-<span class="fc" id="L66">        } else {</span>
-<span class="nc" id="L67">            ConsolePrinter.printFormat(&quot;Continent with name %s existed&quot;, continentName);</span>
-        }
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L59">        dominationMapReader.addContinent(continentName, continentValue, order);</span>
+<span class="fc" id="L60">    }</span>
 
     /**
      * add new country to an existed continent OR add existing country to an existed continent
@@ -75,39 +66,22 @@ import soen6441riskgame.utils.Parser;
      * @param continentName the existed continent name
      */
     public void addCountry(String countryName, String continentName) {
-<span class="fc" id="L78">        Continent continent = getContinentFromName(continentName);</span>
-<span class="fc" id="L79">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
+<span class="fc" id="L69">        Continent continent = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);</span>
+<span class="fc" id="L70">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (continent == null) {</span>
-<span class="nc" id="L82">            ConsolePrinter.printFormat(&quot;Continent %s is not existed&quot;, continentName);</span>
-<span class="nc" id="L83">            return;</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (continent == null) {</span>
+<span class="nc" id="L73">            ConsolePrinter.printFormat(&quot;Continent %s is not existed&quot;, continentName);</span>
+<span class="nc" id="L74">            return;</span>
         }
 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (country == null) {</span>
-<span class="fc" id="L87">            createNewCountry(countryName, continent);</span>
-<span class="fc" id="L88">        } else {</span>
-<span class="nc" id="L89">            continent.getCountries().add(country);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (country == null) {</span>
+<span class="fc" id="L78">            createNewCountry(countryName, continent);</span>
+        } else {
+<span class="nc" id="L80">            continent.getCountries().add(country);</span>
         }
 
-<span class="fc" id="L92">        ConsolePrinter.printFormat(&quot;Country %s is added to continent %s&quot;, countryName, continentName);</span>
-<span class="fc" id="L93">    }</span>
-
-    /**
-     * add new country from map file
-     *
-     * @param order          the order of country in the list, start with 1
-     * @param name           the country name (no space allowed)
-     * @param continentOrder the other of the continent that new country belongs to
-     * @param coordinate     the position of the country on a visual map (not used)
-     */
-    private void addCountryFromMapFile(int order, String name, int continentOrder, Coordinate coordinate) {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">            if (continent.getOrder() == continentOrder) {</span>
-<span class="fc" id="L106">                Country country = new Country(order, name, coordinate, continent);</span>
-<span class="fc" id="L107">                updateCountryContinent(country, continent);</span>
-            }
-        }
-<span class="fc" id="L110">    }</span>
+<span class="fc" id="L83">        ConsolePrinter.printFormat(&quot;Country %s is added to continent %s&quot;, countryName, continentName);</span>
+<span class="fc" id="L84">    }</span>
 
     /**
      * connect 2 countries with each other on the borderGraph
@@ -116,16 +90,16 @@ import soen6441riskgame.utils.Parser;
      * @param neighborCountryName name of the neighbor country
      */
     public void addNeighbor(String countryName, String neighborCountryName) {
-<span class="fc" id="L119">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
-<span class="fc" id="L120">        Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);</span>
+<span class="fc" id="L93">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
+<span class="fc" id="L94">        Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);</span>
 
-<span class="pc bpc" id="L122" title="2 of 4 branches missed.">        if (country == null || neighbor == null) {</span>
-<span class="nc" id="L123">            ConsolePrinter.printFormat(&quot;The country name or neighbor country name is not existed!&quot;);</span>
-<span class="nc" id="L124">            return;</span>
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">        if (country == null || neighbor == null) {</span>
+<span class="nc" id="L97">            ConsolePrinter.printFormat(&quot;The country name or neighbor country name is not existed!&quot;);</span>
+<span class="nc" id="L98">            return;</span>
         }
 
-<span class="fc" id="L127">        addBorders(country.getOrder(), neighbor.getOrder());</span>
-<span class="fc" id="L128">    }</span>
+<span class="fc" id="L101">        dominationMapReader.addBorders(country.getOrder(), neighbor.getOrder());</span>
+<span class="fc" id="L102">    }</span>
 
     /**
      * create new country, add it to the borderGraph
@@ -134,20 +108,20 @@ import soen6441riskgame.utils.Parser;
      * @param continent   the name of continent that country belong to
      */
     public void createNewCountry(String countryName, Continent continent) {
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName) != null) {</span>
-<span class="nc" id="L138">            return;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName) != null) {</span>
+<span class="nc" id="L112">            return;</span>
         }
 
-<span class="fc" id="L141">        int newBorderSize = GameBoard.getInstance().getGameBoardMap().getCountries().size() + 1;</span>
+<span class="fc" id="L115">        int newBorderSize = GameBoard.getInstance().getGameBoardMap().getCountries().size() + 1;</span>
 
-<span class="fc" id="L143">        Country newCountry = new Country(newBorderSize, countryName, new Coordinate(0, 0), continent);</span>
+<span class="fc" id="L117">        Country newCountry = new Country(newBorderSize, countryName, new Coordinate(0, 0), continent);</span>
 
-<span class="fc" id="L145">        increaseBorder(newBorderSize);</span>
+<span class="fc" id="L119">        increaseBorder(newBorderSize);</span>
 
-<span class="fc" id="L147">        updateCountryContinent(newCountry, continent);</span>
+<span class="fc" id="L121">        GameBoard.getInstance().getGameBoardMap().updateCountryContinent(newCountry, continent);</span>
 
-<span class="fc" id="L149">        ConsolePrinter.printFormat(&quot;Country %s is created&quot;, countryName);</span>
-<span class="fc" id="L150">    }</span>
+<span class="fc" id="L123">        ConsolePrinter.printFormat(&quot;Country %s is created&quot;, countryName);</span>
+<span class="fc" id="L124">    }</span>
 
     /**
      * increase border
@@ -155,20 +129,20 @@ import soen6441riskgame.utils.Parser;
      * @param newBorderSize location of the border to insert
      */
     private void increaseBorder(int newBorderSize) {
-<span class="fc" id="L158">        int[][] originalBorder = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
-<span class="fc" id="L159">        int[][] newBorders = new int[newBorderSize][newBorderSize];</span>
+<span class="fc" id="L132">        int[][] originalBorder = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
+<span class="fc" id="L133">        int[][] newBorders = new int[newBorderSize][newBorderSize];</span>
 
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (int row = 0; row &lt; newBorderSize - 1; row++) {</span>
-<span class="fc" id="L162">            newBorders[row] = Arrays.copyOf(originalBorder[row], newBorderSize);</span>
-<span class="fc" id="L163">            newBorders[newBorderSize - 1][row] = 0;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        for (int row = 0; row &lt; newBorderSize - 1; row++) {</span>
+<span class="fc" id="L136">            newBorders[row] = Arrays.copyOf(originalBorder[row], newBorderSize);</span>
+<span class="fc" id="L137">            newBorders[newBorderSize - 1][row] = 0;</span>
         }
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        for (int col = 0; col &lt; newBorderSize; col++) {</span>
-<span class="fc" id="L167">            newBorders[newBorderSize - 1][col] = 0;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        for (int col = 0; col &lt; newBorderSize; col++) {</span>
+<span class="fc" id="L141">            newBorders[newBorderSize - 1][col] = 0;</span>
         }
 
-<span class="fc" id="L170">        GameBoard.getInstance().getGameBoardMap().setBorders(newBorders);</span>
-<span class="fc" id="L171">    }</span>
+<span class="fc" id="L144">        GameBoard.getInstance().getGameBoardMap().setBorders(newBorders);</span>
+<span class="fc" id="L145">    }</span>
 
     /**
      * handle 'editcontient' command from console
@@ -176,24 +150,24 @@ import soen6441riskgame.utils.Parser;
      * @param args -add continentName continentValue -remove continentName
      */
     public void editContinent(String[] args) {
-<span class="fc" id="L179">        CommonCommandArgs continentCommand = CommonCommandArgs.fromString(args[0]);</span>
+<span class="fc" id="L153">        CommonCommandArgs continentCommand = CommonCommandArgs.fromString(args[0]);</span>
 
-<span class="pc bpc" id="L181" title="3 of 4 branches missed.">        switch (continentCommand) {</span>
+<span class="pc bpc" id="L155" title="3 of 4 branches missed.">        switch (continentCommand) {</span>
             case ADD: {
-<span class="nc" id="L183">                addContinent(args[1], args[2]);</span>
-<span class="nc" id="L184">                break;</span>
+<span class="nc" id="L157">                dominationMapReader.addContinent(args[1], args[2]);</span>
+<span class="nc" id="L158">                break;</span>
             }
             case REMOVE: {
-<span class="fc" id="L187">                removeContinent(args[1]);</span>
-<span class="fc" id="L188">                break;</span>
+<span class="fc" id="L161">                removeContinent(args[1]);</span>
+<span class="fc" id="L162">                break;</span>
             }
             case INVALID:
             case NONE: {
-<span class="nc" id="L192">                ConsolePrinter.printFormat(&quot;Incorrect command&quot;);</span>
+<span class="nc" id="L166">                ConsolePrinter.printFormat(&quot;Incorrect command&quot;);</span>
                 break;
             }
         }
-<span class="fc" id="L196">    }</span>
+<span class="fc" id="L170">    }</span>
 
     /**
      * handle 'editcountry' command
@@ -201,24 +175,24 @@ import soen6441riskgame.utils.Parser;
      * @param args -add countryName continentName -remove countryName
      */
     public void editCountry(String[] args) {
-<span class="fc" id="L204">        CommonCommandArgs countryCommand = CommonCommandArgs.fromString(args[0]);</span>
+<span class="fc" id="L178">        CommonCommandArgs countryCommand = CommonCommandArgs.fromString(args[0]);</span>
 
-<span class="pc bpc" id="L206" title="2 of 4 branches missed.">        switch (countryCommand) {</span>
+<span class="pc bpc" id="L180" title="2 of 4 branches missed.">        switch (countryCommand) {</span>
             case ADD: {
-<span class="fc" id="L208">                addCountry(args[1], args[2]);</span>
-<span class="fc" id="L209">                break;</span>
+<span class="fc" id="L182">                addCountry(args[1], args[2]);</span>
+<span class="fc" id="L183">                break;</span>
             }
             case REMOVE: {
-<span class="fc" id="L212">                removeCountry(args[1]);</span>
-<span class="fc" id="L213">                break;</span>
+<span class="fc" id="L186">                removeCountry(args[1]);</span>
+<span class="fc" id="L187">                break;</span>
             }
             case INVALID:
             case NONE: {
-<span class="nc" id="L217">                ConsolePrinter.printFormat(&quot;Incorrect command&quot;);</span>
+<span class="nc" id="L191">                ConsolePrinter.printFormat(&quot;Incorrect command&quot;);</span>
                 break;
             }
         }
-<span class="fc" id="L221">    }</span>
+<span class="fc" id="L195">    }</span>
 
     /**
      * edit an existing map from file
@@ -228,12 +202,42 @@ import soen6441riskgame.utils.Parser;
      */
     public void editMap(String fileName) throws IOException {
         try {
-<span class="nc" id="L231">            loadMap(fileName);</span>
-<span class="nc" id="L232">        } catch (IOException e) {</span>
+<span class="nc" id="L205">            dominationMapReader.loadMap(fileName);</span>
+<span class="nc" id="L206">        } catch (IOException e) {</span>
             // file not existed. Create new map
-<span class="nc" id="L234">            saveMap(fileName);</span>
+<span class="nc" id="L208">            saveMap(fileName);</span>
+<span class="nc" id="L209">        }</span>
+<span class="nc" id="L210">    }</span>
+
+    /**
+     * save the map to a file
+     *
+     * @param fileName          path to file
+     * @param isConquestMapType true to save map as conquest map type
+     * @throws IOException exception
+     */
+    public void saveMap(String fileName, boolean isConquestMapType) throws IOException {
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">        if (!isMapValid()) {</span>
+<span class="nc" id="L221">            ConsolePrinter.printFormat(&quot;Invalid map. Map not saved&quot;);</span>
+<span class="nc" id="L222">            return;</span>
         }
-<span class="nc" id="L236">    }</span>
+
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">        if (isConquestMapType) {</span>
+<span class="nc" id="L226">            conquestMapReader.writeMapToConquestFile(fileName);</span>
+        } else {
+<span class="fc" id="L228">            dominationMapReader.writeMapToFile(fileName);</span>
+        }
+<span class="fc" id="L230">    }</span>
+
+    /**
+     * save the map to a file
+     *
+     * @param fileName path to file
+     * @throws IOException exception
+     */
+    public void saveMap(String fileName) throws IOException {
+<span class="fc" id="L239">        saveMap(fileName, false);</span>
+<span class="fc" id="L240">    }</span>
 
     /**
      * handle 'editneighbor' command
@@ -241,39 +245,24 @@ import soen6441riskgame.utils.Parser;
      * @param args -add countryName neighborCountryName -remove countryName neighborCountryName
      */
     public void editNeighbor(String[] args) {
-<span class="fc" id="L244">        CommonCommandArgs neighborCommand = CommonCommandArgs.fromString(args[0]);</span>
+<span class="fc" id="L248">        CommonCommandArgs neighborCommand = CommonCommandArgs.fromString(args[0]);</span>
 
-<span class="pc bpc" id="L246" title="2 of 4 branches missed.">        switch (neighborCommand) {</span>
+<span class="pc bpc" id="L250" title="2 of 4 branches missed.">        switch (neighborCommand) {</span>
             case ADD: {
-<span class="fc" id="L248">                addNeighbor(args[1], args[2]);</span>
-<span class="fc" id="L249">                break;</span>
+<span class="fc" id="L252">                addNeighbor(args[1], args[2]);</span>
+<span class="fc" id="L253">                break;</span>
             }
             case REMOVE: {
-<span class="fc" id="L252">                removeNeighbor(args[1], args[2]);</span>
-<span class="fc" id="L253">                break;</span>
+<span class="fc" id="L256">                removeNeighbor(args[1], args[2]);</span>
+<span class="fc" id="L257">                break;</span>
             }
             case INVALID:
             case NONE: {
-<span class="nc" id="L257">                ConsolePrinter.printFormat(&quot;Incorrect command&quot;);</span>
+<span class="nc" id="L261">                ConsolePrinter.printFormat(&quot;Incorrect command&quot;);</span>
                 break;
             }
         }
-<span class="fc" id="L261">    }</span>
-
-    /**
-     * get continent object from name
-     *
-     * @param continentName name of the continent
-     * @return null if continent name is not existed in map
-     */
-    public Continent getContinentFromName(String continentName) {
-<span class="fc bfc" id="L270" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">            if (continent.getName().equals(continentName))</span>
-<span class="fc" id="L272">                return continent;</span>
-        }
-
-<span class="fc" id="L275">        return null;</span>
-    }
+<span class="fc" id="L265">    }</span>
 
     /**
      * get all continents that have no country
@@ -281,15 +270,15 @@ import soen6441riskgame.utils.Parser;
      * @return a list of empty continent, or an empty list if all continent have countries inside
      */
     private ArrayList&lt;Continent&gt; getEmptyContinents() {
-<span class="fc" id="L284">        ArrayList&lt;Continent&gt; result = new ArrayList&lt;Continent&gt;();</span>
+<span class="fc" id="L273">        ArrayList&lt;Continent&gt; result = new ArrayList&lt;Continent&gt;();</span>
 
-<span class="fc bfc" id="L286" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">            if (continent.getCountries().size() == 0) {</span>
-<span class="fc" id="L288">                result.add(continent);</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">            if (continent.getCountries().size() == 0) {</span>
+<span class="fc" id="L277">                result.add(continent);</span>
             }
-        }
+<span class="fc" id="L279">        }</span>
 
-<span class="fc" id="L292">        return result;</span>
+<span class="fc" id="L281">        return result;</span>
     }
 
     /**
@@ -298,47 +287,23 @@ import soen6441riskgame.utils.Parser;
      * @return a list of isolated country, or an empty list if all country is connected
      */
     private ArrayList&lt;Country&gt; getIsolatedCountries() {
-<span class="fc" id="L301">        int[][] borders = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
-<span class="fc" id="L302">        int borderSize = borders[0].length;</span>
-<span class="fc" id="L303">        ArrayList&lt;Country&gt; result = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L290">        int[][] borders = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
+<span class="fc" id="L291">        int borderSize = borders[0].length;</span>
+<span class="fc" id="L292">        ArrayList&lt;Country&gt; result = new ArrayList&lt;Country&gt;();</span>
 
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        for (int row = 0; row &lt; borderSize; row++) {</span>
-<span class="fc" id="L306">            int rowSum = 0;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        for (int row = 0; row &lt; borderSize; row++) {</span>
+<span class="fc" id="L295">            int rowSum = 0;</span>
 
-<span class="fc bfc" id="L308" title="All 2 branches covered.">            for (int col = 0; col &lt; borderSize; col++) {</span>
-<span class="fc" id="L309">                rowSum += borders[row][col];</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">            for (int col = 0; col &lt; borderSize; col++) {</span>
+<span class="fc" id="L298">                rowSum += borders[row][col];</span>
             }
 
-<span class="fc bfc" id="L312" title="All 2 branches covered.">            if (rowSum == 0) {</span>
-<span class="fc" id="L313">                result.add(GameBoard.getInstance().getGameBoardMap().getCountries().get(row));</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">            if (rowSum == 0) {</span>
+<span class="fc" id="L302">                result.add(GameBoard.getInstance().getGameBoardMap().getCountries().get(row));</span>
             }
         }
 
-<span class="fc" id="L317">        return result;</span>
-    }
-
-    /**
-     * check if continent with the specified name existed in map
-     *
-     * @param continentName name of the continent
-     * @return is continent existed
-     */
-    public boolean isContinentExisted(String continentName) {
-<span class="fc" id="L327">        Continent continent = getContinentFromName(continentName);</span>
-
-<span class="fc bfc" id="L329" title="All 2 branches covered.">        return continent != null;</span>
-    }
-
-    /**
-     * check if country with the specified name existed in map
-     *
-     * @param countryName name of the country
-     * @return true if country existed
-     */
-    public boolean isCountryExisted(String countryName) {
-<span class="fc" id="L339">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
-
-<span class="fc bfc" id="L341" title="All 2 branches covered.">        return country != null;</span>
+<span class="fc" id="L306">        return result;</span>
     }
 
     /**
@@ -348,169 +313,17 @@ import soen6441riskgame.utils.Parser;
      * @return false if the number of country is lower than the minimum amount of country required
      */
     private boolean isNotEnoughCountries() {
-<span class="fc" id="L351">        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
-<span class="fc bfc" id="L352" title="All 2 branches covered.">        boolean isNotEnoughCountries = numberOfCountry &lt; MapController.MINIMUM_AMOUNT_OF_COUNTRIES;</span>
+<span class="fc" id="L316">        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        boolean isNotEnoughCountries = numberOfCountry &lt; MapController.MINIMUM_AMOUNT_OF_COUNTRIES;</span>
 
-<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (isNotEnoughCountries) {</span>
-<span class="fc" id="L355">            ConsolePrinter.printFormat(&quot;Not enough countries. Created: %d - Minimum required: %s&quot;,</span>
-<span class="fc" id="L356">                                       numberOfCountry,</span>
-<span class="fc" id="L357">                MapController.MINIMUM_AMOUNT_OF_COUNTRIES);</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        if (isNotEnoughCountries) {</span>
+<span class="fc" id="L320">            ConsolePrinter.printFormat(&quot;Not enough countries. Created: %d - Minimum required: %s&quot;,</span>
+<span class="fc" id="L321">                                       numberOfCountry,</span>
+<span class="fc" id="L322">                                       MapController.MINIMUM_AMOUNT_OF_COUNTRIES);</span>
         }
 
-<span class="fc" id="L360">        return isNotEnoughCountries;</span>
+<span class="fc" id="L325">        return isNotEnoughCountries;</span>
     }
-
-    /**
-     * The map file stores data in blocks. This function check if the current data line is still in a
-     * block or not
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the lines in map file
-     * @return if the current data line is still in a block or not
-     */
-    private boolean isStillInCurrentDataBlock(int currentLineIndex, List&lt;String&gt; lines) {
-<span class="fc bfc" id="L372" title="All 2 branches covered.">        if (currentLineIndex &lt; lines.size()) {</span>
-<span class="fc" id="L373">            String currentLine = lines.get(currentLineIndex);</span>
-<span class="pc bpc" id="L374" title="1 of 4 branches missed.">            return !currentLine.equals(&quot;&quot;) &amp;&amp; currentLine.contains(&quot; &quot;);</span>
-        }
-
-<span class="fc" id="L377">        return false;</span>
-    }
-
-    /**
-     * Load all border data from map file
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the line in map file
-     * @return the line index that end the border block in map file
-     */
-    private int loadBordersFromFile(int currentLineIndex, List&lt;String&gt; lines) {
-<span class="fc" id="L388">        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
-<span class="fc" id="L389">        GameBoard.getInstance().getGameBoardMap().setBorders(new int[numberOfCountry][numberOfCountry]);</span>
-
-<span class="fc bfc" id="L391" title="All 2 branches covered.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
-<span class="fc" id="L392">            String currentLine = lines.get(index);</span>
-
-<span class="fc" id="L394">            String[] fragments = currentLine.split(&quot; &quot;);</span>
-
-<span class="fc" id="L396">            int countryOrder = Integer.parseInt(fragments[0]);</span>
-
-<span class="fc" id="L398">            int[] borderWithCountries = new int[fragments.length - 1];</span>
-<span class="fc bfc" id="L399" title="All 2 branches covered.">            for (int borderIndex = 0; borderIndex &lt; borderWithCountries.length; borderIndex++) {</span>
-<span class="fc" id="L400">                borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);</span>
-            }
-
-<span class="fc" id="L403">            addBorders(countryOrder, borderWithCountries);</span>
-
-<span class="fc" id="L405">            currentLineIndex = index;</span>
-        }
-
-<span class="fc" id="L408">        return currentLineIndex + 1;</span>
-    }
-
-    /**
-     * Load all continent data from map file
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the line in map file
-     * @return the line index that end the continent block in map file
-     */
-    private int loadContinentsFromFile(int currentLineIndex, List&lt;String&gt; lines) {
-<span class="fc" id="L419">        int continentOrder = 1;</span>
-<span class="fc bfc" id="L420" title="All 2 branches covered.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
-<span class="fc" id="L421">            String currentLine = lines.get(index);</span>
-<span class="fc" id="L422">            String[] fragments = currentLine.split(&quot; &quot;);</span>
-<span class="fc" id="L423">            String continentName = fragments[0];</span>
-<span class="fc" id="L424">            int continentArmy = Integer.parseInt(fragments[1]);</span>
-
-            // String continentColor = fragments[2];
-
-<span class="fc" id="L428">            addContinent(continentName, Integer.toString(continentArmy), continentOrder);</span>
-
-<span class="fc" id="L430">            currentLineIndex = index;</span>
-<span class="fc" id="L431">            continentOrder++;</span>
-        }
-
-<span class="fc" id="L434">        return currentLineIndex + 1;</span>
-    }
-
-    /**
-     * Load all country data from map file
-     *
-     * @param currentLineIndex the current line index
-     * @param lines            all the line in map file
-     * @return the line index that end the country block in map file
-     */
-    private int loadCountriesFromFile(int currentLineIndex, List&lt;String&gt; lines) {
-<span class="fc bfc" id="L445" title="All 2 branches covered.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
-<span class="fc" id="L446">            String currentLine = lines.get(index);</span>
-
-<span class="fc" id="L448">            String[] fragments = currentLine.split(&quot; &quot;);</span>
-
-<span class="fc" id="L450">            int countryOrder = Integer.parseInt(fragments[0]);</span>
-<span class="fc" id="L451">            String countryName = fragments[1];</span>
-<span class="fc" id="L452">            int continentOrder = Integer.parseInt(fragments[2]);</span>
-<span class="fc" id="L453">            int x = Integer.parseInt(fragments[3]);</span>
-<span class="fc" id="L454">            int y = Integer.parseInt(fragments[4]);</span>
-<span class="fc" id="L455">            Coordinate coordinate = new Coordinate(x, y);</span>
-
-<span class="fc" id="L457">            addCountryFromMapFile(countryOrder, countryName, continentOrder, coordinate);</span>
-
-<span class="fc" id="L459">            currentLineIndex = index;</span>
-        }
-
-<span class="fc" id="L462">        return currentLineIndex + 1;</span>
-    }
-
-    /**
-     * load map from file
-     *
-     * @param fileName the exact path to map file, end with .map extension for example:
-     *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
-     * @throws IOException exception
-     */
-    public void loadMap(String fileName) throws IOException {
-<span class="fc" id="L473">        Path path = Paths.get(fileName);</span>
-
-<span class="fc" id="L475">        List&lt;String&gt; lines = Files.lines(path).collect(Collectors.toList());</span>
-<span class="fc" id="L476">        resetMap();</span>
-<span class="fc bfc" id="L477" title="All 2 branches covered.">        for (int index = 0; index &lt; lines.size(); index++) {</span>
-<span class="fc" id="L478">            String currentLine = lines.get(index);</span>
-<span class="fc bfc" id="L479" title="All 2 branches covered.">            if (currentLine.startsWith(&quot;;&quot;)) {</span>
-<span class="fc" id="L480">                continue;</span>
-            }
-
-<span class="fc" id="L483">            String firstWord = currentLine.split(&quot; &quot;)[0];</span>
-<span class="fc" id="L484">            MapPart part = MapPart.fromString(firstWord);</span>
-
-<span class="fc bfc" id="L486" title="All 5 branches covered.">            switch (part) {</span>
-                case NAME: {
-<span class="fc" id="L488">                    GameBoard.getInstance()</span>
-<span class="fc" id="L489">                             .getGameBoardMap()</span>
-<span class="fc" id="L490">                             .setMapName(currentLine.split(&quot;name&quot;)[1].trim());</span>
-<span class="fc" id="L491">                    break;</span>
-                }
-                case CONTINENTS: {
-<span class="fc" id="L494">                    index = loadContinentsFromFile(index, lines);</span>
-<span class="fc" id="L495">                    break;</span>
-                }
-                case COUNTRIES: {
-<span class="fc" id="L498">                    index = loadCountriesFromFile(index, lines);</span>
-<span class="fc" id="L499">                    break;</span>
-                }
-                case BORDERS: {
-<span class="fc" id="L502">                    index = loadBordersFromFile(index, lines);</span>
-<span class="fc" id="L503">                    break;</span>
-                }
-                case FILES:
-                case NONE: {
-                    break;
-                }
-            }
-        }
-
-<span class="fc" id="L512">        ConsolePrinter.printFormat(&quot;Map loaded&quot;);</span>
-<span class="fc" id="L513">    }</span>
 
     /**
      * Remove a continent from map. Remove continent will make all country inside that continent
@@ -519,31 +332,31 @@ import soen6441riskgame.utils.Parser;
      * @param continentName name of the continent
      */
     public void removeContinent(String continentName) {
-<span class="fc" id="L522">        ConsolePrinter.printFormat(&quot;Remove continent will remove all country inside that continent&quot;);</span>
+<span class="fc" id="L335">        ConsolePrinter.printFormat(&quot;Remove continent will remove all country inside that continent&quot;);</span>
 
-<span class="fc" id="L524">        Continent continentToRemove = getContinentFromName(continentName);</span>
+<span class="fc" id="L337">        Continent continentToRemove = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);</span>
 
-<span class="fc bfc" id="L526" title="All 2 branches covered.">        if (continentToRemove != null) {</span>
-<span class="fc" id="L527">            String[] countriesToRemove = new String[continentToRemove.getCountries().size()];</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        if (continentToRemove != null) {</span>
+<span class="fc" id="L340">            String[] countriesToRemove = new String[continentToRemove.getCountries().size()];</span>
 
-<span class="fc bfc" id="L529" title="All 2 branches covered.">            for (int index = 0; index &lt; countriesToRemove.length; index++) {</span>
-<span class="fc" id="L530">                countriesToRemove[index] = continentToRemove.getCountries().get(index).getName();</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">            for (int index = 0; index &lt; countriesToRemove.length; index++) {</span>
+<span class="fc" id="L343">                countriesToRemove[index] = continentToRemove.getCountries().get(index).getName();</span>
             }
 
-<span class="fc bfc" id="L533" title="All 2 branches covered.">            for (String country : countriesToRemove) {</span>
-<span class="fc" id="L534">                removeCountry(country);</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">            for (String country : countriesToRemove) {</span>
+<span class="fc" id="L347">                removeCountry(country);</span>
             }
 
-<span class="fc" id="L537">            GameBoard.getInstance()</span>
-<span class="fc" id="L538">                     .getGameBoardMap()</span>
-<span class="fc" id="L539">                     .getContinents()</span>
-<span class="fc" id="L540">                     .remove(continentToRemove);</span>
+<span class="fc" id="L350">            GameBoard.getInstance()</span>
+<span class="fc" id="L351">                     .getGameBoardMap()</span>
+<span class="fc" id="L352">                     .getContinents()</span>
+<span class="fc" id="L353">                     .remove(continentToRemove);</span>
 
-<span class="fc" id="L542">            ConsolePrinter.printFormat(&quot;Continent %s is removed&quot;, continentToRemove.getName());</span>
-<span class="fc" id="L543">        } else {</span>
-<span class="fc" id="L544">            ConsolePrinter.printFormat(&quot;Continent %s is not existed&quot;, continentName);</span>
+<span class="fc" id="L355">            ConsolePrinter.printFormat(&quot;Continent %s is removed&quot;, continentToRemove.getName());</span>
+<span class="fc" id="L356">        } else {</span>
+<span class="fc" id="L357">            ConsolePrinter.printFormat(&quot;Continent %s is not existed&quot;, continentName);</span>
         }
-<span class="fc" id="L546">    }</span>
+<span class="fc" id="L359">    }</span>
 
     /**
      * remove a country from map, this including remove it border info and remove it from continent
@@ -551,22 +364,22 @@ import soen6441riskgame.utils.Parser;
      * @param countryName name of the country to remove
      */
     public void removeCountry(String countryName) {
-<span class="fc" id="L554">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
+<span class="fc" id="L367">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
 
-<span class="pc bpc" id="L556" title="1 of 2 branches missed.">        if (country == null) {</span>
-<span class="nc" id="L557">            ConsolePrinter.printFormat(&quot;Country %s is not existed&quot;, countryName);</span>
-<span class="nc" id="L558">            return;</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">        if (country == null) {</span>
+<span class="nc" id="L370">            ConsolePrinter.printFormat(&quot;Country %s is not existed&quot;, countryName);</span>
+<span class="nc" id="L371">            return;</span>
         }
 
         // Remove it border
-<span class="fc" id="L562">        int countryOrder = country.getOrder();</span>
-<span class="fc" id="L563">        removeBorder(countryOrder - 1);</span>
+<span class="fc" id="L375">        int countryOrder = country.getOrder();</span>
+<span class="fc" id="L376">        removeBorder(countryOrder - 1);</span>
 
         // Remove it from continent
-<span class="fc" id="L566">        country.getContinent().getCountries().remove(country);</span>
+<span class="fc" id="L379">        country.getContinent().getCountries().remove(country);</span>
         // Remove it from list country
-<span class="fc" id="L568">        GameBoard.getInstance().getGameBoardMap().getCountries().remove(country);</span>
-<span class="fc" id="L569">    }</span>
+<span class="fc" id="L381">        GameBoard.getInstance().getGameBoardMap().getCountries().remove(country);</span>
+<span class="fc" id="L382">    }</span>
 
     /**
      * Remove border
@@ -574,25 +387,25 @@ import soen6441riskgame.utils.Parser;
      * @param borderLocation location of the border to remove
      */
     private void removeBorder(int borderLocation) {
-<span class="fc" id="L577">        int[][] originalBorder = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
-<span class="fc" id="L578">        int size = originalBorder[0].length - 1;</span>
+<span class="fc" id="L390">        int[][] originalBorder = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
+<span class="fc" id="L391">        int size = originalBorder[0].length - 1;</span>
 
-<span class="fc" id="L580">        int[][] newBorders = new int[size][size];</span>
+<span class="fc" id="L393">        int[][] newBorders = new int[size][size];</span>
 
-<span class="pc bpc" id="L582" title="1 of 2 branches missed.">        for (int row = 0; row &lt; borderLocation; row++) {</span>
-<span class="nc bnc" id="L583" title="All 2 branches missed.">            for (int col = 0; col &lt; borderLocation; col++) {</span>
-<span class="nc" id="L584">                newBorders[row][col] = originalBorder[row][col];</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">        for (int row = 0; row &lt; borderLocation; row++) {</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">            for (int col = 0; col &lt; borderLocation; col++) {</span>
+<span class="nc" id="L397">                newBorders[row][col] = originalBorder[row][col];</span>
             }
         }
 
-<span class="fc bfc" id="L588" title="All 2 branches covered.">        for (int row = size - 1; row &gt;= borderLocation; row--) {</span>
-<span class="fc bfc" id="L589" title="All 2 branches covered.">            for (int col = size - 1; col &gt;= borderLocation; col--) {</span>
-<span class="fc" id="L590">                newBorders[row][col] = originalBorder[row + 1][col + 1];</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">        for (int row = size - 1; row &gt;= borderLocation; row--) {</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">            for (int col = size - 1; col &gt;= borderLocation; col--) {</span>
+<span class="fc" id="L403">                newBorders[row][col] = originalBorder[row + 1][col + 1];</span>
             }
         }
 
-<span class="fc" id="L594">        GameBoard.getInstance().getGameBoardMap().setBorders(newBorders);</span>
-<span class="fc" id="L595">    }</span>
+<span class="fc" id="L407">        GameBoard.getInstance().getGameBoardMap().setBorders(newBorders);</span>
+<span class="fc" id="L408">    }</span>
 
     /**
      * remove connection between 2 countries in the borderGraph
@@ -601,125 +414,24 @@ import soen6441riskgame.utils.Parser;
      * @param neighborCountryName name of the neighbor country
      */
     public void removeNeighbor(String countryName, String neighborCountryName) {
-<span class="fc" id="L604">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
-<span class="fc" id="L605">        Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);</span>
+<span class="fc" id="L417">        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);</span>
+<span class="fc" id="L418">        Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);</span>
 
-<span class="pc bpc" id="L607" title="2 of 4 branches missed.">        if (country == null || neighbor == null) {</span>
-<span class="nc" id="L608">            ConsolePrinter.printFormat(&quot;One or both countries is not existed&quot;);</span>
-<span class="nc" id="L609">            return;</span>
+<span class="pc bpc" id="L420" title="2 of 4 branches missed.">        if (country == null || neighbor == null) {</span>
+<span class="nc" id="L421">            ConsolePrinter.printFormat(&quot;One or both countries is not existed&quot;);</span>
+<span class="nc" id="L422">            return;</span>
         }
 
-<span class="fc" id="L612">        GameBoard.getInstance().getGameBoardMap().getBorders()[country.getOrder() - 1][neighbor.getOrder() - 1] = 0;</span>
-<span class="fc" id="L613">        GameBoard.getInstance().getGameBoardMap().getBorders()[country.getOrder() - 1][neighbor.getOrder() - 1] = 0;</span>
-<span class="fc" id="L614">    }</span>
-
-    /**
-     * Reset the map, clear all continents, countries and borders
-     */
-    public void resetMap() {
-<span class="fc" id="L620">        GameBoard.getInstance().reset();</span>
-<span class="fc" id="L621">    }</span>
-
-    /**
-     * save the map to a file
-     *
-     * @param fileName path to file
-     * @throws IOException exception
-     */
-    public void saveMap(String fileName) throws IOException {
-<span class="pc bpc" id="L630" title="1 of 2 branches missed.">        if (!isMapValid()) {</span>
-<span class="nc" id="L631">            ConsolePrinter.printFormat(&quot;Invalid map. Map not saved&quot;);</span>
-<span class="nc" id="L632">            return;</span>
-        }
-
-<span class="fc" id="L635">        FileWriter writer = new FileWriter(fileName);</span>
-
-<span class="fc" id="L637">        writeContinentsToFile(writer);</span>
-
-<span class="fc" id="L639">        writeCountriesToFile(writer);</span>
-
-<span class="fc" id="L641">        writeBordersToFile(writer);</span>
-
-<span class="fc" id="L643">        writer.close();</span>
-<span class="fc" id="L644">    }</span>
-
-    /**
-     * Write borders information to file
-     *
-     * @param writer file writer
-     * @throws IOException file not found or not exist
-     */
-    private void writeBordersToFile(FileWriter writer) throws IOException {
-<span class="fc" id="L653">        writer.write(&quot;[borders]\n&quot;);</span>
-
-<span class="fc bfc" id="L655" title="All 2 branches covered.">        for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {</span>
-<span class="fc" id="L656">            ArrayList&lt;Country&gt; neighbors = country.getNeighbors();</span>
-
-<span class="fc" id="L658">            StringBuilder neighborLine = new StringBuilder(Integer.toString(country.getOrder()));</span>
-
-<span class="fc bfc" id="L660" title="All 2 branches covered.">            for (Country neighbor : neighbors) {</span>
-<span class="fc" id="L661">                neighborLine.append(&quot; &quot;).append(neighbor.getOrder());</span>
-            }
-
-<span class="fc" id="L664">            writer.write(neighborLine + &quot;\n&quot;);</span>
-        }
-<span class="fc" id="L666">    }</span>
-
-    /**
-     * Write countries information to file
-     *
-     * @param writer file writer
-     * @throws IOException file not found or not exist
-     */
-    private void writeCountriesToFile(FileWriter writer) throws IOException {
-<span class="fc" id="L675">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
-<span class="fc" id="L676">        writer.write(&quot;[countries]\n&quot;);</span>
-<span class="fc bfc" id="L677" title="All 2 branches covered.">        for (Country country : countries) {</span>
-<span class="fc" id="L678">            writer.write(country.getOrder() + &quot; &quot;</span>
-<span class="fc" id="L679">                         + country.getName() + &quot; &quot;</span>
-<span class="fc" id="L680">                         + country.getContinent().getOrder() + &quot; &quot;</span>
-<span class="fc" id="L681">                         + country.getCoordinate().getX() + &quot; &quot;</span>
-<span class="fc" id="L682">                         + country.getCoordinate().getY() + &quot;\n&quot;);</span>
-        }
-<span class="fc" id="L684">        writer.write(&quot;\n&quot;);</span>
-<span class="fc" id="L685">    }</span>
-
-    /**
-     * Write continent information to file
-     *
-     * @param writer file writer
-     * @throws IOException file not found or not exist
-     */
-    private void writeContinentsToFile(FileWriter writer) throws IOException {
-<span class="fc" id="L694">        ArrayList&lt;Continent&gt; continents = GameBoard.getInstance().getGameBoardMap().getContinents();</span>
-<span class="fc" id="L695">        writer.write(&quot;[continents]\n&quot;);</span>
-
-<span class="fc bfc" id="L697" title="All 2 branches covered.">        for (Continent continent : continents) {</span>
-<span class="fc" id="L698">            writer.write(continent.getName() + &quot; &quot; + continent.getArmy() + &quot;\n&quot;);</span>
-        }
-
-<span class="fc" id="L701">        writer.write(&quot;\n&quot;);</span>
-<span class="fc" id="L702">    }</span>
+<span class="fc" id="L425">        GameBoard.getInstance().getGameBoardMap().getBorders()[country.getOrder() - 1][neighbor.getOrder() - 1] = 0;</span>
+<span class="fc" id="L426">        GameBoard.getInstance().getGameBoardMap().getBorders()[country.getOrder() - 1][neighbor.getOrder() - 1] = 0;</span>
+<span class="fc" id="L427">    }</span>
 
     /**
      * Display all continents and it's countries to console
      */
     public void showMap() {
-<span class="nc" id="L708">        GameBoard.getInstance().getGameBoardMap().showContinents();</span>
-<span class="nc" id="L709">    }</span>
-
-    /**
-     * add the country to country list in GameMap, and add to continent's country list in GameMap this
-     * function should be remove when Dependency Injection implemented
-     *
-     * @param country   the country object
-     * @param continent the continent object
-     */
-    private void updateCountryContinent(Country country, Continent continent) {
-<span class="fc" id="L719">        country.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());</span>
-<span class="fc" id="L720">        GameBoard.getInstance().getGameBoardMap().getCountries().add(country);</span>
-<span class="fc" id="L721">        continent.getCountries().add(country);</span>
-<span class="fc" id="L722">    }</span>
+<span class="nc" id="L433">        GameBoard.getInstance().getGameBoardMap().showContinents();</span>
+<span class="nc" id="L434">    }</span>
 
     /**
      * get the country that not belong to any continent
@@ -727,16 +439,16 @@ import soen6441riskgame.utils.Parser;
      * @return list of countries
      */
     private ArrayList&lt;Country&gt; getCountriesHaveNoContinent() {
-<span class="fc" id="L730">        ArrayList&lt;Country&gt; countriesWithNoContinent = new ArrayList&lt;Country&gt;();</span>
-<span class="fc" id="L731">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
+<span class="fc" id="L442">        ArrayList&lt;Country&gt; countriesWithNoContinent = new ArrayList&lt;Country&gt;();</span>
+<span class="fc" id="L443">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
 
-<span class="fc bfc" id="L733" title="All 2 branches covered.">        for (Country country : countries) {</span>
-<span class="pc bpc" id="L734" title="1 of 2 branches missed.">            if (country.getContinent() == null) {</span>
-<span class="nc" id="L735">                countriesWithNoContinent.add(country);</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        for (Country country : countries) {</span>
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">            if (country.getContinent() == null) {</span>
+<span class="nc" id="L447">                countriesWithNoContinent.add(country);</span>
             }
-        }
+<span class="fc" id="L449">        }</span>
 
-<span class="fc" id="L739">        return countriesWithNoContinent;</span>
+<span class="fc" id="L451">        return countriesWithNoContinent;</span>
     }
 
     /**
@@ -747,70 +459,70 @@ import soen6441riskgame.utils.Parser;
      * @return is map valid or not
      */
     public boolean isMapValid() {
-<span class="fc bfc" id="L750" title="All 2 branches covered.">        if (isNotEnoughCountries()) {</span>
-<span class="fc" id="L751">            return false;</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">        if (isNotEnoughCountries()) {</span>
+<span class="fc" id="L463">            return false;</span>
         }
 
-<span class="fc" id="L754">        ArrayList&lt;Country&gt; isolatedCountries = getIsolatedCountries();</span>
-<span class="fc bfc" id="L755" title="All 2 branches covered.">        boolean isIsolatedCountryExisted = isolatedCountries.size() &gt; 0;</span>
+<span class="fc" id="L466">        ArrayList&lt;Country&gt; isolatedCountries = getIsolatedCountries();</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">        boolean isIsolatedCountryExisted = isolatedCountries.size() &gt; 0;</span>
 
-<span class="fc" id="L757">        ArrayList&lt;Continent&gt; emptyContinents = getEmptyContinents();</span>
-<span class="fc bfc" id="L758" title="All 2 branches covered.">        boolean isEmptyContinentExisted = emptyContinents.size() &gt; 0;</span>
+<span class="fc" id="L469">        ArrayList&lt;Continent&gt; emptyContinents = getEmptyContinents();</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">        boolean isEmptyContinentExisted = emptyContinents.size() &gt; 0;</span>
 
-<span class="fc" id="L760">        ArrayList&lt;Country&gt; countriesWithNoContinent = getCountriesHaveNoContinent();</span>
-<span class="pc bpc" id="L761" title="1 of 2 branches missed.">        boolean isCountryWithNoContinentExisted = countriesWithNoContinent.size() &gt; 0;</span>
+<span class="fc" id="L472">        ArrayList&lt;Country&gt; countriesWithNoContinent = getCountriesHaveNoContinent();</span>
+<span class="pc bpc" id="L473" title="1 of 2 branches missed.">        boolean isCountryWithNoContinentExisted = countriesWithNoContinent.size() &gt; 0;</span>
 
-<span class="fc bfc" id="L763" title="All 2 branches covered.">        if (isIsolatedCountryExisted) {</span>
-<span class="fc" id="L764">            ConsolePrinter.printFormat(&quot;Isolated countries existed:&quot;);</span>
-<span class="fc bfc" id="L765" title="All 2 branches covered.">            for (Country country : isolatedCountries) {</span>
-<span class="fc" id="L766">                country.view(1);</span>
-            }
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        if (isIsolatedCountryExisted) {</span>
+<span class="fc" id="L476">            ConsolePrinter.printFormat(&quot;Isolated countries existed:&quot;);</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">            for (Country country : isolatedCountries) {</span>
+<span class="fc" id="L478">                country.view(1);</span>
+<span class="fc" id="L479">            }</span>
         }
 
-<span class="fc bfc" id="L770" title="All 2 branches covered.">        if (isEmptyContinentExisted) {</span>
-<span class="fc" id="L771">            ConsolePrinter.printFormat(&quot;Empty continent existed:&quot;);</span>
-<span class="fc bfc" id="L772" title="All 2 branches covered.">            for (Continent continent : emptyContinents) {</span>
-<span class="fc" id="L773">                continent.view(1);</span>
-            }
+<span class="fc bfc" id="L482" title="All 2 branches covered.">        if (isEmptyContinentExisted) {</span>
+<span class="fc" id="L483">            ConsolePrinter.printFormat(&quot;Empty continent existed:&quot;);</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">            for (Continent continent : emptyContinents) {</span>
+<span class="fc" id="L485">                continent.view(1);</span>
+<span class="fc" id="L486">            }</span>
         }
 
-<span class="pc bpc" id="L777" title="1 of 2 branches missed.">        if (isCountryWithNoContinentExisted) {</span>
-<span class="nc" id="L778">            ConsolePrinter.printFormat(&quot;Country that not belong to any continent existed:&quot;);</span>
-<span class="nc bnc" id="L779" title="All 2 branches missed.">            for (Country country : countriesWithNoContinent) {</span>
-<span class="nc" id="L780">                country.viewWithoutNeighbors(1);</span>
-            }
+<span class="pc bpc" id="L489" title="1 of 2 branches missed.">        if (isCountryWithNoContinentExisted) {</span>
+<span class="nc" id="L490">            ConsolePrinter.printFormat(&quot;Country that not belong to any continent existed:&quot;);</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">            for (Country country : countriesWithNoContinent) {</span>
+<span class="nc" id="L492">                country.viewWithoutNeighbors(1);</span>
+<span class="nc" id="L493">            }</span>
         }
 
         // check if country in continents are connected
-<span class="fc" id="L785">        boolean isCountriesInContinentConnected = true;</span>
-<span class="fc" id="L786">        ArrayList&lt;Continent&gt; continents = GameBoard.getInstance().getGameBoardMap().getContinents();</span>
-<span class="fc bfc" id="L787" title="All 2 branches covered.">        for (Continent continent : continents) {</span>
-<span class="fc bfc" id="L788" title="All 2 branches covered.">            if (!continent.isContinentConnected()) {</span>
-<span class="fc" id="L789">                isCountriesInContinentConnected = false;</span>
-<span class="fc" id="L790">                break;</span>
+<span class="fc" id="L497">        boolean isCountriesInContinentConnected = true;</span>
+<span class="fc" id="L498">        ArrayList&lt;Continent&gt; continents = GameBoard.getInstance().getGameBoardMap().getContinents();</span>
+<span class="fc bfc" id="L499" title="All 2 branches covered.">        for (Continent continent : continents) {</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">            if (!continent.isContinentConnected()) {</span>
+<span class="fc" id="L501">                isCountriesInContinentConnected = false;</span>
+<span class="fc" id="L502">                break;</span>
             }
-        }
+<span class="fc" id="L504">        }</span>
 
-<span class="fc" id="L794">        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance()</span>
-<span class="fc" id="L795">            .getGameBoardMap()</span>
-<span class="fc" id="L796">                                                                            .getCountries());</span>
+<span class="fc" id="L506">        boolean isMapConnected = GraphChecker.isCountriesConnected(GameBoard.getInstance()</span>
+<span class="fc" id="L507">                                                                            .getGameBoardMap()</span>
+<span class="fc" id="L508">                                                                            .getCountries());</span>
 
-<span class="fc bfc" id="L798" title="All 2 branches covered.">        return !isIsolatedCountryExisted</span>
-<span class="fc bfc" id="L799" title="All 2 branches covered.">            &amp;&amp; !isEmptyContinentExisted</span>
-<span class="pc bpc" id="L800" title="1 of 2 branches missed.">            &amp;&amp; !isCountryWithNoContinentExisted</span>
-<span class="fc bfc" id="L801" title="All 2 branches covered.">            &amp;&amp; isCountriesInContinentConnected</span>
-<span class="pc bpc" id="L802" title="1 of 2 branches missed.">            &amp;&amp; isMapConnected;</span>
+<span class="pc bpc" id="L510" title="2 of 10 branches missed.">        return !isIsolatedCountryExisted</span>
+               &amp;&amp; !isEmptyContinentExisted
+               &amp;&amp; !isCountryWithNoContinentExisted
+               &amp;&amp; isCountriesInContinentConnected
+               &amp;&amp; isMapConnected;
     }
 
     /**
      * handle the map validation command
      */
     public void validateMap() {
-<span class="pc bpc" id="L809" title="1 of 2 branches missed.">        if (isMapValid()) {</span>
-<span class="fc" id="L810">            ConsolePrinter.printFormat(&quot;Map valid&quot;);</span>
-<span class="fc" id="L811">        } else {</span>
-<span class="nc" id="L812">            ConsolePrinter.printFormat(&quot;Invalid map&quot;);</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">        if (isMapValid()) {</span>
+<span class="fc" id="L522">            ConsolePrinter.printFormat(&quot;Map valid&quot;);</span>
+        } else {
+<span class="nc" id="L524">            ConsolePrinter.printFormat(&quot;Invalid map&quot;);</span>
         }
-<span class="fc" id="L814">    }</span>
+<span class="fc" id="L526">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

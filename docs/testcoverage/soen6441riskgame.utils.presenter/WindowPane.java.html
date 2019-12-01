@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,15 +23,15 @@ public class WindowPane extends JPanel {
     /**
      * Presenter constructor
      */
-<span class="nc" id="L25">    public WindowPane() {</span>
-<span class="nc" id="L26">        setLayout(new BorderLayout());</span>
-<span class="nc" id="L27">        textArea = new JTextArea();</span>
-<span class="nc" id="L28">        textArea.setBackground(Color.BLACK);</span>
-<span class="nc" id="L29">        textArea.setForeground(Color.WHITE);</span>
-<span class="nc" id="L30">        Font font = loadFont();</span>
-<span class="nc" id="L31">        textArea.setFont(font);</span>
-<span class="nc" id="L32">        add(new JScrollPane(textArea));</span>
-<span class="nc" id="L33">    }</span>
+<span class="nc" id="L26">    public WindowPane() {</span>
+<span class="nc" id="L27">        setLayout(new BorderLayout());</span>
+<span class="nc" id="L28">        textArea = new JTextArea();</span>
+<span class="nc" id="L29">        textArea.setBackground(Color.BLACK);</span>
+<span class="nc" id="L30">        textArea.setForeground(Color.WHITE);</span>
+<span class="nc" id="L31">        Font font = loadFont();</span>
+<span class="nc" id="L32">        textArea.setFont(font);</span>
+<span class="nc" id="L33">        add(new JScrollPane(textArea));</span>
+<span class="nc" id="L34">    }</span>
 
     /**
      * Load RobotoMono font
@@ -40,25 +41,23 @@ public class WindowPane extends JPanel {
     public Font loadFont() {
         Font font;
         try {
-<span class="nc" id="L43">            InputStream fontFile = new BufferedInputStream(new FileInputStream(&quot;src\\main\\java\\soen6441riskgame\\resources\\RobotoMono-Regular.ttf&quot;));</span>
-<span class="nc" id="L44">            Font localFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);</span>
+<span class="nc" id="L44">            InputStream fontFile = new BufferedInputStream(new FileInputStream(&quot;src\\main\\java\\soen6441riskgame\\resources\\RobotoMono-Regular.ttf&quot;));</span>
+<span class="nc" id="L45">            Font localFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);</span>
 
-<span class="nc" id="L46">            font = localFont.deriveFont(Font.PLAIN, 14);</span>
-<span class="nc" id="L47">        } catch (Exception ex) {</span>
-<span class="nc" id="L48">            font = null;</span>
-        }
+<span class="nc" id="L47">            font = localFont.deriveFont(Font.PLAIN, 14);</span>
+<span class="nc" id="L48">        } catch (Exception ex) {</span>
+<span class="nc" id="L49">            font = null;</span>
+<span class="nc" id="L50">        }</span>
 
-<span class="nc" id="L51">        return font;</span>
+<span class="nc" id="L52">        return font;</span>
     }
 
     /**
      * Clear the view
      */
     public void clearView() {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (textArea != null) {</span>
-<span class="nc" id="L59">            textArea.setText(null);</span>
-        }
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L59">        textArea.setText(null);</span>
+<span class="nc" id="L60">    }</span>
 
     /**
      * append new text to view
@@ -66,12 +65,20 @@ public class WindowPane extends JPanel {
      * @param text the text to append
      */
     public void appendText(final String text) {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (EventQueue.isDispatchThread()) {</span>
-<span class="nc" id="L70">            textArea.append(text);</span>
-<span class="nc" id="L71">            textArea.setCaretPosition(textArea.getText().length());</span>
-<span class="nc" id="L72">        } else {</span>
-<span class="nc" id="L73">            EventQueue.invokeLater(() -&gt; appendText(text));</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (EventQueue.isDispatchThread()) {</span>
+<span class="nc" id="L69">            textArea.append(text);</span>
+<span class="nc" id="L70">            textArea.setCaretPosition(textArea.getText().length());</span>
+        } else {
+            try {
+<span class="nc" id="L73">                EventQueue.invokeAndWait(() -&gt; {</span>
+<span class="nc" id="L74">                    appendText(text);</span>
+<span class="nc" id="L75">                });</span>
+<span class="nc" id="L76">            } catch (InvocationTargetException e) {</span>
+
+<span class="nc" id="L78">            } catch (InterruptedException e) {</span>
+
+<span class="nc" id="L80">            }</span>
         }
-<span class="nc" id="L75">    }</span>
+<span class="nc" id="L82">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

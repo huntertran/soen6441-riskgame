@@ -31,240 +31,263 @@ public class ModelCommands {
 <span class="fc" id="L31">        init(newArgs);</span>
 <span class="fc" id="L32">    }</span>
 
+    /**
+     * initialize the param check
+     * 
+     * @param new_args
+     */
     private void init(String new_args) {
         // check if arguments provided is not null or empty string.
-<span class="pc bpc" id="L36" title="2 of 4 branches missed.">        if ((new_args == null) || (new_args.equals(&quot;&quot;))) {</span>
-<span class="nc" id="L37">            return;</span>
+<span class="pc bpc" id="L41" title="2 of 4 branches missed.">        if ((new_args == null) || (new_args.equals(&quot;&quot;))) {</span>
+<span class="nc" id="L42">            return;</span>
         }
 
         // Split first word and rest of the string into two array.
-<span class="fc" id="L41">        String[] temp_args = new_args.split(&quot; &quot;, 2);</span>
+<span class="fc" id="L46">        String[] temp_args = new_args.split(&quot; &quot;, 2);</span>
 
         // assign command as the first value of the temp_args array
-<span class="fc" id="L44">        this.cmd = temp_args[0].toLowerCase();</span>
+<span class="fc" id="L49">        this.cmd = temp_args[0].toLowerCase();</span>
 
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (temp_args.length &lt;= 1) {</span>
-<span class="fc" id="L47">            return;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (temp_args.length &lt;= 1) {</span>
+<span class="fc" id="L52">            return;</span>
         }
 
         // Split rest of the string parameter except the command using &quot;-&quot;
         String[] paramsArray;
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if(this.cmd.equalsIgnoreCase(&quot;tournament&quot;)) {</span>
-<span class="nc" id="L53">            paramsArray = temp_args[1].split(&quot; &quot;);</span>
-<span class="nc" id="L54">        }</span>
-        else {
-<span class="fc" id="L56">            paramsArray = temp_args[1].split(&quot;-&quot;);</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (this.cmd.equalsIgnoreCase(&quot;tournament&quot;)) {</span>
+<span class="nc" id="L58">            paramsArray = temp_args[1].split(&quot; &quot;);</span>
+        } else {
+<span class="fc" id="L60">            paramsArray = temp_args[1].split(&quot;-&quot;);</span>
         }
 
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (String s : paramsArray) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (String s : paramsArray) {</span>
             try {
-<span class="fc" id="L61">                populateRegularCommandsOrSubRoutines(paramsArray, s);</span>
-<span class="fc" id="L62">            } catch (NumberFormatException e) {</span>
-<span class="fc" id="L63">                ConsolePrinter.printFormat(&quot;Invalid value detected.&quot;);</span>
-<span class="fc" id="L64">                continue;</span>
-<span class="fc" id="L65">            } catch (Exception e) {</span>
-<span class="fc" id="L66">                ConsolePrinter.printFormat(&quot;Invalid command detected.&quot;);</span>
-                continue;
-            }
+<span class="fc" id="L65">                populateRegularCommandsOrSubRoutines(paramsArray, s);</span>
+<span class="fc" id="L66">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L67">                ConsolePrinter.printFormat(&quot;Invalid value detected.&quot;);</span>
+<span class="fc" id="L68">                continue;</span>
+<span class="fc" id="L69">            } catch (Exception e) {</span>
+<span class="fc" id="L70">                ConsolePrinter.printFormat(&quot;Invalid command detected.&quot;);</span>
+<span class="fc" id="L71">                continue;</span>
+<span class="fc" id="L72">            }</span>
         }
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L74">    }</span>
 
+    /**
+     * create regular commands OR sub routines
+     * 
+     * @param paramsArray param array
+     * @param s           string
+     * @throws Exception if cannot parse params
+     */
     private void populateRegularCommandsOrSubRoutines(String[] paramsArray, String s) throws Exception {
         // Split rest of the string parameter except the command using space (&quot; &quot;)
-<span class="fc" id="L74">        String[] params = s.split(&quot; &quot;);</span>
+<span class="fc" id="L85">        String[] params = s.split(&quot; &quot;);</span>
 
-<span class="fc" id="L76">        buildSubRoutines(params);</span>
+<span class="fc" id="L87">        buildSubRoutines(params);</span>
 
-<span class="fc" id="L78">        buildRegularCommands(paramsArray, params);</span>
-<span class="fc" id="L79">    }</span>
+<span class="fc" id="L89">        buildRegularCommands(paramsArray, params);</span>
+<span class="fc" id="L90">    }</span>
 
+    /**
+     * build sub routines
+     * 
+     * @param params params
+     */
     private void buildSubRoutines(String[] params) {
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int j = 0; j &lt; params.length; j++) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for (int j = 0; j &lt; params.length; j++) {</span>
             // check for null or empty value after split
-<span class="pc bpc" id="L84" title="1 of 4 branches missed.">            if ((params[j] == null) || (params[j].equals(&quot;&quot;))) {</span>
-<span class="fc" id="L85">                continue;</span>
+<span class="pc bpc" id="L100" title="1 of 4 branches missed.">            if ((params[j] == null) || (params[j].equals(&quot;&quot;))) {</span>
+<span class="fc" id="L101">                continue;</span>
             }
 
-<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">                || params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                || params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {</span>
                 // check specific validation criteria as per command
                 // check if ADD command is provided
-<span class="fc bfc" id="L92" title="All 2 branches covered.">                if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">                    if (cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                    if (cmd.equalsIgnoreCase(MapEditorCommands.EDITCONTINENT)) {</span>
                         // check if number of army are in number format
-<span class="fc bfc" id="L95" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[j + 2])) {</span>
-<span class="fc" id="L96">                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),</span>
-<span class="fc" id="L97">                                                                 params[j + 1],</span>
-<span class="fc" id="L98">                                                                 params[j + 2]));</span>
-<span class="fc" id="L99">                            break;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[j + 2])) {</span>
+<span class="fc" id="L112">                            subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),</span>
+                                                                 params[j + 1],
+                                                                 params[j + 2]));
+<span class="fc" id="L115">                            break;</span>
                         } else {
-<span class="fc" id="L101">                            throw new NumberFormatException();</span>
+<span class="fc" id="L117">                            throw new NumberFormatException();</span>
                         }
                     }
                     // check if the command is GAMEPLAYER
-<span class="fc bfc" id="L105" title="All 2 branches covered.">                    else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {</span>
-<span class="fc" id="L106">                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));</span>
-<span class="fc" id="L107">                        break;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                    else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {</span>
+<span class="fc" id="L122">                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));</span>
+<span class="fc" id="L123">                        break;</span>
                     }
                     // command contains sub commands so add separately to subroutine list.
                     else {
-<span class="fc" id="L111">                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),</span>
-<span class="fc" id="L112">                                                             params[j + 1],</span>
-<span class="fc" id="L113">                                                             params[j + 2]));</span>
-<span class="fc" id="L114">                        break;</span>
+<span class="fc" id="L127">                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),</span>
+                                                             params[j + 1],
+                                                             params[j + 2]));
+<span class="fc" id="L130">                        break;</span>
                     }
                 }
                 // check if REMOVE command is provided
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">                else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {</span>
-<span class="fc" id="L119">                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));</span>
-<span class="fc" id="L120">                    break;</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {</span>
+<span class="fc" id="L135">                    subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));</span>
+<span class="fc" id="L136">                    break;</span>
                 }
             }
         }
-<span class="fc" id="L124">    }</span>
+<span class="fc" id="L140">    }</span>
 
+    /**
+     * build regular commands
+     * 
+     * @param paramsArray array of params
+     * @param params      the params
+     * @throws Exception if cannot parse param
+     */
     private void buildRegularCommands(String[] paramsArray, String[] params) throws Exception {
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        for (int j = 0; j &lt; params.length; j++) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        for (int j = 0; j &lt; params.length; j++) {</span>
             // check for null or empty value after split
-<span class="pc bpc" id="L129" title="1 of 4 branches missed.">            if ((params[j] == null) || (params[j].equals(&quot;&quot;))) {</span>
-<span class="fc" id="L130">                continue;</span>
+<span class="pc bpc" id="L152" title="1 of 4 branches missed.">            if ((params[j] == null) || (params[j].equals(&quot;&quot;))) {</span>
+<span class="fc" id="L153">                continue;</span>
             }
 
-<span class="fc bfc" id="L133" title="All 2 branches covered.">            if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">                || params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {</span>
-<span class="fc" id="L135">                continue;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">            if (params[j].equalsIgnoreCase(MapEditorCommands.ADD)</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">                || params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {</span>
+<span class="fc" id="L158">                continue;</span>
             }
 
-<span class="fc" id="L138">            String lowerCasedCommand = cmd.toLowerCase();</span>
+<span class="fc" id="L161">            String lowerCasedCommand = cmd.toLowerCase();</span>
 
-<span class="pc bpc" id="L140" title="8 of 19 branches missed.">            switch (lowerCasedCommand) {</span>
+<span class="pc bpc" id="L163" title="1 of 7 branches missed.">            switch (lowerCasedCommand) {</span>
                 case GameCommands.REINFORCE: {
                     // check if number of armies are in number format
-<span class="fc bfc" id="L143" title="All 2 branches covered.">                    if (Parser.checkValidInputNumber(params[1])) {</span>
-<span class="fc" id="L144">                        regularCommands.add(params[j]);</span>
-<span class="fc" id="L145">                        regularCommands.add(params[j + 1]);</span>
-<span class="fc" id="L146">                        return;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">                    if (Parser.checkValidInputNumber(params[1])) {</span>
+<span class="fc" id="L167">                        regularCommands.add(params[j]);</span>
+<span class="fc" id="L168">                        regularCommands.add(params[j + 1]);</span>
+<span class="fc" id="L169">                        return;</span>
                     }
                 }
                 case GameCommands.FORTIFY: {
                     // Three parameters of FORTIFY command
-<span class="fc bfc" id="L151" title="All 2 branches covered.">                    if (params.length == 3) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                    if (params.length == 3) {</span>
                         // check if number of armies are in number format
-<span class="fc bfc" id="L153" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
-<span class="fc" id="L154">                            regularCommands.add(params[j]);</span>
-<span class="fc" id="L155">                            regularCommands.add(params[j + 1]);</span>
-<span class="fc" id="L156">                            regularCommands.add(params[j + 2].replace(&quot;-&quot;, &quot;&quot;));</span>
-<span class="fc" id="L157">                            return;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
+<span class="fc" id="L177">                            regularCommands.add(params[j]);</span>
+<span class="fc" id="L178">                            regularCommands.add(params[j + 1]);</span>
+<span class="fc" id="L179">                            regularCommands.add(params[j + 2].replace(&quot;-&quot;, &quot;&quot;));</span>
+<span class="fc" id="L180">                            return;</span>
                         }
                         // did not provide number
                         else {
-<span class="fc" id="L161">                            throw new NumberFormatException();</span>
+<span class="fc" id="L184">                            throw new NumberFormatException();</span>
                         }
-<span class="fc bfc" id="L163" title="All 2 branches covered.">                    } else if (params.length == 4) {</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">                    } else if (params.length == 4) {</span>
                         // check if number of armies are in number format
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
-<span class="fc" id="L166">                            regularCommands.add(params[j]);</span>
-<span class="fc" id="L167">                            regularCommands.add(params[j + 1]);</span>
-<span class="fc" id="L168">                            regularCommands.add(params[j + 2]);</span>
-<span class="fc" id="L169">                            regularCommands.add(params[j + 3]);</span>
-<span class="fc" id="L170">                            return;</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
+<span class="fc" id="L189">                            regularCommands.add(params[j]);</span>
+<span class="fc" id="L190">                            regularCommands.add(params[j + 1]);</span>
+<span class="fc" id="L191">                            regularCommands.add(params[j + 2]);</span>
+<span class="fc" id="L192">                            regularCommands.add(params[j + 3]);</span>
+<span class="fc" id="L193">                            return;</span>
                         }
                         // did not provide number
                         else {
-<span class="nc" id="L174">                            throw new NumberFormatException();</span>
+<span class="nc" id="L197">                            throw new NumberFormatException();</span>
                         }
                     }
                     // Player does not wish to fortify
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">                    else if (params[0] != null</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">                             &amp;&amp; params[0].replace(&quot;-&quot;, &quot;&quot;).equalsIgnoreCase(GameCommands.NONE)) {</span>
-<span class="fc" id="L180">                        regularCommands.add(params[j].toLowerCase());</span>
-<span class="fc" id="L181">                        return;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">                    else if (params[0] != null</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">                             &amp;&amp; params[0].replace(&quot;-&quot;, &quot;&quot;).equalsIgnoreCase(GameCommands.NONE)) {</span>
+<span class="fc" id="L203">                        regularCommands.add(params[j].toLowerCase());</span>
+<span class="fc" id="L204">                        return;</span>
                     }
                     // Unknown command provided throw invalid exception
                     else {
-<span class="fc" id="L185">                        throw new Exception(&quot;Invalid Input&quot;);</span>
+<span class="fc" id="L208">                        throw new Exception(&quot;Invalid Input&quot;);</span>
                     }
                 }
                 case GameCommands.EXCHANGECARDS: {
-<span class="fc bfc" id="L189" title="All 2 branches covered.">                    if ((params.length % 3) == 0) {</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">                        for (String param : params) {</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">                            if (Parser.checkValidInputNumber(param)) {</span>
-<span class="fc" id="L192">                                regularCommands.add(param);</span>
-<span class="fc" id="L193">                            } else {</span>
-<span class="fc" id="L194">                                throw new NumberFormatException();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">                    if ((params.length % 3) == 0) {</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">                        for (String param : params) {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">                            if (Parser.checkValidInputNumber(param)) {</span>
+<span class="fc" id="L215">                                regularCommands.add(param);</span>
+                            } else {
+<span class="fc" id="L217">                                throw new NumberFormatException();</span>
                             }
                         }
-<span class="fc" id="L197">                        return;</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">                    } else if ((params.length % 3) == 1) {</span>
-<span class="fc" id="L199">                        int size = params.length - 1;</span>
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">                        for (int index = 0; index &lt; size; index++) {</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">                            if (Parser.checkValidInputNumber(params[index])) {</span>
-<span class="nc" id="L202">                                regularCommands.add(params[index]);</span>
-<span class="nc" id="L203">                            } else {</span>
-<span class="nc" id="L204">                                throw new NumberFormatException();</span>
+<span class="fc" id="L220">                        return;</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">                    } else if ((params.length % 3) == 1) {</span>
+<span class="fc" id="L222">                        int size = params.length - 1;</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">                        for (int index = 0; index &lt; size; index++) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">                            if (Parser.checkValidInputNumber(params[index])) {</span>
+<span class="nc" id="L225">                                regularCommands.add(params[index]);</span>
+                            } else {
+<span class="nc" id="L227">                                throw new NumberFormatException();</span>
                             }
                         }
-<span class="fc" id="L207">                        regularCommands.add(params[size]);</span>
-<span class="fc" id="L208">                        return;</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">                    } else if (params[j].replace(&quot;-&quot;, &quot;&quot;).equalsIgnoreCase(GameCommands.NONE)) {</span>
-<span class="nc" id="L210">                        regularCommands.add(params[j].toLowerCase());</span>
-<span class="nc" id="L211">                        return;</span>
+<span class="fc" id="L230">                        regularCommands.add(params[size]);</span>
+<span class="fc" id="L231">                        return;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">                    } else if (params[j].replace(&quot;-&quot;, &quot;&quot;).equalsIgnoreCase(GameCommands.NONE)) {</span>
+<span class="nc" id="L233">                        regularCommands.add(params[j].toLowerCase());</span>
+<span class="nc" id="L234">                        return;</span>
                     }
                 }
                 case GameCommands.ATTACK: {
-<span class="fc bfc" id="L215" title="All 2 branches covered.">                    if (params.length == 3) {</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
-<span class="fc" id="L217">                            regularCommands.add(params[j]);</span>
-<span class="fc" id="L218">                            regularCommands.add(params[j + 1]);</span>
-<span class="fc" id="L219">                            regularCommands.add(params[j + 2]);</span>
-<span class="fc" id="L220">                            return;</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">                    if (params.length == 3) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
+<span class="fc" id="L240">                            regularCommands.add(params[j]);</span>
+<span class="fc" id="L241">                            regularCommands.add(params[j + 1]);</span>
+<span class="fc" id="L242">                            regularCommands.add(params[j + 2]);</span>
+<span class="fc" id="L243">                            return;</span>
                         } else {
-<span class="fc" id="L222">                            throw new NumberFormatException();</span>
+<span class="fc" id="L245">                            throw new NumberFormatException();</span>
                         }
-<span class="fc bfc" id="L224" title="All 2 branches covered.">                    } else if (params.length == 2) {</span>
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">                        if (paramsArray[1].replace(&quot;-&quot;, &quot;&quot;).equalsIgnoreCase(GameCommands.ALLOUT)) {</span>
-<span class="fc" id="L226">                            regularCommands.add(params[j]);</span>
-<span class="fc" id="L227">                            regularCommands.add(params[j + 1]);</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">                    } else if (params.length == 2) {</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">                        if (paramsArray[1].replace(&quot;-&quot;, &quot;&quot;).equalsIgnoreCase(GameCommands.ALLOUT)) {</span>
+<span class="fc" id="L249">                            regularCommands.add(params[j]);</span>
+<span class="fc" id="L250">                            regularCommands.add(params[j + 1]);</span>
                             // regularCommands.add(paramsArray[1]);
-<span class="fc" id="L229">                            return;</span>
+<span class="fc" id="L252">                            return;</span>
                         }
-<span class="fc bfc" id="L231" title="All 2 branches covered.">                    } else if (params.length == 4) {</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
-<span class="fc" id="L233">                            regularCommands.add(params[j]);</span>
-<span class="fc" id="L234">                            regularCommands.add(params[j + 1]);</span>
-<span class="fc" id="L235">                            regularCommands.add(params[j + 2]);</span>
-<span class="fc" id="L236">                            return;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">                    } else if (params.length == 4) {</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">                        if (Parser.checkValidInputNumber(params[2])) {</span>
+<span class="fc" id="L256">                            regularCommands.add(params[j]);</span>
+<span class="fc" id="L257">                            regularCommands.add(params[j + 1]);</span>
+<span class="fc" id="L258">                            regularCommands.add(params[j + 2]);</span>
+<span class="fc" id="L259">                            return;</span>
                         } else {
-<span class="fc" id="L238">                            throw new NumberFormatException();</span>
+<span class="fc" id="L261">                            throw new NumberFormatException();</span>
                         }
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">                    } else if (params.length == 1) {</span>
-<span class="fc" id="L241">                        regularCommands.add(params[j].toLowerCase());</span>
-<span class="fc" id="L242">                        return;</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">                    } else if (params.length == 1) {</span>
+<span class="fc" id="L264">                        regularCommands.add(params[j].toLowerCase());</span>
+<span class="fc" id="L265">                        return;</span>
                     } else {
-<span class="nc" id="L244">                        throw new Exception();</span>
+<span class="nc" id="L267">                        throw new Exception();</span>
                     }
                 }
                 case GameCommands.DEFEND: {
-<span class="nc bnc" id="L248" title="All 2 branches missed.">                    if (Parser.checkValidInputNumber(params[j])) {</span>
-<span class="nc" id="L249">                        regularCommands.add(params[j]);</span>
-<span class="nc" id="L250">                        return;</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                    if (Parser.checkValidInputNumber(params[j])) {</span>
+<span class="nc" id="L272">                        regularCommands.add(params[j]);</span>
+<span class="nc" id="L273">                        return;</span>
                     } else {
-<span class="nc" id="L252">                        throw new NumberFormatException();</span>
+<span class="nc" id="L275">                        throw new NumberFormatException();</span>
                     }
                 }
                 case GameCommands.ATTACKMOVE: {
-<span class="fc bfc" id="L256" title="All 2 branches covered.">                    if (Parser.checkValidInputNumber(params[j])) {</span>
-<span class="fc" id="L257">                        regularCommands.add(params[j].toLowerCase());</span>
-<span class="fc" id="L258">                        return;</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">                    if (Parser.checkValidInputNumber(params[j])) {</span>
+<span class="fc" id="L280">                        regularCommands.add(params[j].toLowerCase());</span>
+<span class="fc" id="L281">                        return;</span>
                     } else {
-<span class="fc" id="L260">                        throw new NumberFormatException();</span>
+<span class="fc" id="L283">                        throw new NumberFormatException();</span>
                     }
                 }
                 default: {
-<span class="fc" id="L264">                    regularCommands.add(params[j]);</span>
+<span class="fc" id="L287">                    regularCommands.add(params[j]);</span>
                 }
             }
         }
-<span class="fc" id="L268">    }</span>
+<span class="fc" id="L291">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

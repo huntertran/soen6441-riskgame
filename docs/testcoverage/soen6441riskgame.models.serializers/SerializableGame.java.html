@@ -14,7 +14,10 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.singleton.GameBoardPlaying;
 
-<span class="fc" id="L17">public class SerializableGame {</span>
+/**
+ * hold data for save - load game
+ */
+<span class="fc" id="L20">public class SerializableGame {</span>
     @Expose
     private List&lt;Country&gt; countries;
     @Expose
@@ -34,18 +37,18 @@ import soen6441riskgame.singleton.GameBoardPlaying;
      * @return json string
      */
     public String serialize() {
-<span class="fc" id="L37">        Gson gson = new GsonBuilder().setPrettyPrinting()</span>
-<span class="fc" id="L38">                                     .serializeNulls()</span>
-<span class="fc" id="L39">                                     .excludeFieldsWithoutExposeAnnotation()</span>
-<span class="fc" id="L40">                                     .create();</span>
+<span class="fc" id="L40">        Gson gson = new GsonBuilder().setPrettyPrinting()</span>
+<span class="fc" id="L41">                                     .serializeNulls()</span>
+<span class="fc" id="L42">                                     .excludeFieldsWithoutExposeAnnotation()</span>
+<span class="fc" id="L43">                                     .create();</span>
 
-<span class="fc" id="L42">        return gson.toJson(this);</span>
+<span class="fc" id="L45">        return gson.toJson(this);</span>
     }
 
     /**
      * Builder pattern for serialize the game
      */
-<span class="fc" id="L48">    public static class Builder {</span>
+<span class="fc" id="L51">    public static class Builder {</span>
         private List&lt;Country&gt; countries;
         private List&lt;Continent&gt; continents;
         private List&lt;Player&gt; players;
@@ -60,8 +63,8 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return builder object
          */
         public Builder setContinents(List&lt;Continent&gt; continents) {
-<span class="fc" id="L63">            this.continents = continents;</span>
-<span class="fc" id="L64">            return this;</span>
+<span class="fc" id="L66">            this.continents = continents;</span>
+<span class="fc" id="L67">            return this;</span>
         }
 
         /**
@@ -71,8 +74,8 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return builder object
          */
         public Builder setCountries(List&lt;Country&gt; countries) {
-<span class="fc" id="L74">            this.countries = countries;</span>
-<span class="fc" id="L75">            return this;</span>
+<span class="fc" id="L77">            this.countries = countries;</span>
+<span class="fc" id="L78">            return this;</span>
         }
 
         /**
@@ -82,8 +85,8 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return builder object
          */
         public Builder setPlayers(List&lt;Player&gt; players) {
-<span class="fc" id="L85">            this.players = players;</span>
-<span class="fc" id="L86">            return this;</span>
+<span class="fc" id="L88">            this.players = players;</span>
+<span class="fc" id="L89">            return this;</span>
         }
 
         /**
@@ -93,8 +96,8 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return builder object
          */
         public Builder setBorders(int[][] borders) {
-<span class="fc" id="L96">            this.borders = borders;</span>
-<span class="fc" id="L97">            return this;</span>
+<span class="fc" id="L99">            this.borders = borders;</span>
+<span class="fc" id="L100">            return this;</span>
         }
 
         /**
@@ -104,8 +107,8 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return builder object
          */
         public Builder setCards(Card[] cards) {
-<span class="fc" id="L107">            this.cards = cards;</span>
-<span class="fc" id="L108">            return this;</span>
+<span class="fc" id="L110">            this.cards = cards;</span>
+<span class="fc" id="L111">            return this;</span>
         }
 
         /**
@@ -115,8 +118,8 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return builder object
          */
         public Builder setGameBoardPlaying(GameBoardPlaying gameBoardPlaying) {
-<span class="fc" id="L118">            this.gameBoardPlaying = gameBoardPlaying;</span>
-<span class="fc" id="L119">            return this;</span>
+<span class="fc" id="L121">            this.gameBoardPlaying = gameBoardPlaying;</span>
+<span class="fc" id="L122">            return this;</span>
         }
 
         /**
@@ -125,77 +128,77 @@ import soen6441riskgame.singleton.GameBoardPlaying;
          * @return SerializableGame that hold all the data
          */
         public SerializableGame build() {
-<span class="fc" id="L128">            SerializableGame serializableGame = new SerializableGame();</span>
-<span class="fc" id="L129">            serializableGame.continents = this.continents;</span>
-<span class="fc" id="L130">            serializableGame.countries = this.countries;</span>
-<span class="fc" id="L131">            serializableGame.players = this.players;</span>
-<span class="fc" id="L132">            serializableGame.borders = this.borders;</span>
-<span class="fc" id="L133">            serializableGame.cards = this.cards;</span>
-<span class="fc" id="L134">            serializableGame.gameBoardPlaying = this.gameBoardPlaying;</span>
-<span class="fc" id="L135">            return serializableGame;</span>
+<span class="fc" id="L131">            SerializableGame serializableGame = new SerializableGame();</span>
+<span class="fc" id="L132">            serializableGame.continents = this.continents;</span>
+<span class="fc" id="L133">            serializableGame.countries = this.countries;</span>
+<span class="fc" id="L134">            serializableGame.players = this.players;</span>
+<span class="fc" id="L135">            serializableGame.borders = this.borders;</span>
+<span class="fc" id="L136">            serializableGame.cards = this.cards;</span>
+<span class="fc" id="L137">            serializableGame.gameBoardPlaying = this.gameBoardPlaying;</span>
+<span class="fc" id="L138">            return serializableGame;</span>
         }
 
         /**
          * reconstruct game in specific order
          */
         public void reconstructGame() {
-<span class="fc" id="L142">            GameBoard.getInstance().reset();</span>
+<span class="fc" id="L145">            GameBoard.getInstance().reset();</span>
 
-<span class="fc bfc" id="L144" title="All 2 branches covered.">            for (Continent continent : continents) {</span>
-<span class="fc" id="L145">                continent.initializeCountries();</span>
-<span class="fc" id="L146">                GameBoard.getInstance()</span>
-<span class="fc" id="L147">                         .getGameBoardMap()</span>
-<span class="fc" id="L148">                         .getContinents()</span>
-<span class="fc" id="L149">                         .add(continent);</span>
-            }
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            for (Continent continent : continents) {</span>
+<span class="fc" id="L148">                continent.initializeCountries();</span>
+<span class="fc" id="L149">                GameBoard.getInstance()</span>
+<span class="fc" id="L150">                         .getGameBoardMap()</span>
+<span class="fc" id="L151">                         .getContinents()</span>
+<span class="fc" id="L152">                         .add(continent);</span>
+<span class="fc" id="L153">            }</span>
 
-<span class="fc" id="L152">            GameBoard.getInstance().getGameBoardMap().setBorders(borders);</span>
+<span class="fc" id="L155">            GameBoard.getInstance().getGameBoardMap().setBorders(borders);</span>
 
-<span class="fc bfc" id="L154" title="All 2 branches covered.">            for (Player player : players) {</span>
-<span class="fc" id="L155">                Player linkedPlayer = new Player(player);</span>
-<span class="fc" id="L156">                GameBoard.getInstance()</span>
-<span class="fc" id="L157">                         .getGameBoardPlayer()</span>
-<span class="fc" id="L158">                         .getPlayers()</span>
-<span class="fc" id="L159">                         .add(linkedPlayer);</span>
-            }
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            for (Player player : players) {</span>
+<span class="fc" id="L158">                Player linkedPlayer = new Player(player);</span>
+<span class="fc" id="L159">                GameBoard.getInstance()</span>
+<span class="fc" id="L160">                         .getGameBoardPlayer()</span>
+<span class="fc" id="L161">                         .getPlayers()</span>
+<span class="fc" id="L162">                         .add(linkedPlayer);</span>
+<span class="fc" id="L163">            }</span>
 
-<span class="fc bfc" id="L162" title="All 2 branches covered.">            for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {</span>
-<span class="fc" id="L163">                player.linkNextAndPrevious(GameBoard.getInstance()</span>
-<span class="fc" id="L164">                                                    .getGameBoardPlayer()</span>
-<span class="fc" id="L165">                                                    .getPlayers());</span>
-<span class="fc" id="L166">                player.reconstruct();</span>
-            }
+<span class="fc bfc" id="L165" title="All 2 branches covered.">            for (Player player : GameBoard.getInstance().getGameBoardPlayer().getPlayers()) {</span>
+<span class="fc" id="L166">                player.linkNextAndPrevious(GameBoard.getInstance()</span>
+<span class="fc" id="L167">                                                    .getGameBoardPlayer()</span>
+<span class="fc" id="L168">                                                    .getPlayers());</span>
+<span class="fc" id="L169">                player.reconstruct();</span>
+<span class="fc" id="L170">            }</span>
 
             // sort countries
-<span class="fc" id="L170">            countries.sort(Comparator.comparingInt(Country::getSerializedOrder));</span>
+<span class="fc" id="L173">            countries.sort(Comparator.comparingInt(Country::getSerializedOrder));</span>
 
-<span class="fc bfc" id="L172" title="All 2 branches covered.">            for (Country country : countries) {</span>
-<span class="fc" id="L173">                Country linkedCountry = new Country(country,</span>
-<span class="fc" id="L174">                                                    GameBoard.getInstance()</span>
-<span class="fc" id="L175">                                                             .getGameBoardMap()</span>
-<span class="fc" id="L176">                                                             .getContinents(),</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">            for (Country country : countries) {</span>
+<span class="fc" id="L176">                Country linkedCountry = new Country(country,</span>
 <span class="fc" id="L177">                                                    GameBoard.getInstance()</span>
-<span class="fc" id="L178">                                                             .getGameBoardPlayer()</span>
-<span class="fc" id="L179">                                                             .getPlayers());</span>
+<span class="fc" id="L178">                                                             .getGameBoardMap()</span>
+<span class="fc" id="L179">                                                             .getContinents(),</span>
+<span class="fc" id="L180">                                                    GameBoard.getInstance()</span>
+<span class="fc" id="L181">                                                             .getGameBoardPlayer()</span>
+<span class="fc" id="L182">                                                             .getPlayers());</span>
 
-<span class="fc" id="L181">                linkedCountry.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());</span>
+<span class="fc" id="L184">                linkedCountry.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());</span>
 
-<span class="fc" id="L183">                GameBoard.getInstance()</span>
-<span class="fc" id="L184">                         .getGameBoardMap()</span>
-<span class="fc" id="L185">                         .getCountries()</span>
-<span class="fc" id="L186">                         .add(linkedCountry);</span>
+<span class="fc" id="L186">                GameBoard.getInstance()</span>
+<span class="fc" id="L187">                         .getGameBoardMap()</span>
+<span class="fc" id="L188">                         .getCountries()</span>
+<span class="fc" id="L189">                         .add(linkedCountry);</span>
 
-<span class="fc bfc" id="L188" title="All 2 branches covered.">                for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">                    if (linkedCountry.getContinent().getName() == continent.getName()) {</span>
-<span class="fc" id="L190">                        continent.getCountries().add(linkedCountry);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">                for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                    if (linkedCountry.getContinent().getName() == continent.getName()) {</span>
+<span class="fc" id="L193">                        continent.getCountries().add(linkedCountry);</span>
                     }
-                }
-            }
+<span class="fc" id="L195">                }</span>
+<span class="fc" id="L196">            }</span>
 
-<span class="fc" id="L195">            GameBoard.getInstance().loadCardFromSave(cards);</span>
+<span class="fc" id="L198">            GameBoard.getInstance().loadCardFromSave(cards);</span>
 
-<span class="fc" id="L197">            GameBoard.getInstance().loadGameBoardPlaying(gameBoardPlaying);</span>
-<span class="fc" id="L198">        }</span>
+<span class="fc" id="L200">            GameBoard.getInstance().loadGameBoardPlaying(gameBoardPlaying);</span>
+<span class="fc" id="L201">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

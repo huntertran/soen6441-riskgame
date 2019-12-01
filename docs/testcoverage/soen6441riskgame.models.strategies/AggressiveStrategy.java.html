@@ -46,7 +46,7 @@ import java.util.ArrayList;
 <span class="fc" id="L46">                strongestPlayerCountry = country;</span>
 <span class="fc" id="L47">                maxPlayerArmy = tempArmy;</span>
             }
-        }
+<span class="fc" id="L49">        }</span>
 
 <span class="fc" id="L51">        return strongestPlayerCountry;</span>
     }
@@ -86,9 +86,9 @@ import java.util.ArrayList;
 
 <span class="fc" id="L87">            attack(attackingCountry, defendingCountry, 0);</span>
 
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (player.isGameEnded()) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (player.isGameEnded()) {</span>
                 // because right after attack, if player win, the attack move command will invalid
-<span class="nc" id="L91">                return attackedCountries;</span>
+<span class="fc" id="L91">                return attackedCountries;</span>
             }
 
             // after attack with allout
@@ -102,7 +102,7 @@ import java.util.ArrayList;
 <span class="fc bfc" id="L102" title="All 2 branches covered.">            if (!player.furtherAttackPossible()) {</span>
 <span class="fc" id="L103">                return attackedCountries;</span>
             }
-        }
+<span class="fc" id="L105">        }</span>
 
 <span class="fc" id="L107">        attackEnd();</span>
 
@@ -146,9 +146,9 @@ import java.util.ArrayList;
 
 <span class="fc" id="L147">        ArrayList&lt;Country&gt; attackedCountries = attack(player, strongestPlayerCountry);</span>
 
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (player.isGameEnded()) {</span>
-<span class="nc" id="L150">            player.setEndOfGamePhase();</span>
-<span class="nc" id="L151">        } else {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (player.isGameEnded()) {</span>
+<span class="fc" id="L150">            player.setEndOfGamePhase();</span>
+        } else {
 
 <span class="fc bfc" id="L153" title="All 2 branches covered.">            if (attackedCountries.size() != 0) {</span>
 <span class="fc" id="L154">                int index = attackedCountries.size() - 1;</span>

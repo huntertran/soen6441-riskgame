@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapReadable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils.map</a> &gt; <span class="el_source">MapReadable.java</span></div><h1>MapReadable.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils.map;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.Coordinate;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
+import soen6441riskgame.utils.Parser;
+
+/**
+ * common interface for both conquest and domination map
+ */
+public interface MapReadable {
+    /**
+     * adds new continent
+     *
+     * @param continentName  name of the continent
+     * @param continentValue the amount of army for the new continent
+     * @param order          the continent other in the list (start with 1 as the map file structure
+     *                       indicate)
+     */
+    default void addContinent(String continentName, String continentValue, int... order) {
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (!Parser.checkValidInputNumber(continentValue)) {</span>
+<span class="nc" id="L31">            ConsolePrinter.printFormat(&quot;Invalid Input&quot;);</span>
+        }
+
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (!GameBoard.getInstance().getGameBoardMap().isContinentExisted(continentName)) {</span>
+<span class="fc" id="L35">            GameBoard.getInstance()</span>
+<span class="fc" id="L36">                     .getGameBoardMap()</span>
+<span class="fc" id="L37">                     .getContinents()</span>
+<span class="fc" id="L38">                     .add(new Continent(continentName,</span>
+<span class="fc" id="L39">                                        Integer.parseInt(continentValue)));</span>
+
+<span class="fc" id="L41">            ConsolePrinter.printFormat(&quot;New continent added: %s with %s armies&quot;,</span>
+                                       continentName,
+                                       continentValue);
+        } else {
+<span class="nc" id="L45">            ConsolePrinter.printFormat(&quot;Continent with name %s existed&quot;, continentName);</span>
+        }
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * add new country from map file
+     *
+     * @param order          the order of country in the list, start with 1
+     * @param name           the country name (no space allowed)
+     * @param continentOrder the other of the continent that new country belongs to
+     * @param coordinate     the position of the country on a visual map (not used)
+     */
+    default void addCountry(int order,
+                            String name,
+                            int continentOrder,
+                            Coordinate coordinate) {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        for (Continent continent : GameBoard.getInstance().getGameBoardMap().getContinents()) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if (continent.getOrder() == continentOrder) {</span>
+<span class="fc" id="L63">                Country country = new Country(order, name, coordinate, continent);</span>
+<span class="fc" id="L64">                GameBoard.getInstance().getGameBoardMap().updateCountryContinent(country, continent);</span>
+            }
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * add border from country to others country
+     *
+     * @param countryOrder        the location of first country in the border graph
+     * @param borderWithCountries the location of other countries in the border graph
+     */
+    default void addBorders(int countryOrder, int... borderWithCountries) {
+<span class="fc" id="L76">        int[][] graph = GameBoard.getInstance().getGameBoardMap().getBorders();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (int borderWithCountry : borderWithCountries) {</span>
+<span class="fc" id="L78">            graph[countryOrder - 1][borderWithCountry - 1] = 1;</span>
+<span class="fc" id="L79">            graph[borderWithCountry - 1][countryOrder - 1] = 1;</span>
+        }
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * The map file stores data in blocks. This function check if the current data line is still in a
+     * block or not
+     *
+     * @param currentLineIndex the current line index
+     * @param lines            all the lines in map file
+     * @return if the current data line is still in a block or not
+     */
+    default boolean isStillInCurrentDataBlock(int currentLineIndex, List&lt;String&gt; lines) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (currentLineIndex &lt; lines.size()) {</span>
+<span class="fc" id="L93">            String currentLine = lines.get(currentLineIndex);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            return !currentLine.equals(&quot;&quot;)</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                   &amp;&amp; (currentLine.contains(&quot; &quot;)</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                       || currentLine.contains(&quot;=&quot;)</span>
+<span class="pc bnc" id="L97" title="All 2 branches missed.">                       || currentLine.contains(&quot;,&quot;));</span>
+        }
+
+<span class="fc" id="L100">        return false;</span>
+    }
+
+    /**
+     * load map from file
+     *
+     * @param fileName the exact path to map file, end with .map extension for example:
+     *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
+     * @throws IOException exception
+     * @return lines in file
+     */
+    default List&lt;String&gt; readMapFile(String fileName) throws IOException {
+<span class="fc" id="L112">        Path path = Paths.get(fileName);</span>
+
+<span class="fc" id="L114">        List&lt;String&gt; lines = Files.lines(path).collect(Collectors.toList());</span>
+<span class="fc" id="L115">        GameBoard.getInstance().reset();</span>
+
+<span class="fc" id="L117">        return lines;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -47,7 +47,7 @@ import soen6441riskgame.models.Player;
 <span class="fc" id="L47">                weakestPlayerCountry = country;</span>
 <span class="fc" id="L48">                weakestNumberOfArmy = country.getArmyAmount();</span>
             }
-        }
+<span class="fc" id="L50">        }</span>
 
 <span class="fc" id="L52">        return weakestPlayerCountry;</span>
     }
@@ -107,13 +107,13 @@ import soen6441riskgame.models.Player;
 
 <span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (player.isGameEnded()) {</span>
 <span class="nc" id="L109">            player.setEndOfGamePhase();</span>
-<span class="nc" id="L110">        } else {</span>
+        } else {
 
 <span class="fc" id="L112">            Country weakerPlayerCountry = getWeakestCountryToReinforce(player);</span>
 
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (weakerPlayerCountry != null</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">                &amp;&amp; weakerPlayerCountry != weakestPlayerCountry</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                &amp;&amp; weakestPlayerCountry != null) {</span>
+<span class="pc bpc" id="L114" title="2 of 6 branches missed.">            if (weakerPlayerCountry != null</span>
+                &amp;&amp; weakerPlayerCountry != weakestPlayerCountry
+                &amp;&amp; weakestPlayerCountry != null) {
 <span class="fc" id="L117">                fortify(weakestPlayerCountry, weakerPlayerCountry);</span>
             }
 

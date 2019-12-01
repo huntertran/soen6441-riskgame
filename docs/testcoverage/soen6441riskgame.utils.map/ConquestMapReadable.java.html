@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConquestMapReadable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils.map</a> &gt; <span class="el_source">ConquestMapReadable.java</span></div><h1>ConquestMapReadable.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils.map;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * conquest map reader interface, for adapter pattern
+ */
+public interface ConquestMapReadable extends MapReadable {
+    /**
+     * load the conquest map from file
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found or read file error
+     */
+    void loadConquestMap(String fileName) throws IOException;
+
+    /**
+     * load conquest map components
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
+    int loadConquestMapComponents(List&lt;String&gt; lines, int index);
+
+    /**
+     * load conquest map info
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
+    int loadConquestMapInfo(List&lt;String&gt; lines, int index);
+
+    /**
+     * load continents
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
+    int loadContinentsFromConquestFile(int currentLineIndex, List&lt;String&gt; lines);
+
+    /**
+     * load countries
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
+    int loadCountriesFromConquestFile(int currentLineIndex, List&lt;String&gt; lines);
+
+    /**
+     * write map to conquest file
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found
+     */
+    void writeMapToConquestFile(String fileName) throws IOException;
+
+    /**
+     * write continents to conquest map file
+     * 
+     * @param writer the file writer
+     * @throws IOException if cannot write to file
+     */
+    void writeContinentsToConquestFile(FileWriter writer) throws IOException;
+
+    /**
+     * write countries to conquest map files
+     * 
+     * @param writer the file writer
+     * @throws IOException if cannot write to file
+     */
+    void writeCountriesToConquestFile(FileWriter writer) throws IOException;
+
+    /**
+     * convert string that contains space character to underscore
+     * 
+     * @param illegalString the original string
+     * @return string that doesn't have space
+     */
+    default String legalizeString(String illegalString) {
+<span class="nc" id="L86">        return illegalString.replace(&quot; &quot;, &quot;_&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

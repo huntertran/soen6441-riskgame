@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapReaderAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soen6441riskgame</a> &gt; <a href="index.source.html" class="el_package">soen6441riskgame.utils.map</a> &gt; <span class="el_source">MapReaderAdapter.java</span></div><h1>MapReaderAdapter.java</h1><pre class="source lang-java linenums">package soen6441riskgame.utils.map;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import soen6441riskgame.enums.ConquestMapPart;
+import soen6441riskgame.enums.DominationMapPart;
+import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.Coordinate;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
+
+/**
+ * map reader adapter for both conquest and domination map style
+ */
+<span class="fc" id="L19">public class MapReaderAdapter implements DominationMapReadable, ConquestMapReadable {</span>
+    /**
+     * load map from file
+     *
+     * @param fileName the exact path to map file, end with .map extension for example:
+     *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
+     * @throws IOException exception
+     */
+    @Override
+    public void loadMap(String fileName) throws IOException {
+<span class="fc" id="L29">        List&lt;String&gt; lines = readMapFile(fileName);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (int index = 0; index &lt; lines.size(); index++) {</span>
+<span class="fc" id="L31">            index = loadMapComponents(lines, index);</span>
+        }
+
+<span class="fc" id="L34">        ConsolePrinter.printFormat(&quot;Map loaded&quot;);</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * load domination map components
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
+    @Override
+    public int loadMapComponents(List&lt;String&gt; lines, int index) {
+<span class="fc" id="L46">        String currentLine = lines.get(index);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (currentLine.startsWith(&quot;;&quot;)) {</span>
+<span class="fc" id="L48">            return index;</span>
+        }
+
+<span class="fc" id="L51">        String firstWord = currentLine.split(&quot; &quot;)[0];</span>
+<span class="fc" id="L52">        DominationMapPart part = DominationMapPart.fromString(firstWord);</span>
+
+<span class="pc bfc" id="L54" title="All 5 branches covered.">        switch (part) {</span>
+            case NAME: {
+<span class="fc" id="L56">                GameBoard.getInstance()</span>
+<span class="fc" id="L57">                         .getGameBoardMap()</span>
+<span class="fc" id="L58">                         .setMapName(currentLine.split(&quot;name&quot;)[1].trim());</span>
+<span class="fc" id="L59">                break;</span>
+            }
+            case CONTINENTS: {
+<span class="fc" id="L62">                index = loadContinentsFromFile(index, lines);</span>
+<span class="fc" id="L63">                break;</span>
+            }
+            case COUNTRIES: {
+<span class="fc" id="L66">                index = loadCountriesFromFile(index, lines);</span>
+<span class="fc" id="L67">                break;</span>
+            }
+            case BORDERS: {
+<span class="fc" id="L70">                index = loadBordersFromFile(index, lines);</span>
+<span class="fc" id="L71">                break;</span>
+            }
+            case FILES:
+            case NONE: {
+                break;
+            }
+        }
+<span class="fc" id="L78">        return index;</span>
+    }
+
+    /**
+     * Load all continent data from map file
+     *
+     * @param currentLineIndex the current line index
+     * @param lines            all the line in map file
+     * @return the line index that end the continent block in map file
+     */
+    public int loadContinentsFromFile(int currentLineIndex, List&lt;String&gt; lines) {
+<span class="fc" id="L89">        int continentOrder = 1;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="fc" id="L91">            String currentLine = lines.get(index);</span>
+<span class="fc" id="L92">            String[] fragments = currentLine.split(&quot; &quot;);</span>
+<span class="fc" id="L93">            String continentName = fragments[0];</span>
+<span class="fc" id="L94">            int continentArmy = Integer.parseInt(fragments[1]);</span>
+
+            // String continentColor = fragments[2];
+
+<span class="fc" id="L98">            addContinent(continentName, Integer.toString(continentArmy), continentOrder);</span>
+
+<span class="fc" id="L100">            currentLineIndex = index;</span>
+<span class="fc" id="L101">            continentOrder++;</span>
+        }
+
+<span class="fc" id="L104">        return currentLineIndex + 1;</span>
+    }
+
+    /**
+     * Load all country data from map file
+     *
+     * @param currentLineIndex the current line index
+     * @param lines            all the line in map file
+     * @return the line index that end the country block in map file
+     */
+    public int loadCountriesFromFile(int currentLineIndex, List&lt;String&gt; lines) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="fc" id="L116">            String currentLine = lines.get(index);</span>
+
+<span class="fc" id="L118">            String[] fragments = currentLine.split(&quot; &quot;);</span>
+
+<span class="fc" id="L120">            int countryOrder = Integer.parseInt(fragments[0]);</span>
+<span class="fc" id="L121">            String countryName = fragments[1];</span>
+<span class="fc" id="L122">            int continentOrder = Integer.parseInt(fragments[2]);</span>
+<span class="fc" id="L123">            int x = Integer.parseInt(fragments[3]);</span>
+<span class="fc" id="L124">            int y = Integer.parseInt(fragments[4]);</span>
+<span class="fc" id="L125">            Coordinate coordinate = new Coordinate(x, y);</span>
+
+<span class="fc" id="L127">            addCountry(countryOrder, countryName, continentOrder, coordinate);</span>
+
+<span class="fc" id="L129">            currentLineIndex = index;</span>
+        }
+
+<span class="fc" id="L132">        return currentLineIndex + 1;</span>
+    }
+
+    /**
+     * Load all border data from map file
+     *
+     * @param currentLineIndex the current line index
+     * @param lines            all the line in map file
+     * @return the line index that end the border block in map file
+     */
+    public int loadBordersFromFile(int currentLineIndex, List&lt;String&gt; lines) {
+<span class="fc" id="L143">        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
+<span class="fc" id="L144">        GameBoard.getInstance().getGameBoardMap().setBorders(new int[numberOfCountry][numberOfCountry]);</span>
+
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="fc" id="L147">            String currentLine = lines.get(index);</span>
+
+<span class="fc" id="L149">            String[] fragments = currentLine.split(&quot; &quot;);</span>
+
+<span class="fc" id="L151">            int countryOrder = Integer.parseInt(fragments[0]);</span>
+
+<span class="fc" id="L153">            int[] borderWithCountries = new int[fragments.length - 1];</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            for (int borderIndex = 0; borderIndex &lt; borderWithCountries.length; borderIndex++) {</span>
+<span class="fc" id="L155">                borderWithCountries[borderIndex] = Integer.parseInt(fragments[borderIndex + 1]);</span>
+            }
+
+<span class="fc" id="L158">            addBorders(countryOrder, borderWithCountries);</span>
+
+<span class="fc" id="L160">            currentLineIndex = index;</span>
+        }
+
+<span class="fc" id="L163">        return currentLineIndex + 1;</span>
+    }
+
+    /**
+     * save the map to a file
+     *
+     * @param fileName path to file
+     * @throws IOException exception
+     */
+    public void writeMapToFile(String fileName) throws IOException {
+<span class="fc" id="L173">        FileWriter writer = new FileWriter(fileName);</span>
+
+<span class="fc" id="L175">        writeContinentsToFile(writer);</span>
+
+<span class="fc" id="L177">        writeCountriesToFile(writer);</span>
+
+<span class="fc" id="L179">        writeBordersToFile(writer);</span>
+
+<span class="fc" id="L181">        writer.close();</span>
+<span class="fc" id="L182">    }</span>
+
+    /**
+     * Write continent information to file
+     *
+     * @param writer file writer
+     * @throws IOException file not found or not exist
+     */
+    public void writeContinentsToFile(FileWriter writer) throws IOException {
+<span class="fc" id="L191">        ArrayList&lt;Continent&gt; continents = GameBoard.getInstance().getGameBoardMap().getContinents();</span>
+<span class="fc" id="L192">        writer.write(DominationMapPart.CONTINENTS.getPart() + &quot;\n&quot;);</span>
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        for (Continent continent : continents) {</span>
+<span class="fc" id="L195">            writer.write(continent.getName() + &quot; &quot; + continent.getArmy() + &quot;\n&quot;);</span>
+<span class="fc" id="L196">        }</span>
+
+<span class="fc" id="L198">        writer.write(&quot;\n&quot;);</span>
+<span class="fc" id="L199">    }</span>
+
+    /**
+     * Write borders information to file
+     *
+     * @param writer file writer
+     * @throws IOException file not found or not exist
+     */
+    public void writeBordersToFile(FileWriter writer) throws IOException {
+<span class="fc" id="L208">        writer.write(DominationMapPart.BORDERS.getPart() + &quot;\n&quot;);</span>
+
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Country country : GameBoard.getInstance().getGameBoardMap().getCountries()) {</span>
+<span class="fc" id="L211">            ArrayList&lt;Country&gt; neighbors = country.getNeighbors();</span>
+
+<span class="fc" id="L213">            StringBuilder neighborLine = new StringBuilder(Integer.toString(country.getOrder()));</span>
+
+<span class="fc bfc" id="L215" title="All 2 branches covered.">            for (Country neighbor : neighbors) {</span>
+<span class="fc" id="L216">                neighborLine.append(&quot; &quot;).append(neighbor.getOrder());</span>
+<span class="fc" id="L217">            }</span>
+
+<span class="fc" id="L219">            writer.write(neighborLine + &quot;\n&quot;);</span>
+<span class="fc" id="L220">        }</span>
+<span class="fc" id="L221">    }</span>
+
+    /**
+     * Write countries information to file
+     *
+     * @param writer file writer
+     * @throws IOException file not found or not exist
+     */
+    public void writeCountriesToFile(FileWriter writer) throws IOException {
+<span class="fc" id="L230">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
+<span class="fc" id="L231">        writer.write(DominationMapPart.COUNTRIES.getPart() + &quot;\n&quot;);</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        for (Country country : countries) {</span>
+<span class="fc" id="L233">            writer.write(country.getOrder() + &quot; &quot;</span>
+<span class="fc" id="L234">                         + country.getName() + &quot; &quot;</span>
+<span class="fc" id="L235">                         + country.getContinent().getOrder() + &quot; &quot;</span>
+<span class="fc" id="L236">                         + country.getCoordinate().getX() + &quot; &quot;</span>
+<span class="fc" id="L237">                         + country.getCoordinate().getY() + &quot;\n&quot;);</span>
+<span class="fc" id="L238">        }</span>
+<span class="fc" id="L239">        writer.write(&quot;\n&quot;);</span>
+<span class="fc" id="L240">    }</span>
+
+    /**
+     * load the conquest map from file
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found or read file error
+     */
+    @Override
+    public void loadConquestMap(String fileName) throws IOException {
+<span class="nc" id="L250">        List&lt;String&gt; lines = readMapFile(fileName);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        for (int index = 0; index &lt; lines.size(); index++) {</span>
+<span class="nc" id="L252">            index = loadConquestMapComponents(lines, index);</span>
+        }
+
+<span class="nc" id="L255">        ConsolePrinter.printFormat(&quot;Map loaded&quot;);</span>
+<span class="nc" id="L256">    }</span>
+
+    /**
+     * load conquest map components
+     * 
+     * @param lines lines in file
+     * @param index current line
+     * @return end of the current block
+     */
+    @Override
+    public int loadConquestMapComponents(List&lt;String&gt; lines, int index) {
+<span class="nc" id="L267">        String currentLine = lines.get(index);</span>
+<span class="nc" id="L268">        String firstWord = currentLine.split(&quot; &quot;)[0];</span>
+<span class="nc" id="L269">        ConquestMapPart part = ConquestMapPart.fromString(firstWord);</span>
+
+<span class="pc bnc" id="L271" title="All 4 branches missed.">        switch (part) {</span>
+            case MAP: {
+<span class="nc" id="L273">                index = loadConquestMapInfo(lines, index);</span>
+<span class="nc" id="L274">                break;</span>
+            }
+            case CONTINENTS: {
+<span class="nc" id="L277">                index = loadContinentsFromConquestFile(index, lines);</span>
+<span class="nc" id="L278">                break;</span>
+            }
+            case TERRITORIES: {
+<span class="nc" id="L281">                index = loadCountriesFromConquestFile(index, lines);</span>
+<span class="nc" id="L282">                break;</span>
+            }
+            case NONE: {
+                break;
+            }
+        }
+<span class="nc" id="L288">        return index;</span>
+    }
+
+    /**
+     * load conquest map info
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
+    @Override
+    public int loadConquestMapInfo(List&lt;String&gt; lines, int currentLineIndex) {
+<span class="nc bnc" id="L300" title="All 2 branches missed.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="nc" id="L301">            currentLineIndex = index;</span>
+        }
+
+<span class="nc" id="L304">        return currentLineIndex + 1;</span>
+    }
+
+    /**
+     * load continents
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
+    @Override
+    public int loadContinentsFromConquestFile(int currentLineIndex, List&lt;String&gt; lines) {
+<span class="nc" id="L316">        int continentOrder = 1;</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="nc" id="L318">            String currentLine = lines.get(index);</span>
+<span class="nc" id="L319">            String[] fragments = currentLine.split(&quot;=&quot;);</span>
+<span class="nc" id="L320">            String continentName = legalizeString(fragments[0]);</span>
+<span class="nc" id="L321">            int continentArmy = Integer.parseInt(fragments[1]);</span>
+
+<span class="nc" id="L323">            addContinent(continentName, Integer.toString(continentArmy), continentOrder);</span>
+
+<span class="nc" id="L325">            currentLineIndex = index;</span>
+<span class="nc" id="L326">            continentOrder++;</span>
+        }
+
+<span class="nc" id="L329">        return currentLineIndex + 1;</span>
+    }
+
+    /**
+     * load countries
+     * 
+     * @param lines            lines in file
+     * @param currentLineIndex current line
+     * @return end of the current block
+     */
+    @Override
+    public int loadCountriesFromConquestFile(int currentLineIndex, List&lt;String&gt; lines) {
+        // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
+        // Territory name,x,y,Continent,neighbor1,neighbor1
+<span class="nc" id="L343">        int originalLineIndex = currentLineIndex;</span>
+
+<span class="nc bnc" id="L345" title="All 2 branches missed.">        for (int index = currentLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="nc" id="L346">            String currentLine = lines.get(index);</span>
+
+<span class="nc" id="L348">            String[] fragments = currentLine.split(&quot;,&quot;);</span>
+
+<span class="nc" id="L350">            String countryName = legalizeString(fragments[0]);</span>
+
+<span class="nc" id="L352">            int x = Integer.parseInt(fragments[1]);</span>
+<span class="nc" id="L353">            int y = Integer.parseInt(fragments[2]);</span>
+<span class="nc" id="L354">            Coordinate coordinate = new Coordinate(x, y);</span>
+
+<span class="nc" id="L356">            String continentName = legalizeString(fragments[3]);</span>
+
+<span class="nc" id="L358">            int countryOrder = GameBoard.getInstance()</span>
+<span class="nc" id="L359">                                        .getGameBoardMap()</span>
+<span class="nc" id="L360">                                        .getCountries()</span>
+<span class="nc" id="L361">                                        .size()</span>
+                               + 1;
+
+<span class="nc" id="L364">            int continentOrder = GameBoard.getInstance()</span>
+<span class="nc" id="L365">                                          .getGameBoardMap()</span>
+<span class="nc" id="L366">                                          .getContinentFromName(continentName)</span>
+<span class="nc" id="L367">                                          .getOrder();</span>
+
+<span class="nc" id="L369">            addCountry(countryOrder, countryName, continentOrder, coordinate);</span>
+        }
+
+<span class="nc" id="L372">        originalLineIndex = loadBordersFromConquestFile(lines, originalLineIndex);</span>
+
+<span class="nc" id="L374">        return originalLineIndex + 1;</span>
+    }
+
+    /**
+     * load border from conquest file
+     * 
+     * @param lines             lines from file
+     * @param originalLineIndex the start index of the territories part
+     * @return line index that end the territories part
+     */
+    private int loadBordersFromConquestFile(List&lt;String&gt; lines, int originalLineIndex) {
+        // load borders
+        // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
+        // Territory name,x,y,Continent,neighbor1,neighbor1
+
+<span class="nc" id="L389">        int numberOfCountry = GameBoard.getInstance().getGameBoardMap().getCountries().size();</span>
+<span class="nc" id="L390">        GameBoard.getInstance().getGameBoardMap().setBorders(new int[numberOfCountry][numberOfCountry]);</span>
+
+<span class="nc bnc" id="L392" title="All 2 branches missed.">        for (int index = originalLineIndex + 1; isStillInCurrentDataBlock(index, lines); index++) {</span>
+<span class="nc" id="L393">            String currentLine = lines.get(index);</span>
+
+<span class="nc" id="L395">            String[] fragments = currentLine.split(&quot;,&quot;);</span>
+
+<span class="nc" id="L397">            int countryOrder = GameBoard.getInstance()</span>
+<span class="nc" id="L398">                                        .getGameBoardMap()</span>
+<span class="nc" id="L399">                                        .getCountryFromName(legalizeString(fragments[0]))</span>
+<span class="nc" id="L400">                                        .getOrder();</span>
+
+            // neighbors start from fragments[4]
+
+<span class="nc" id="L404">            int[] borderWithCountries = new int[fragments.length - 4];</span>
+
+<span class="nc bnc" id="L406" title="All 2 branches missed.">            for (int neighborIndex = 4; neighborIndex &lt; fragments.length; neighborIndex++) {</span>
+<span class="nc" id="L407">                int neighborOrder = GameBoard.getInstance()</span>
+<span class="nc" id="L408">                                             .getGameBoardMap()</span>
+<span class="nc" id="L409">                                             .getCountryFromName(legalizeString(fragments[neighborIndex]))</span>
+<span class="nc" id="L410">                                             .getOrder();</span>
+
+<span class="nc" id="L412">                borderWithCountries[neighborIndex - 4] = neighborOrder;</span>
+            }
+
+<span class="nc" id="L415">            addBorders(countryOrder, borderWithCountries);</span>
+
+<span class="nc" id="L417">            originalLineIndex = index;</span>
+        }
+<span class="nc" id="L419">        return originalLineIndex;</span>
+    }
+
+    /**
+     * write map to conquest file
+     * 
+     * @param fileName path to file
+     * @throws IOException if file not found
+     */
+    @Override
+    public void writeMapToConquestFile(String fileName) throws IOException {
+<span class="nc" id="L430">        FileWriter writer = new FileWriter(fileName);</span>
+
+<span class="nc" id="L432">        writeContinentsToConquestFile(writer);</span>
+
+<span class="nc" id="L434">        writeCountriesToConquestFile(writer);</span>
+
+<span class="nc" id="L436">        writer.close();</span>
+<span class="nc" id="L437">    }</span>
+
+    /**
+     * write continents to conquest map file
+     * 
+     * @param writer the file writer
+     * @throws IOException if cannot write to file
+     */
+    @Override
+    public void writeContinentsToConquestFile(FileWriter writer) throws IOException {
+<span class="nc" id="L447">        ArrayList&lt;Continent&gt; continents = GameBoard.getInstance().getGameBoardMap().getContinents();</span>
+<span class="nc" id="L448">        writer.write(ConquestMapPart.CONTINENTS.getPart() + &quot;\n&quot;);</span>
+
+<span class="nc bnc" id="L450" title="All 2 branches missed.">        for (Continent continent : continents) {</span>
+<span class="nc" id="L451">            writer.write(continent.getName() + &quot;=&quot; + continent.getArmy() + &quot;\n&quot;);</span>
+<span class="nc" id="L452">        }</span>
+
+<span class="nc" id="L454">        writer.write(&quot;\n&quot;);</span>
+<span class="nc" id="L455">    }</span>
+
+    /**
+     * write countries to conquest map files
+     * 
+     * @param writer the file writer
+     * @throws IOException if cannot write to file
+     */
+    @Override
+    public void writeCountriesToConquestFile(FileWriter writer) throws IOException {
+        // Cockpit01,658,355,Cockpit,Cockpit02,Territory33
+<span class="nc" id="L466">        ArrayList&lt;Country&gt; countries = GameBoard.getInstance().getGameBoardMap().getCountries();</span>
+<span class="nc" id="L467">        writer.write(ConquestMapPart.TERRITORIES.getPart() + &quot;\n&quot;);</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">        for (Country country : countries) {</span>
+
+<span class="nc" id="L470">            String countryData = country.getName() + &quot;,&quot;</span>
+<span class="nc" id="L471">                                 + country.getCoordinate().getX() + &quot;,&quot;</span>
+<span class="nc" id="L472">                                 + country.getCoordinate().getY() + &quot;,&quot;</span>
+<span class="nc" id="L473">                                 + country.getContinent().getName() + &quot;,&quot;;</span>
+
+<span class="nc" id="L475">            ArrayList&lt;Country&gt; neighbors = country.getNeighbors();</span>
+
+<span class="nc bnc" id="L477" title="All 2 branches missed.">            for (Country neighbor : neighbors) {</span>
+<span class="nc" id="L478">                countryData += neighbor.getName() + &quot;,&quot;;</span>
+<span class="nc" id="L479">            }</span>
+
+<span class="nc" id="L481">            countryData = countryData.substring(0, countryData.length() - 1);</span>
+
+<span class="nc" id="L483">            writer.write(countryData + &quot;\n&quot;);</span>
+<span class="nc" id="L484">        }</span>
+
+<span class="nc" id="L486">        writer.write(&quot;\n&quot;);</span>
+<span class="nc" id="L487">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

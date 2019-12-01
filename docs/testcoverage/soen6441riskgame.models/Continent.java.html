@@ -89,7 +89,7 @@ public class Continent extends Observable implements Viewable {
 <span class="fc bfc" id="L89" title="All 4 branches covered.">            if (conquerer != null &amp;&amp; !conquerer.equals(countryConquerer)) {</span>
 <span class="fc" id="L90">                return null;</span>
             }
-        }
+<span class="fc" id="L92">        }</span>
 
 <span class="fc" id="L94">        return countryConquerer;</span>
     }
@@ -114,7 +114,7 @@ public class Continent extends Observable implements Viewable {
 
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">        for (Country country : this.getCountries()) {</span>
 <span class="nc" id="L116">            country.view(printStream, indent + 1);</span>
-        }
+<span class="nc" id="L117">        }</span>
 <span class="fc" id="L118">    }</span>
 
     /**
@@ -140,11 +140,11 @@ public class Continent extends Observable implements Viewable {
         }
 
 <span class="fc" id="L142">        ConsolePrinter.printFormat(printStream,</span>
-<span class="fc" id="L143">                                   printString,</span>
+                                   printString,
 <span class="fc" id="L144">                                   this.getName(),</span>
 <span class="fc" id="L145">                                   this.getOrder(),</span>
 <span class="fc" id="L146">                                   this.getArmy(),</span>
-<span class="fc" id="L147">                                   conquererName);</span>
+                                   conquererName);
 <span class="fc" id="L148">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

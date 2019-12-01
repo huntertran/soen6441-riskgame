@@ -52,10 +52,10 @@ import soen6441riskgame.utils.presenter.WindowPane;
      * check if is debug or not
      */
     private static void setIsDebug() {
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean()</span>
+<span class="fc" id="L55">        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean()</span>
 <span class="fc" id="L56">                                                        .getInputArguments()</span>
 <span class="fc" id="L57">                                                        .toString()</span>
-<span class="fc" id="L58">                                                        .indexOf(&quot;-Xdebug&quot;) == 1;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">                                                        .indexOf(&quot;-Xdebug&quot;) == 1;</span>
 <span class="fc" id="L59">    }</span>
 
     /**

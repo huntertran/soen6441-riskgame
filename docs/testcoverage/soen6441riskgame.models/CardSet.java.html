@@ -86,14 +86,14 @@ public class CardSet {
             }
 
 <span class="fc" id="L88">            cardValue += card.getCardType().getCardTypeAsInt();</span>
-        }
+<span class="fc" id="L89">        }</span>
 
-<span class="fc bfc" id="L91" title="All 4 branches covered.">        return cardValue == allInfantry()</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        return cardValue == allInfantry()</span>
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">               || cardValue == allCavalry()</span>
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">               || cardValue == allArtillery()</span>
 <span class="pc bpc" id="L94" title="1 of 2 branches missed.">               || cardValue == allWild()</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">               || cardValue == oneOfEach()</span>
-<span class="fc" id="L96">               || cardValue &gt; CardType.Wild.getCardTypeAsInt();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">               || cardValue == oneOfEach()</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">               || cardValue &gt; CardType.Wild.getCardTypeAsInt();</span>
     }
 
     /**
@@ -125,7 +125,7 @@ public class CardSet {
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (isSetValid()) {</span>
 <span class="pc bpc" id="L126" title="1 of 2 branches missed.">            if (tradeTime &gt; 6) {</span>
 <span class="nc" id="L127">                armies = 15 + (tradeTime - 6) * 5;</span>
-<span class="nc" id="L128">            } else {</span>
+            } else {
 <span class="pc bpc" id="L129" title="5 of 7 branches missed.">                switch (tradeTime) {</span>
                     case 1: {
 <span class="fc" id="L131">                        return 4;</span>
@@ -161,24 +161,29 @@ public class CardSet {
     public void setCardsExchanged() {
 <span class="fc bfc" id="L162" title="All 2 branches covered.">        for (Card card : cards) {</span>
 <span class="fc" id="L163">            card.setExchanged(true);</span>
-        }
+<span class="fc" id="L164">        }</span>
 <span class="fc" id="L165">    }</span>
 
+    /**
+     * get card position in deck for tournament mode
+     * 
+     * @return card position in deck
+     */
     public String getCardsPositionForTournament() {
-<span class="fc" id="L168">        String result = &quot;&quot;;</span>
+<span class="nc" id="L173">        String result = &quot;&quot;;</span>
 
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (isSetValid()) {</span>
-<span class="fc" id="L171">            Player holdingPlayer = cards.get(0).getHoldingPlayer();</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (isSetValid()) {</span>
+<span class="nc" id="L176">            Player holdingPlayer = cards.get(0).getHoldingPlayer();</span>
 
-<span class="fc" id="L173">            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(0)) + 1);</span>
-<span class="fc" id="L174">            result += &quot; &quot;;</span>
-<span class="fc" id="L175">            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(1)) + 1);</span>
-<span class="fc" id="L176">            result += &quot; &quot;;</span>
-<span class="fc" id="L177">            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(2)) + 1);</span>
+<span class="nc" id="L178">            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(0)) + 1);</span>
+<span class="nc" id="L179">            result += &quot; &quot;;</span>
+<span class="nc" id="L180">            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(1)) + 1);</span>
+<span class="nc" id="L181">            result += &quot; &quot;;</span>
+<span class="nc" id="L182">            result += (holdingPlayer.getHoldingCards().indexOf(cards.get(2)) + 1);</span>
 
         }
 
-<span class="fc" id="L181">        return result;</span>
+<span class="nc" id="L186">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

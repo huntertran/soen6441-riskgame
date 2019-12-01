@@ -22,7 +22,7 @@ public abstract class SeparatedView {
 <span class="fc" id="L22">    public SeparatedView(String viewName) {</span>
 <span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (ConsolePrinter.isJUnitTest()) {</span>
 <span class="fc" id="L24">            printStream = System.out;</span>
-<span class="fc" id="L25">        } else {</span>
+        } else {
 <span class="nc" id="L26">            presenter = ConsolePrinter.createWindowPane(viewName, 600, 600);</span>
 <span class="nc" id="L27">            printStream = new PrintStream(new WindowOutputStream(presenter));</span>
         }

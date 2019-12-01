@@ -7,13 +7,16 @@ import soen6441riskgame.models.strategies.HumanStrategy;
 import soen6441riskgame.models.strategies.RandomStrategy;
 import soen6441riskgame.models.strategies.Strategy;
 
-<span class="fc" id="L10">public enum StrategyName {</span>
-<span class="fc" id="L11">                          AGGRESSIVE(&quot;aggressive&quot;),</span>
-<span class="fc" id="L12">                          BENEVOLENT(&quot;benevolent&quot;),</span>
-<span class="fc" id="L13">                          RANDOM(&quot;random&quot;),</span>
-<span class="fc" id="L14">                          CHEATER(&quot;cheater&quot;),</span>
-<span class="fc" id="L15">                          HUMAN(&quot;human&quot;),</span>
-<span class="fc" id="L16">                          INVALID(&quot;&quot;);</span>
+/**
+ * name of the strategy as enum for easy comparison and parse
+ */
+<span class="fc" id="L13">public enum StrategyName {</span>
+<span class="fc" id="L14">                          AGGRESSIVE(&quot;aggressive&quot;),</span>
+<span class="fc" id="L15">                          BENEVOLENT(&quot;benevolent&quot;),</span>
+<span class="fc" id="L16">                          RANDOM(&quot;random&quot;),</span>
+<span class="fc" id="L17">                          CHEATER(&quot;cheater&quot;),</span>
+<span class="fc" id="L18">                          HUMAN(&quot;human&quot;),</span>
+<span class="fc" id="L19">                          INVALID(&quot;&quot;);</span>
 
     /**
      * Strategy name
@@ -25,9 +28,9 @@ import soen6441riskgame.models.strategies.Strategy;
      * 
      * @param name strategy name
      */
-<span class="fc" id="L28">    StrategyName(final String name) {</span>
-<span class="fc" id="L29">        this.name = name;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L31">    StrategyName(final String name) {</span>
+<span class="fc" id="L32">        this.name = name;</span>
+<span class="fc" id="L33">    }</span>
 
     /**
      * get name of the strategy enum
@@ -35,7 +38,7 @@ import soen6441riskgame.models.strategies.Strategy;
      * @return name of the strategy enum
      */
     public String getName() {
-<span class="fc" id="L38">        return name;</span>
+<span class="fc" id="L41">        return name;</span>
     }
 
     /**
@@ -45,23 +48,23 @@ import soen6441riskgame.models.strategies.Strategy;
      * @return the arg converted to enum
      */
     public static Strategy fromString(String argumentString) {
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        for (StrategyName argument : values()) {</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (argument.getName().equalsIgnoreCase(argumentString)) {</span>
-<span class="pc bpc" id="L50" title="3 of 6 branches missed.">                switch (argument) {</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        for (StrategyName argument : values()) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (argument.getName().equalsIgnoreCase(argumentString)) {</span>
+<span class="pc bpc" id="L53" title="3 of 6 branches missed.">                switch (argument) {</span>
                     case AGGRESSIVE: {
-<span class="fc" id="L52">                        return new AggressiveStrategy();</span>
+<span class="fc" id="L55">                        return new AggressiveStrategy();</span>
                     }
                     case BENEVOLENT: {
-<span class="fc" id="L55">                        return new BenevolentStrategy();</span>
+<span class="fc" id="L58">                        return new BenevolentStrategy();</span>
                     }
                     case RANDOM: {
-<span class="fc" id="L58">                        return new RandomStrategy();</span>
+<span class="fc" id="L61">                        return new RandomStrategy();</span>
                     }
                     case CHEATER: {
-<span class="nc" id="L61">                        return new CheaterStrategy();</span>
+<span class="nc" id="L64">                        return new CheaterStrategy();</span>
                     }
                     case HUMAN: {
-<span class="nc" id="L64">                        return new HumanStrategy();</span>
+<span class="nc" id="L67">                        return new HumanStrategy();</span>
                     }
                     default: {
                         break;
@@ -70,7 +73,7 @@ import soen6441riskgame.models.strategies.Strategy;
             }
         }
 
-<span class="nc" id="L73">        return null;</span>
+<span class="nc" id="L76">        return null;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

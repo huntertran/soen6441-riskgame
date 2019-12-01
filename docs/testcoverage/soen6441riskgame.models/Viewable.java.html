@@ -8,14 +8,6 @@ import soen6441riskgame.singleton.GameBoard;
  * indicate an object is printable to console with/without indentation
  */
 public interface Viewable {
-
-    // /**
-    // * view with a number of indent
-    // *
-    // * @param indent number of indent
-    // */
-    // public void view(int indent);
-
     /**
      * view with a number of indent on custom printStream
      *
@@ -28,12 +20,12 @@ public interface Viewable {
      * view without indent
      */
     default void view() {
-<span class="nc" id="L31">        view(GameBoard.getInstance().standardPrintStream, 0);</span>
-<span class="nc" id="L32">    }</span>
+<span class="nc" id="L23">        view(GameBoard.getInstance().standardPrintStream, 0);</span>
+<span class="nc" id="L24">    }</span>
 
     default void view(int indent) {
-<span class="fc" id="L35">        view(GameBoard.getInstance().standardPrintStream, indent);</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L27">        view(GameBoard.getInstance().standardPrintStream, indent);</span>
+<span class="fc" id="L28">    }</span>
 
     /**
      * view without indent on custom printStream
@@ -41,8 +33,8 @@ public interface Viewable {
      * @param printStream the stream to print
      */
     default void view(PrintStream printStream) {
-<span class="nc" id="L44">        view(printStream, 0);</span>
-<span class="nc" id="L45">    }</span>
+<span class="nc" id="L36">        view(printStream, 0);</span>
+<span class="nc" id="L37">    }</span>
 
     /**
      * print the indent with 4 spaces
@@ -50,8 +42,8 @@ public interface Viewable {
      * @param indent number of indent
      */
     default void printIndent(int indent) {
-<span class="nc" id="L53">        printIndent(GameBoard.getInstance().standardPrintStream, indent);</span>
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L45">        printIndent(GameBoard.getInstance().standardPrintStream, indent);</span>
+<span class="nc" id="L46">    }</span>
 
     /**
      * print the indent with 4 spaces
@@ -60,9 +52,9 @@ public interface Viewable {
      * @param indent      number of indent
      */
     default void printIndent(PrintStream printStream, int indent) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (int index = 0; index &lt; indent; index++) {</span>
-<span class="fc" id="L64">            printStream.print(&quot;    &quot;);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int index = 0; index &lt; indent; index++) {</span>
+<span class="fc" id="L56">            printStream.print(&quot;    &quot;);</span>
         }
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L58">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
