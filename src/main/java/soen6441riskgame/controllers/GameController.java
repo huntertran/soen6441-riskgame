@@ -282,6 +282,12 @@ public class GameController {
      */
     public void showCurrentPlayer() {
         Player player = getCurrentPlayer();
+
+        if (player == null) {
+            ConsolePrinter.printFormat("There is no player in game. Add some!");
+            return;
+        }
+
         ConsolePrinter.printFormat("Player %s is in turn", player.getName());
         ConsolePrinter.printFormat("Current phase: %s", player.getCurrentPhase().toString());
         ConsolePrinter.printFormat("    Un-placed Armies: %d", player.getUnplacedArmies());

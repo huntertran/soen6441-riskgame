@@ -71,7 +71,8 @@ public class Country extends Observable implements Viewable {
         }
 
         for (Player player : players) {
-            if (serializedCountry.conquererName.equals(player.getName())) {
+            if (serializedCountry.conquererName != null
+                && serializedCountry.conquererName.equals(player.getName())) {
                 this.conquerer = player;
                 break;
             }

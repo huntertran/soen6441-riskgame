@@ -41,6 +41,34 @@ public class SaveLoadControllerTest {
 
         Player currentPlayer = gameController.getCurrentPlayer();
 
+        // reinforce
+        for (int index = 0; index < 3; index++) {
+            Player player = gameController.getCurrentPlayer();
+
+            while (player.getUnplacedArmies() > 0) {
+                App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
+                                                    + " " + player.getConqueredCountries().get(0).getName()
+                                                    + " 1"));
+            }
+        }
+
+        // attack
+        App.jumpToCommand(new ModelCommands(GameCommands.ATTACK + " -noattack"));
+
+        // fortify
+        App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY + " -none"));
+
+        // reinforce
+        for (int index = 0; index < 3; index++) {
+            Player player = gameController.getCurrentPlayer();
+
+            while (player.getUnplacedArmies() > 0) {
+                App.jumpToCommand(new ModelCommands(GameCommands.REINFORCE
+                                                    + " " + player.getConqueredCountries().get(0).getName()
+                                                    + " 1"));
+            }
+        }
+
         // add cards to player
         for (int index = 0; index < 6; index++) {
             Card newCard = GameBoard.getInstance()
