@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -55,9 +56,7 @@ public class WindowPane extends JPanel {
      * Clear the view
      */
     public void clearView() {
-        if (textArea != null) {
-            textArea.setText(null);
-        }
+        textArea.setText(null);
     }
 
     /**
@@ -70,7 +69,15 @@ public class WindowPane extends JPanel {
             textArea.append(text);
             textArea.setCaretPosition(textArea.getText().length());
         } else {
-            EventQueue.invokeLater(() -> appendText(text));
+            try {
+                EventQueue.invokeAndWait(() -> {
+                    appendText(text);
+                });
+            } catch (InvocationTargetException e) {
+
+            } catch (InterruptedException e) {
+
+            }
         }
     }
 }
