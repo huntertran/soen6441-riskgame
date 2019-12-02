@@ -104,11 +104,11 @@ public class MapControllerTest {
     @CsvSource({ "Russia, 11, Vietnam, Laos",
                  "Asia, 14, India, Pakistan" })
     public void addCountryTest(String continent1,
-                               String continent1_value,
+                               String continent1Value,
                                String country1,
                                String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        mapController.addContinent(continent1, continent1Value);
 
         // Action
         mapController.addCountry(country1, continent1);
@@ -127,11 +127,11 @@ public class MapControllerTest {
     @CsvSource({ "Russia, 11, Vietnam, Laos",
                  "Asia, 14, India, Pakistan" })
     public void removeCountryTest(String continent1,
-                                  String continent1_value,
+                                  String continent1Value,
                                   String country1,
                                   String country2) {
         // Setup
-        mapController.addContinent(continent1, continent1_value);
+        mapController.addContinent(continent1, continent1Value);
         mapController.addCountry(country1, continent1);
         mapController.addCountry(country2, continent1);
 
@@ -185,7 +185,7 @@ public class MapControllerTest {
     @ValueSource(strings = { "Russia",
                              "Asia",
                              "Europe" })
-    public void removeContinentTest(String continent1) {
+    public void editContinentRemoveTest(String continent1) {
         // Action
         String[] arguments = { "-remove", continent1 };
         mapController.editContinent(arguments);

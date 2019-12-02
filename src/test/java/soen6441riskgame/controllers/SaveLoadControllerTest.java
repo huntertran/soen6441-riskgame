@@ -34,7 +34,7 @@ public class SaveLoadControllerTest {
         gameController = new GameController();
     }
 
-    private String setupForSave(){
+    private String setupForSave() {
         GamePlayActionsTestHelper.addPlayersToGame();
         App.jumpToCommand(new ModelCommands(GameCommands.POPULATECOUNTRIES));
         App.jumpToCommand(new ModelCommands(GameCommands.PLACEALL));
@@ -89,7 +89,7 @@ public class SaveLoadControllerTest {
     }
 
     @Test
-    public void loadGameTest(){
+    public void loadGameTest() {
         String saveGameFilePath = setupForSave();
         boolean saveResult = saveLoadController.saveGame(saveGameFilePath);
         boolean readResult = saveLoadController.loadGame(saveGameFilePath);

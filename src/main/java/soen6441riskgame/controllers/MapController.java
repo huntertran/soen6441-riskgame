@@ -162,7 +162,8 @@ public final class MapController {
                 break;
             }
             case INVALID:
-            case NONE: {
+            case NONE:
+            default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
@@ -187,7 +188,8 @@ public final class MapController {
                 break;
             }
             case INVALID:
-            case NONE: {
+            case NONE:
+            default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
@@ -257,7 +259,8 @@ public final class MapController {
                 break;
             }
             case INVALID:
-            case NONE: {
+            case NONE:
+            default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
             }

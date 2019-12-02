@@ -23,28 +23,38 @@ import soen6441riskgame.utils.Parser;
  * The tournament should proceed without any user interaction and show the results of the tournament
  * at the end. Both the phase view and player domination view should be enabled in tournament mode.
  *
+ * <p>
  * A tournament starts with the user choosing
  *
+ * <p>
  * M = 1 to 5 different maps
  *
+ * <p>
  * P = 2 to 4 different computer players strategies
  *
+ * <p>
  * G = 1 to 5 games to be played on each map
  *
+ * <p>
  * D = 10 to 50 maximum number of turns for each game.
  *
+ * <p>
  * A tournament is then automatically played by playing G games on each of the M different maps
  * between the chosen computer player strategies. In order to minimize run completion time, each
  * game should be declared a draw after D turns. Once started, the tournament plays all the games
  * automatically without user interaction. At the end of the tournament, a report of the results
  * should be displayed, e.g.
  *
+ * <p>
  * M: Map1, Map2, Map3
  *
+ * <p>
  * P: Aggressive, Benevolent, Random, Cheater.
  *
+ * <p>
  * G: 4
  *
+ * <p>
  * D: 30
  *
  * <table summary="sample result">
@@ -229,6 +239,9 @@ public class TournamentController {
                     maxNumberOfTurn = Parser.parseWithDefault(args[index + 1], 0);
                     break;
                 }
+                default: {
+                    break;
+                }
             }
         }
     }
@@ -286,10 +299,13 @@ public class TournamentController {
     /**
      * M = 1 to 5 different maps
      *
+     * <p>
      * P = 2 to 4 different computer players strategies
      *
+     * <p>
      * G = 1 to 5 games to be played on each map
      *
+     * <p>
      * D = 10 to 50 maximum number of turns for each game.
      */
     private boolean isTournamentValid() {
