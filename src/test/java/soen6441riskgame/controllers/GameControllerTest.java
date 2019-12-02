@@ -81,18 +81,14 @@ public class GameControllerTest {
         Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
         Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(ben);
 
-        Player tjNextPlayer = tjPlayer.getNextPlayer();
-        Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
-        Player hunterNextPlayer = hunterPlayer.getNextPlayer();
-
         // Assert
         assertNotNull(tjPlayer);
         assertNotNull(hunterPlayer);
         assertNotNull(benPlayer);
 
-        assertSame(hunterPlayer, tjNextPlayer);
-        assertSame(benPlayer, hunterNextPlayer);
-        assertSame(benPlayer, tjPreviousPlayer);
+        assertSame(hunterPlayer, tjPlayer.getNextPlayer());
+        assertSame(benPlayer, hunterPlayer.getNextPlayer());
+        assertSame(benPlayer, tjPlayer.getPreviousPlayer());
     }
 
     /**
@@ -113,18 +109,14 @@ public class GameControllerTest {
         Player hunterPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(hunter);
         Player benPlayer = GameBoard.getInstance().getGameBoardPlayer().getPlayerFromName(ben);
 
-        Player tjNextPlayer = tjPlayer.getNextPlayer();
-        Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
-        Player hunterNextPlayer = hunterPlayer.getNextPlayer();
-
         // Assert
         assertNotNull(tjPlayer);
         assertNotNull(hunterPlayer);
         assertNotNull(benPlayer);
 
-        assertSame(hunterPlayer, tjNextPlayer);
-        assertSame(benPlayer, hunterNextPlayer);
-        assertSame(benPlayer, tjPreviousPlayer);
+        assertSame(hunterPlayer, tjPlayer.getNextPlayer());
+        assertSame(benPlayer, hunterPlayer.getNextPlayer());
+        assertSame(benPlayer, tjPlayer.getPreviousPlayer());
     }
 
     /**
@@ -145,15 +137,12 @@ public class GameControllerTest {
         Player tjNextPlayer = tjPlayer.getNextPlayer();
         Player tjPreviousPlayer = tjPlayer.getPreviousPlayer();
 
-        Player benPreviousPlayer = benPlayer.getPreviousPlayer();
-        Player benNextPlayer = benPlayer.getNextPlayer();
-
         // Assert
         assertNull(hunterPlayer);
         assertSame(benPlayer, tjNextPlayer);
         assertSame(benPlayer, tjPreviousPlayer);
-        assertSame(tjPlayer, benPreviousPlayer);
-        assertSame(tjPlayer, benNextPlayer);
+        assertSame(tjPlayer, benPlayer.getPreviousPlayer());
+        assertSame(tjPlayer, benPlayer.getNextPlayer());
     }
 
     /**
@@ -248,14 +237,20 @@ public class GameControllerTest {
         int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount();
         // Action
         gameController.handleAttackCommand(new String[] { "Spain", "France", "1" });
-        if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
+        if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                                         GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                                         GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                                         GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
             gameController.handleDefendCommand(new String[] { "1" });
         }
 
         // Assert
         assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName("Spain").getArmyAmount() != a
                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName("France").getArmyAmount() != b
-                   || !gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag()));
+                   || !gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                                                    GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                                                    GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                                                    GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag()));
     }
 
     /**
@@ -269,9 +264,9 @@ public class GameControllerTest {
         gameController.enterReinforcement();
         Player currentPlayer = gameController.getCurrentPlayer();
         String fromCountry = currentPlayer.getConqueredCountries().get(0).getName();
-        ArrayList<Country> neighboring_countries = currentPlayer.getConqueredCountries().get(0).getNeighbors();
+        ArrayList<Country> neighboringCountries = currentPlayer.getConqueredCountries().get(0).getNeighbors();
         String enemyCountry = "";
-        for (Country tempCountry : neighboring_countries) {
+        for (Country tempCountry : neighboringCountries) {
             if (tempCountry.getConquerer() != currentPlayer) {
                 enemyCountry = tempCountry.getName();
             }
@@ -279,20 +274,24 @@ public class GameControllerTest {
         gameController.handleReinforceCommand(new String[] { fromCountry, "4" });
         gameController.enterAttackPhase();
         int a = GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount();
-        if(enemyCountry != "") {
+        if (enemyCountry != "") {
             int b = GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount();
             // Action
             gameController.handleAttackCommand(new String[] { fromCountry, enemyCountry, "3" });
-            if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(), GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(), GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(), GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
+            if (gameController.isAttackValid(GameBoard.getInstance().getGameBoardPlaying().getAttackingCountry(),
+                                             GameBoard.getInstance().getGameBoardPlaying().getAttackerNumDice(),
+                                             GameBoard.getInstance().getGameBoardPlaying().getDefenderNumDice(),
+                                             GameBoard.getInstance().getGameBoardPlaying().isAlloutFlag())) {
                 gameController.handleDefendCommand(new String[] { "1" });
             }
-            //Assert
+            // Assert
             assertTrue(GameBoard.getInstance().getGameBoardMap().getCountryFromName(fromCountry).getArmyAmount() != a
-                    || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry).getArmyAmount() != b);
+                       || GameBoard.getInstance().getGameBoardMap().getCountryFromName(enemyCountry)
+                                   .getArmyAmount() != b);
 
         }
 
-            }
+    }
 
     /**
      * it tests the endAttackPhase method and checks if the attack phase is ended or not.
@@ -566,7 +565,8 @@ public class GameControllerTest {
         }
 
         // action
-        int expectedTradeInArmy = 10 + currentPlayer.getUnplacedArmies();
+        final int expectedTradeInArmy = 10 + currentPlayer.getUnplacedArmies();
+
         App.jumpToCommand(new ModelCommands(GameCommands.CURRENTPLAYER));
         currentPlayer.setCurrentPhase(GamePhase.REINFORCEMENT);
         App.jumpToCommand(new ModelCommands(GameCommands.EXCHANGECARDS

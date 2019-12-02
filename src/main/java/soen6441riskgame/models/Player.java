@@ -17,6 +17,7 @@ import soen6441riskgame.utils.GameHelper;
 /**
  * Hold player data
  *
+ * <p>
  * Each player is a node in a linked list
  */
 public class Player extends Observable {
@@ -219,7 +220,7 @@ public class Player extends Observable {
             }
             // // check if unplaced armies == 0 , then just skip the reinforcement phase
             // else if (this.getUnplacedArmies() == 0) {
-            //     isChangePhaseAllowed = true;
+            // isChangePhaseAllowed = true;
             // }
         }
 
