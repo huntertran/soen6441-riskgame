@@ -27,11 +27,11 @@
         <property name="eachLine" value="true" />
     </module>
 
-    <module name="LineLength">
+    <!-- <module name="LineLength">
         <property name="fileExtensions" value="java" />
         <property name="max" value="100" />
         <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://" />
-    </module>
+    </module> -->
 
     <module name="TreeWalker">
         <module name="OuterTypeFilename" />
@@ -173,7 +173,7 @@
         <module name="OverloadMethodsDeclarationOrder" />
         <module name="VariableDeclarationUsageDistance" />
         <module name="CustomImportOrder">
-            <property name="sortImportsInGroupAlphabetically" value="true" />
+            <property name="sortImportsInGroupAlphabetically" value="false" />
             <property name="separateLineBetweenGroups" value="true" />
             <property name="customImportOrderRules" value="STATIC###THIRD_PARTY_PACKAGE" />
         </module>
@@ -202,6 +202,7 @@
         <module name="JavadocTagContinuationIndentation" />
         <module name="SummaryJavadoc">
             <property name="forbiddenSummaryFragments" value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )" />
+            <property name="period" value=""/>
         </module>
         <module name="JavadocParagraph" />
         <module name="AtclauseOrder">
