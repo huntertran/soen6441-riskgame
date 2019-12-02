@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -101,5 +103,54 @@ public class PlayerTest {
         ArrayList<CardSet> cardSets = player.buildValidCardSets();
 
         assertTrue(expectedValidSets >= cardSets.size());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+                 "WAITING_TO_TURN,LOST,LOST,False",
+                 "REINFORCEMENT,LOST,LOST,False",
+                 "ATTACK,LOST,LOST,False",
+                 "FORTIFICATION,LOST,LOST,False",
+                 "WAITING_TO_TURN,REINFORCEMENT,REINFORCEMENT,False",
+                 "REINFORCEMENT,ATTACK,ATTACK,False",
+                 "ATTACK,FORTIFICATION,FORTIFICATION,False",
+                 "ATTACK,END_OF_GAME,END_OF_GAME,False",
+                 "FORTIFICATION,WAITING_TO_TURN,WAITING_TO_TURN,False",
+                 "REINFORCEMENT,WAITING_TO_TURN,REINFORCEMENT,False",
+                 "ATTACK,REINFORCEMENT,ATTACK,False",
+                 "REINFORCEMENT,ATTACK,REINFORCEMENT,True"
+    })
+    public void setCurrentPhaseTest(GamePhase oldPhase,
+                                    GamePhase newPhase,
+                                    GamePhase expectedPhase,
+                                    Boolean isHoldingMaxNumberOfCard) {
+        // setup
+        String playerJson = "{"
+                            + "\"name\": \"p1\","
+                            + "\"unplacedArmies\": 0,"
+                            + "\"isPlaying\": false,"
+                            + "\"nextPlayerName\": \"p2\","
+                            + "\"previousPlayerName\": \"p2\","
+                            + "\"currentPhase\": \"" + oldPhase.toString() + "\","
+                            + "\"currentPhaseActions\": [],"
+                            + "\"isPlayerBeAwardCard\": false"
+                            + "}";
+        Gson gson = new Gson();
+        Player player = new Player(gson.fromJson(playerJson, Player.class));
+        player.reconstruct();
+
+        if (isHoldingMaxNumberOfCard) {
+            int index = 0;
+            while (index < 5) {
+                player.getHoldingCards().add(GameBoard.getInstance().getRandomAvailableCard());
+                index++;
+            }
+        }
+
+        // action
+        player.setCurrentPhase(newPhase);
+
+        // assert
+        assertEquals(expectedPhase, player.getCurrentPhase());
     }
 }

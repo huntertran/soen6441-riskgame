@@ -10,7 +10,16 @@ import soen6441riskgame.models.Player;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.utils.ConsolePrinter;
 
+/**
+ * support setup environment for other tests
+ */
 public class GamePlayActionsTestHelper {
+    /**
+     * fortify multiple time
+     * 
+     * @param gameController game controller
+     * @param fortifyTimes   time to fortify
+     */
     public static void multipleFortify(GameController gameController, int fortifyTimes) {
         for (int index = 0; index < fortifyTimes; index++) {
             Player player = gameController.getCurrentPlayer();
@@ -20,7 +29,7 @@ public class GamePlayActionsTestHelper {
             Country toCountry = getPlayerCountryForToCountryArg(player, fromCountry);
 
             fortify(
-                1,
+                    1,
                     fromCountry,
                     toCountry);
         }
@@ -28,6 +37,12 @@ public class GamePlayActionsTestHelper {
         App.jumpToCommand(new ModelCommands(GameCommands.FORTIFY + " -none"));
     }
 
+    /**
+     * get player's country for command that required `fromcountry` argument
+     * 
+     * @param player the player to get country
+     * @return country
+     */
     public static Country getPlayerCountryForFromCountryArg(Player player) {
         ArrayList<Country> countries = player.getConqueredCountries();
 
@@ -42,6 +57,13 @@ public class GamePlayActionsTestHelper {
         return fromCountry;
     }
 
+    /**
+     * get player's country for command that required `tocountry` argument
+     * 
+     * @param player      the player to get country
+     * @param fromCountry from country (which have neighbor relationship with result)
+     * @return country
+     */
     public static Country getPlayerCountryForToCountryArg(Player player, Country fromCountry) {
         Country toCountry = null;
 
@@ -58,6 +80,13 @@ public class GamePlayActionsTestHelper {
         return toCountry;
     }
 
+    /**
+     * fortify command
+     * 
+     * @param armies      number of armies
+     * @param fromCountry from country
+     * @param toCountry   to country
+     */
     public static void fortify(int armies,
                                Country fromCountry,
                                Country toCountry) {
@@ -74,6 +103,9 @@ public class GamePlayActionsTestHelper {
         }
     }
 
+    /**
+     * add player hunter, ben and tj to game
+     */
     public static void addPlayersToGame() {
         App.jumpToCommand(new ModelCommands(GameCommands.GAMEPLAYER + " -add hunter -add ben -add tj"));
     }

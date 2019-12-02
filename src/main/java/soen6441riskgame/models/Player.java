@@ -128,7 +128,7 @@ public class Player extends Observable {
 
         this.addObserver(GameBoard.getInstance().getGameBoardPlayer().getPhaseView());
 
-        if (currentPhase == GamePhase.REINFORCEMENT) {
+        if (currentPhase == GamePhase.REINFORCEMENT || currentPhase == GamePhase.WAITING_TO_TURN) {
             this.addObserver(GameBoard.getInstance().getExchangeCardView());
         }
     }
@@ -217,10 +217,10 @@ public class Player extends Observable {
 
                 isChangePhaseAllowed = false;
             }
-            // check if unplaced armies == 0 , then just skip the reinforcement phase
-            else if (this.getUnplacedArmies() == 0) {
-                isChangePhaseAllowed = true;
-            }
+            // // check if unplaced armies == 0 , then just skip the reinforcement phase
+            // else if (this.getUnplacedArmies() == 0) {
+            //     isChangePhaseAllowed = true;
+            // }
         }
 
         if (newPhase == GamePhase.END_OF_GAME && currentPhase == GamePhase.ATTACK) {
@@ -682,6 +682,7 @@ public class Player extends Observable {
 
     /**
      * build a valid card set from holding cards for tournament mode
+     * 
      * @return a valid card set
      */
     public ArrayList<CardSet> buildValidCardSets() {
