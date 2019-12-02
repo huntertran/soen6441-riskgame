@@ -105,8 +105,8 @@ public interface MapReadable {
      *
      * @param fileName the exact path to map file, end with .map extension for example:
      *                 D://src/test/java/soen6441riskgame/maps/RiskEurope.map
-     * @throws IOException exception
      * @return lines in file
+     * @throws IOException exception
      */
     default List<String> readMapFile(String fileName) throws IOException {
         Path path = Paths.get(fileName);

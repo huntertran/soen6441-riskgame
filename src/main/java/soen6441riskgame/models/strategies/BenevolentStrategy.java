@@ -9,10 +9,13 @@ import soen6441riskgame.models.Player;
 /**
  * focuses on protecting its weak countries
  *
+ * <p>
  * 1. reinforces its weakest countries
  *
+ * <p>
  * 2. never attacks
  *
+ * <p>
  * 3. fortifies in order to move armies to weaker countries
  */
 public class BenevolentStrategy implements Strategy {

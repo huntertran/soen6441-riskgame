@@ -99,23 +99,32 @@ public class CardSet {
     /**
      * get the armies that can be trade by the set
      *
+     * <p>
      * The first set traded in - 4 armies
      *
+     * <p>
      * The second set traded in - 6 armies
      *
+     * <p>
      * The third set traded in - 8 armies
      *
+     * <p>
      * The fourth set traded in - 10 armies
      *
+     * <p>
      * The fifth set traded in - 12 armies
      *
+     * <p>
      * The sixth set traded in - 15 armies
      *
-     * After the sixth set has been traded in, each additional set is worth 5 more armies. Example: If
-     * you trade in the seventh set, you get 20 armies; if you trade in the eighth, you get 25 armies,
-     * and so on. “First” and “second” set, etc., refer to sets traded in by anyone during the game.
-     * Thus, if you trade in the third set in the game, you receive 8 armies, even if it’s the first set
-     * you have traded in.
+     * <p>
+     * After the sixth set has been traded in, each additional set is worth 5 more armies.
+     * 
+     * <p>
+     * Example: If you trade in the seventh set, you get 20 armies; if you trade in the eighth, you get
+     * 25 armies, and so on. “First” and “second” set, etc., refer to sets traded in by anyone during
+     * the game. Thus, if you trade in the third set in the game, you receive 8 armies, even if it’s the
+     * first set you have traded in.
      *
      * @param tradeTime the time player trading this set
      * @return the number of armies

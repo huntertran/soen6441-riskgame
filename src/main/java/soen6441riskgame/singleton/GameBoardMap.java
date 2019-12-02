@@ -137,8 +137,9 @@ public class GameBoardMap implements Resettable {
      */
     public Continent getContinentFromName(String continentName) {
         for (Continent continent : getContinents()) {
-            if (continent.getName().equals(continentName))
+            if (continent.getName().equals(continentName)) {
                 return continent;
+            }
         }
 
         return null;

@@ -1,5 +1,8 @@
 package soen6441riskgame.utils;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -9,10 +12,17 @@ import soen6441riskgame.helpers.StringArrayConverter;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+/**
+ * test GameHelper functions
+ */
 public class GameHelperTest {
+    /**
+     * test get max
+     * 
+     * @param inputArray     int array
+     * @param isGetSecondMax is get second max
+     * @param expectedResult expected result
+     */
     @ParameterizedTest
     @CsvSource({
                  "1;2;3;4;5;6;7,False,7",
@@ -30,6 +40,12 @@ public class GameHelperTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    /**
+     * test count distinct value from array
+     * 
+     * @param inputArray            input array
+     * @param expectedDistinctValue expected result
+     */
     @ParameterizedTest
     @CsvSource({
                  "map1;map2;map3,3",
@@ -43,6 +59,12 @@ public class GameHelperTest {
         assertEquals(expectedDistinctValue, actualDistinctValue);
     }
 
+    /**
+     * test get random int in range
+     * 
+     * @param min min value
+     * @param max max value
+     */
     @ParameterizedTest
     @CsvSource({
                  "1,1",
@@ -56,6 +78,13 @@ public class GameHelperTest {
         assertTrue(min <= result && result <= max);
     }
 
+    /**
+     * test get random elements in an array
+     * 
+     * @param list                  list to get elements from
+     * @param numberOfItemToPick    number of elements to pick
+     * @param expectedSizeAfterPick the list should not be modified after picked
+     */
     @ParameterizedTest
     @CsvSource({
                  "1;2;3;4;5;6,3,6",

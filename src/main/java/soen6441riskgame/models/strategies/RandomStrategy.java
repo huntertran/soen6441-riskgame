@@ -12,10 +12,13 @@ import soen6441riskgame.utils.GameHelper;
 /**
  * 1. reinforces random a random country
  *
+ * <p>
  * 2. attacks a random number of times a random country
  *
+ * <p>
  * 3. and fortifies a random country
  *
+ * <p>
  * all following the standard rules for each phase.
  */
 public class RandomStrategy implements Strategy {
@@ -111,18 +114,20 @@ public class RandomStrategy implements Strategy {
          * 3. generate index of country from filtered list of conquered countries 4. generate randArmyMove
          * int (min 1, max = number of army moving from country filtered)
          */
-        if(fromCountry.getArmyAmount()-1 > 0) {
-            int randArmyAmountToMove = GameHelper.nextRandomIntInRange(1, fromCountry.getArmyAmount()-1);
+        if (fromCountry.getArmyAmount() - 1 > 0) {
+            int randArmyAmountToMove = GameHelper.nextRandomIntInRange(1, fromCountry.getArmyAmount() - 1);
             fortify(fromCountry, toCountry, randArmyAmountToMove);
         }
-        
+
     }
 
     /**
      * 1. reinforces random a random country
      *
+     * <p>
      * 2. attacks a random number of times a random country
      *
+     * <p>
      * 3. and fortifies a random country
      *
      * @param player current player

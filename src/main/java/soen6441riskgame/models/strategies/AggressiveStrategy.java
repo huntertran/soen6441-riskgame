@@ -10,10 +10,13 @@ import java.util.ArrayList;
 /**
  * focuses on attack
  *
+ * <p>
  * 1. reinforces its strongest country
  *
+ * <p>
  * 2. always attack with it until it cannot attack anymore
  *
+ * <p>
  * 3. fortifies in order to maximize aggregation of forces in one country).
  */
 public class AggressiveStrategy implements Strategy {
@@ -54,6 +57,7 @@ public class AggressiveStrategy implements Strategy {
     /**
      * Reinforce Phase
      *
+     * <p>
      * get number of army to place.
      *
      * <code>reinforce countryname num</code>
@@ -112,12 +116,15 @@ public class AggressiveStrategy implements Strategy {
     /**
      * Fortify Phase
      *
+     * <p>
      * Command:
      *
      * <code>fortify fromcountry tocountry num</code>
      *
+     * <p>
      * get max number of armies to move then
      *
+     * <p>
      * move the countries
      *
      * @param fromCountry the attacking country

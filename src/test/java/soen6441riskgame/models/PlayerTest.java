@@ -82,6 +82,12 @@ public class PlayerTest {
         assertTrue(numberOfInitArmiesInReinforce >= 3);
     }
 
+    /**
+     * test building valid card sets
+     * 
+     * @param cardIndexes       indexes of the card
+     * @param expectedValidSets expected number of sets
+     */
     @ParameterizedTest
     @CsvSource({
                  "0;1;2;3;4;5;6;7;8;9, 3",
@@ -105,6 +111,14 @@ public class PlayerTest {
         assertTrue(expectedValidSets >= cardSets.size());
     }
 
+    /**
+     * test changing phase
+     * 
+     * @param oldPhase                 old phase
+     * @param newPhase                 new phase
+     * @param expectedPhase            expected phase after changed
+     * @param isHoldingMaxNumberOfCard is player holding cards and must exchanged
+     */
     @ParameterizedTest
     @CsvSource({
                  "WAITING_TO_TURN,LOST,LOST,False",

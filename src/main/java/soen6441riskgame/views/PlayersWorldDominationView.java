@@ -13,10 +13,13 @@ import soen6441riskgame.utils.ConsolePrinter;
  * Implementation of a “players world domination view” using the Observer pattern. The players world
  * domination view should display
  *
+ * <p>
  * 1. the percentage of the map controlled by every player
  *
+ * <p>
  * 2. the continents controlled by every player
  *
+ * <p>
  * 3. the total number of armies owned by every player
  *
  */

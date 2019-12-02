@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * a pair of command and params
  * 
- * this model only accept a pair of params for each command, which is create a hard code into the
+ * <p>this model only accept a pair of params for each command, which is create a hard code into the
  * source
  */
 public class ModelCommandsPair {

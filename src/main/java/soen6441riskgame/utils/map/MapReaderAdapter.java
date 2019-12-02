@@ -71,7 +71,8 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
                 break;
             }
             case FILES:
-            case NONE: {
+            case NONE:
+            default: {
                 break;
             }
         }
@@ -281,7 +282,8 @@ public class MapReaderAdapter implements DominationMapReadable, ConquestMapReada
                 index = loadCountriesFromConquestFile(index, lines);
                 break;
             }
-            case NONE: {
+            case NONE:
+            default: {
                 break;
             }
         }

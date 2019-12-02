@@ -31,7 +31,7 @@ public class Continent extends Observable implements Viewable {
         this.army = army;
     }
 
-    public void initializeCountries(){
+    public void initializeCountries() {
         this.countries = new ArrayList<>();
     }
 
@@ -97,6 +97,7 @@ public class Continent extends Observable implements Viewable {
     /**
      * check if the continent is a mini-connected graph
      *
+     * <p>
      * https://github.com/huntertran/soen6441-riskgame/wiki/Connected-Graph-Validation-Unit-Test
      *
      * @return false if it's not a mini-connected graph

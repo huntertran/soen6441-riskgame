@@ -3,6 +3,7 @@ package soen6441riskgame.enums;
 /**
  * Type of card that a player can hold
  *
+ * <p>
  * The number of each type is used for calculate the validity of a set of 3 cards to trade for
  * armies during reinforcement phase
  */

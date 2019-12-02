@@ -74,9 +74,9 @@ public class WindowPane extends JPanel {
                     appendText(text);
                 });
             } catch (InvocationTargetException e) {
-
+                // do nothing
             } catch (InterruptedException e) {
-
+                // do nothing
             }
         }
     }

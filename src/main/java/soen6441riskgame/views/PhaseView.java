@@ -10,10 +10,13 @@ import soen6441riskgame.utils.ConsolePrinter;
 /**
  * Implementation of a “phase view” using the Observer pattern. The phase view should display:
  *
+ * <p>
  * 1. the name of the game phase currently being played
  *
+ * <p>
  * 2. the current player’s name
  *
+ * <p>
  * 3. information about actions that are taking place during this phase. The phase view should be
  * cleared at the beginning of every phase.
  */

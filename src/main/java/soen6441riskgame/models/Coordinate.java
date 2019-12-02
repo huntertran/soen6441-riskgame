@@ -6,8 +6,11 @@ import com.google.gson.annotations.Expose;
  * Coordinate of an entity on bitmap file, not used in console application
  */
 public class Coordinate {
+    @SuppressWarnings("checkstyle:MemberName")
     @Expose
     private int x;
+
+    @SuppressWarnings("checkstyle:MemberName")
     @Expose
     private int y;
 

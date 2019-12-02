@@ -10,8 +10,10 @@ import java.util.ArrayList;
 /**
  * reinforce() method doubles the number of armies on all its countries
  *
+ * <p>
  * attack() method automatically conquers all the neighbors of all its countries
  *
+ * <p>
  * fortify() method doubles the number of armies on its countries that have neighbors that belong to
  * other players.
  */

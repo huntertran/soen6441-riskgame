@@ -22,7 +22,7 @@ public class ModelCommands {
     // commands.
     public List<ModelCommandsPair> subRoutine = new ArrayList<ModelCommandsPair>();
 
-    /***
+    /**
      * Class Constructor
      *
      * @param newArgs = raw string input of the command line parameters
@@ -34,30 +34,30 @@ public class ModelCommands {
     /**
      * initialize the param check
      * 
-     * @param new_args
+     * @param newArguments new arguments
      */
-    private void init(String new_args) {
+    private void init(String newArguments) {
         // check if arguments provided is not null or empty string.
-        if ((new_args == null) || (new_args.equals(""))) {
+        if ((newArguments == null) || (newArguments.equals(""))) {
             return;
         }
 
         // Split first word and rest of the string into two array.
-        String[] temp_args = new_args.split(" ", 2);
+        String[] tempArguments = newArguments.split(" ", 2);
 
         // assign command as the first value of the temp_args array
-        this.cmd = temp_args[0].toLowerCase();
+        this.cmd = tempArguments[0].toLowerCase();
 
-        if (temp_args.length <= 1) {
+        if (tempArguments.length <= 1) {
             return;
         }
 
         // Split rest of the string parameter except the command using "-"
         String[] paramsArray;
         if (this.cmd.equalsIgnoreCase("tournament")) {
-            paramsArray = temp_args[1].split(" ");
+            paramsArray = tempArguments[1].split(" ");
         } else {
-            paramsArray = temp_args[1].split("-");
+            paramsArray = tempArguments[1].split("-");
         }
 
         for (String s : paramsArray) {
@@ -188,7 +188,7 @@ public class ModelCommands {
                             throw new NumberFormatException();
                         }
                     } else if (params[0] != null
-                             && params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
+                               && params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                         regularCommands.add(params[j].toLowerCase());
                         return;
                     } else {

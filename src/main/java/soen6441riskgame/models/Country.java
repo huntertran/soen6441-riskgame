@@ -104,6 +104,7 @@ public class Country extends Observable implements Viewable {
     /**
      * set conquerer of this country.
      *
+     * <p>
      * if set to null, this country have no conquerer
      *
      * @param conquerer player object to set
