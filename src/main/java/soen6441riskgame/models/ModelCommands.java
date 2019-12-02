@@ -3,8 +3,8 @@ package soen6441riskgame.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
 
@@ -116,22 +116,17 @@ public class ModelCommands {
                         } else {
                             throw new NumberFormatException();
                         }
-                    }
-                    // check if the command is GAMEPLAYER
-                    else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
-                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));
+                    } else if (cmd.equalsIgnoreCase(GameCommands.GAMEPLAYER)) {
+                        subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
+                                                             params[j + 1]));
                         break;
-                    }
-                    // command contains sub commands so add separately to subroutine list.
-                    else {
+                    } else {
                         subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(),
                                                              params[j + 1],
                                                              params[j + 2]));
                         break;
                     }
-                }
-                // check if REMOVE command is provided
-                else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
+                } else if (params[j].equalsIgnoreCase(MapEditorCommands.REMOVE)) {
                     subRoutine.add(new ModelCommandsPair(params[j].toLowerCase(), params[j + 1]));
                     break;
                 }
@@ -140,11 +135,11 @@ public class ModelCommands {
     }
 
     /**
-     * build regular commands
+     * build regular commands.
      * 
-     * @param paramsArray array of params
-     * @param params      the params
-     * @throws Exception if cannot parse param
+     * @param paramsArray array of parameters.
+     * @param params      the parameters.
+     * @throws Exception if cannot parse parameters.
      */
     private void buildRegularCommands(String[] paramsArray, String[] params) throws Exception {
         for (int j = 0; j < params.length; j++) {
@@ -178,9 +173,7 @@ public class ModelCommands {
                             regularCommands.add(params[j + 1]);
                             regularCommands.add(params[j + 2].replace("-", ""));
                             return;
-                        }
-                        // did not provide number
-                        else {
+                        } else {
                             throw new NumberFormatException();
                         }
                     } else if (params.length == 4) {
@@ -191,20 +184,14 @@ public class ModelCommands {
                             regularCommands.add(params[j + 2]);
                             regularCommands.add(params[j + 3]);
                             return;
-                        }
-                        // did not provide number
-                        else {
+                        } else {
                             throw new NumberFormatException();
                         }
-                    }
-                    // Player does not wish to fortify
-                    else if (params[0] != null
+                    } else if (params[0] != null
                              && params[0].replace("-", "").equalsIgnoreCase(GameCommands.NONE)) {
                         regularCommands.add(params[j].toLowerCase());
                         return;
-                    }
-                    // Unknown command provided throw invalid exception
-                    else {
+                    } else {
                         throw new Exception("Invalid Input");
                     }
                 }

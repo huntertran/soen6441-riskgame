@@ -3,17 +3,17 @@ package soen6441riskgame;
 import java.io.IOException;
 import java.util.Scanner;
 
-import soen6441riskgame.models.commands.GameCommands;
-import soen6441riskgame.models.commands.MapEditorCommands;
-import soen6441riskgame.models.commands.TournamentCommands;
-import soen6441riskgame.singleton.GameBoard;
-import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.controllers.SaveLoadController;
 import soen6441riskgame.controllers.TournamentController;
+import soen6441riskgame.models.commands.GameCommands;
+import soen6441riskgame.models.commands.MapEditorCommands;
+import soen6441riskgame.models.commands.TournamentCommands;
 import soen6441riskgame.models.ModelCommands;
 import soen6441riskgame.models.ModelCommandsPair;
+import soen6441riskgame.singleton.GameBoard;
+import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * The main class of the game

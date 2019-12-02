@@ -52,7 +52,8 @@ public class GameController {
                 break;
             }
             case INVALID:
-            case NONE: {
+            case NONE:
+            default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
             }
@@ -130,15 +131,20 @@ public class GameController {
     /**
      * allocate a number of initial armies to each players, depending on number of players, from the
      * game rule
-     *
+     * 
+     * <p>
      * If 2 are playing, each player counts out 40 Infantry.
      *
+     * <p>
      * If 3 are playing, each player counts out 35 Infantry.
      *
+     * <p>
      * If 4 are playing, each player counts out 30 Infantry.
      *
+     * <p>
      * If 5 are playing, each player counts out 25 Infantry.
      *
+     * <p>
      * If 6 are playing, each player counts out 20 Infantry.
      */
     public void initPlayersUnplacedArmies() {
@@ -167,6 +173,9 @@ public class GameController {
             }
             case 6: {
                 unplacedArmiesEachPlayer = 20;
+                break;
+            }
+            default: {
                 break;
             }
         }
@@ -225,15 +234,6 @@ public class GameController {
             }
             // }
         }
-    }
-
-    /**
-     * This get the current player without print the message
-     *
-     * @return current player
-     */
-    public Player getCurrentPlayer() {
-        return getCurrentPlayer(false);
     }
 
     /**
@@ -340,6 +340,15 @@ public class GameController {
     }
 
     /**
+     * This get the current player without print the message
+     *
+     * @return current player
+     */
+    public Player getCurrentPlayer() {
+        return getCurrentPlayer(false);
+    }
+
+    /**
      * REINFORCEMENT PHASE enter reinforcement phase
      *
      * @return true if enter reinforcement phase successfully or the current player is already in
@@ -403,8 +412,10 @@ public class GameController {
     /**
      * move any number of armies from one country to another if they are connected
      *
+     * <p>
      * If last argument is "none" or "-none" then user choose not to do a move.
      *
+     * <p>
      * The arguments can be divided by a set of 3 as below. User can enter multiple set of arguments.
      *
      * @param args [0] from country - [1] to country - [2] number of armies
@@ -437,6 +448,7 @@ public class GameController {
     /**
      * move any number of armies from one country to another if they are connected
      *
+     * <p>
      * If args[0] is "none" then user choose not to do a move
      *
      * @param args [0] from country - [1] to country - [2] number of armies
@@ -488,6 +500,7 @@ public class GameController {
     /**
      * it handles the attack command
      *
+     * <p>
      * If args[0] is "-noattack" then user choose not to attack and the player moves on to next phase
      * fortification
      *
@@ -554,6 +567,7 @@ public class GameController {
                                gameBoardPlaying.getAttackerNumDice(),
                                gameBoardPlaying.getDefenderNumDice(),
                                gameBoardPlaying.isAlloutFlag())) {
+                // do nothing
             }
         }
     }
@@ -569,16 +583,16 @@ public class GameController {
                                                                           .getArmyAmount()
                                                           - 1),
                                                          MAXIMUM_ARMY_IN_ONE_ATTACK));
-            int defender_dice = Math.min(gameBoardPlaying.getDefendingCountry()
-                                                         .getArmyAmount(),
-                                         2);
+            int defenderDice = Math.min(gameBoardPlaying.getDefendingCountry()
+                                                        .getArmyAmount(),
+                                        2);
             if (gameBoardPlaying.isAttackMoveCmdRequired()) {
                 gameBoardPlaying.setAlloutFlag(false);
             } else if (isAttackValid(gameBoardPlaying.getAttackingCountry(),
                                      gameBoardPlaying.getAttackerNumDice(),
                                      gameBoardPlaying.getDefenderNumDice(),
                                      gameBoardPlaying.isAlloutFlag())) {
-                handleDefendCommand(new String[] { Integer.toString(defender_dice) });
+                handleDefendCommand(new String[] { Integer.toString(defenderDice) });
             } else {
                 gameBoardPlaying.setAlloutFlag(false);
                 gameBoardPlaying.reset();
@@ -596,8 +610,6 @@ public class GameController {
     public void handleDefendCommand(String[] args) {
         GameBoardPlaying gameBoardPlaying = GameBoard.getInstance().getGameBoardPlaying();
         Country defendingCountry = gameBoardPlaying.getDefendingCountry();
-        Country attackingCountry = gameBoardPlaying.getAttackingCountry();
-        int attackerNumDice = gameBoardPlaying.getAttackerNumDice();
 
         if (gameBoardPlaying.isAttackMoveCmdRequired()) {
             ConsolePrinter.printFormat("Player %s need to move armies into your conquered country %s",
@@ -613,6 +625,8 @@ public class GameController {
 
         gameBoardPlaying.setDefenderNumDice(Integer.parseInt(args[0]));
         int defenderNumDice = gameBoardPlaying.getDefenderNumDice();
+        Country attackingCountry = gameBoardPlaying.getAttackingCountry();
+        int attackerNumDice = gameBoardPlaying.getAttackerNumDice();
 
         if (attackingCountry == null
             || defendingCountry == null) {
@@ -654,23 +668,23 @@ public class GameController {
         GameBoardPlaying gameBoardPlaying = GameBoard.getInstance().getGameBoardPlaying();
         if (gameBoardPlaying.isAttackMoveCmdRequired()) {
             if (Parser.checkValidInputNumber(args[0])) {
-                int army_to_be_moved = Integer.parseInt(args[0]);
+                int armyTobeMoved = Integer.parseInt(args[0]);
                 Country attackingCountry = gameBoardPlaying.getAttackingCountry();
                 int attackerNumDice = gameBoardPlaying.getAttackerNumDice();
-                if (army_to_be_moved < attackerNumDice
+                if (armyTobeMoved < attackerNumDice
                     && attackingCountry.getArmyAmount()
-                       - 1 > army_to_be_moved) {
+                       - 1 > armyTobeMoved) {
                     ConsolePrinter.printFormat("You need to move atleast %s army to the conquered country.",
                                                attackerNumDice);
                 } else if (attackingCountry.getArmyAmount()
-                           - 1 < army_to_be_moved) {
+                           - 1 < armyTobeMoved) {
                     ConsolePrinter.printFormat("You only have %s army available to move. You cannot move more armies than what you have.",
                                                attackerNumDice);
                 } else {
                     Player currentPlayer = getCurrentPlayer(false);
                     currentPlayer.attackMove(attackingCountry,
                                              gameBoardPlaying.getDefendingCountry(),
-                                             army_to_be_moved);
+                                             armyTobeMoved);
                     // attackingCountry.moveArmies(defendingCountry, army_to_be_moved);
                     // reinitialize variables to null
                     gameBoardPlaying.reset();
@@ -717,12 +731,16 @@ public class GameController {
     /**
      * check if attack pre-conditions valid. The conditions are:
      *
+     * <p>
      * valid attacking country and defending country
      *
+     * <p>
      * attacking country belong to attacker
      *
+     * <p>
      * defending country does not belong to attacker
      *
+     * <p>
      * attacking country and defending country is neighbor
      *
      * 
@@ -769,14 +787,13 @@ public class GameController {
     }
 
     /**
-     *
      * it returns whether the attack is valid (true) or not (false)
      *
-     * @return boolean it checks whether attack is valid or not and returns true or false based on that.
      * @param attackingCountry attacking country
      * @param attackerNumDice  attacker number of dice
      * @param defenderNumDice  defender number of dice
      * @param alloutFlag       is all out
+     * @return boolean it checks whether attack is valid or not and returns true or false based on that.
      */
     boolean isAttackValid(Country attackingCountry,
                           int attackerNumDice,
@@ -787,23 +804,19 @@ public class GameController {
             ConsolePrinter.printFormat("The country %s has less than 2 armies. You need at least 2 armies to attack a country.",
                                        attackingCountry.getName());
             return false;
-        }
-        // check if the player has more armies than the numDice. numDice can be at most 3.
-        else if ((attackingCountry.getArmyAmount()
-                  - 1) < attackerNumDice) {
+        } else if ((attackingCountry.getArmyAmount()
+                    - 1) < attackerNumDice) {
+            // check if the player has more armies than the numDice. numDice can be at most 3.
             ConsolePrinter.printFormat("The number of armies available to attack are less than %s",
                                        attackerNumDice);
             return false;
-        }
-        // also numdice has to be less than 3
-        else if (attackerNumDice > MAXIMUM_ARMY_IN_ONE_ATTACK) {
+        } else if (attackerNumDice > MAXIMUM_ARMY_IN_ONE_ATTACK) {
+            // also numdice has to be less than 3
             ConsolePrinter.printFormat("You can only attack with a maximum of %d armies at a time",
                                        MAXIMUM_ARMY_IN_ONE_ATTACK);
             return false;
-        }
-
-        // attack execution
-        else {
+        } else {
+            // attack execution
             if (defenderNumDice == 0
                 && !alloutFlag) {
                 ConsolePrinter.printFormat("Enter defend command");
