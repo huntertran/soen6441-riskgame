@@ -259,7 +259,7 @@ public class GameController {
      * gives turn to the next player in list
      */
     void turnToNextPlayer() {
-        Player currentPlayer = getCurrentPlayer();
+        Player currentPlayer = getCurrentPlayer(false);
 
         if (currentPlayer != null) {
             currentPlayer.setPlaying(false);

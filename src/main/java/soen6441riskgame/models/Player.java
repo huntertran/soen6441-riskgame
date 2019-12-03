@@ -462,6 +462,11 @@ public class Player extends Observable {
      */
     public void setPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
+
+        if (isPlaying) {
+            setChanged();
+            notifyObservers(ChangedProperty.GAME_PHASE);
+        }
     }
 
     /**
