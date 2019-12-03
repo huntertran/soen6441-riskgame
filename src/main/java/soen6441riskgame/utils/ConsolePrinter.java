@@ -2,10 +2,12 @@ package soen6441riskgame.utils;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.io.PrintStream;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.presenter.WindowPane;
+import soen6441riskgame.views.WorldView;
 
 /**
  * Helper to print out to console with proper format
@@ -159,5 +161,17 @@ public class ConsolePrinter {
         frame.setVisible(true);
         frame.setTitle(title);
         return windowPane;
+    }
+
+    /**
+     * create world view with countries
+     */
+    public static void createWorldView() {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container content = frame.getContentPane();
+        content.add(new WorldView());
+        frame.pack();
+        frame.setVisible(true);
     }
 }

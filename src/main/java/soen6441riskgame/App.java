@@ -31,6 +31,8 @@ public final class App {
     public static void main(String[] args) {
         ConsolePrinter.printFormat("SOEN 6441 - Risk Domination game");
 
+        ConsolePrinter.createWorldView();
+
         if (args.length == 0) {
             runFromBeginning();
         } else {
