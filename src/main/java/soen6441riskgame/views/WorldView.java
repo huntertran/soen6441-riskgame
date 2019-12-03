@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
@@ -34,6 +37,8 @@ import edu.uci.ics.jung.visualization.decorators.PickableEdgePaintTransformer;
 import edu.uci.ics.jung.visualization.decorators.PickableVertexPaintTransformer;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.VertexLabelRenderer;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.singleton.GameBoard;
 
 /**
  * Demonstrates jung support for drawing edge labels that can be positioned at any point along the
@@ -42,35 +47,32 @@ import edu.uci.ics.jung.visualization.renderers.VertexLabelRenderer;
  * @author Tom Nelson
  * 
  */
-public class WorldView extends JApplet {
+public class WorldView extends JApplet implements Observer {
     private static final long serialVersionUID = -6077157664507049647L;
 
     /**
      * the graph
      */
-    Graph<Integer, Number> graph;
+    Graph<Country, Number> graph;
 
     /**
      * the visual component and renderer for the graph
      */
-    VisualizationViewer<Integer, Number> vv;
+    VisualizationViewer<Country, Number> vv;
 
     VertexLabelRenderer vertexLabelRenderer;
 
     ScalingControl scaler = new CrossoverScalingControl();
 
-    /**
-     * create an instance of a simple graph with controls to demo the label positioning features
-     * 
-     */
-    public WorldView() {
+    public void redraw() {
         // create a simple graph for the demo
-        graph = new SparseMultigraph<Integer, Number>();
-        Integer[] v = createVertices(3);
+        graph = new SparseMultigraph<Country, Number>();
+        Country[] v = createVertices();
+
         createEdges(v);
 
-        Layout<Integer, Number> layout = new CircleLayout<Integer, Number>(graph);
-        vv = new VisualizationViewer<Integer, Number>(layout, new Dimension(600, 400));
+        Layout<Country, Number> layout = new CircleLayout<Country, Number>(graph);
+        vv = new VisualizationViewer<Country, Number>(layout, new Dimension(600, 400));
         vv.setBackground(Color.white);
 
         vv.getRenderContext().setEdgeShapeTransformer(EdgeShape.line(graph));
@@ -82,9 +84,12 @@ public class WorldView extends JApplet {
                                                                                                    Color.black,
                                                                                                    Color.cyan));
         vv.getRenderContext().setVertexFillPaintTransformer(
-                                                            new PickableVertexPaintTransformer<Integer>(vv.getPickedVertexState(),
+                                                            new PickableVertexPaintTransformer<Country>(vv.getPickedVertexState(),
                                                                                                         Color.red,
                                                                                                         Color.yellow));
+
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+
         // add my listener for ToolTips
         vv.setVertexToolTipTransformer(new ToStringLabeller());
 
@@ -132,7 +137,7 @@ public class WorldView extends JApplet {
      *
      *
      */
-    class MutableDirectionalEdgeValue extends ConstantDirectionalEdgeValueTransformer<Integer, Number> {
+    class MutableDirectionalEdgeValue extends ConstantDirectionalEdgeValueTransformer<Country, Number> {
         BoundedRangeModel undirectedModel = new DefaultBoundedRangeModel(5, 0, 0, 10);
         BoundedRangeModel directedModel = new DefaultBoundedRangeModel(7, 0, 0, 10);
 
@@ -162,12 +167,18 @@ public class WorldView extends JApplet {
      * @param count how many to create
      * @return the Vertices in an array
      */
-    private Integer[] createVertices(int count) {
-        Integer[] v = new Integer[count];
+    private Country[] createVertices() {
+        int count = GameBoard.getInstance().getGameBoardMap().getCountries().size();
+        if (count == 0) {
+            return null;
+        }
+
+        Country[] v = new Country[count];
         for (int i = 0; i < count; i++) {
-            v[i] = new Integer(i);
+            v[i] = GameBoard.getInstance().getGameBoardMap().getCountries().get(i);
             graph.addVertex(v[i]);
         }
+
         return v;
     }
 
@@ -176,8 +187,21 @@ public class WorldView extends JApplet {
      * 
      * @param v an array of Vertices to connect
      */
-    void createEdges(Integer[] v) {
-        graph.addEdge(new Double(Math.random()), v[0], v[1]);
-        graph.addEdge(new Double(Math.random()), v[1], v[2]);
+    void createEdges(Country[] v) {
+        if (v == null || v.length == 0) {
+            return;
+        }
+
+        for (Country country : v) {
+            ArrayList<Country> neighbors = country.getNeighbors();
+            for (Country neighbor : neighbors) {
+                graph.addEdge(new Double(Math.random()), neighbor, country);
+            }
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        redraw();
     }
 }

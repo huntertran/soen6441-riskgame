@@ -376,4 +376,9 @@ public class Country extends Observable implements Viewable {
             country.viewWithoutNeighbors(indent + 2);
         }
     }
+
+    @Override
+    public String toString() {
+        return getName() + " | " + "Army: " + getArmyAmount() + " | " + "Conquerer: " + getConquerer();
+    }
 }

@@ -52,7 +52,7 @@ public final class App {
 
         MapController mapController = new MapController();
         GameController gameController = new GameController();
-        try {
+        // try {
             switch (command) {
                 case MapEditorCommands.EDITCONTINENT: {
                     for (ModelCommandsPair sub : args.subRoutine) {
@@ -214,10 +214,10 @@ public final class App {
                     break;
                 }
             }
-        } catch (Exception e) {
-            ConsolePrinter.printFormat(e.getMessage());
-            // ConsolePrinter.printFormat("exception on line " + e.getStackTrace()[0].getLineNumber());
-        }
+        // } catch (Exception e) {
+        //     ConsolePrinter.printFormat(e.getMessage());
+        //     // ConsolePrinter.printFormat("exception on line " + e.getStackTrace()[0].getLineNumber());
+        // }
     }
 
     /**

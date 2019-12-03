@@ -78,6 +78,8 @@ public interface MapReadable {
             graph[countryOrder - 1][borderWithCountry - 1] = 1;
             graph[borderWithCountry - 1][countryOrder - 1] = 1;
         }
+
+        GameBoard.getInstance().getGameBoardMap().getWordView().redraw();
     }
 
     /**

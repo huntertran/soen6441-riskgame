@@ -6,12 +6,14 @@ import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.views.PlayersWorldDominationView;
+import soen6441riskgame.views.WorldView;
 
 /**
  * hold countries, continents and player world domination view
  */
 public class GameBoardMap implements Resettable {
     private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();
+    private WorldView worldView = new WorldView();
     private String mapName;
     private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
@@ -24,6 +26,10 @@ public class GameBoardMap implements Resettable {
      */
     public PlayersWorldDominationView getPlayersWorldDominationView() {
         return playersWorldDominationView;
+    }
+
+    public WorldView getWordView() {
+        return worldView;
     }
 
     /**
@@ -42,6 +48,7 @@ public class GameBoardMap implements Resettable {
      */
     public void setBorders(int[][] graph) {
         this.borders = graph;
+        GameBoard.getInstance().getGameBoardMap().getWordView().redraw();
     }
 
     /**
@@ -166,6 +173,7 @@ public class GameBoardMap implements Resettable {
      */
     public void updateCountryContinent(Country country, Continent continent) {
         country.addObserver(getPlayersWorldDominationView());
+        country.addObserver(getWordView());
         getCountries().add(country);
         continent.getCountries().add(country);
     }

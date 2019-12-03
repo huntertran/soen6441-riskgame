@@ -182,6 +182,7 @@ public class SerializableGame {
                                                              .getPlayers());
 
                 linkedCountry.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());
+                linkedCountry.addObserver(GameBoard.getInstance().getGameBoardMap().getPlayersWorldDominationView());
 
                 GameBoard.getInstance()
                          .getGameBoardMap()
