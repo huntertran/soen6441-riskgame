@@ -163,6 +163,7 @@ public class ModelCommands {
                         regularCommands.add(params[j + 1]);
                         return;
                     }
+                    break;
                 }
                 case GameCommands.FORTIFY: {
                     // Three parameters of FORTIFY command
@@ -220,6 +221,7 @@ public class ModelCommands {
                         regularCommands.add(params[j].toLowerCase());
                         return;
                     }
+                    break;
                 }
                 case GameCommands.ATTACK: {
                     if (params.length == 3) {
@@ -253,6 +255,7 @@ public class ModelCommands {
                     } else {
                         throw new Exception();
                     }
+                    break;
                 }
                 case GameCommands.DEFEND: {
                     if (Parser.checkValidInputNumber(params[j])) {
@@ -272,6 +275,7 @@ public class ModelCommands {
                 }
                 default: {
                     regularCommands.add(params[j]);
+                    break;
                 }
             }
         }
