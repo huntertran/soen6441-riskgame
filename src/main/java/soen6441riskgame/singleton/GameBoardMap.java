@@ -1,23 +1,34 @@
 package soen6441riskgame.singleton;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.views.PlayersWorldDominationView;
 import soen6441riskgame.views.WorldView;
+import soen6441riskgame.views.WorldViewForUnitTest;
 
 /**
  * hold countries, continents and player world domination view
  */
 public class GameBoardMap implements Resettable {
     private PlayersWorldDominationView playersWorldDominationView = new PlayersWorldDominationView();
-    private WorldView worldView = new WorldView();
+    private WorldView worldView;
+    private WorldViewForUnitTest worldViewForUnitTest;
     private String mapName;
     private ArrayList<Continent> continents = new ArrayList<Continent>();
     private ArrayList<Country> countries = new ArrayList<Country>();
     private int[][] borders;
+
+    public GameBoardMap() {
+        if (ConsolePrinter.isJUnitTest()) {
+            worldViewForUnitTest = new WorldViewForUnitTest();
+        } else {
+            worldView = new WorldView();
+        }
+    }
 
     /**
      * get PlayersWorldDominationView instance
@@ -28,7 +39,15 @@ public class GameBoardMap implements Resettable {
         return playersWorldDominationView;
     }
 
-    public WorldView getWordView() {
+    public Observer getWordView() {
+        if (ConsolePrinter.isJUnitTest()) {
+            return worldViewForUnitTest;
+        } else {
+            return worldView;
+        }
+    }
+
+    public WorldView getWorldView() {
         return worldView;
     }
 
@@ -48,7 +67,7 @@ public class GameBoardMap implements Resettable {
      */
     public void setBorders(int[][] graph) {
         this.borders = graph;
-        GameBoard.getInstance().getGameBoardMap().getWordView().redraw();
+        GameBoard.getInstance().getGameBoardMap().getWordView().update(null, null);
     }
 
     /**

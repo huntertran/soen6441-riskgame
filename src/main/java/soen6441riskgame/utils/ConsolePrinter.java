@@ -173,7 +173,7 @@ public class ConsolePrinter {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container content = frame.getContentPane();
-        content.add(GameBoard.getInstance().getGameBoardMap().getWordView());
+        content.add(GameBoard.getInstance().getGameBoardMap().getWorldView());
         frame.setSize(600, 600);
         frame.setVisible(true);
     }

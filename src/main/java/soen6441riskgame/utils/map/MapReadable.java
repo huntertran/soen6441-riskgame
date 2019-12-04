@@ -79,7 +79,7 @@ public interface MapReadable {
             graph[borderWithCountry - 1][countryOrder - 1] = 1;
         }
 
-        GameBoard.getInstance().getGameBoardMap().getWordView().redraw();
+        GameBoard.getInstance().getGameBoardMap().getWordView().update(null, null);
     }
 
     /**
