@@ -7,7 +7,6 @@ import java.io.PrintStream;
 
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.presenter.WindowPane;
-import soen6441riskgame.views.WorldView;
 
 /**
  * Helper to print out to console with proper format
@@ -167,6 +166,10 @@ public class ConsolePrinter {
      * create world view with countries
      */
     public static void createWorldView() {
+        if (isJUnitTest && !isDebug) {
+            return;
+        }
+
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container content = frame.getContentPane();

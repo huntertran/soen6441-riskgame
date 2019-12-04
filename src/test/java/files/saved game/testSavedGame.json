@@ -5,29 +5,29 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 18,
+      "armyAmount": 12,
       "name": "India",
       "serializedOrder": 1,
       "continentName": "Asia",
-      "conquererName": "hunter"
+      "conquererName": "tj"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 15,
+      "armyAmount": 33,
       "name": "Pakistan",
       "serializedOrder": 2,
       "continentName": "Asia",
-      "conquererName": "hunter"
+      "conquererName": "ben"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 5,
+      "armyAmount": 4,
       "name": "China",
       "serializedOrder": 3,
       "continentName": "Asia",
@@ -38,9 +38,20 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 22,
+      "armyAmount": 37,
       "name": "USA",
       "serializedOrder": 4,
+      "continentName": "America",
+      "conquererName": "hunter"
+    },
+    {
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "armyAmount": 7,
+      "name": "Canada",
+      "serializedOrder": 5,
       "continentName": "America",
       "conquererName": "ben"
     },
@@ -50,28 +61,17 @@
         "y": 0
       },
       "armyAmount": 3,
-      "name": "Canada",
-      "serializedOrder": 5,
-      "continentName": "America",
-      "conquererName": "tj"
-    },
-    {
-      "coordinate": {
-        "x": 0,
-        "y": 0
-      },
-      "armyAmount": 18,
       "name": "Russia",
       "serializedOrder": 6,
       "continentName": "America",
-      "conquererName": "ben"
+      "conquererName": "hunter"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 8,
+      "armyAmount": 1,
       "name": "Mexico",
       "serializedOrder": 7,
       "continentName": "America",
@@ -111,7 +111,7 @@
     },
     {
       "name": "tj",
-      "unplacedArmies": 29,
+      "unplacedArmies": 21,
       "isPlaying": false,
       "nextPlayerName": "hunter",
       "previousPlayerName": "ben",

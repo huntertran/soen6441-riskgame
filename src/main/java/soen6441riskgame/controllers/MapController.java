@@ -374,14 +374,15 @@ public final class MapController {
             return;
         }
 
-        // Remove it border
-        int countryOrder = country.getOrder();
-        removeBorder(countryOrder - 1);
+        final int countryOrder = country.getOrder();
 
         // Remove it from continent
         country.getContinent().getCountries().remove(country);
         // Remove it from list country
         GameBoard.getInstance().getGameBoardMap().getCountries().remove(country);
+
+        // Remove it border
+        removeBorder(countryOrder - 1);
     }
 
     /**
