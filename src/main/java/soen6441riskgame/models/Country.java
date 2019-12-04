@@ -379,6 +379,11 @@ public class Country extends Observable implements Viewable {
 
     @Override
     public String toString() {
-        return getName() + " | " + "Army: " + getArmyAmount() + " | " + "Conquerer: " + getConquerer();
+        String result = getName() + " | " + "Army: " + getArmyAmount();
+        if (getConquerer() != null) {
+            result += " | " + "Conquerer: " + getConquerer().getName();
+        }
+
+        return result;
     }
 }
