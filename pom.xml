@@ -144,16 +144,12 @@
                 <configuration>
                     <reportOutputDirectory>./docs/</reportOutputDirectory>
                     <destDir>javadocs</destDir>
-                    <doclet>info.leadinglight.umljavadoclet.UmlJavaDoclet</doclet>
-                    <docletArtifact>
-                        <groupId>info.leadinglight</groupId>
-                        <artifactId>uml-java-doclet</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                    </docletArtifact>
-                    <!-- -linetype polyline / spline / ortho (default) -->
-                    <!-- -dependencies public (default) / protected / package / private -->
-                    <additionalparam></additionalparam>
-                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                    <doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
+                        <docletArtifact>
+                            <groupId>nl.talsmasoftware</groupId>
+                            <artifactId>umldoclet</artifactId>
+                            <version>2.0.6</version>
+                        </docletArtifact>
                 </configuration>
             </plugin>
 

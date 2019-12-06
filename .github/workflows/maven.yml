@@ -24,5 +24,4 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn -f plugins/uml-java-doclet/pom.xml clean install
           mvn package --file pom.xml
