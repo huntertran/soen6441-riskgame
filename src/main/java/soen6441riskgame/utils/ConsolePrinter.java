@@ -2,7 +2,8 @@ package soen6441riskgame.utils;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.PrintStream;
 
 import soen6441riskgame.singleton.GameBoard;
@@ -170,11 +171,18 @@ public class ConsolePrinter {
             return;
         }
 
+        var worldView = GameBoard.getInstance().getGameBoardMap().getWorldView();
+
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container content = frame.getContentPane();
-        content.add(GameBoard.getInstance().getGameBoardMap().getWorldView());
+        frame.add(worldView);
         frame.setSize(600, 600);
         frame.setVisible(true);
+
+        frame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent componentEvent) {
+                worldView.updateSize(frame.getSize());
+            }
+        });
     }
 }

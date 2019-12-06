@@ -1,22 +1,15 @@
 package soen6441riskgame.views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
-import javax.swing.Box;
 import javax.swing.DefaultBoundedRangeModel;
-import javax.swing.JApplet;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -47,7 +40,7 @@ import soen6441riskgame.singleton.GameBoard;
  * @author Tom Nelson
  * 
  */
-public class WorldView extends JApplet implements Observer {
+public class WorldView extends JPanel implements Observer {
     private static final long serialVersionUID = -6077157664507049647L;
 
     /**
@@ -58,7 +51,7 @@ public class WorldView extends JApplet implements Observer {
     /**
      * the visual component and renderer for the graph
      */
-    VisualizationViewer<Country, Number> vv;
+    VisualizationViewer<Country, Number> visualizationViewer;
 
     VertexLabelRenderer vertexLabelRenderer;
 
@@ -72,61 +65,50 @@ public class WorldView extends JApplet implements Observer {
         createEdges(v);
 
         Layout<Country, Number> layout = new CircleLayout<Country, Number>(graph);
-        vv = new VisualizationViewer<Country, Number>(layout, new Dimension(600, 400));
-        vv.setBackground(Color.white);
+        visualizationViewer = new VisualizationViewer<Country, Number>(layout);
+        visualizationViewer.setBackground(Color.white);
 
-        vv.getRenderContext().setEdgeShapeTransformer(EdgeShape.line(graph));
+        visualizationViewer.getRenderContext().setEdgeShapeTransformer(EdgeShape.line(graph));
 
-        vertexLabelRenderer = vv.getRenderContext().getVertexLabelRenderer();
+        vertexLabelRenderer = visualizationViewer.getRenderContext().getVertexLabelRenderer();
 
-        vv.getRenderContext().setEdgeDrawPaintTransformer(
-                                                          new PickableEdgePaintTransformer<Number>(vv.getPickedEdgeState(),
-                                                                                                   Color.black,
-                                                                                                   Color.cyan));
-        vv.getRenderContext().setVertexFillPaintTransformer(
-                                                            new PickableVertexPaintTransformer<Country>(vv.getPickedVertexState(),
-                                                                                                        Color.red,
-                                                                                                        Color.yellow));
+        visualizationViewer.getRenderContext().setEdgeDrawPaintTransformer(
+                                                                           new PickableEdgePaintTransformer<Number>(visualizationViewer.getPickedEdgeState(),
+                                                                                                                    Color.black,
+                                                                                                                    Color.cyan));
+        visualizationViewer.getRenderContext().setVertexFillPaintTransformer(
+                                                                             new PickableVertexPaintTransformer<Country>(visualizationViewer.getPickedVertexState(),
+                                                                                                                         Color.red,
+                                                                                                                         Color.yellow));
 
-        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        visualizationViewer.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
 
         // add my listener for ToolTips
-        vv.setVertexToolTipTransformer(new ToStringLabeller());
+        visualizationViewer.setVertexToolTipTransformer(new ToStringLabeller());
 
         // create a from to hold the graph
-        final GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
-        Container content = getContentPane();
-        content.add(panel);
+        final GraphZoomScrollPane panel = new GraphZoomScrollPane(visualizationViewer);
+
+        removeAll();
+        add(panel);
 
         final DefaultModalGraphMouse<Integer, Number> graphMouse = new DefaultModalGraphMouse<Integer, Number>();
-        vv.setGraphMouse(graphMouse);
+        visualizationViewer.setGraphMouse(graphMouse);
         graphMouse.setMode(ModalGraphMouse.Mode.TRANSFORMING);
 
-        JButton plus = new JButton("+");
-        plus.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                scaler.scale(vv, 1.1f, vv.getCenter());
-            }
-        });
-        JButton minus = new JButton("-");
-        minus.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                scaler.scale(vv, 1 / 1.1f, vv.getCenter());
-            }
-        });
-
-        MutableDirectionalEdgeValue mv = new MutableDirectionalEdgeValue(.5, .7);
-        vv.getRenderContext().setEdgeLabelClosenessTransformer(mv);
+        MutableDirectionalEdgeValue mutableDirectionalEdgeValue = new MutableDirectionalEdgeValue(.5, .7);
+        visualizationViewer.getRenderContext().setEdgeLabelClosenessTransformer(mutableDirectionalEdgeValue);
 
         JPanel zoomPanel = new JPanel(new GridLayout(0, 1));
         zoomPanel.setBorder(BorderFactory.createTitledBorder("Scale"));
-        zoomPanel.add(plus);
-        zoomPanel.add(minus);
 
-        Box controls = Box.createHorizontalBox();
+        add(zoomPanel);
+    }
 
-        controls.add(zoomPanel);
-        content.add(controls, BorderLayout.SOUTH);
+    public void updateSize(Dimension dimension) {
+        if (visualizationViewer != null) {
+            visualizationViewer.setPreferredSize(dimension);
+        }
     }
 
     /**
@@ -149,13 +131,13 @@ public class WorldView extends JApplet implements Observer {
             undirectedModel.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
                     setUndirectedValue(undirectedModel.getValue() / 10f);
-                    vv.repaint();
+                    visualizationViewer.repaint();
                 }
             });
             directedModel.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
                     setDirectedValue(directedModel.getValue() / 10f);
-                    vv.repaint();
+                    visualizationViewer.repaint();
                 }
             });
         }
