@@ -93,7 +93,7 @@ public class WorldView extends JApplet implements Observer {
         // add my listener for ToolTips
         vv.setVertexToolTipTransformer(new ToStringLabeller());
 
-        // create a frome to hold the graph
+        // create a from to hold the graph
         final GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
         Container content = getContentPane();
         content.add(panel);
@@ -148,13 +148,13 @@ public class WorldView extends JApplet implements Observer {
 
             undirectedModel.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
-                    setUndirectedValue(new Double(undirectedModel.getValue() / 10f));
+                    setUndirectedValue(undirectedModel.getValue() / 10f);
                     vv.repaint();
                 }
             });
             directedModel.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
-                    setDirectedValue(new Double(directedModel.getValue() / 10f));
+                    setDirectedValue(directedModel.getValue() / 10f);
                     vv.repaint();
                 }
             });
@@ -195,7 +195,7 @@ public class WorldView extends JApplet implements Observer {
         for (Country country : v) {
             ArrayList<Country> neighbors = country.getNeighbors();
             for (Country neighbor : neighbors) {
-                graph.addEdge(new Double(Math.random()), neighbor, country);
+                graph.addEdge(Math.random(), neighbor, country);
             }
         }
     }
