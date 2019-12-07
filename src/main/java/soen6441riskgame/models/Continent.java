@@ -14,7 +14,7 @@ import soen6441riskgame.utils.GraphChecker;
 /**
  * Hold continent data
  */
-public class Continent extends Observable implements Viewable, Parsable<Continent> {
+public class Continent extends Observable implements Viewable, Parsable {
     @Expose
     private String name;
     @Expose
@@ -149,8 +149,7 @@ public class Continent extends Observable implements Viewable, Parsable<Continen
                                    conquererName);
     }
 
-    @Override
-    public Continent parse(String argument) {
+    public static Continent parse(String argument) {
         return GameBoard.getInstance().getGameBoardMap().getContinentFromName(argument);
     }
 }

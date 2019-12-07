@@ -14,7 +14,7 @@ import soen6441riskgame.utils.ConsolePrinter;
 /**
  * Hold country data
  */
-public class Country extends Observable implements Viewable, Parsable<Country> {
+public class Country extends Observable implements Viewable, Parsable {
     @Expose
     private Coordinate coordinate;
     @Expose
@@ -389,8 +389,7 @@ public class Country extends Observable implements Viewable, Parsable<Country> {
         return result;
     }
 
-    @Override
-    public Country parse(String argument) {
-        return GameBoard.getInstance().getGameBoardMap().getCountryFromName(argument);
+    public static Country parse(String name) {
+        return GameBoard.getInstance().getGameBoardMap().getCountryFromName(name);
     }
 }
