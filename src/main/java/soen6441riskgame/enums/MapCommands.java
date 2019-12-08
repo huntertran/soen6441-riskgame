@@ -1,16 +1,30 @@
 package soen6441riskgame.enums;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import soen6441riskgame.models.CommandRoutine;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.commands.Argument;
+import soen6441riskgame.models.commands.CommandBranch;
 
 public enum MapCommands {
-                         EDIT_CONTINENT("editcontinent", Continent.class, Integer.class),
-                         EDIT_COUNTRY("editcountry", Country.class, Continent.class),
-                         EDIT_NEIGHBOR("editneighbor", Country.class, Country.class),
+                         EDITCONTINENT("editcontinent",
+                                       List.of(new CommandBranch(CommonCommandArgs.ADD, 2),
+                                               new CommandBranch(CommonCommandArgs.REMOVE, 1)),
+                                       Continent.class,
+                                       Integer.class),
+                         EDITCOUNTRY("editcountry",
+                                     List.of(new CommandBranch(CommonCommandArgs.ADD, 2),
+                                             new CommandBranch(CommonCommandArgs.REMOVE, 1)),
+                                     Country.class,
+                                     Continent.class),
+                         EDITNEIGHBOR("editneighbor",
+                                      List.of(new CommandBranch(CommonCommandArgs.ADD, 2),
+                                              new CommandBranch(CommonCommandArgs.REMOVE, 2)),
+                                      Country.class,
+                                      Country.class),
                          SHOWMAP("showmap"),
                          SAVEMAP("savemap", String.class),
                          EDITMAP("editmap", String.class),
@@ -20,11 +34,20 @@ public enum MapCommands {
 
     private String action;
     private ArrayList<CommandRoutine> routines;
-    private Class<?>[] commandArguments;
+    private Class<?>[] commandArgumentTypes;
+    private List<CommandBranch> branches;
 
-    MapCommands(String action, Class<?>... commandArguments) {
+    MapCommands(String action,
+                List<CommandBranch> branches,
+                Class<?>... commandArgumentTypes) {
         this.action = action;
-        this.commandArguments = commandArguments;
+        this.commandArgumentTypes = commandArgumentTypes;
+        this.branches = branches;
+    }
+
+    MapCommands(String action, Class<?>... commandArgumentTypes) {
+        this.action = action;
+        this.commandArgumentTypes = commandArgumentTypes;
     }
 
     /**
@@ -40,25 +63,24 @@ public enum MapCommands {
             var fragments = subCommand.split(" ");
 
             var action = CommonCommandArgs.fromString(fragments[0]);
-            var parsableArguments = new ArrayList<Class<?>>();
+            var parsableArguments = new ArrayList<Argument>();
 
             for (int index = 1; index < fragments.length; index++) {
-                parsableArguments.add(commandArguments[index]);
+                parsableArguments.add(new Argument(commandArgumentTypes[index], fragments[index]));
             }
 
-            var commandRoutine = new CommandRoutine(action,
-                                                    parsableArguments,
-                                                    Arrays.copyOfRange(fragments, 1, fragments.length));
+            var commandRoutine = new CommandRoutine(action, parsableArguments);
+            commandRoutine.setCommandBranch(branches);
             routines.add(commandRoutine);
         }
     }
 
-    public String getAction() {
+    private String getAction() {
         return action;
     }
 
-    public Class<?>[] getCommandArguments() {
-        return commandArguments;
+    public ArrayList<CommandRoutine> getCommandRoutines() {
+        return routines;
     }
 
     /**
@@ -67,7 +89,7 @@ public enum MapCommands {
      * @param commandText command text from user input
      * @return command with sub actions
      */
-    public MapCommands parseCommand(String commandText) {
+    public static MapCommands parseCommand(String commandText) {
         var action = commandText.split(" ")[0];
 
         for (MapCommands command : values()) {

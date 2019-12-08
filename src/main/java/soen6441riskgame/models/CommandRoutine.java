@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import soen6441riskgame.enums.CommonCommandArgs;
-import soen6441riskgame.models.commands.Parsable;
-import soen6441riskgame.utils.Parser;
+import soen6441riskgame.models.commands.Argument;
+import soen6441riskgame.models.commands.CommandBranch;
 
 public class CommandRoutine {
     private CommonCommandArgs action;
-
-    private List<Parsable> actionArguments;
+    private List<Argument> actionArguments;
+    private CommandBranch branch;
 
     /**
      * construct a command routine
@@ -18,41 +18,44 @@ public class CommandRoutine {
      * @param action            action text start with <code>-</code> or <code>--</code>
      * @param parsableArguments action arguments, could be country, continent, number, etc
      */
-    public CommandRoutine(CommonCommandArgs action,
-                          ArrayList<Class<?>> parsableArguments,
-                          String[] objectValues) {
-        actionArguments = new ArrayList<Parsable>();
-
-        for (int index = 0; index < parsableArguments.size(); index++) {
-            actionArguments.add(Parser.parseObject(objectValues[index], parsableArguments.get(index)));
-        }
+    public CommandRoutine(CommonCommandArgs action, ArrayList<Argument> parsableArguments) {
+        this.action = action;
+        this.actionArguments = parsableArguments;
     }
 
     /**
-     * @return the actionText
+     * get the action
+     * 
+     * @return the CommonCommandAction
      */
-    public CommonCommandArgs getActionText() {
+    public CommonCommandArgs getAction() {
         return action;
     }
 
     /**
-     * @return the actionArguments
+     * get the list of arguments
+     * 
+     * @return the list of arguments
      */
-    public List<Parsable> getActionArguments() {
+    public List<Argument> getActionArguments() {
         return actionArguments;
     }
 
     /**
-     * @param actionArguments the actionArguments to set
+     * set the command branch for this routine
+     * 
+     * @param availableBranches all available branches of parent command
      */
-    public void setActionArguments(List<Parsable> actionArguments) {
-        this.actionArguments = actionArguments;
+    public void setCommandBranch(List<CommandBranch> availableBranches) {
+        for (CommandBranch branch : availableBranches) {
+            if (branch.getAction() == action) {
+                this.branch = branch;
+                return;
+            }
+        }
     }
 
-    /**
-     * @param actionText the actionText to set
-     */
-    public void setActionText(CommonCommandArgs actionText) {
-        this.action = actionText;
+    public CommandBranch getBranch() {
+        return branch;
     }
 }

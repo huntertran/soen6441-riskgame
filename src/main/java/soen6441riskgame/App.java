@@ -7,6 +7,7 @@ import soen6441riskgame.controllers.GameController;
 import soen6441riskgame.controllers.MapController;
 import soen6441riskgame.controllers.SaveLoadController;
 import soen6441riskgame.controllers.TournamentController;
+import soen6441riskgame.enums.MapCommands;
 import soen6441riskgame.models.commands.GameCommands;
 import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.models.commands.TournamentCommands;
@@ -26,7 +27,7 @@ public final class App {
      * main method of the game. User can run a command directly from console or start the game and enter
      * commands
      *
-     * @param args the command ang it's arguments
+     * @param args the command arguments
      */
     public static void main(String[] args) {
         ConsolePrinter.printFormat("SOEN 6441 - Risk Domination game");
@@ -37,8 +38,7 @@ public final class App {
             runFromBeginning();
         } else {
             String commands = String.join(" ", args);
-            ModelCommands cmds = new ModelCommands(commands);
-            jumpToCommand(cmds);
+            jumpToCommand(commands);
         }
     }
 
@@ -216,6 +216,28 @@ public final class App {
     }
 
     /**
+     * Jump to a specific function to handle the command
+     *
+     * @param commands the command and it's arguments
+     */
+    public static void jumpToCommand(String commands) {
+        MapCommands mapCommands = MapCommands.parseCommand(commands);
+
+        MapController mapController = new MapController();
+
+        switch (mapCommands) {
+            case EDITCONTINENT: {
+                mapController.editContinent(mapCommands.getCommandRoutines());
+                return;
+            }
+            case NONE:
+            default: {
+                return;
+            }
+        }
+    }
+
+    /**
      * start the game from beginning, allow user to enter commands and arguments
      */
     public static void runFromBeginning() {
@@ -228,8 +250,7 @@ public final class App {
         String command = scanner.nextLine();
 
         while (!command.equals(GameCommands.EXIT)) {
-            ModelCommands cmds = new ModelCommands(command);
-            jumpToCommand(cmds);
+            jumpToCommand(command);
             ConsolePrinter.printFormat(GameBoard.getInstance().standardPrintStream,
                                        false,
                                        "ENTER YOUR ACTION: ");

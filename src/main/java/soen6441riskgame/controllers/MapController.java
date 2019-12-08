@@ -3,11 +3,14 @@ package soen6441riskgame.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import soen6441riskgame.enums.CommonCommandArgs;
+import soen6441riskgame.models.CommandRoutine;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.commands.Argument;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
@@ -166,6 +169,34 @@ public final class MapController {
             default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
+            }
+        }
+    }
+
+    /**
+     * handle 'editcontient' command from console
+     *
+     * @param routines -add continentName continentValue -remove continentName
+     */
+    public void editContinent(List<CommandRoutine> routines) {
+        for (CommandRoutine routine : routines) {
+            List<Argument> args = routine.getActionArguments();
+            switch (routine.getAction()) {
+                case ADD: {
+                    dominationMapReader.addContinent(args.get(0).getUnparsedValue(),
+                                                     args.get(1).getValueAsInt());
+                    break;
+                }
+                case REMOVE: {
+                    removeContinent((Continent) args.get(0).getValue());
+                    break;
+                }
+                case INVALID:
+                case NONE:
+                default: {
+                    ConsolePrinter.printFormat("Incorrect command");
+                    break;
+                }
             }
         }
     }
@@ -358,6 +389,37 @@ public final class MapController {
             ConsolePrinter.printFormat("Continent %s is removed", continentToRemove.getName());
         } else {
             ConsolePrinter.printFormat("Continent %s is not existed", continentName);
+        }
+    }
+
+    /**
+     * Remove a continent from map. Remove continent will make all country inside that continent
+     * invalid, thus make the map invalid.
+     *
+     * @param continent the continent to remove
+     */
+    public void removeContinent(Continent continent) {
+        ConsolePrinter.printFormat("Remove continent will remove all country inside that continent");
+
+        if (continent != null) {
+            String[] countriesToRemove = new String[continent.getCountries().size()];
+
+            for (int index = 0; index < countriesToRemove.length; index++) {
+                countriesToRemove[index] = continent.getCountries().get(index).getName();
+            }
+
+            for (String country : countriesToRemove) {
+                removeCountry(country);
+            }
+
+            GameBoard.getInstance()
+                     .getGameBoardMap()
+                     .getContinents()
+                     .remove(continent);
+
+            ConsolePrinter.printFormat("Continent %s is removed", continent.getName());
+        } else {
+            ConsolePrinter.printFormat("Continent %s is not existed", continent);
         }
     }
 

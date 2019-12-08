@@ -47,6 +47,29 @@ public interface MapReadable {
     }
 
     /**
+     * adds new continent
+     *
+     * @param continentName  name of the continent
+     * @param continentValue the amount of army for the new continent
+     * @param order          the continent other in the list (start with 1 as the map file structure
+     *                       indicate)
+     */
+    default void addContinent(String continentName, int continentValue, int... order) {
+        if (!GameBoard.getInstance().getGameBoardMap().isContinentExisted(continentName)) {
+            GameBoard.getInstance()
+                     .getGameBoardMap()
+                     .getContinents()
+                     .add(new Continent(continentName, continentValue));
+
+            ConsolePrinter.printFormat("New continent added: %s with %d armies",
+                                       continentName,
+                                       continentValue);
+        } else {
+            ConsolePrinter.printFormat("Continent with name %s existed", continentName);
+        }
+    }
+
+    /**
      * add new country from map file
      *
      * @param order          the order of country in the list, start with 1

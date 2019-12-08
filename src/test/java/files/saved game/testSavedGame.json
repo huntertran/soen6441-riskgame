@@ -5,18 +5,18 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 16,
+      "armyAmount": 40,
       "name": "India",
       "serializedOrder": 1,
       "continentName": "Asia",
-      "conquererName": "ben"
+      "conquererName": "hunter"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 30,
+      "armyAmount": 1,
       "name": "Pakistan",
       "serializedOrder": 2,
       "continentName": "Asia",
@@ -27,7 +27,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 8,
+      "armyAmount": 3,
       "name": "China",
       "serializedOrder": 3,
       "continentName": "Asia",
@@ -38,7 +38,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 8,
+      "armyAmount": 16,
       "name": "USA",
       "serializedOrder": 4,
       "continentName": "America",
@@ -49,7 +49,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 24,
+      "armyAmount": 35,
       "name": "Canada",
       "serializedOrder": 5,
       "continentName": "America",
@@ -60,7 +60,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 5,
+      "armyAmount": 19,
       "name": "Russia",
       "serializedOrder": 6,
       "continentName": "America",
@@ -71,11 +71,11 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 3,
+      "armyAmount": 5,
       "name": "Mexico",
       "serializedOrder": 7,
       "continentName": "America",
-      "conquererName": "hunter"
+      "conquererName": "ben"
     }
   ],
   "continents": [
@@ -111,7 +111,7 @@
     },
     {
       "name": "tj",
-      "unplacedArmies": 24,
+      "unplacedArmies": 2,
       "isPlaying": false,
       "nextPlayerName": "hunter",
       "previousPlayerName": "ben",
