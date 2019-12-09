@@ -6,6 +6,7 @@ import java.util.List;
 import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.models.commands.Argument;
 import soen6441riskgame.models.commands.CommandBranch;
+import soen6441riskgame.utils.ConsolePrinter;
 
 public class CommandRoutine {
     private CommonCommandArgs action;
@@ -57,5 +58,26 @@ public class CommandRoutine {
 
     public CommandBranch getBranch() {
         return branch;
+    }
+
+    public boolean isValid() {
+        return isValid(false);
+    }
+
+    /**
+     * check if the command have enough argument
+     * 
+     * @param isPrintWarning print warning or not?
+     * @return true if enough argument
+     */
+    public boolean isValid(boolean isPrintWarning) {
+        boolean result = branch.getNumberOfArgs() == actionArguments.size();
+        if (isPrintWarning && result == false) {
+            ConsolePrinter.printFormat("Invalid command: Missing argument. Required %d but receive %d",
+                                       branch.getNumberOfArgs(),
+                                       actionArguments.size());
+        }
+
+        return result;
     }
 }

@@ -180,24 +180,27 @@ public final class MapController {
      */
     public void editContinent(List<CommandRoutine> routines) {
         for (CommandRoutine routine : routines) {
-            List<Argument> args = routine.getActionArguments();
-            switch (routine.getAction()) {
-                case ADD: {
-                    dominationMapReader.addContinent(args.get(0).getUnparsedValue(),
-                                                     args.get(1).getValueAsInt());
-                    break;
-                }
-                case REMOVE: {
-                    removeContinent((Continent) args.get(0).getValue());
-                    break;
-                }
-                case INVALID:
-                case NONE:
-                default: {
-                    ConsolePrinter.printFormat("Incorrect command");
-                    break;
+            if (routine.isValid(true)) {
+                List<Argument> args = routine.getActionArguments();
+                switch (routine.getAction()) {
+                    case ADD: {
+                        dominationMapReader.addContinent(args.get(0).getUnparsedValue(),
+                                                         args.get(1).getValueAsInt());
+                        break;
+                    }
+                    case REMOVE: {
+                        removeContinent((Continent) args.get(0).getValue());
+                        break;
+                    }
+                    case INVALID:
+                    case NONE:
+                    default: {
+                        ConsolePrinter.printFormat("Incorrect command");
+                        break;
+                    }
                 }
             }
+
         }
     }
 
@@ -370,26 +373,7 @@ public final class MapController {
 
         Continent continentToRemove = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);
 
-        if (continentToRemove != null) {
-            String[] countriesToRemove = new String[continentToRemove.getCountries().size()];
-
-            for (int index = 0; index < countriesToRemove.length; index++) {
-                countriesToRemove[index] = continentToRemove.getCountries().get(index).getName();
-            }
-
-            for (String country : countriesToRemove) {
-                removeCountry(country);
-            }
-
-            GameBoard.getInstance()
-                     .getGameBoardMap()
-                     .getContinents()
-                     .remove(continentToRemove);
-
-            ConsolePrinter.printFormat("Continent %s is removed", continentToRemove.getName());
-        } else {
-            ConsolePrinter.printFormat("Continent %s is not existed", continentName);
-        }
+        removeContinent(continentToRemove);
     }
 
     /**

@@ -94,7 +94,7 @@ public enum MapCommands {
 
         for (MapCommands command : values()) {
             if (command.getAction().equals(action)) {
-                command.init(commandText);
+                command.init(commandText.substring(action.length()).strip());
                 return command;
             }
         }
