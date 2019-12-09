@@ -5,7 +5,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 28,
+      "armyAmount": 20,
       "name": "India",
       "serializedOrder": 1,
       "continentName": "Asia",
@@ -16,7 +16,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 38,
+      "armyAmount": 33,
       "name": "Pakistan",
       "serializedOrder": 2,
       "continentName": "Asia",
@@ -27,18 +27,18 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 1,
+      "armyAmount": 14,
       "name": "China",
       "serializedOrder": 3,
       "continentName": "Asia",
-      "conquererName": "hunter"
+      "conquererName": "tj"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 2,
+      "armyAmount": 3,
       "name": "USA",
       "serializedOrder": 4,
       "continentName": "America",
@@ -49,7 +49,7 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 3,
+      "armyAmount": 17,
       "name": "Canada",
       "serializedOrder": 5,
       "continentName": "America",
@@ -60,18 +60,18 @@
         "x": 0,
         "y": 0
       },
-      "armyAmount": 9,
+      "armyAmount": 2,
       "name": "Russia",
       "serializedOrder": 6,
       "continentName": "America",
-      "conquererName": "tj"
+      "conquererName": "hunter"
     },
     {
       "coordinate": {
         "x": 0,
         "y": 0
       },
-      "armyAmount": 12,
+      "armyAmount": 10,
       "name": "Mexico",
       "serializedOrder": 7,
       "continentName": "America",
@@ -92,7 +92,7 @@
     {
       "name": "hunter",
       "unplacedArmies": 0,
-      "isPlaying": false,
+      "isPlaying": true,
       "nextPlayerName": "ben",
       "previousPlayerName": "tj",
       "currentPhase": "WAITING_TO_TURN",
@@ -101,17 +101,17 @@
     },
     {
       "name": "ben",
-      "unplacedArmies": 0,
-      "isPlaying": true,
+      "unplacedArmies": 7,
+      "isPlaying": false,
       "nextPlayerName": "tj",
       "previousPlayerName": "hunter",
-      "currentPhase": "ATTACK",
+      "currentPhase": "WAITING_TO_TURN",
       "currentPhaseActions": [],
       "isPlayerBeAwardCard": false
     },
     {
       "name": "tj",
-      "unplacedArmies": 25,
+      "unplacedArmies": 6,
       "isPlaying": false,
       "nextPlayerName": "hunter",
       "previousPlayerName": "ben",

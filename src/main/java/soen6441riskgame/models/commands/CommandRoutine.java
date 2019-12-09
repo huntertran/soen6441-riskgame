@@ -1,4 +1,4 @@
-package soen6441riskgame.models;
+package soen6441riskgame.models.commands;
 
 import java.util.ArrayList;
 import java.util.List;

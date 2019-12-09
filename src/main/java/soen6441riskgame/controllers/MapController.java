@@ -6,11 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import soen6441riskgame.enums.CommonCommandArgs;
-import soen6441riskgame.models.CommandRoutine;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.commands.Argument;
+import soen6441riskgame.models.commands.CommandRoutine;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
@@ -262,6 +262,11 @@ public final class MapController {
         }
     }
 
+    /**
+     * handle 'editcountry' command
+     *
+     * @param routines -add countryName continentName -remove countryName
+     */
     public void editCountry(List<CommandRoutine> routines) {
         for (CommandRoutine routine : routines) {
             if (routine.isValid(true)) {
@@ -509,7 +514,7 @@ public final class MapController {
     /**
      * remove a country from map, this including remove it border info and remove it from continent
      *
-     * @param countryName name of the country to remove
+     * @param country the country to remove
      */
     public void removeCountry(Country country) {
         if (country == null) {

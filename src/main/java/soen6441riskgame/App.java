@@ -238,9 +238,23 @@ public final class App {
                 mapController.editNeighbor(mapCommand.getCommandRoutines());
                 return;
             }
+            case SHOWMAP: {
+                mapController.showMap();
+                return;
+            }
+            case SAVEMAP: {
+                boolean isConquestMapType = (boolean) mapCommand.getOptions().getOption("conquest");
+                try {
+                    mapController.saveMap(mapCommand.getCommandText(), isConquestMapType);
+                } catch (IOException e) {
+                    ConsolePrinter.printFormat("Error: " + e.getClass().getName());
+                }
+
+                return;
+            }
             case NONE:
             default: {
-                return;
+                break;
             }
         }
     }

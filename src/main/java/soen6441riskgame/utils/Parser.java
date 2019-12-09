@@ -43,6 +43,14 @@ public class Parser {
         return null;
     }
 
+    public static Object parseObjectWithClass(String objectValue, Class<?> objectType) {
+        if (Boolean.class.isAssignableFrom(objectType)) {
+            return Boolean.valueOf(objectValue);
+        }
+
+        return null;
+    }
+
     /**
      * check if input is a valid number
      *

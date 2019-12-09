@@ -1,13 +1,19 @@
 package soen6441riskgame.enums;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import soen6441riskgame.models.CommandRoutine;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.commands.Argument;
 import soen6441riskgame.models.commands.CommandBranch;
+import soen6441riskgame.models.commands.CommandOption;
+import soen6441riskgame.models.commands.CommandRoutine;
+import soen6441riskgame.utils.Parser;
 
 public enum MapCommands {
                          EDITCONTINENT("editcontinent",
@@ -26,16 +32,18 @@ public enum MapCommands {
                                       Country.class,
                                       Country.class),
                          SHOWMAP("showmap"),
-                         SAVEMAP("savemap", String.class),
+                         SAVEMAP("savemap", Map.ofEntries(Map.entry("conquest", false))),
                          EDITMAP("editmap", String.class),
                          VALIDATEMAP("validatemap"),
-                         LOADMAP("loadmap", String.class),
+                         LOADMAP("loadmap", Map.ofEntries(Map.entry("conquest", false))),
                          NONE("");
 
     private String action;
     private ArrayList<CommandRoutine> routines;
     private Class<?>[] commandArgumentTypes;
     private List<CommandBranch> branches;
+    private String commandText;
+    private CommandOption<?> options;
 
     MapCommands(String action,
                 List<CommandBranch> branches,
@@ -50,12 +58,48 @@ public enum MapCommands {
         this.commandArgumentTypes = commandArgumentTypes;
     }
 
+    MapCommands(String action, Map<String, ?> options) {
+        this.action = action;
+        this.options = new CommandOption<>(options);
+    }
+
+    public String getCommandText() {
+        return commandText;
+    }
+
+    public CommandOption<?> getOptions() {
+        return options;
+    }
+
     /**
      * init command with command text
      * 
      * @param commandText command text from user's input
      */
     public void init(String commandText) {
+        if (branches == null) {
+            this.commandText = commandText;
+            // var optionFragments = commandText.split("\\s-");
+            var optionFragments = new ArrayList<String>();
+            Matcher matcher = Pattern.compile("(\\s*-+\\S+)").matcher(commandText);
+
+            while (matcher.find()) {
+                optionFragments.add(matcher.group());
+            }
+
+            for (String optionFragment : optionFragments) {
+                var key = optionFragment.split("=")[0].replaceAll("-", "");
+                var valueString = optionFragment.split("=")[1];
+
+                Class<?> type = options.getOption(key).getClass();
+                var value = Parser.parseObjectWithClass(valueString, type);
+
+                // options.addOption(key, value);
+            }
+
+            return;
+        }
+
         routines = new ArrayList<>();
 
         var subCommands = commandText.split("\\s-");
