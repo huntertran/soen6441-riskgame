@@ -221,17 +221,22 @@ public final class App {
      * @param commands the command and it's arguments
      */
     public static void jumpToCommand(String commands) {
-        MapCommands mapCommands = MapCommands.parseCommand(commands);
+        MapCommands mapCommand = MapCommands.parseCommand(commands);
 
         MapController mapController = new MapController();
 
-        switch (mapCommands) {
+        switch (mapCommand) {
             case EDITCONTINENT: {
-                mapController.editContinent(mapCommands.getCommandRoutines());
+                mapController.editContinent(mapCommand.getCommandRoutines());
                 return;
             }
-            case EDITCOUNTRY:{
-                mapController.editCountry(mapCommands.getCommandRoutines());
+            case EDITCOUNTRY: {
+                mapController.editCountry(mapCommand.getCommandRoutines());
+                return;
+            }
+            case EDITNEIGHBOR: {
+                mapController.editNeighbor(mapCommand.getCommandRoutines());
+                return;
             }
             case NONE:
             default: {

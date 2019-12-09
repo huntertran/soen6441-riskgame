@@ -89,8 +89,8 @@ public final class MapController {
     /**
      * add new country to an existed continent OR add existing country to an existed continent
      *
-     * @param countryName   the new country name
-     * @param continentName the existed continent name
+     * @param countryName the new country name
+     * @param continent   the existed continent name
      */
     public void addCountry(String countryName, Continent continent) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
@@ -119,6 +119,16 @@ public final class MapController {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
         Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);
 
+        addNeighbor(country, neighbor);
+    }
+
+    /**
+     * connect 2 countries with each other on the borderGraph
+     *
+     * @param country  country
+     * @param neighbor neighbor
+     */
+    public void addNeighbor(Country country, Country neighbor) {
         if (country == null || neighbor == null) {
             ConsolePrinter.printFormat("The country name or neighbor country name is not existed!");
             return;
@@ -349,6 +359,37 @@ public final class MapController {
     }
 
     /**
+     * handle 'editneighbor' command
+     *
+     * @param routines -add countryName neighborCountryName -remove countryName neighborCountryName
+     */
+    public void editNeighbor(List<CommandRoutine> routines) {
+        for (CommandRoutine routine : routines) {
+            if (routine.isValid(true)) {
+                List<Argument> args = routine.getActionArguments();
+                switch (routine.getAction()) {
+                    case ADD: {
+                        addNeighbor((Country) args.get(0).getValue(),
+                                    (Country) args.get(1).getValue());
+                        break;
+                    }
+                    case REMOVE: {
+                        removeNeighbor((Country) args.get(0).getValue(),
+                                       (Country) args.get(1).getValue());
+                        break;
+                    }
+                    case INVALID:
+                    case NONE:
+                    default: {
+                        ConsolePrinter.printFormat("Incorrect command");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * get all continents that have no country
      *
      * @return a list of empty continent, or an empty list if all continent have countries inside
@@ -523,6 +564,16 @@ public final class MapController {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
         Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);
 
+        removeNeighbor(country, neighbor);
+    }
+
+    /**
+     * remove connection between 2 countries in the borderGraph
+     *
+     * @param country  the country
+     * @param neighbor the neighbor country
+     */
+    public void removeNeighbor(Country country, Country neighbor) {
         if (country == null || neighbor == null) {
             ConsolePrinter.printFormat("One or both countries is not existed");
             return;
