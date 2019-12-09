@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import soen6441riskgame.App;
+import soen6441riskgame.enums.MapCommands;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
 import soen6441riskgame.models.commands.MapEditorCommands;
@@ -189,7 +190,7 @@ public class MapControllerTest {
                              "Europe" })
     public void editContinentRemoveTest(String continent1) {
         // Action
-        String[] arguments = { MapEditorCommands.EDITCONTINENT,
+        String[] arguments = { MapCommands.EDITCONTINENT.getAction(),
                                "-remove",
                                continent1 };
         App.jumpToCommand(String.join(" ", arguments));

@@ -230,6 +230,9 @@ public final class App {
                 mapController.editContinent(mapCommands.getCommandRoutines());
                 return;
             }
+            case EDITCOUNTRY:{
+                mapController.editCountry(mapCommands.getCommandRoutines());
+            }
             case NONE:
             default: {
                 return;

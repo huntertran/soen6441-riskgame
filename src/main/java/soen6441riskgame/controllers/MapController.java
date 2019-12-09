@@ -87,6 +87,29 @@ public final class MapController {
     }
 
     /**
+     * add new country to an existed continent OR add existing country to an existed continent
+     *
+     * @param countryName   the new country name
+     * @param continentName the existed continent name
+     */
+    public void addCountry(String countryName, Continent continent) {
+        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
+
+        if (continent == null) {
+            ConsolePrinter.printFormat("Continent is not existed");
+            return;
+        }
+
+        if (country == null) {
+            createNewCountry(countryName, continent);
+        } else {
+            continent.getCountries().add(country);
+        }
+
+        ConsolePrinter.printFormat("Country %s is added to continent %s", countryName, continent.getName());
+    }
+
+    /**
      * connect 2 countries with each other on the borderGraph
      *
      * @param countryName         name of the country
@@ -200,7 +223,6 @@ public final class MapController {
                     }
                 }
             }
-
         }
     }
 
@@ -226,6 +248,31 @@ public final class MapController {
             default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
+            }
+        }
+    }
+
+    public void editCountry(List<CommandRoutine> routines) {
+        for (CommandRoutine routine : routines) {
+            if (routine.isValid(true)) {
+                List<Argument> args = routine.getActionArguments();
+                switch (routine.getAction()) {
+                    case ADD: {
+                        addCountry(args.get(0).getUnparsedValue(),
+                                   (Continent) args.get(1).getValue());
+                        break;
+                    }
+                    case REMOVE: {
+                        removeCountry((Country) args.get(0).getValue());
+                        break;
+                    }
+                    case INVALID:
+                    case NONE:
+                    default: {
+                        ConsolePrinter.printFormat("Incorrect command");
+                        break;
+                    }
+                }
             }
         }
     }
@@ -415,8 +462,17 @@ public final class MapController {
     public void removeCountry(String countryName) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
 
+        removeCountry(country);
+    }
+
+    /**
+     * remove a country from map, this including remove it border info and remove it from continent
+     *
+     * @param countryName name of the country to remove
+     */
+    public void removeCountry(Country country) {
         if (country == null) {
-            ConsolePrinter.printFormat("Country %s is not existed", countryName);
+            ConsolePrinter.printFormat("Country is not existed");
             return;
         }
 

@@ -75,7 +75,7 @@ public enum MapCommands {
         }
     }
 
-    private String getAction() {
+    public String getAction() {
         return action;
     }
 
