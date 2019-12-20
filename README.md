@@ -77,11 +77,8 @@ The javadoc files will be generated at `\docs\javadocs`. When you commit the new
 
 # 2. Members
 <a id="markdown-members" name="members"></a>
-- 40124288 - Van Tuan Tran
-- 40080998 - Benjamin Osei Asante
-- 40114377 - Tejinder Singh
-- 40089008 - Bharti Saini
-- 40076461 - Roger Madhu
+- Van Tuan Tran
+- Bharti Saini
 
 # 3. General description
 <a id="markdown-general-description" name="general-description"></a>
