@@ -19,6 +19,10 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 |--------------|---------------|---------------|
 | ![](https://github.com/huntertran/soen6441-riskgame/workflows/Java%20CI/badge.svg) | [![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/badge.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame) | [![codecov](https://codecov.io/gh/huntertran/soen6441-riskgame/branch/master/graph/tree.svg?token=crTbuvO5Gq)](https://codecov.io/gh/huntertran/soen6441-riskgame) |
 
+Code Quality
+
+[![BCH compliance](https://bettercodehub.com/edge/badge/huntertran/soen6441-riskgame?branch=master)](https://bettercodehub.com/)
+
 > Official Site: [https://huntertran.github.io/soen6441-riskgame/](https://huntertran.github.io/soen6441-riskgame/)
 
 # 1. Continue Development
