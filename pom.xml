@@ -124,13 +124,13 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.0.0-M4</version>
                 <dependencies>
                     <!-- https://mvnrepository.com/artifact/org.apache.maven.surefire/surefire -->
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire</artifactId>
-                        <version>3.0.0-M3</version>
+                        <version>3.0.0-M4</version>
                         <type>pom</type>
                     </dependency>
                 </dependencies>
@@ -160,7 +160,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.1</version>
+                <version>0.8.5</version>
                 <configuration>
                     <outputDirectory>./docs/testcoverage</outputDirectory>
                 </configuration>
