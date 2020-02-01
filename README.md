@@ -126,4 +126,8 @@ For a more details MVC pattern, please look in [this part](https://github.com/hu
 ## 5.2. JDK version and tools
 <a id="markdown-jdk-version-and-tools" name="jdk-version-and-tools"></a>
 
-The project use features of Java 8, as well as a mix of Eclipse IDE and Visual Studio Code with Java extension by RedHat.
+> The original project use features of Java 8
+
+The maintaining project using Java 13 with AdoptOpenJDK
+
+Work best with Visual Studio Code / Eclipse
