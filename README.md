@@ -21,7 +21,7 @@ SOEN 6441 - RISK GAME GROUP PROJECT
 
 Code Quality
 
-[![BCH compliance](https://bettercodehub.com/edge/badge/huntertran/soen6441-riskgame?branch=master)](https://bettercodehub.com/)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f8884dd413fb450c8ff6d4c7a4ef041f)](https://www.codacy.com/manual/huntertran/soen6441-riskgame?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=huntertran/soen6441-riskgame&amp;utm_campaign=Badge_Grade)
 
 > Official Site: [https://huntertran.github.io/soen6441-riskgame/](https://huntertran.github.io/soen6441-riskgame/)
 
