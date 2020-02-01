@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Observable;
 
 import com.google.gson.annotations.Expose;
+
+import soen6441riskgame.models.commands.Parsable;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 
 /**
  * Hold country data
  */
-public class Country extends Observable implements Viewable {
+public class Country extends Observable implements Viewable, Parsable {
     @Expose
     private Coordinate coordinate;
     @Expose
@@ -385,5 +387,9 @@ public class Country extends Observable implements Viewable {
         }
 
         return result;
+    }
+
+    public static Country parse(String name) {
+        return GameBoard.getInstance().getGameBoardMap().getCountryFromName(name);
     }
 }

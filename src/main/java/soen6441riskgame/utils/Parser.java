@@ -1,5 +1,9 @@
 package soen6441riskgame.utils;
 
+import soen6441riskgame.models.Continent;
+import soen6441riskgame.models.Country;
+import soen6441riskgame.models.commands.Parsable;
+
 /**
  * Helper to parse
  */
@@ -18,6 +22,33 @@ public class Parser {
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+    }
+
+    /**
+     * parse an object to parsable type
+     * 
+     * @param objectValue value of the object
+     * @param objectType  type of the object
+     * @return
+     */
+    public static Parsable parseObject(String objectValue, Class<?> objectType) {
+        if (Continent.class.isAssignableFrom(objectType)) {
+            return Continent.parse(objectValue);
+        }
+
+        if (Country.class.isAssignableFrom(objectType)) {
+            return Country.parse(objectValue);
+        }
+
+        return null;
+    }
+
+    public static Object parseObjectWithClass(String objectValue, Class<?> objectType) {
+        if (Boolean.class.isAssignableFrom(objectType)) {
+            return Boolean.valueOf(objectValue);
+        }
+
+        return null;
     }
 
     /**

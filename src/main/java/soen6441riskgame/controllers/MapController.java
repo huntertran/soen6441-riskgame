@@ -3,11 +3,14 @@ package soen6441riskgame.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import soen6441riskgame.enums.CommonCommandArgs;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Coordinate;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.commands.Argument;
+import soen6441riskgame.models.commands.CommandRoutine;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.GraphChecker;
@@ -84,6 +87,29 @@ public final class MapController {
     }
 
     /**
+     * add new country to an existed continent OR add existing country to an existed continent
+     *
+     * @param countryName the new country name
+     * @param continent   the existed continent name
+     */
+    public void addCountry(String countryName, Continent continent) {
+        Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
+
+        if (continent == null) {
+            ConsolePrinter.printFormat("Continent is not existed");
+            return;
+        }
+
+        if (country == null) {
+            createNewCountry(countryName, continent);
+        } else {
+            continent.getCountries().add(country);
+        }
+
+        ConsolePrinter.printFormat("Country %s is added to continent %s", countryName, continent.getName());
+    }
+
+    /**
      * connect 2 countries with each other on the borderGraph
      *
      * @param countryName         name of the country
@@ -93,6 +119,16 @@ public final class MapController {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
         Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);
 
+        addNeighbor(country, neighbor);
+    }
+
+    /**
+     * connect 2 countries with each other on the borderGraph
+     *
+     * @param country  country
+     * @param neighbor neighbor
+     */
+    public void addNeighbor(Country country, Country neighbor) {
         if (country == null || neighbor == null) {
             ConsolePrinter.printFormat("The country name or neighbor country name is not existed!");
             return;
@@ -171,6 +207,36 @@ public final class MapController {
     }
 
     /**
+     * handle 'editcontient' command from console
+     *
+     * @param routines -add continentName continentValue -remove continentName
+     */
+    public void editContinent(List<CommandRoutine> routines) {
+        for (CommandRoutine routine : routines) {
+            if (routine.isValid(true)) {
+                List<Argument> args = routine.getActionArguments();
+                switch (routine.getAction()) {
+                    case ADD: {
+                        dominationMapReader.addContinent(args.get(0).getUnparsedValue(),
+                                                         args.get(1).getValueAsInt());
+                        break;
+                    }
+                    case REMOVE: {
+                        removeContinent((Continent) args.get(0).getValue());
+                        break;
+                    }
+                    case INVALID:
+                    case NONE:
+                    default: {
+                        ConsolePrinter.printFormat("Incorrect command");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * handle 'editcountry' command
      *
      * @param args -add countryName continentName -remove countryName
@@ -192,6 +258,36 @@ public final class MapController {
             default: {
                 ConsolePrinter.printFormat("Incorrect command");
                 break;
+            }
+        }
+    }
+
+    /**
+     * handle 'editcountry' command
+     *
+     * @param routines -add countryName continentName -remove countryName
+     */
+    public void editCountry(List<CommandRoutine> routines) {
+        for (CommandRoutine routine : routines) {
+            if (routine.isValid(true)) {
+                List<Argument> args = routine.getActionArguments();
+                switch (routine.getAction()) {
+                    case ADD: {
+                        addCountry(args.get(0).getUnparsedValue(),
+                                   (Continent) args.get(1).getValue());
+                        break;
+                    }
+                    case REMOVE: {
+                        removeCountry((Country) args.get(0).getValue());
+                        break;
+                    }
+                    case INVALID:
+                    case NONE:
+                    default: {
+                        ConsolePrinter.printFormat("Incorrect command");
+                        break;
+                    }
+                }
             }
         }
     }
@@ -268,6 +364,37 @@ public final class MapController {
     }
 
     /**
+     * handle 'editneighbor' command
+     *
+     * @param routines -add countryName neighborCountryName -remove countryName neighborCountryName
+     */
+    public void editNeighbor(List<CommandRoutine> routines) {
+        for (CommandRoutine routine : routines) {
+            if (routine.isValid(true)) {
+                List<Argument> args = routine.getActionArguments();
+                switch (routine.getAction()) {
+                    case ADD: {
+                        addNeighbor((Country) args.get(0).getValue(),
+                                    (Country) args.get(1).getValue());
+                        break;
+                    }
+                    case REMOVE: {
+                        removeNeighbor((Country) args.get(0).getValue(),
+                                       (Country) args.get(1).getValue());
+                        break;
+                    }
+                    case INVALID:
+                    case NONE:
+                    default: {
+                        ConsolePrinter.printFormat("Incorrect command");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * get all continents that have no country
      *
      * @return a list of empty continent, or an empty list if all continent have countries inside
@@ -339,11 +466,23 @@ public final class MapController {
 
         Continent continentToRemove = GameBoard.getInstance().getGameBoardMap().getContinentFromName(continentName);
 
-        if (continentToRemove != null) {
-            String[] countriesToRemove = new String[continentToRemove.getCountries().size()];
+        removeContinent(continentToRemove);
+    }
+
+    /**
+     * Remove a continent from map. Remove continent will make all country inside that continent
+     * invalid, thus make the map invalid.
+     *
+     * @param continent the continent to remove
+     */
+    public void removeContinent(Continent continent) {
+        ConsolePrinter.printFormat("Remove continent will remove all country inside that continent");
+
+        if (continent != null) {
+            String[] countriesToRemove = new String[continent.getCountries().size()];
 
             for (int index = 0; index < countriesToRemove.length; index++) {
-                countriesToRemove[index] = continentToRemove.getCountries().get(index).getName();
+                countriesToRemove[index] = continent.getCountries().get(index).getName();
             }
 
             for (String country : countriesToRemove) {
@@ -353,11 +492,11 @@ public final class MapController {
             GameBoard.getInstance()
                      .getGameBoardMap()
                      .getContinents()
-                     .remove(continentToRemove);
+                     .remove(continent);
 
-            ConsolePrinter.printFormat("Continent %s is removed", continentToRemove.getName());
+            ConsolePrinter.printFormat("Continent %s is removed", continent.getName());
         } else {
-            ConsolePrinter.printFormat("Continent %s is not existed", continentName);
+            ConsolePrinter.printFormat("Continent %s is not existed", continent);
         }
     }
 
@@ -369,8 +508,17 @@ public final class MapController {
     public void removeCountry(String countryName) {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
 
+        removeCountry(country);
+    }
+
+    /**
+     * remove a country from map, this including remove it border info and remove it from continent
+     *
+     * @param country the country to remove
+     */
+    public void removeCountry(Country country) {
         if (country == null) {
-            ConsolePrinter.printFormat("Country %s is not existed", countryName);
+            ConsolePrinter.printFormat("Country is not existed");
             return;
         }
 
@@ -421,6 +569,16 @@ public final class MapController {
         Country country = GameBoard.getInstance().getGameBoardMap().getCountryFromName(countryName);
         Country neighbor = GameBoard.getInstance().getGameBoardMap().getCountryFromName(neighborCountryName);
 
+        removeNeighbor(country, neighbor);
+    }
+
+    /**
+     * remove connection between 2 countries in the borderGraph
+     *
+     * @param country  the country
+     * @param neighbor the neighbor country
+     */
+    public void removeNeighbor(Country country, Country neighbor) {
         if (country == null || neighbor == null) {
             ConsolePrinter.printFormat("One or both countries is not existed");
             return;

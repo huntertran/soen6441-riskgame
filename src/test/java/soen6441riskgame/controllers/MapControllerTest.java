@@ -9,8 +9,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import soen6441riskgame.App;
+import soen6441riskgame.enums.MapCommands;
 import soen6441riskgame.models.Continent;
 import soen6441riskgame.models.Country;
+import soen6441riskgame.models.commands.MapEditorCommands;
 import soen6441riskgame.singleton.GameBoard;
 import soen6441riskgame.utils.ConsolePrinter;
 import soen6441riskgame.utils.Parser;
@@ -187,8 +190,10 @@ public class MapControllerTest {
                              "Europe" })
     public void editContinentRemoveTest(String continent1) {
         // Action
-        String[] arguments = { "-remove", continent1 };
-        mapController.editContinent(arguments);
+        String[] arguments = { MapCommands.EDITCONTINENT.getAction(),
+                               "-remove",
+                               continent1 };
+        App.jumpToCommand(String.join(" ", arguments));
 
         // Assertions
         Assertions.assertFalse(GameBoard.getInstance().getGameBoardMap().isContinentExisted(continent1));
